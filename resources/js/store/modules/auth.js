@@ -39,7 +39,9 @@ export const mutations = {
   },
 
   [types.UPDATE_USER] (state, { user }) {
-    state.user = user
+    Object.keys(user).forEach(key => {
+      state.user[key] = user[key]
+    });
   }
 }
 

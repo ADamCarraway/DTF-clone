@@ -4,6 +4,8 @@ $config = [
     'locale' => $locale = app()->getLocale(),
     'locales' => config('app.locales'),
     'githubAuth' => config('services.github.client_id'),
+    'twitterAuth' => config('services.twitter.client_id'),
+    'twitchAuth' => config('services.twitch.client_id'),
 ];
 @endphp
 <!DOCTYPE html>
@@ -14,6 +16,7 @@ $config = [
 
   <title>{{ config('app.name') }}</title>
 
+  <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
   <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
 </head>
 <body>

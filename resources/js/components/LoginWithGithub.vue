@@ -1,8 +1,10 @@
 <template>
-  <button v-if="githubAuth" class="btn btn-dark ml-auto" type="button" @click="login">
-    {{ $t('login_with') }}
-    <fa :icon="['fab', 'github']" />
-  </button>
+  <div class="social-auth__button" @click="login">
+    <svg class="icon icon--ui_github" width="19" height="17">
+      <fa :icon="['fab', 'github']" />
+    </svg>
+    <div class="social-auth__label">Github</div>
+  </div>
 </template>
 
 <script>

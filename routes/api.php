@@ -18,8 +18,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/user', 'Auth\UserController@current');
 
-    Route::patch('settings/profile', 'Settings\ProfileController@update');
-    Route::patch('settings/password', 'Settings\PasswordController@update');
+    Route::post('settings/profile', 'Settings\ProfileController@update');
+    Route::post('settings/profile/avatar/update', 'Settings\ProfileController@avatarUpdate');
+    Route::post('settings/password', 'Settings\PasswordController@update');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

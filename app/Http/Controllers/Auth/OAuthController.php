@@ -22,6 +22,10 @@ class OAuthController extends Controller
     {
         config([
             'services.github.redirect' => route('oauth.callback', 'github'),
+            'services.twitter.redirect' => route('oauth.callback', 'twitter'),
+            'services.twitch.redirect' => route('oauth.callback', 'twitch'),
+            'services.facebook.redirect' => route('oauth.callback', 'facebook'),
+            'services.google.redirect' => route('oauth.callback', 'google'),
         ]);
     }
 
@@ -47,6 +51,8 @@ class OAuthController extends Controller
     public function handleProviderCallback($provider)
     {
         $user = Socialite::driver($provider)->stateless()->user();
+        $user->name = $user->name == null ? $user->nickname : $user->name;
+
         $user = $this->findOrCreateUser($provider, $user);
 
         $this->guard()->setToken(
@@ -80,8 +86,13 @@ class OAuthController extends Controller
             return $oauthProvider->user;
         }
 
-        if (User::where('email', $user->getEmail())->exists()) {
-            throw new EmailTakenException;
+        if ($ex_user = User::where('email', $user->getEmail())->first()) {
+            return  $ex_user->oauthProviders()->create([
+                'provider' => $provider,
+                'provider_user_id' => $user->getId(),
+                'access_token' => $user->token,
+                'refresh_token' => $user->refreshToken,
+            ]);
         }
 
         return $this->createUser($provider, $user);
@@ -109,4 +120,6 @@ class OAuthController extends Controller
 
         return $user;
     }
+
+
 }
