@@ -4,9 +4,9 @@ import router from '~/router'
 import i18n from '~/plugins/i18n'
 import App from '~/components/App'
 
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
+import AtComponents from 'at-ui'
+Vue.use(AtComponents)
+
 
 import '~/plugins'
 import '~/components'

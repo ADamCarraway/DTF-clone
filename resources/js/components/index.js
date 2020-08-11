@@ -6,7 +6,8 @@ import Checkbox from './Checkbox'
 import Avatar from './User/Settings/Avatar'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 import MainInfo from "./User/Settings/MainInfo";
-
+import SocialAuthBox from "./SocialAuthBox";
+import LoginBox from "./LoginBox";
 // Components that are registered globaly.
 [
   Avatar,
@@ -17,7 +18,9 @@ import MainInfo from "./User/Settings/MainInfo";
   Checkbox,
   HasError,
   AlertError,
-  AlertSuccess
+  AlertSuccess,
+  SocialAuthBox,
+  LoginBox
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

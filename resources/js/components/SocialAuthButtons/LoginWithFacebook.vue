@@ -8,8 +8,11 @@
 </template>
 
 <script>
+  import EventBus from "../../plugins/event-bus";
+
   export default {
     name: 'LoginWithFacebook',
+    props:[''],
 
     computed: {
       facebookAuth: () => window.config.facebookAuth,
@@ -31,6 +34,8 @@
         const url = await this.$store.dispatch('auth/fetchOauthUrl', {
           provider: 'facebook'
         })
+
+        EventBus.$emit('loginModal', false);
 
         newWindow.location.href = url
       },

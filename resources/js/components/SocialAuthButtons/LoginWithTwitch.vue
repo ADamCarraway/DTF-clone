@@ -1,19 +1,21 @@
 <template>
   <div class="social-auth__button" @click="login">
-    <svg class="icon icon--ui_google" width="19" height="17">
-      <fa :icon="['fab', 'google']" />
+    <svg class="icon icon--ui_twitch" width="19" height="17">
+      <fa :icon="['fab', 'twitch']" />
     </svg>
-    <div class="social-auth__label">Google</div>
+    <div class="social-auth__label">Twitch</div>
   </div>
 </template>
 
 <script>
+  import EventBus from "../../plugins/event-bus";
+
   export default {
-    name: 'LoginWithGoogle',
+    name: 'LoginWithTwitch',
 
     computed: {
-      googleAuth: () => window.config.googleAuth,
-      url: () => `/api/oauth/google`
+      twitchAuth: () => window.config.twitchAuth,
+      url: () => `/api/oauth/twitch`
     },
 
     mounted () {
@@ -29,8 +31,10 @@
         const newWindow = openWindow('', this.$t('login'))
 
         const url = await this.$store.dispatch('auth/fetchOauthUrl', {
-          provider: 'google'
+          provider: 'twitch'
         })
+
+        EventBus.$emit('loginModal', false);
 
         newWindow.location.href = url
       },

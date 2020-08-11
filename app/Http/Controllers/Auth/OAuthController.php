@@ -32,7 +32,7 @@ class OAuthController extends Controller
     /**
      * Redirect the user to the provider authentication page.
      *
-     * @param  string $provider
+     * @param string $provider
      * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToProvider($provider)
@@ -45,18 +45,22 @@ class OAuthController extends Controller
     /**
      * Obtain the user information from the provider.
      *
-     * @param  string $driver
+     * @param string $driver
      * @return \Illuminate\Http\Response
      */
     public function handleProviderCallback($provider)
     {
+        if (auth()->check()){
+           return $this->attach($provider);
+        }
+
         $user = Socialite::driver($provider)->stateless()->user();
         $user->name = $user->name == null ? $user->nickname : $user->name;
 
         $user = $this->findOrCreateUser($provider, $user);
 
         $this->guard()->setToken(
-            $token = $this->guard()->login($user)
+            $token = $this->guard()->login($user, true)
         );
 
         return view('oauth/callback', [
@@ -67,8 +71,8 @@ class OAuthController extends Controller
     }
 
     /**
-     * @param  string $provider
-     * @param  \Laravel\Socialite\Contracts\User $sUser
+     * @param string $provider
+     * @param \Laravel\Socialite\Contracts\User $sUser
      * @return \App\User|false
      */
     protected function findOrCreateUser($provider, $user)
@@ -87,20 +91,22 @@ class OAuthController extends Controller
         }
 
         if ($ex_user = User::where('email', $user->getEmail())->first()) {
-            return  $ex_user->oauthProviders()->create([
+            $ex_user->oauthProviders()->create([
                 'provider' => $provider,
                 'provider_user_id' => $user->getId(),
                 'access_token' => $user->token,
                 'refresh_token' => $user->refreshToken,
             ]);
+
+            return $ex_user;
         }
 
         return $this->createUser($provider, $user);
     }
 
     /**
-     * @param  string $provider
-     * @param  \Laravel\Socialite\Contracts\User $sUser
+     * @param string $provider
+     * @param \Laravel\Socialite\Contracts\User $sUser
      * @return \App\User
      */
     protected function createUser($provider, $sUser)
@@ -121,5 +127,38 @@ class OAuthController extends Controller
         return $user;
     }
 
+    public function detach($driver)
+    {
+        abort_if(auth()->user()->oauthProviders()->count() === 1, 400,'Нельзя отсоединить последний подключенный аккаунт');
 
+        return auth()->user()->oauthProviders()->where('provider', $driver)->firstOrFail()->delete();
+    }
+
+    public function attach($driver)
+    {
+        $user = Socialite::driver($driver)->stateless()->user();
+        $user->name = $user->name == null ? $user->nickname : $user->name;
+
+        $ex_u = OAuthProvider::query()->where('provider', $driver)->where('provider_user_id', $user->getId())->first();
+
+        if ($ex_u && $ex_u->user_id != auth()->id()){
+            abort(400, 'Этот аккаунт нельзя прикрепить, потому что он уже прикреплён к другому пользователю');
+        }
+
+        if ($ex_u && $ex_u->user_id == auth()->id()){
+            abort(400, 'Этот аакаунт уже привязан');
+        }
+
+        auth()->user()->oauthProviders()->create([
+            'provider' => $driver,
+            'provider_user_id' => $user->getId(),
+            'access_token' => $user->token,
+            'refresh_token' => $user->refreshToken,
+        ]);
+
+        return view('oauth.socialAttach', [
+            'status' => true,
+            'provider' => $driver,
+        ]);
+    }
 }

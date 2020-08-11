@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import EventBus from "../../plugins/event-bus";
+
 export default {
   name: 'LoginWithGithub',
 
@@ -31,6 +33,8 @@ export default {
       const url = await this.$store.dispatch('auth/fetchOauthUrl', {
         provider: 'github'
       })
+
+      EventBus.$emit('loginModal', false);
 
       newWindow.location.href = url
     },

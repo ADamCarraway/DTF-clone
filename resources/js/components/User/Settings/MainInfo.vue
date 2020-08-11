@@ -2,26 +2,24 @@
   <card :title="$t('your_info')">
     <form @submit.prevent="update">
       <!-- Name -->
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">{{ $t('name') }}</label>
-        <div class="col-md-7">
+      <div class="row at-row">
+        <div class="col-md-24 mb-2">
           <input v-model="name" class="form-control" type="text"
                  name="name">
         </div>
       </div>
 
       <!-- Email -->
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">{{ $t('email') }}</label>
-        <div class="col-md-7">
+      <div class="row at-row">
+        <div class="col-md-24 mb-2">
           <input v-model="email" class="form-control"
                  type="email" name="email">
         </div>
       </div>
 
       <!-- Submit Button -->
-      <div class="form-group row">
-        <div class="col-md-9 ml-md-auto">
+      <div class="row at-row">
+        <div class="col-md-24 ml-md-auto">
           <v-button type="success">
             {{ $t('update') }}
           </v-button>

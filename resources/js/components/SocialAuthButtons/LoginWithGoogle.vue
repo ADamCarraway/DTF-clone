@@ -1,19 +1,21 @@
 <template>
   <div class="social-auth__button" @click="login">
-    <svg class="icon icon--ui_twitter" width="19" height="17">
-      <fa :icon="['fab', 'twitter']" />
+    <svg class="icon icon--ui_google" width="19" height="17">
+      <fa :icon="['fab', 'google']" />
     </svg>
-    <div class="social-auth__label">Twitter</div>
+    <div class="social-auth__label">Google</div>
   </div>
 </template>
 
 <script>
+  import EventBus from "../../plugins/event-bus";
+
   export default {
-    name: 'LoginWithTwitter',
+    name: 'LoginWithGoogle',
 
     computed: {
-      twitterAuth: () => window.config.twitterAuth,
-      url: () => `/api/oauth/twitter`
+      googleAuth: () => window.config.googleAuth,
+      url: () => `/api/oauth/google`
     },
 
     mounted () {
@@ -29,8 +31,10 @@
         const newWindow = openWindow('', this.$t('login'))
 
         const url = await this.$store.dispatch('auth/fetchOauthUrl', {
-          provider: 'twitter'
+          provider: 'google'
         })
+
+        EventBus.$emit('loginModal', false);
 
         newWindow.location.href = url
       },

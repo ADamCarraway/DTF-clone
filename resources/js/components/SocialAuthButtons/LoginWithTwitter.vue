@@ -1,19 +1,21 @@
 <template>
   <div class="social-auth__button" @click="login">
-    <svg class="icon icon--ui_twitch" width="19" height="17">
-      <fa :icon="['fab', 'twitch']" />
+    <svg class="icon icon--ui_twitter" width="19" height="17">
+      <fa :icon="['fab', 'twitter']" />
     </svg>
-    <div class="social-auth__label">Twitch</div>
+    <div class="social-auth__label">Twitter</div>
   </div>
 </template>
 
 <script>
+  import EventBus from "../../plugins/event-bus";
+
   export default {
-    name: 'LoginWithTwitch',
+    name: 'LoginWithTwitter',
 
     computed: {
-      twitchAuth: () => window.config.twitchAuth,
-      url: () => `/api/oauth/twitch`
+      twitterAuth: () => window.config.twitterAuth,
+      url: () => `/api/oauth/twitter`
     },
 
     mounted () {
@@ -29,8 +31,10 @@
         const newWindow = openWindow('', this.$t('login'))
 
         const url = await this.$store.dispatch('auth/fetchOauthUrl', {
-          provider: 'twitch'
+          provider: 'twitter'
         })
+
+        EventBus.$emit('loginModal', false);
 
         newWindow.location.href = url
       },

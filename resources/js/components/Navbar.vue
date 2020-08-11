@@ -1,96 +1,153 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <div class="container">
-      <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand">
-        {{ appName }}
-      </router-link>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
-        <span class="navbar-toggler-icon" />
-      </button>
-
-      <div id="navbarToggler" class="collapse navbar-collapse">
-        <ul class="navbar-nav">
-          <locale-dropdown />
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li> -->
-        </ul>
-
-        <ul class="navbar-nav ml-auto">
-          <!-- Authenticated -->
-          <li v-if="user" class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-dark"
-               href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-            >
-              <img :src="user.avatar" class="rounded-circle profile-photo mr-1">
-              {{ user.name }}
-            </a>
-            <div class="dropdown-menu">
-              <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
-                <fa icon="cog" fixed-width />
-                {{ $t('settings') }}
-              </router-link>
-
-              <div class="dropdown-divider" />
-              <a href="#" class="dropdown-item pl-3" @click.prevent="logout">
-                <fa icon="sign-out-alt" fixed-width />
-                {{ $t('logout') }}
-              </a>
-            </div>
-          </li>
-          <!-- Guest -->
-          <template v-else>
-            <li class="nav-item">
-              <router-link :to="{ name: 'login' }" class="nav-link" active-class="active">
-                {{ $t('login') }}
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
-                {{ $t('register') }}
-              </router-link>
-            </li>
-          </template>
-        </ul>
+  <div class="site-header">
+    <div class="site-header__item site-header__item--burger" @click="sidebarChange()">
+      <div class="site-header-burger">
+        <i class="icon icon-menu icon--ui_burger fs-24"></i>
       </div>
     </div>
-  </nav>
+    <div class="site-header__item site-header__item--logo">
+      <router-link :to="{ name: 'index' }" class="site-header-logo">
+        <svg height="50" width="70" class="icon icon--site_logo">
+          <use xlink:href="#site_logo">
+            <svg viewBox="0 0 70 24" id="site_logo">
+              <path
+                d="M14.446 0H0v23h14.446c5.014 0 9.091-3.984 9.091-8.883V8.883C23.538 3.984 19.46 0 14.446 0zm3.171 14.117c0 1.708-1.421 3.099-3.17 3.099h-8.53V5.783h8.529c1.748 0 3.17 1.388 3.17 3.1v5.234zm7.591-8.334h8.264v17.169h5.918V5.783h8.264V0H25.208M70 5.783V0H50.889v22.952h5.918V16.19h9.982v-5.78h-9.982V5.783"></path>
+            </svg>
+          </use>
+        </svg>
+      </router-link>
+    </div>
+
+    <div class="site-header__item site-header__item--spaced site-header__item--centered site-header__item--search">
+      <div class="search">
+        <!--        //search&#45;&#45;active-->
+        <div class="search__field">
+          <i class="icon icon-search icon--search fs-16"></i>
+          <input type="text" placeholder="Поиск" class="search__input"></div>
+      </div>
+    </div>
+
+    <div class="site-header__item site-header__item--spaced site-header__item--desktop site-header__item--centered">
+      <div class="v-create-button">
+        <a href="/writing?to=u" class="v-create-button__main">
+          <div class="v-create-button__label">
+            Создать запись
+          </div>
+        </a>
+      </div>
+    </div>
+
+
+    <div class="site-header__spacer"></div>
+
+    <div class="site-header__item" v-if="user">
+      <div class="head-notifies">
+        <div class="head-notifies__toggler">
+          <i class="icon icon-bell icon--bell fs-24"></i>
+          <span class="head-notifies__badge head-notifies__badge--hidden">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-header__item" v-if="user">
+      <div class="site-header-user">
+        <at-dropdown trigger="click">
+          <div class="site-header-user__avatar" :style="{'background-image': 'url('+user.avatar+')'}"></div>
+          <at-dropdown-menu slot="menu">
+            <div class="at-dropdown-menu-item__title">Профиль</div>
+            <router-link :to="{ name: 'home' }" class="at-dropdown-menu__item item--selected">
+              <div class="item__image">
+                <img :src="user.avatar">
+              </div>
+              <span class="item__text">{{ user.name }}</span>
+            </router-link>
+
+            <router-link :to="{ name: 'settings' }" class="at-dropdown-menu__item">
+              <div class="item__icon">
+                <i class="icon icon-settings"></i>
+              </div>
+              <span class="item__text">Настройки</span>
+            </router-link>
+
+            <a href="#" class="at-dropdown-menu__item" @click.prevent="logout" style="color: rgb(233, 42, 64);">
+              <div class="item__icon">
+                <i class="icon icon-log-out"></i>
+              </div>
+              Выйти
+            </a>
+          </at-dropdown-menu>
+        </at-dropdown>
+
+      </div>
+    </div>
+
+    <div class="site-header__item" v-else @click="loginModal = true">
+      <div data-ignore-outside-click="" class="site-header-user">
+        <i class="icon icon-user icon--signin fs-24"></i>
+
+        <span class="fs-16">Войти</span>
+      </div>
+    </div>
+
+    <at-modal v-model="loginModal" :class="'loginBox'">
+      <login-box/>
+      <div slot="footer">
+      </div>
+    </at-modal>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import LocaleDropdown from './LocaleDropdown'
+  import {mapGetters} from 'vuex'
+  import LocaleDropdown from './LocaleDropdown'
+  import LoginBox from "./LoginBox";
+  import EventBus from "../plugins/event-bus";
 
-export default {
-  components: {
-    LocaleDropdown
-  },
+  export default {
+    components: {
+      LoginBox,
+      LocaleDropdown
+    },
 
-  data: () => ({
-    appName: window.config.appName
-  }),
+    data: () => ({
+      appName: window.config.appName,
+      loginModal: false,
+      sidebarShow: true
+    }),
 
-  computed: mapGetters({
-    user: 'auth/user'
-  }),
+    computed: mapGetters({
+      user: 'auth/user'
+    }),
 
-  methods: {
-    async logout () {
-      // Log out the user.
-      await this.$store.dispatch('auth/logout')
+    mounted() {
+      let t = this;
 
-      // Redirect to login.
-      this.$router.push({ name: 'login' })
+      EventBus.$on('loginModal', function (status) {
+        t.loginModal = status;
+      });
+    },
+
+    methods: {
+      async logout() {
+        // Log out the user.
+        await this.$store.dispatch('auth/logout')
+
+        // Redirect to login.
+        this.$router.push({name: 'login'})
+      },
+      sidebarChange() {
+        EventBus.$emit('sidebarShow', !this.sidebarShow);
+        this.sidebarShow = !this.sidebarShow
+      }
     }
   }
-}
 </script>
 
 <style scoped>
-.profile-photo {
-  width: 2rem;
-  height: 2rem;
-  margin: -.375rem 0;
-}
+  .profile-photo {
+    width: 2rem;
+    height: 2rem;
+    margin: -.375rem 0;
+  }
+
 </style>
