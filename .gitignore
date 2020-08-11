@@ -4,7 +4,9 @@
 /public/storage
 /storage/*.key
 /vendor
-/public/dist
+/public/dist/css/1.css
+/public/dist/css/app.css
+/public/dist/js
 /public/build
 /public/mix-manifest.json
 .env
