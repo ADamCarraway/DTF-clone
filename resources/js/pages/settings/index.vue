@@ -1,19 +1,24 @@
 <template>
   <div>
-    <profile />
+    <profile/>
     <br>
-    <password />
+    <password v-if="user.password"/>
   </div>
 </template>
 
 <script>
   import Password from "./password";
   import Profile from "./profile";
+  import {mapGetters} from "vuex";
+
   export default {
     components: {Profile, Password},
     middleware: 'auth',
 
     computed: {
+      ...mapGetters({
+        user: 'auth/user'
+      }),
       tabs() {
         return [
           {
@@ -28,6 +33,10 @@
           }
         ]
       }
+    },
+
+    mounted() {
+
     }
   }
 </script>

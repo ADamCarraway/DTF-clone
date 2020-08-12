@@ -171,6 +171,8 @@ return [
         /*
          * Package Service Providers...
          */
+        JD\Cloudder\CloudderServiceProvider::class,
+        SocialiteProviders\Manager\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -180,10 +182,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-
-        JD\Cloudder\CloudderServiceProvider::class,
-    SocialiteProviders\Manager\ServiceProvider::class,
     ],
 
     /*

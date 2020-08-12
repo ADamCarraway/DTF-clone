@@ -8,9 +8,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facade;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject, MustVerifyEmail
+class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
 {
     use Notifiable;
 
@@ -21,7 +23,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'qr'
     ];
 
     protected $casts = [
@@ -30,6 +32,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     protected $with = [
         'oauthProviders'
+    ];
+
+    protected $appends = [
+        'have_password'
     ];
 
     public function oauthProviders()
@@ -55,5 +61,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getHavePasswordAttribute()
+    {
+        return $this->password === null;
     }
 }

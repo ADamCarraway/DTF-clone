@@ -100,9 +100,12 @@
             this.form.reset()
           } else {
             axios.post('/api/login', this.form).then((res) => {
-              this.$store.dispatch('auth/saveToken', res.data.token)
+              this.$store.dispatch('auth/saveToken', {
+                token: res.data.token,
+                remember: true
+              })
 
-              this.$store.dispatch('auth/updateUser', {user: res.data})
+              this.$store.dispatch('auth/fetchUser')
 
               this.$router.push({name: 'home'})
             });
