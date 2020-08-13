@@ -4,11 +4,19 @@
         <div class="auth-form__content">
             <div class="auth-form__title l-mb-20">Вход на SITTE</div>
 
-            <!-- Google Login Button -->
-            <login-with-google/>
+          <div class="social-auth__button" @click="login('google')">
+            <svg class="icon icon--ui_google" width="19" height="17">
+              <fa :icon="['fab', 'google']" />
+            </svg>
+            <div class="social-auth__label">Google</div>
+          </div>
 
-            <!-- Facebook Login Button -->
-            <login-with-facebook/>
+          <div class="social-auth__button" @click="login('facebook')">
+            <svg class="icon icon--ui_facebook" width="19" height="17">
+              <fa :icon="['fab', 'facebook-f']" />
+            </svg>
+            <div class="social-auth__label">Facebook</div>
+          </div>
 
             <!-- Login Form Button -->
             <div class="social-auth__button" @click="showLoginForm()">
@@ -20,15 +28,20 @@
 
             <div class="row at-row">
                 <div class="col-md-12">
-                    <!-- Twitter Login Button -->
-                    <login-with-twitter/>
+                  <div class="social-auth__button" @click="login('twitter')">
+                    <svg class="icon icon--ui_twitter" width="19" height="17">
+                      <fa :icon="['fab', 'twitter']" />
+                    </svg>
+                    <div class="social-auth__label">Twitter</div>
+                  </div>
                 </div>
                 <div class="col-md-12">
-                    <!--        &lt;!&ndash; GitHub Login Button &ndash;&gt;-->
-                    <!--        <login-with-github/>-->
-
-                    <!-- Twitch Login Button -->
-                    <login-with-twitch/>
+                  <div class="social-auth__button" @click="login('twitch')">
+                    <svg class="icon icon--ui_twitch" width="19" height="17">
+                      <fa :icon="['fab', 'twitch']" />
+                    </svg>
+                    <div class="social-auth__label">Twitch</div>
+                  </div>
                 </div>
             </div>
         </div>
@@ -36,32 +49,92 @@
 </template>
 
 <script>
-    import LoginWithGithub from '../components/SocialAuthButtons/LoginWithGithub'
-    import LoginWithTwitter from "../components/SocialAuthButtons/LoginWithTwitter";
-    import LoginWithTwitch from "../components/SocialAuthButtons/LoginWithTwitch";
-    import LoginWithFacebook from "../components/SocialAuthButtons/LoginWithFacebook";
-    import LoginWithGoogle from "../components/SocialAuthButtons/LoginWithGoogle";
     import EventBus from '../plugins/event-bus';
 
     export default {
-        name: "SocialAuthBox",
+      name: 'SocialAuthBox',
+      props:[''],
+      data(){
+        return {
+          url: ''
+        }
+      },
 
-        components: {
-            LoginWithGoogle,
-            LoginWithFacebook,
-            LoginWithTwitch,
-            LoginWithTwitter,
-            LoginWithGithub
+      mounted () {
+        window.addEventListener('message', this.onMessage, false)
+      },
+
+      beforeDestroy () {
+        window.removeEventListener('message', this.onMessage)
+      },
+
+      methods: {
+        async login (provider) {
+          this.url = `/api/oauth/`+provider;
+
+          const newWindow = openWindow('', this.$t('login'))
+
+          const url = await this.$store.dispatch('auth/fetchOauthUrl', {
+            provider: provider
+          })
+
+          EventBus.$emit('loginModal', false);
+
+          newWindow.location.href = url
         },
 
-        methods: {
-            showLoginForm() {
-                EventBus.$emit('show', 'login-form');
-            }
+        /**
+         * @param {MessageEvent} e
+         */
+        onMessage (e) {
+          if (e.origin !== window.origin || !e.data.token) {
+            return
+          }
+
+          this.$store.dispatch('auth/saveToken', {
+            token: e.data.token
+          })
+
+          this.$router.push({ name: 'home' })
+        },
+
+        showLoginForm() {
+          EventBus.$emit('show', 'login-form');
         }
+      }
+    }
+
+    /**
+     * @param  {Object} options
+     * @return {Window}
+     */
+    function openWindow (url, title, options = {}) {
+      if (typeof url === 'object') {
+        options = url
+        url = ''
+      }
+
+      options = { url, title, width: 600, height: 720, ...options }
+
+      const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screen.left
+      const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screen.top
+      const width = window.innerWidth || document.documentElement.clientWidth || window.screen.width
+      const height = window.innerHeight || document.documentElement.clientHeight || window.screen.height
+
+      options.left = ((width / 2) - (options.width / 2)) + dualScreenLeft
+      options.top = ((height / 2) - (options.height / 2)) + dualScreenTop
+
+      const optionsStr = Object.keys(options).reduce((acc, key) => {
+        acc.push(`${key}=${options[key]}`)
+        return acc
+      }, []).join(',')
+
+      const newWindow = window.open(url, title, optionsStr)
+
+      if (window.focus) {
+        newWindow.focus()
+      }
+
+      return newWindow
     }
 </script>
-
-<style scoped>
-
-</style>

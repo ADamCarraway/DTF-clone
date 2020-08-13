@@ -87,7 +87,7 @@
             remember: this.remember
           })
 
-          this.$store.dispatch('auth/fetchUser')
+          // this.$store.dispatch('auth/fetchUser')
 
           this.$router.push({name: 'home'})
         }).catch((er) => {

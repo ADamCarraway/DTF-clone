@@ -43,7 +43,7 @@
     <div class="site-header__item" v-if="user">
       <div class="head-notifies">
         <div class="head-notifies__toggler">
-          <i class="icon icon-bell icon--bell fs-24"></i>
+          <i class="far fa-bell fs-24"></i>
           <span class="head-notifies__badge head-notifies__badge--hidden">0</span>
         </div>
       </div>
@@ -133,7 +133,7 @@
         await this.$store.dispatch('auth/logout')
 
         // Redirect to login.
-        this.$router.push({name: 'login'})
+        this.$router.push({name: 'index'})
       },
       sidebarChange() {
         EventBus.$emit('sidebarShow', !this.sidebarShow);

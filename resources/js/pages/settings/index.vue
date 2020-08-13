@@ -2,7 +2,7 @@
   <div>
     <profile/>
     <br>
-    <password v-if="user.password"/>
+    <password v-if="user.have_password"/>
   </div>
 </template>
 
