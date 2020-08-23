@@ -1816,6 +1816,12 @@ body {
     padding-left: 7px;
     padding-right: 8px;
 }
+
+.ui-tabs .ui-tab:first-child {
+    padding-left: 0px;
+    padding-right: 8px;
+}
+
 .ui-tab {
     -ms-flex-negative: 0;
     flex-shrink: 0;
@@ -1856,4 +1862,122 @@ body {
 
 .ui-tab--active {
     pointer-events: none;
+}
+
+.l-island-a {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.subsites_catalog__search {
+    border-top: 1px solid #f4f4f4;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.subsites_catalog__search {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.subsites_catalog__search i{
+    color: #818181;
+}
+
+.l-island-bg {
+    background-color: #fff;
+}
+
+.subsites_catalog__search__bar {
+    border: 0;
+    outline: 0!important;
+    font-size: 15px;
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+}
+
+.subsites_catalog_item {
+    position: relative;
+    overflow: hidden;
+}
+
+.subsites_catalog_item:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 120%;
+    height: 1px;
+    background-color: #f4f4f4;
+}
+
+.subsites_catalog_item:first-child:before {
+    content:none;
+}
+
+.subsite_card_simple {
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+}
+
+.subsite_card_simple__avatar {
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+.l-mins-38 {
+    min-width: 38px;
+    min-height: 38px;
+}
+.l-s-38 {
+    width: 38px;
+    height: 38px;
+}
+.l-block {
+    display: block;
+}
+.subsite_card_short__avatar img, .subsite_card_simple__avatar img, .subsite_card_simple_short__avatar img {
+    width: 100%;
+    height: 100%;
+}
+.subsite_card_simple__info {
+    color:#000;
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+}
+
+.subsite_card_simple__info a:hover {
+    color:#000;
+}
+
+.subsite_card_simple__title {
+    font-size: 18px;
+    line-height: 24px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.l-fw-500 {
+    font-weight: 500;
+}
+.subsite_card_simple__description {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.l-mt-2 {
+    margin-top: 2px;
+}
+.l-pt-1 {
+    padding-top: 1px;
+}
+.l-ml-15 {
+    margin-left: 15px;
+}
+.l-pv-20 {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
