@@ -8,9 +8,6 @@
       <p class="sidebar__tree-list__item__name">Свежее</p>
       <p data-v-1a27d7bb="" class="sidebar__tree-list__item__badge">99+</p>
     </a>
-    <a href="/m" class="sidebar__tree-list__item">
-      <p class="sidebar__tree-list__item__name">Сообщения</p>
-    </a>
     <div class="sidebar__tree-list__item__custom-html l-ph-20 lm-ph-15">
       <div class="propaganda" data-id="20"></div>
     </div>

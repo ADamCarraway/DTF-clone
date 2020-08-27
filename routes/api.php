@@ -42,3 +42,6 @@ Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallba
 
 Route::get('/subs', 'CategoryController@index')->name('subs.index');
 
+Route::post('/{category}/subscribe', 'SubscriptionController@store')->name('sub.store');
+Route::post('/{category}/unsubscribe', 'SubscriptionController@destroy')->name('sub.destroy');
+

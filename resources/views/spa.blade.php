@@ -3,9 +3,7 @@
       'appName' => config('app.name'),
       'locale' => $locale = app()->getLocale(),
       'locales' => config('app.locales'),
-      'githubAuth' => config('services.github.client_id'),
-      'twitterAuth' => config('services.twitter.client_id'),
-      'twitchAuth' => config('services.twitch.client_id'),
+      'categories' => $categories
   ];
 @endphp
   <!DOCTYPE html>
@@ -24,6 +22,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 </head>
 <body>
+
 <div id="app"></div>
 
 {{-- Global configuration object --}}

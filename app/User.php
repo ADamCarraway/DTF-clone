@@ -35,8 +35,10 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     ];
 
     protected $appends = [
-        'have_password'
+        'have_password',
+        'subscriptions_ids'
     ];
+
 
     public function oauthProviders()
     {
@@ -66,5 +68,32 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     public function getHavePasswordAttribute()
     {
         return $this->password === null;
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class );
+    }
+
+    public function getSubscriptionsIdsAttribute()
+    {
+        return $this->subscriptions()->pluck('category_id');
+    }
+
+    public function subscribe(Category $category)
+    {
+        $data = [
+            'user_id' => $this->id,
+            'category_id' => $category->id
+        ];
+
+        if(!Subscription::where($data)->exists()){
+            Subscription::query()->create($data);
+        }
+    }
+
+    public function unsubscribe(Category $category)
+    {
+        $category->subscribers()->where('user_id', $this->id)->delete();
     }
 }

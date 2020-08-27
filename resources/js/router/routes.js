@@ -23,13 +23,8 @@ export default [
     ]
   },
   {path: '/settings', name: 'settings', component: page('settings/index.vue')},
-  {
-    path: '/subs', component: page('category/index.vue'),
-    // children: [{path: '', name: 'home', component: UserPosts},]
-  },
-  {
-    path: '/*', component: page('category/category.vue'),
-  },
+  {path: '/subs', name: 'subs', component: page('category/index.vue')},
+  {path: '/:slug', name: 'subsite', component: page('category/category.vue'),},
 
   {path: '*', component: page('errors/404.vue')}
 ]

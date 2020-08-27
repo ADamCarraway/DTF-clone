@@ -852,18 +852,18 @@ body {
     width: 300px;
 }
 
-.layout__sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    /* top: 60px; */
-    height: calc(100vh - 60px);
-}
-
 .layout__right-column {
     -ms-flex-negative: 0;
     flex-shrink: 0;
     position: relative;
     z-index: 3;
+}
+
+.layout__sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
 }
 
 .sidebar {
@@ -1472,10 +1472,10 @@ body {
     }
 }
 
-.comments__item__more--root--wide, .ui-button--wide {
+/* .comments__item__more--root--wide, .ui-button--wide {
     width: 100%;
-    padding-right: 10px
-}
+    padding-right: 10px;
+} */
 
 .comments__item__more--root--wide span, .comments__item__more--root--wide svg, .ui-button--wide span, .ui-button--wide svg {
     margin-right: auto
@@ -1980,4 +1980,83 @@ body {
 .l-pv-20 {
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+.sidebar__tree-list__title {
+    color: #818181;
+    font-size: 13px;
+    line-height: 26px;
+}
+
+.sidebar__tree-list__item__image {
+    margin-right: 10px;
+    width: 22px;
+    height: 22px;
+    outline: 1px solid rgba(0,0,0,0.1);
+    outline-offset: -1px;
+    border-radius: 2px;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.sidebar__tree-list__item {
+    margin: 0 10px;
+    padding: 0 10px;
+    border-radius: 4px;
+}
+
+.sidebar__tree-list__button {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #818181;
+    font-size: 13px;
+    cursor: pointer;
+    line-height: 19px;
+    margin-top: 5px;
+}
+
+.subsite__cover {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    text-align: center;
+}
+
+.subsite__cover__crop {
+    display: block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding-top: 25%;
+}
+
+.subsite__cover__crop img, .subsite__cover__crop video {
+    display: block;
+    position: absolute;
+    width: 100%;
+    pointer-events: none;
+}
+
+.subsite_head__row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.subsite_head__row--inline {
+    width: auto;
+    margin-top: 0;
+}
+
+.mr-10{
+    margin-right: 10px;
 }
