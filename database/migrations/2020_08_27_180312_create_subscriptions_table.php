@@ -14,6 +14,7 @@ class CreateSubscriptionsTable extends Migration
     public function up()
     {
         Schema::create('subscriptions', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id');
             $table->foreignId('category_id');
             $table->timestamps();

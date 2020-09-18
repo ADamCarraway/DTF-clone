@@ -12,6 +12,13 @@
               <router-link class="not-active" :to="{ name: 'subs'}">Подписки</router-link>
             </div>
 
+            <div class="sidebar__tree-list__title l-flex l-fa-center l-ph-20 lm-ph-15" v-if="!Object.keys(subsites).length">
+              <span class="not-active">
+                Пусто
+              </span>
+            </div>
+
+
             <router-link v-for="subsite in subsites" :key="subsite.slug"
                          :to="{ name: 'subsite', params: {'slug': subsite.slug} }"
                          class="sidebar__tree-list__item l-ph-20 lm-ph-15 sidebar__tree-list__item--with-image">
@@ -20,7 +27,7 @@
               <p class="sidebar__tree-list__item__name">{{ subsite.title}}</p>
             </router-link>
 
-            <div class="sidebar__tree-list__button l-ph-20 lm-ph-15" @click="showMore()">
+            <div class="sidebar__tree-list__button l-ph-20 lm-ph-15" @click="showMore()" v-if="Object.keys(subsites).length">
               <span>{{ btn }}</span>
             </div>
           </div>
@@ -33,6 +40,7 @@
 <script>
   import MainList from "./MainList";
   import EventBus from "../plugins/event-bus";
+  import {mapGetters} from "vuex";
 
   export default {
     name: "Sidebar",
@@ -47,6 +55,9 @@
         btn: 'показать еще'
       }
     },
+    computed: mapGetters({
+      user: 'auth/user'
+    }),
     mounted() {
       let t = this;
 
@@ -54,7 +65,7 @@
         t.show = status;
       });
 
-      EventBus.$on('modifySusiteList', function () {
+      EventBus.$on('modifySubsiteList', function () {
         t.modifyList()
       });
     },
@@ -77,7 +88,8 @@
     },
     created() {
       let i = 0;
-      for (const [key, value] of Object.entries(window.config.categories)) {
+      let subs = this.user ? window.config.userSubs : window.config.categories ;
+      for (const [key, value] of Object.entries(subs)) {
         if (i >= 6) {
           this.hidden[key] = value;
         } else {

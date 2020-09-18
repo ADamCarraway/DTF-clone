@@ -3,7 +3,8 @@
       'appName' => config('app.name'),
       'locale' => $locale = app()->getLocale(),
       'locales' => config('app.locales'),
-      'categories' => $categories
+      'categories' => $categories,
+      'userSubs' => $userSubs
   ];
 @endphp
   <!DOCTYPE html>

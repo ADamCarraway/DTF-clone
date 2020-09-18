@@ -33,16 +33,6 @@
               <i class="fas fa-plus icon--ui_plus mr-10"></i>
               <span>Подписаться</span>
             </div>
-
-
-            <!--            <div class="ui-button ui-button&#45;&#45;subscribed ui-button&#45;&#45;5 ui-button&#45;&#45;wide">-->
-            <!--              <svg class="icon icon&#45;&#45;ui_check" width="14" height="11" xmlns="http://www.w3.org/2000/svg">-->
-            <!--                <use xlink:href="#ui_check"></use>-->
-            <!--              </svg>-->
-            <!--              <span>Подписан</span>-->
-            <!--            </div>-->
-
-
           </div>
 
 
@@ -131,8 +121,6 @@
     },
     created() {
       this.get(this.$route.params.slug)
-      console.log(this.user)
-
     }
   }
 </script>
