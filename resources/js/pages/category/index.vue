@@ -18,8 +18,9 @@
         <input class="subsites_catalog__search__bar l-ml-15" placeholder="Поиск"
                data-gtm="Subsites catalog – Search">
       </div>
+
       <div class="subsites_catalog__content l-island-bg">
-        <div v-for="item in subs" :key="item.id" class="subsites_catalog_item l-island-a l-pv-20">
+        <div v-for="item in subs" :key="item.slug" class="subsites_catalog_item l-island-a l-pv-20">
           <div class="subsite_card_simple">
             <router-link :to="{ name: 'subsite', params: { slug: item.slug }  }"
                          class="subsite_card_simple__avatar l-block l-s-38 l-mins-38 lm-s-40 lm-mins-40">
@@ -29,7 +30,7 @@
             <div class="subsite_card_simple__info l-ml-15 l-pt-1 l-block">
               <router-link :to="{ name: 'subsite', params: { slug: item.slug }  }"
                            class="subsite_card_simple__title l-block l-fw-500">
-                <span>{{item.title}}</span>
+                <span>{{item.title+' '+item.isSub}}</span>
               </router-link>
               <p class="subsite_card_simple__description l-mt-2">{{ item.description }}</p>
             </div>
@@ -37,12 +38,12 @@
               <div
                 class="subsite_subscribe_button subsite_subscribe_button--size-small subsite_subscribe_button--notifications-disabled subsite_subscribe_button--active-short subsite_subscribe_button--mobile-short l-ml-12 subsite_subscribe_button--state-inactive ">
                 <div class="subsite_subscribe_button__main ui-splash">
-                  <at-button v-if="!checkSub(item.slug)" icon="icon-plus"
-                             @click="subscribe(1, item.id)">Подписаться
+                  <at-button v-if="!item.isSub" icon="icon-plus"
+                             @click="subscribe(1, item.id, item.slug)">Подписаться
                   </at-button>
 
-                  <at-button style="margin-left: auto;color: green" v-else
-                             @click="subscribe(0, item.id)"
+                  <at-button style="margin-left: auto;color: green" v-if="item.isSub"
+                             @click="subscribe(0, item.id, item.slug)"
                              icon="icon-check"></at-button>
                 </div>
               </div>
@@ -57,6 +58,7 @@
 <script>
   import {mapGetters} from "vuex";
   import axios from "axios";
+  import {forEach} from "../../helpers";
 
   export default {
     name: "index",
@@ -71,30 +73,27 @@
       }),
     },
     methods: {
-      checkSub(slug){
-        if (!this.user) return false;
-
-        return slug in window.config.userSubs;
-      },
-      subscribe(type, id) {
+      subscribe(type, id, slug) {
         if (!type) {
-          let index = this.user.subscriptions_ids.indexOf(id);
           axios.post('/api/' + id + '/unsubscribe', this.form).then((res) => {
-            this.user.subscriptions_ids.splice(index, 1);
-            this.$store.dispatch('auth/updateUser', {user: {'subscriptions_ids': this.user.subscriptions_ids}})
+            this.subs[slug]['isSub'] = false;
+
+            this.$store.dispatch('auth/destroyUserSubscription', {slug: slug})
           })
         }
 
         if (type) {
           axios.post('/api/' + id + '/subscribe', this.form).then((res) => {
-            this.user.subscriptions_ids.push(id)
-            this.$store.dispatch('auth/updateUser', {user: {'subscriptions_ids': this.user.subscriptions_ids}})
+            this.subs[slug]['isSub'] = true;
+            this.subs[slug]['isVisible'] = true;
+
+            this.$store.dispatch('auth/addUserSubscription', {sub: this.subs[slug]})
           })
         }
       },
     },
     created() {
-      this.subs = window.config.categories
+      this.subs = window.config.categories;
     }
   }
 </script>

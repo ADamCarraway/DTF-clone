@@ -14,6 +14,6 @@ class SubscriptionController extends Controller
 
     public function destroy(Category $category)
     {
-       return auth()->user()->subscriptions()->where('category_id', $category->id)->delete();
+       return auth()->user()->subscriptions()->detach($category->id);
     }
 }

@@ -1,34 +1,33 @@
 <template>
-  <div class="layout__left-column layout__sticky" v-if="show">
+  <div class="layout__left-column layout__sticky">
     <div class="sidebar">
       <div class="sidebar__scroll vb vb-visible" style="position: relative; overflow: hidden;">
         <div data-v-23da34b5="" class="vb-content"
              style="display: block; overflow: hidden scroll; height: 100%; width: calc(100% + 17px);">
           <div data-v-23da34b5="" class="sidebar__spacer lm-hidden"></div>
           <main-list/>
-
-          <div class="sidebar__tree-list sidebar__tree-list--limited" v-if="subsites">
+          <div class="sidebar__tree-list sidebar__tree-list--limited">
             <div class="sidebar__tree-list__title l-flex l-fa-center l-ph-20 lm-ph-15">
               <router-link class="not-active" :to="{ name: 'subs'}">Подписки</router-link>
             </div>
-
-            <div class="sidebar__tree-list__title l-flex l-fa-center l-ph-20 lm-ph-15" v-if="!Object.keys(subsites).length">
+            <div class="sidebar__tree-list__title l-flex l-fa-center l-ph-20 lm-ph-15" v-if="!Object.keys(subs).length">
               <span class="not-active">
                 Пусто
               </span>
             </div>
 
-
-            <router-link v-for="subsite in subsites" :key="subsite.slug"
+            <router-link v-for="subsite in subs" :key="subsite.slug"
+                         v-show="subsite.isVisible"
                          :to="{ name: 'subsite', params: {'slug': subsite.slug} }"
                          class="sidebar__tree-list__item l-ph-20 lm-ph-15 sidebar__tree-list__item--with-image">
               <img class="sidebar__tree-list__item__image"
-                   :src="subsite.icon" lazy="loaded">
-              <p class="sidebar__tree-list__item__name">{{ subsite.title}}</p>
+                   :src="subsite.icon" lazy="loaded" alt="">
+              <p class="sidebar__tree-list__item__name">{{ subsite.title+' '+subsite.isVisible}}</p>
             </router-link>
 
-            <div class="sidebar__tree-list__button l-ph-20 lm-ph-15" @click="showMore()" v-if="Object.keys(subsites).length">
-              <span>{{ btn }}</span>
+            <div class="sidebar__tree-list__button l-ph-20 lm-ph-15" @click="" v-if="Object.keys(subs).length > 6">
+              <span v-if="hide" @click="showAll(false)">скрыть</span>
+              <span v-else @click="showAll(true)">показать еще</span>
             </div>
           </div>
         </div>
@@ -41,65 +40,45 @@
   import MainList from "./MainList";
   import EventBus from "../plugins/event-bus";
   import {mapGetters} from "vuex";
+  import {forEach} from "../helpers"
 
   export default {
     name: "Sidebar",
     components: {MainList},
     data() {
       return {
-        show: true,
-        hideList: true,
-        subsites: [],
-        showed: {},
-        hidden: {},
-        btn: 'показать еще'
+        hide: true,
+        subs: {},
+        active: []
       }
     },
     computed: mapGetters({
-      user: 'auth/user'
+      user: 'auth/user',
+      userSubs: 'auth/userSubs',
     }),
     mounted() {
-      let t = this;
+      this.subs = this.user ? this.userSubs : window.config.categories;
+      this.showAll(false)
 
-      EventBus.$on('sidebarShow', function (status) {
-        t.show = status;
-      });
-
-      EventBus.$on('modifySubsiteList', function () {
-        t.modifyList()
+      EventBus.$on('sidebarShow', (status) => {
+        this.show = status;
       });
     },
 
     methods: {
-      showMore() {
-        this.hideList = !this.hideList
-        this.modifyList();
-      },
+      showAll(status) {
+        this.hide = status;
 
-      modifyList() {
+        if (status) return Object.keys(this.subs).map((key) => {
+          this.subs[key]['isVisible'] = true;
+        });
+
         let i = 0;
-
-        if (!this.hideList) {
-          this.subsites = window.config.categories;
-        } else {
-          this.subsites = this.showed
-        }
-      }
-    },
-    created() {
-      let i = 0;
-      let subs = this.user ? window.config.userSubs : window.config.categories ;
-      for (const [key, value] of Object.entries(subs)) {
-        if (i >= 6) {
-          this.hidden[key] = value;
-        } else {
-          this.showed[key] = value;
-        }
-        i++;
-      }
-
-      this.subsites = this.showed
-      // this.showed = window.config.categories
+        forEach(this.subs, (value, prop, obj) => {
+          this.subs[prop]['isVisible'] = i <= 6;
+          i++;
+        });
+      },
     }
   }
 </script>

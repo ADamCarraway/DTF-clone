@@ -72,7 +72,7 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
 
     public function subscriptions()
     {
-        return $this->hasMany(Subscription::class );
+        return $this->belongsToMany(Category::class, 'subscriptions');
     }
 
     public function getSubscriptionsIdsAttribute()
