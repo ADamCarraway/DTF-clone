@@ -1,86 +1,108 @@
 <template>
   <div v-if="data">
-    <div class="subsite__cover subsite__cover--image" v-if="data.header">
-      <div class="subsite__cover__crop " style="background-color: #dcf4fc">
-        <img class="subsite__cover__media" style="top: 0%"
-             :src="data.header">
-      </div>
-    </div>
+    <div class="l-page l-page--header-content-sidebar l-mt-12 l-mb-12">
 
-    <div class="subsite_head l-island-a l-island-bg l-pv-15">
-      <div class="subsite_head__row subsite_head__row--inline l-mr-auto">
-        <div class="subsite_head__face l-s-54 lm-s-42 l-mr-15">
+      <div class="l-page__header">
+        <div class="subsite-header"><!---->
+          <div class="l-island-bg v-header v-header--with-actions v-header--with-description">
+            <div v-if="data.header" class="v-header-cover v-header__cover"
+                 :style="{ backgroundImage: `url('${data.header}')`, backgroundPosition: `50% 0%` }"></div>
 
-          <img class="andropov_image subsite_head__face__avatar andropov_image--bordered andropov_image--zoomable"
-               style="background-color: transparent;"
-               :src="data.icon">
-        </div>
-      </div>
-      <div class="subsite_head__row subsite_head__row--inline subsite_head__row--actions">
+            <div class="v-header__avatar v-header-avatar"
+                 :style="{ backgroundImage: `url('${data.icon}')` }">
 
-        <div
-          class="subsite_subscribe_button subsite_subscribe_button--size-default subsite_subscribe_button--state-active subsite_subscribe_button--notifications-disabled subsite_subscribe_button--with-notifications l-ml-12 l-ml-12 lm-ml-0 lm-mr-12">
-          <div class="subsite_subscribe_button__main">
+            </div>
+            <div class="v-header__content">
+              <div class="v-header__title">
+                <div class="v-header-title">
+                  <div class="v-header-title__main">
+                    <div class="v-header-title__item v-header-title__name">
+                      {{ data.title }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="v-header__description">
+                <div class="v-header-description">
+                  <div class="v-header-description__content">
+                    <p v-if="!showDescription && data.description.length > 97">
+                      {{ data.description.slice(0,97)+' ...'}}
+                      <span @click="showDescription = !showDescription" class="v-header-description__more">еще</span>
+                    </p>
+                    <p v-if="showDescription">
+                      {{ data.description}}
+                      <span @click="showDescription = !showDescription" class="v-header-description__more">скрыть</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v-header__actions">
+              <div
+                class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
+                <div @click="subscribe(0)" v-if="data.slug in userSubs"
+                     class="v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default">
+                  <div class="v-button__icon">
+                    <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
+                       aria-hidden="true"></i>
+                    <i v-else class="fas fa-times icon--ui_close"></i>
+                  </div>
+                  <span class="v-button__label">Отписаться</span>
+                </div>
 
-            <div @click="subscribe(0)" v-if="data.slug in userSubs"
-                 class="ui-button ui-button--unsubscribe ui-button--5 ui-button--wide">
-              <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status" aria-hidden="true"></i>
-              <i v-else class="fas fa-times icon--ui_close mr-10"></i>
-              <span>Отписаться</span>
+                <div @click="subscribe(1)" v-if="!(data.slug in userSubs)"
+                     class="v-subscribe-button__subscribe v-button v-button--blue v-button--size-default">
+                  <div class="v-button__icon">
+                    <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
+                       aria-hidden="true"></i>
+                    <i v-else class="fas fa-plus icon--ui_plus"></i>
+                  </div>
+                  <span class="v-button__label">Подписаться</span>
+                </div>
+
+                <div v-if="(data.slug in userSubs) && !this.user.category_notify.includes(data.id)" @click="notify(1)"
+                     class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
+                  <div class="v-button__icon">
+                    <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
+                       aria-hidden="true"></i>
+                    <i v-else class="far fa-bell"></i>
+                  </div>
+                </div>
+
+                <div v-if="(data.slug in userSubs) && this.user.category_notify.includes(data.id)" @click="notify(0)"
+                     class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
+                  <div class="v-button__icon">
+                    <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
+                       aria-hidden="true"></i>
+                    <i v-else class="fas fa-bell"></i>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div @click="subscribe(1)" v-if="!(data.slug in userSubs)"
-                 class="ui-button ui-button--subscribe ui-button--1 ui-button--wide">
-              <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status" aria-hidden="true"></i>
-              <i v-else class="fas fa-plus icon--ui_plus mr-10"></i>
-              <span >Подписаться</span>
+            <div class="v-header__tabs">
+              <div class="v-tabs">
+                <div class="v-tabs__scroll">
+                  <div class="v-tabs__content"><a href="https://dtf.ru/games/entries" class="v-tab v-tab--active"><span
+                    class="v-tab__label">
+            Статьи
+
+            <span class="v-tab__counter">
+              16 038
+            </span></span></a><a href="https://dtf.ru/games/comments" class="v-tab"><span class="v-tab__label">
+            Комментарии
+
+            <span class="v-tab__counter">
+              10
+            </span></span></a><a href="https://dtf.ru/games/details" class="v-tab"><span class="v-tab__label">
+            Подробнее
+
+                    <!----></span></a></div>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div v-if="(data.slug in userSubs) && !this.user.category_notify.includes(data.id)" @click="notify(1)"
-               class="ui-button ui-button--only-icon ui-button--5 ui-button--notifications l-ml-12 subsite_subscribe_button__notifications">
-            <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i>
-            <i v-else class="far fa-bell"></i>
-          </div>
-
-          <div v-if="(data.slug in userSubs) && this.user.category_notify.includes(data.id)" @click="notify(0)"
-               class="ui-button ui-button--only-icon ui-button--5 ui-button--notifications l-ml-12 subsite_subscribe_button__notifications">
-            <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i>
-            <i v-else class="fas fa-bell"></i>
-          </div>
-
         </div>
-
-      </div>
-
-      <div class="subsite_head__row">
-
-        <p class="subsite_head__name l-to-ellipsis l-fs-30 lm-fs-22 l-lh-34 l-fw-600">{{ data.title}}</p>
-
-
-        <span class="approved_user" title="Официальная страница">
-    <svg class="icon icon--ui_verified" width="14" height="14" xmlns="http://www.w3.org/2000/svg"><use
-      xlink:href="#ui_verified"></use></svg></span>
-
-
-      </div>
-      {{user.category_notify }}
-
-      <div class="subsite_head__row">
-
-        <div class="subsite_head__description l-fs-15 l-lh-21 lm-fs-13 lm-lh-18">
-          <div class="rolled-up-text" data-one-name="rolled-up-text_59f478dd34">
-            <!--            <div class="rolled-up-text__short"><p>Профессиональное издание о развлечениях. Новости и аналитика об играх,-->
-            <!--              а также актуальная информация из мира кино и…</p></div>-->
-            <div class="rolled-up-text__full">
-              <p>
-                {{ data.description }}
-              </p>
-            </div>
-            <span class="rolled-up-text__label" data-one-click="add_mod:rolled-up-text_59f478dd34:open">подробнее</span>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -96,6 +118,7 @@
     name: "category",
     data() {
       return {
+        showDescription: false,
         loadingNotify: false,
         loadingSub: false,
         data: []

@@ -8,7 +8,7 @@ class SubscriptionController extends Controller
 {
     public function store(Category $category)
     {
-       return auth()->user()->subscribe($category);
+       return auth()->user()->subscriptions()->attach($category->id);
     }
 
     public function destroy(Category $category)

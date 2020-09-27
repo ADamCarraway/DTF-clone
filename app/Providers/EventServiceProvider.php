@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Listeners\AddSubsToUser;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -16,13 +17,13 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+            AddSubsToUser::class
         ],
 
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             'SocialiteProviders\\Twitch\\TwitchExtendSocialite@handle',
             'SocialiteProviders\\Twitter\\TwitterExtendSocialite@handle',
             'SocialiteProviders\\Facebook\\FacebookExtendSocialite@handle',
-//            'SocialiteProviders\\GitHub\\GitHubExtendSocialite@handle',
             'SocialiteProviders\\Google\\GoogleExtendSocialite@handle',
         ],
     ];

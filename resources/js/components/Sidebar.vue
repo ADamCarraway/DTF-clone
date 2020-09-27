@@ -2,14 +2,10 @@
   <div class="layout__left-column layout__sticky">
     <div class="sidebar">
       <div class="sidebar__scroll vb vb-visible" style="position: relative; overflow: hidden;">
-        <div data-v-23da34b5="" class="vb-content"
+        <div class="vb-content"
              style="display: block; overflow: hidden scroll; height: 100%; width: calc(100% + 17px);">
-          <div data-v-23da34b5="" class="sidebar__spacer lm-hidden"></div>
           <main-list/>
           <div class="sidebar__tree-list sidebar__tree-list--limited">
-            <div class="sidebar__tree-list__title l-flex l-fa-center l-ph-20 lm-ph-15">
-              <router-link class="not-active" :to="{ name: 'subs'}">Подписки</router-link>
-            </div>
             <div class="sidebar__tree-list__title l-flex l-fa-center l-ph-20 lm-ph-15" v-if="!Object.keys(subs).length">
               <span class="not-active">
                 Пусто
@@ -19,10 +15,12 @@
             <router-link v-for="subsite in subs" :key="subsite.slug"
                          v-show="subsite.isVisible"
                          :to="{ name: 'subsite', params: {'slug': subsite.slug} }"
-                         class="sidebar__tree-list__item l-ph-20 lm-ph-15 sidebar__tree-list__item--with-image">
-              <img class="sidebar__tree-list__item__image"
-                   :src="subsite.icon" lazy="loaded" alt="">
-              <p class="sidebar__tree-list__item__name">{{ subsite.title }}</p>
+                         class="sidebar__tree-list__item lm-ph-15 sidebar__tree-list__item--with-image">
+              <div class="sidebar-tree-list-item__link">
+                <img class="sidebar__tree-list__item__image"
+                     :src="subsite.icon" lazy="loaded" alt="">
+                <p class="sidebar__tree-list__item__name">{{ subsite.title }}</p>
+              </div>
             </router-link>
 
             <div class="sidebar__tree-list__button l-ph-20 lm-ph-15" @click="" v-if="Object.keys(subs).length > 6">
@@ -117,5 +115,27 @@
 
   .not-active.router-link-active {
     background: #fff0;
+  }
+
+  .router-link-exact-active .sidebar-tree-list-item__link i {
+    color: #4da0da;
+  }
+
+  .router-link-exact-active {
+    background: #fff;
+  }
+
+  .router-link-exact-active:hover {
+    background: #fff;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .sidebar-tree-list-item__child-item:hover {
+    background: #eaeaea;
+  }
+
+  .sidebar-tree-list-item__child-item:hover:before {
+    display: none;
   }
 </style>

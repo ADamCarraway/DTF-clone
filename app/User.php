@@ -78,23 +78,6 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
         return $this->subscriptions()->pluck('category_id');
     }
 
-    public function subscribe(Category $category)
-    {
-        $data = [
-            'user_id' => $this->id,
-            'category_id' => $category->id
-        ];
-
-        if(!Subscription::where($data)->exists()){
-            Subscription::query()->create($data);
-        }
-    }
-
-    public function unsubscribe(Category $category)
-    {
-        $category->subscribers()->where('user_id', $this->id)->delete();
-    }
-
     public function subsNotify()
     {
         return $this->hasMany(SubsNotify::class);

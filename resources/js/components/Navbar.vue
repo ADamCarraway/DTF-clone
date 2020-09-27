@@ -30,8 +30,11 @@
     <div class="site-header__item site-header__item--spaced site-header__item--desktop site-header__item--centered">
       <div class="v-create-button">
         <a href="/writing?to=u" class="v-create-button__main">
+          <div class="v-split-button__icon">
+            <i class="fas fa-pencil-alt"></i>
+          </div>
           <div class="v-create-button__label">
-            Создать запись
+            Новая запись
           </div>
         </a>
       </div>

@@ -1,28 +1,30 @@
 <template>
-  <div class="sidebar__tree-list">
-    <a href="/" class="sidebar__tree-list__item">
-<!--      sidebar__tree-list__item&#45;&#45;active-->
-      <p class="sidebar__tree-list__item__name">Популярное</p>
-    </a>
-    <a href="/new" data-gtm="Sidebar — SiteNavigation — New" class="sidebar__tree-list__item">
-      <p class="sidebar__tree-list__item__name">Свежее</p>
-      <p data-v-1a27d7bb="" class="sidebar__tree-list__item__badge">99+</p>
-    </a>
-    <div class="sidebar__tree-list__item__custom-html l-ph-20 lm-ph-15">
-      <div class="propaganda" data-id="20"></div>
+    <div class="sidebar__tree-list">
+        <router-link :to="{ name: 'index'}" class="sidebar__tree-list__item">
+            <div class="sidebar-tree-list-item__link">
+                <i class="fas fa-fire-alt"></i>
+                <p class="sidebar__tree-list__item__name">Лента</p>
+            </div>
+            <a title="Свежее" class="sidebar-tree-list-item__child-item">
+                <i class="far fa-clock mr-0"></i>
+            </a>
+        </router-link>
+        <router-link :to="{ name: 'subs'}" class="sidebar__tree-list__item">
+            <div class="sidebar-tree-list-item__link">
+                <i class="fas fa-list-ul"></i>
+                <p class="sidebar__tree-list__item__name">Подписки</p>
+            </div>
+        </router-link>
     </div>
-  </div>
 </template>
 
 <script>
 
-  export default {
-    name: "MainList",
-  }
+    export default {
+        name: "MainList",
+    }
 </script>
 
 <style scoped>
-  .sidebar__tree-list {
-    margin-bottom: 15px;
-  }
+
 </style>
