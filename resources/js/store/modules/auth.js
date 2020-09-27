@@ -42,7 +42,7 @@ export const mutations = {
 
   [types.UPDATE_USER](state, {user}) {
     Object.keys(user).forEach(key => {
-      state.user[key] = user[key]
+      vue.set(state.user, key, user[key]);
     });
   },
 

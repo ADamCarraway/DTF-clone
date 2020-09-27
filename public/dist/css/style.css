@@ -2060,3 +2060,23 @@ body {
 .mr-10{
     margin-right: 10px;
 }
+
+.at-notification__message{
+    font-family: 'Roboto',Tahoma;
+    font-weight: 400;
+    color: #000;
+    font-size: 14px;
+    line-height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left:10px;
+}
+
+.at-notification--success .at-notification__icon {
+    color: #07a23b;
+    font-size:35px;
+}
+
+.at-notification__content{
+
+}

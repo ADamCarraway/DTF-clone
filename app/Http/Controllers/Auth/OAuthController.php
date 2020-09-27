@@ -142,11 +142,19 @@ class OAuthController extends Controller
         $ex_u = OAuthProvider::query()->where('provider', $driver)->where('provider_user_id', $user->getId())->first();
 
         if ($ex_u && $ex_u->user_id != auth()->id()){
-            abort(400, 'Этот аккаунт нельзя прикрепить, потому что он уже прикреплён к другому пользователю');
+            return view('oauth.socialAttach', [
+                'status' => 'false',
+                'message' => 'Этот аккаунт нельзя прикрепить, потому что он уже прикреплён к другому пользователю',
+                'provider' => $driver,
+            ]);
         }
 
         if ($ex_u && $ex_u->user_id == auth()->id()){
-            abort(400, 'Этот аакаунт уже привязан');
+            return view('oauth.socialAttach', [
+                'status' => 'false',
+                'message' => 'Этот аакаунт уже привязан',
+                'provider' => $driver,
+            ]);
         }
 
         auth()->user()->oauthProviders()->create([

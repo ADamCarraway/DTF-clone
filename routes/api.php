@@ -45,3 +45,5 @@ Route::get('/subs', 'CategoryController@index')->name('subs.index');
 Route::post('/{category}/subscribe', 'SubscriptionController@store')->name('sub.store');
 Route::post('/{category}/unsubscribe', 'SubscriptionController@destroy')->name('sub.destroy');
 
+Route::post('/notifications/subscribe/{type}/{id}', 'SubsNotifyController@store')->name('subsNotify.store');
+Route::post('/notifications/unsubscribe/{type}/{id}', 'SubsNotifyController@destroy')->name('subsNotify.destroy');

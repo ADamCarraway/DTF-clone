@@ -30,7 +30,7 @@
             <div class="subsite_card_simple__info l-ml-15 l-pt-1 l-block">
               <router-link :to="{ name: 'subsite', params: { slug: item.slug }  }"
                            class="subsite_card_simple__title l-block l-fw-500">
-                <span>{{item.title+' '+item.isSub}}</span>
+                <span>{{item.title}}</span>
               </router-link>
               <p class="subsite_card_simple__description l-mt-2">{{ item.description }}</p>
             </div>
@@ -69,7 +69,8 @@
     },
     computed: {
       ...mapGetters({
-        user: 'auth/user'
+        user: 'auth/user',
+        userSubs: 'auth/userSubs',
       }),
     },
     methods: {
@@ -85,7 +86,7 @@
         if (type) {
           axios.post('/api/' + id + '/subscribe', this.form).then((res) => {
             this.subs[slug]['isSub'] = true;
-            this.subs[slug]['isVisible'] = true;
+            this.subs[slug]['isVisible'] = Object.keys(this.userSubs).length < 7;
 
             this.$store.dispatch('auth/addUserSubscription', {sub: this.subs[slug]})
           })

@@ -22,33 +22,40 @@
           class="subsite_subscribe_button subsite_subscribe_button--size-default subsite_subscribe_button--state-active subsite_subscribe_button--notifications-disabled subsite_subscribe_button--with-notifications l-ml-12 l-ml-12 lm-ml-0 lm-mr-12">
           <div class="subsite_subscribe_button__main">
 
-            <div @click="subscribe(0)" v-if="user && user.subscriptions_ids.indexOf( data.id ) != -1"
+            <div @click="subscribe(0)" v-if="data.slug in userSubs"
                  class="ui-button ui-button--unsubscribe ui-button--5 ui-button--wide">
-              <i class="fas fa-times icon--ui_close mr-10"></i>
+              <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status" aria-hidden="true"></i>
+              <i v-else class="fas fa-times icon--ui_close mr-10"></i>
               <span>Отписаться</span>
             </div>
 
-            <div @click="subscribe(1)" v-if="user && user.subscriptions_ids.indexOf( data.id ) === -1"
+            <div @click="subscribe(1)" v-if="!(data.slug in userSubs)"
                  class="ui-button ui-button--subscribe ui-button--1 ui-button--wide">
-              <i class="fas fa-plus icon--ui_plus mr-10"></i>
-              <span>Подписаться</span>
+              <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status" aria-hidden="true"></i>
+              <i v-else class="fas fa-plus icon--ui_plus mr-10"></i>
+              <span >Подписаться</span>
             </div>
           </div>
 
-
-          <div v-if="user && user.subscriptions_ids.indexOf( data.id ) != -1"
+          <div v-if="(data.slug in userSubs) && !this.user.category_notify.includes(data.id)" @click="notify(1)"
                class="ui-button ui-button--only-icon ui-button--5 ui-button--notifications l-ml-12 subsite_subscribe_button__notifications">
-            <i class="far fa-bell"></i>
+            <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i>
+            <i v-else class="far fa-bell"></i>
+          </div>
+
+          <div v-if="(data.slug in userSubs) && this.user.category_notify.includes(data.id)" @click="notify(0)"
+               class="ui-button ui-button--only-icon ui-button--5 ui-button--notifications l-ml-12 subsite_subscribe_button__notifications">
+            <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i>
+            <i v-else class="fas fa-bell"></i>
           </div>
 
         </div>
-
 
       </div>
 
       <div class="subsite_head__row">
 
-        <p class="subsite_head__name l-to-ellipsis l-fs-30 lm-fs-22 l-lh-34 l-fw-600">{{ data.title }}</p>
+        <p class="subsite_head__name l-to-ellipsis l-fs-30 lm-fs-22 l-lh-34 l-fw-600">{{ data.title}}</p>
 
 
         <span class="approved_user" title="Официальная страница">
@@ -57,7 +64,7 @@
 
 
       </div>
-
+      {{user.category_notify }}
 
       <div class="subsite_head__row">
 
@@ -83,16 +90,20 @@
   import EventBus from "../../plugins/event-bus";
   import {mapGetters} from "vuex";
   import axios from "axios";
+  import vue from "vue";
 
   export default {
     name: "category",
     data() {
       return {
+        loadingNotify: false,
+        loadingSub: false,
         data: []
       }
     },
     computed: mapGetters({
-      user: 'auth/user'
+      user: 'auth/user',
+      userSubs: 'auth/userSubs',
     }),
     beforeRouteUpdate(to, from, next) {
       this.get(to.params.slug)
@@ -100,18 +111,47 @@
     },
     methods: {
       subscribe(type) {
+        this.loadingSub = true;
         if (!type) {
-          let index = this.user.subscriptions_ids.indexOf(this.data.id);
           axios.post('/api/' + this.data.id + '/unsubscribe', this.form).then((res) => {
-            this.user.subscriptions_ids.splice(index, 1);
-            this.$store.dispatch('auth/updateUser', {user: {'subscriptions_ids': this.user.subscriptions_ids}})
+            this.$store.dispatch('auth/destroyUserSubscription', {slug: this.data.slug})
+            this.loadingSub = false;
           })
         }
 
         if (type) {
           axios.post('/api/' + this.data.id + '/subscribe', this.form).then((res) => {
-            this.user.subscriptions_ids.push(this.data.id)
-            this.$store.dispatch('auth/updateUser', {user: {'subscriptions_ids': this.user.subscriptions_ids}})
+            this.data['isSub'] = true;
+            this.data['isVisible'] = Object.keys(this.userSubs).length < 7;
+
+            this.$store.dispatch('auth/addUserSubscription', {sub: this.data})
+            this.loadingSub = false;
+          })
+        }
+      },
+      notify(type) {
+        this.loadingNotify = true;
+        if (type) {
+          axios.post('/api/notifications/subscribe/category/' + this.data.id).then((res) => {
+            this.user.category_notify.push(this.data.id)
+            this.$store.dispatch('auth/updateUser', {user: {'category_notify': this.user.category_notify}})
+            this.$Notify.success({
+              message: 'Мы уведомим вас о новых записях'
+            })
+            this.loadingNotify = false;
+          })
+        }
+
+        if (!type) {
+          axios.post('/api/notifications/unsubscribe/category/' + this.data.id).then((res) => {
+            const index = this.user.category_notify.indexOf(this.data.id);
+            this.user.category_notify.splice(index, 1);
+
+            this.$store.dispatch('auth/updateUser', {user: {'category_notify': this.user.category_notify}})
+            this.$Notify.success({
+              message: 'Вы отписались от уведомлений о новых записях'
+            })
+            this.loadingNotify = false;
           })
         }
       },

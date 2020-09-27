@@ -50,8 +50,14 @@
 
     methods: {
       onMessage(e) {
-        console.log(e)
         if (e.origin !== window.origin || !e.data.status) {
+          return
+        }
+
+        if (e.data.status === 'false') {
+          this.$Notify.error({
+            message: e.data.message
+          })
           return
         }
 

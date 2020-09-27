@@ -22,7 +22,7 @@
                          class="sidebar__tree-list__item l-ph-20 lm-ph-15 sidebar__tree-list__item--with-image">
               <img class="sidebar__tree-list__item__image"
                    :src="subsite.icon" lazy="loaded" alt="">
-              <p class="sidebar__tree-list__item__name">{{ subsite.title+' '+subsite.isVisible}}</p>
+              <p class="sidebar__tree-list__item__name">{{ subsite.title }}</p>
             </router-link>
 
             <div class="sidebar__tree-list__button l-ph-20 lm-ph-15" @click="" v-if="Object.keys(subs).length > 6">

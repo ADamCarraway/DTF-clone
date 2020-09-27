@@ -4,12 +4,9 @@ namespace App;
 
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Str;
-use SimpleSoftwareIO\QrCode\Facade;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
@@ -36,7 +33,8 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
 
     protected $appends = [
         'have_password',
-        'subscriptions_ids'
+        'subscriptions_ids',
+        'category_notify'
     ];
 
 
@@ -95,5 +93,15 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     public function unsubscribe(Category $category)
     {
         $category->subscribers()->where('user_id', $this->id)->delete();
+    }
+
+    public function subsNotify()
+    {
+        return $this->hasMany(SubsNotify::class);
+    }
+
+    public function getCategoryNotifyAttribute()
+    {
+        return $this->subsNotify()->where('subs_notify_type', Category::class)->pluck('subs_notify_id');
     }
 }
