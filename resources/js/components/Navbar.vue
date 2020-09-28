@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="site-header__item site-header__item--logo">
-      <router-link :to="{ name: 'index' }" class="site-header-logo">
+      <router-link :to="{ name: 'index' }" class="site-header-logo not-active">
         <svg height="50" width="70" class="icon icon--site_logo">
           <use xlink:href="#site_logo">
             <svg viewBox="0 0 70 24" id="site_logo">
@@ -165,6 +165,10 @@
   .router-link-exact-active span, .router-link-exact-active span, .at-dropdown-menu__item:hover {
     background: #f4f5f6;
     opacity: 1 !important;
+  }
+
+  .not-active{
+    background: #d9f5ff;
   }
 
 </style>

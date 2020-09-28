@@ -33,8 +33,8 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
 
     protected $appends = [
         'have_password',
-        'subscriptions_ids',
-        'category_notify'
+        'category_notify',
+        'user_notify'
     ];
 
 
@@ -68,23 +68,33 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
         return $this->password === null;
     }
 
-    public function subscriptions()
+    public function users()
     {
-        return $this->belongsToMany(Category::class, 'subscriptions');
+        return $this->morphedByMany(User::class, 'subscription');
     }
 
-    public function getSubscriptionsIdsAttribute()
+    public function categories()
     {
-        return $this->subscriptions()->pluck('category_id');
+        return $this->morphedByMany(Category::class, 'subscription');
     }
 
-    public function subsNotify()
+    public function usersNotify()
     {
-        return $this->hasMany(SubsNotify::class);
+        return $this->morphedByMany(User::class, 'subs_notify');
+    }
+
+    public function categoriesNotify()
+    {
+        return $this->morphedByMany(Category::class, 'subs_notify');
     }
 
     public function getCategoryNotifyAttribute()
     {
-        return $this->subsNotify()->where('subs_notify_type', Category::class)->pluck('subs_notify_id');
+        return $this->categoriesNotify()->pluck('subs_notify_id');
+    }
+
+    public function getUserNotifyAttribute()
+    {
+        return $this->usersNotify()->pluck('subs_notify_id');
     }
 }

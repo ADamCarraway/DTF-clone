@@ -6,13 +6,13 @@ use App\Category;
 
 class SubscriptionController extends Controller
 {
-    public function store(Category $category)
+    public function store($id, $type)
     {
-       return auth()->user()->subscriptions()->attach($category->id);
+       return auth()->user()->$type()->attach($id);
     }
 
-    public function destroy(Category $category)
+    public function destroy($id, $type)
     {
-       return auth()->user()->subscriptions()->detach($category->id);
+       return auth()->user()->$type()->detach($id);
     }
 }

@@ -6,13 +6,15 @@ import vue from 'vue'
 export const state = {
   user: null,
   token: Cookies.get('token'),
-  userSubs: {}
+  userCategoriesSubs: {},
+  userUsersSubs: {}
 }
 
 // getters
 export const getters = {
   user: state => state.user,
-  userSubs: state => state.userSubs,
+  userCategoriesSubs: state => state.userCategoriesSubs,
+  userUsersSubs: state => state.userUsersSubs,
   token: state => state.token,
   check: state => state.user !== null
 }
@@ -46,17 +48,30 @@ export const mutations = {
     });
   },
 
-  [types.DESTROY_USER_SUBSCRIPTIONS](state, {slug}) {
-    vue.delete(state.userSubs, slug)
+  [types.DESTROY_USER_CATEGORY_SUBSCRIPTIONS](state, {slug}) {
+    vue.delete(state.userCategoriesSubs, slug)
   },
 
-  [types.FETCH_USER_SUBSCRIPTIONS](state, {subs}) {
-    if (Object.keys(subs).length === 0) return state.userSubs = {};
-    state.userSubs = subs
+  [types.FETCH_USER_CATEGORY_SUBSCRIPTIONS](state, {subs}) {
+    if (Object.keys(subs).length === 0) return state.userCategoriesSubs = {};
+    state.userCategoriesSubs = subs
   },
 
-  [types.ADD_USER_SUBSCRIPTION](state, {sub}) {
-    vue.set(state.userSubs, sub.slug, sub);
+  [types.ADD_USER_CATEGORY_SUBSCRIPTION](state, {sub}) {
+    vue.set(state.userCategoriesSubs, sub.slug, sub);
+  },
+//  -----------------
+  [types.DESTROY_USER_USER_SUBSCRIPTIONS](state, {id}) {
+    vue.delete(state.userUsersSubs, id)
+  },
+
+  [types.FETCH_USER_USER_SUBSCRIPTIONS](state, {subs}) {
+    if (Object.keys(subs).length === 0) return state.userUsersSubs = {};
+    state.userUsersSubs = subs
+  },
+
+  [types.ADD_USER_USER_SUBSCRIPTION](state, {sub}) {
+    vue.set(state.userUsersSubs, sub.id, sub);
   }
 }
 
@@ -70,7 +85,8 @@ export const actions = {
     try {
       const {data} = await axios.get('/api/user')
 
-      commit(types.FETCH_USER_SUBSCRIPTIONS, {subs: data.subscriptions})
+      commit(types.FETCH_USER_USER_SUBSCRIPTIONS, {subs: data.users})
+      commit(types.FETCH_USER_CATEGORY_SUBSCRIPTIONS, {subs: data.categories})
       commit(types.FETCH_USER_SUCCESS, {user: data})
     } catch (e) {
       commit(types.FETCH_USER_FAILURE)
@@ -81,12 +97,20 @@ export const actions = {
     commit(types.UPDATE_USER, payload)
   },
 
-  addUserSubscription({commit}, payload) {
-    commit(types.ADD_USER_SUBSCRIPTION, payload)
+  addUserCategorySubscription({commit}, payload) {
+    commit(types.ADD_USER_CATEGORY_SUBSCRIPTION, payload)
   },
 
-  destroyUserSubscription({commit}, payload) {
-    commit(types.DESTROY_USER_SUBSCRIPTIONS, payload)
+  destroyUserCategorySubscription({commit}, payload) {
+    commit(types.DESTROY_USER_CATEGORY_SUBSCRIPTIONS, payload)
+  },
+
+  addUserUserSubscription({commit}, payload) {
+    commit(types.ADD_USER_USER_SUBSCRIPTION, payload)
+  },
+
+  destroyUserUserSubscription({commit}, payload) {
+    commit(types.DESTROY_USER_USER_SUBSCRIPTIONS, payload)
   },
 
   async logout({commit}) {

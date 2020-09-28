@@ -16,8 +16,9 @@ class UserController extends Controller
      */
     public function current()
     {
-        $request = auth()->user()->load('subscriptions')->toArray();
-        $request['subscriptions'] = collect($request['subscriptions'])->keyBy('slug');
+        $request = auth()->user()->load(['categories', 'users'])->toArray();
+        $request['categories'] = collect($request['categories'])->keyBy('slug');
+        $request['users'] = collect($request['users'])->keyBy('id');
 
         return response()->json($request);
     }

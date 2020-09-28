@@ -8,7 +8,7 @@ class SubsNotify extends Model
 {
     static $types = ['category' => Category::class, 'user' => User::class];
 
-    protected $table = 'subs_notify';
+    protected $table = 'subs_notifies';
     public $timestamps = false;
     protected $guarded = ['id'];
 }

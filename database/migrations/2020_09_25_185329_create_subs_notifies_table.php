@@ -13,7 +13,7 @@ class CreateSubsNotifyTable extends Migration
      */
     public function up()
     {
-        Schema::create('subs_notify', function (Blueprint $table) {
+        Schema::create('subs_notifies', function (Blueprint $table) {
             $table->id('id');
             $table->foreignId('user_id')->index();
             $table->integer('subs_notify_id')->index();

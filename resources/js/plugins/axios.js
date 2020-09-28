@@ -3,6 +3,7 @@ import store from '~/store'
 import router from '~/router'
 import Swal from 'sweetalert2'
 import i18n from '~/plugins/i18n'
+import EventBus from "./event-bus";
 
 // Request interceptor
 axios.interceptors.request.use(request => {
@@ -23,8 +24,12 @@ axios.interceptors.request.use(request => {
 
 // Response interceptor
 axios.interceptors.response.use(response => response, error => {
-  const { status } = error.response
+  const {status} = error.response
 
+  if (status === 401) {
+    EventBus.$emit('loginModal', true);
+
+  }
   if (status >= 500) {
     Swal.fire({
       type: 'error',
@@ -47,7 +52,7 @@ axios.interceptors.response.use(response => response, error => {
     }).then(() => {
       store.commit('auth/LOGOUT')
 
-      router.push({ name: 'login' })
+      router.push({name: 'login'})
     })
   }
 

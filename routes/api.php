@@ -24,6 +24,12 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('oauth/{driver}/attach', 'Auth\OAuthController@redirectToProvider')->name('oauth.attach');
     Route::post('oauth/{driver}/detach', 'Auth\OAuthController@detach')->name('oauth.detach');
+
+    Route::post('/{id}/{type}/subscribe', 'SubscriptionController@store')->name('sub.store');
+    Route::post('/{id}/{type}/unsubscribe', 'SubscriptionController@destroy')->name('sub.destroy');
+
+    Route::post('/notifications/subscribe/{type}/{id}', 'SubsNotifyController@store')->name('subsNotify.store');
+    Route::post('/notifications/unsubscribe/{type}/{id}', 'SubsNotifyController@destroy')->name('subsNotify.destroy');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -43,9 +49,3 @@ Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
 Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 
 Route::get('/subs', 'CategoryController@index')->name('subs.index');
-
-Route::post('/{category}/subscribe', 'SubscriptionController@store')->name('sub.store');
-Route::post('/{category}/unsubscribe', 'SubscriptionController@destroy')->name('sub.destroy');
-
-Route::post('/notifications/subscribe/{type}/{id}', 'SubsNotifyController@store')->name('subsNotify.store');
-Route::post('/notifications/unsubscribe/{type}/{id}', 'SubsNotifyController@destroy')->name('subsNotify.destroy');

@@ -70,25 +70,25 @@
     computed: {
       ...mapGetters({
         user: 'auth/user',
-        userSubs: 'auth/userSubs',
+        userCategoriesSubs: 'auth/userCategoriesSubs',
       }),
     },
     methods: {
       subscribe(type, id, slug) {
         if (!type) {
-          axios.post('/api/' + id + '/unsubscribe', this.form).then((res) => {
+          axios.post('/api/' + id + '/categories/unsubscribe', this.form).then((res) => {
             this.subs[slug]['isSub'] = false;
 
-            this.$store.dispatch('auth/destroyUserSubscription', {slug: slug})
+            this.$store.dispatch('auth/destroyUserCategorySubscription', {slug: slug})
           })
         }
 
         if (type) {
-          axios.post('/api/' + id + '/subscribe', this.form).then((res) => {
+          axios.post('/api/' + id + '/categories/subscribe', this.form).then((res) => {
             this.subs[slug]['isSub'] = true;
-            this.subs[slug]['isVisible'] = Object.keys(this.userSubs).length < 7;
+            this.subs[slug]['isVisible'] = Object.keys(this.userCategoriesSubs).length < 7;
 
-            this.$store.dispatch('auth/addUserSubscription', {sub: this.subs[slug]})
+            this.$store.dispatch('auth/addUserCategorySubscription', {sub: this.subs[slug]})
           })
         }
       },

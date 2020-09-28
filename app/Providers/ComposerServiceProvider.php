@@ -17,7 +17,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         View::composer('spa', function ($view) {
             $view->with('categories', Category::all()->keyBy('slug')->map(function (Category $category){
-                $category['isSub'] = auth()->check() ? auth()->user()->subscriptions()->where('category_id', $category->id)->exists() : false;
+                $category['isSub'] = auth()->check() ? auth()->user()->categories->where('id', $category->id)->count() != 0 : false;
 
                 return $category;
             }));

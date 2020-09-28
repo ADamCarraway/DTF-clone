@@ -40,7 +40,7 @@
             <div class="v-header__actions">
               <div
                 class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
-                <div @click="subscribe(0)" v-if="data.slug in userSubs"
+                <div @click="subscribe(0)" v-if="data.slug in userCategoriesSubs"
                      class="v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default">
                   <div class="v-button__icon">
                     <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
@@ -50,7 +50,7 @@
                   <span class="v-button__label">Отписаться</span>
                 </div>
 
-                <div @click="subscribe(1)" v-if="!(data.slug in userSubs)"
+                <div @click="subscribe(1)" v-if="!(data.slug in userCategoriesSubs)"
                      class="v-subscribe-button__subscribe v-button v-button--blue v-button--size-default">
                   <div class="v-button__icon">
                     <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
@@ -60,7 +60,7 @@
                   <span class="v-button__label">Подписаться</span>
                 </div>
 
-                <div v-if="(data.slug in userSubs) && !this.user.category_notify.includes(data.id)" @click="notify(1)"
+                <div v-if="(data.slug in userCategoriesSubs) && !this.user.category_notify.includes(data.id)" @click="notify(1)"
                      class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
                   <div class="v-button__icon">
                     <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
@@ -69,7 +69,7 @@
                   </div>
                 </div>
 
-                <div v-if="(data.slug in userSubs) && this.user.category_notify.includes(data.id)" @click="notify(0)"
+                <div v-if="(data.slug in userCategoriesSubs) && this.user.category_notify.includes(data.id)" @click="notify(0)"
                      class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
                   <div class="v-button__icon">
                     <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
@@ -126,7 +126,7 @@
     },
     computed: mapGetters({
       user: 'auth/user',
-      userSubs: 'auth/userSubs',
+      userCategoriesSubs: 'auth/userCategoriesSubs',
     }),
     beforeRouteUpdate(to, from, next) {
       this.get(to.params.slug)
@@ -136,18 +136,22 @@
       subscribe(type) {
         this.loadingSub = true;
         if (!type) {
-          axios.post('/api/' + this.data.id + '/unsubscribe', this.form).then((res) => {
-            this.$store.dispatch('auth/destroyUserSubscription', {slug: this.data.slug})
+          axios.post('/api/' + this.data.id + '/categories/unsubscribe', this.form).then((res) => {
+            this.$store.dispatch('auth/destroyUserCategorySubscription', {slug: this.data.slug})
+            this.loadingSub = false;
+          }).catch(()=>{
             this.loadingSub = false;
           })
         }
 
         if (type) {
-          axios.post('/api/' + this.data.id + '/subscribe', this.form).then((res) => {
+          axios.post('/api/' + this.data.id + '/categories/subscribe', this.form).then((res) => {
             this.data['isSub'] = true;
-            this.data['isVisible'] = Object.keys(this.userSubs).length < 7;
+            this.data['isVisible'] = Object.keys(this.userCategoriesSubs).length < 7;
 
-            this.$store.dispatch('auth/addUserSubscription', {sub: this.data})
+            this.$store.dispatch('auth/addUserCategorySubscription', {sub: this.data})
+            this.loadingSub = false;
+          }).catch(()=>{
             this.loadingSub = false;
           })
         }
@@ -155,18 +159,20 @@
       notify(type) {
         this.loadingNotify = true;
         if (type) {
-          axios.post('/api/notifications/subscribe/category/' + this.data.id).then((res) => {
+          axios.post('/api/notifications/subscribe/categoriesNotify/' + this.data.id).then((res) => {
             this.user.category_notify.push(this.data.id)
             this.$store.dispatch('auth/updateUser', {user: {'category_notify': this.user.category_notify}})
             this.$Notify.success({
               message: 'Мы уведомим вас о новых записях'
             })
             this.loadingNotify = false;
+          }).catch(()=>{
+            this.loadingNotify = false;
           })
         }
 
         if (!type) {
-          axios.post('/api/notifications/unsubscribe/category/' + this.data.id).then((res) => {
+          axios.post('/api/notifications/unsubscribe/categoriesNotify/' + this.data.id).then((res) => {
             const index = this.user.category_notify.indexOf(this.data.id);
             this.user.category_notify.splice(index, 1);
 
@@ -174,6 +180,8 @@
             this.$Notify.success({
               message: 'Вы отписались от уведомлений о новых записях'
             })
+            this.loadingNotify = false;
+          }).catch(()=>{
             this.loadingNotify = false;
           })
         }

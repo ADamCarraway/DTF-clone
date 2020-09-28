@@ -95,7 +95,8 @@
             token: e.data.token
           })
 
-          this.$router.push({ name: 'home' })
+          // this.$router.push({ name: this.$route.name })
+          location.reload()
         },
 
         showLoginForm() {

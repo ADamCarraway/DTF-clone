@@ -89,7 +89,9 @@
 
           // this.$store.dispatch('auth/fetchUser')
 
-          this.$router.push({name: 'home'})
+          location.reload()
+
+          // this.$router.push({name: 'home', params: {id: res.data.id}})
         }).catch((er) => {
           this.errors = er.response.data.errors;
         });

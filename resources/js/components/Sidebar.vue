@@ -52,10 +52,10 @@
     },
     computed: mapGetters({
       user: 'auth/user',
-      userSubs: 'auth/userSubs',
+      userCategoriesSubs: 'auth/userCategoriesSubs',
     }),
     mounted() {
-      this.subs = this.user ? this.userSubs : window.config.categories;
+      this.subs = this.user ? this.userCategoriesSubs : window.config.categories;
       this.showAll(false)
 
       EventBus.$on('sidebarShow', (status) => {

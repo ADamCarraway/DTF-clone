@@ -16,17 +16,13 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('category_id');
+            $table->integer('subscription_id');
+            $table->string('subscription_type');
             $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
-
-            $table->foreign('category_id')
-                ->references('id')
-                ->on('categories')
                 ->onDelete('cascade');
         });
     }
