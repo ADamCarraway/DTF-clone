@@ -37,6 +37,8 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('email/resend', 'Auth\VerificationController@resend');
 });
 
+Route::get('u/{id}', 'Auth\UserController@show')->name('user.show');
+
 Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
 Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 

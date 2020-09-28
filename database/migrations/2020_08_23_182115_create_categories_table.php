@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('title')->index();
             $table->string('slug')->index();
-            $table->string('description');
+            $table->text('description');
             $table->string('icon');
             $table->string('header')->nullable(true);
             $table->boolean('is_public')->default(false)->index();

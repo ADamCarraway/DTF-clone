@@ -11,8 +11,8 @@ export default [
   {path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue')},
   {path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue')},
   {
-    path: '/home',
-    component: page('home.vue'),
+    path: '/u/:id',
+    component: page('user.vue'),
     children: [
       {path: '', name: 'home', component: UserPosts},
       {path: 'comments', name: 'user.comments', component: UserComments}

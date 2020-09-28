@@ -58,7 +58,7 @@
           <div class="site-header-user__avatar" :style="{'background-image': 'url('+user.avatar+')'}"></div>
           <at-dropdown-menu slot="menu">
             <div class="at-dropdown-menu-item__title">Профиль</div>
-            <router-link :to="{ name: 'home' }" class="at-dropdown-menu__item item--selected">
+            <router-link :to="{ name: 'home', params: {id: user.id} }" class="at-dropdown-menu__item item--selected">
               <div class="item__image">
                 <img :src="user.avatar">
               </div>
@@ -151,6 +151,20 @@
     width: 2rem;
     height: 2rem;
     margin: -.375rem 0;
+  }
+
+  .router-link-exact-active, .item--focused, .item:hover {
+    background: #f4f5f6;
+    opacity: 1 !important;
+  }
+
+  .router-link-exact-active {
+    font-weight: bold;
+  }
+
+  .router-link-exact-active span, .router-link-exact-active span, .at-dropdown-menu__item:hover {
+    background: #f4f5f6;
+    opacity: 1 !important;
   }
 
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar__tree-list">
-        <router-link :to="{ name: 'index'}" class="sidebar__tree-list__item">
+      <router-link :to="{ name: 'index'}" class="sidebar__tree-list__item">
             <div class="sidebar-tree-list-item__link">
                 <i class="fas fa-fire-alt"></i>
                 <p class="sidebar__tree-list__item__name">Лента</p>
