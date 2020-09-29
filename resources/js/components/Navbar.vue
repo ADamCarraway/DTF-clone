@@ -54,33 +54,38 @@
 
     <div class="site-header__item" v-if="user">
       <div class="site-header-user">
-        <at-dropdown trigger="click">
-          <div class="site-header-user__avatar" :style="{'background-image': 'url('+user.avatar+')'}"></div>
-          <at-dropdown-menu slot="menu">
-            <div class="at-dropdown-menu-item__title">Профиль</div>
-            <router-link :to="{ name: 'home', params: {id: user.id} }" class="at-dropdown-menu__item item--selected">
-              <div class="item__image">
-                <img :src="user.avatar">
-              </div>
-              <span class="item__text">{{ user.name }}</span>
-            </router-link>
+        <div class="site-header-user-profile">
+          <router-link :to="{ name: 'home', params: {id: user.id} }"  class="site-header-user-profile__avatar not-active">
+            <div class="site-header-user-profile__avatar-image" :style="{'background-image': 'url('+user.avatar+')'}"></div>
+          </router-link>
+            <at-dropdown trigger="click">
+              <span><i class="icon icon-chevron-down"></i></span>
+              <at-dropdown-menu slot="menu">
+                <div class="at-dropdown-menu-item__title">Профиль</div>
+                <router-link :to="{ name: 'home', params: {id: user.id} }" class="at-dropdown-menu__item item--selected">
+                  <div class="item__image">
+                    <img :src="user.avatar">
+                  </div>
+                  <span class="item__text">{{ user.name }}</span>
+                </router-link>
 
-            <router-link :to="{ name: 'settings' }" class="at-dropdown-menu__item">
-              <div class="item__icon">
-                <i class="icon icon-settings"></i>
-              </div>
-              <span class="item__text">Настройки</span>
-            </router-link>
+                <router-link :to="{ name: 'settings' }" class="at-dropdown-menu__item">
+                  <div class="item__icon">
+                    <i class="icon icon-settings"></i>
+                  </div>
+                  <span class="item__text">Настройки</span>
+                </router-link>
 
-            <a href="#" class="at-dropdown-menu__item" @click.prevent="logout" style="color: rgb(233, 42, 64);">
-              <div class="item__icon">
-                <i class="icon icon-log-out"></i>
-              </div>
-              Выйти
-            </a>
-          </at-dropdown-menu>
-        </at-dropdown>
+                <a href="#" class="at-dropdown-menu__item" @click.prevent="logout" style="color: rgb(233, 42, 64);">
+                  <div class="item__icon">
+                    <i class="icon icon-log-out"></i>
+                  </div>
+                  Выйти
+                </a>
+              </at-dropdown-menu>
+            </at-dropdown>
 
+        </div>
       </div>
     </div>
 
@@ -136,7 +141,8 @@
         await this.$store.dispatch('auth/logout')
 
         // Redirect to login.
-        this.$router.push({name: 'index'})
+        // this.$router.push({name: 'index'})
+        location.reload()
       },
       sidebarChange() {
         EventBus.$emit('sidebarShow', !this.sidebarShow);
@@ -165,6 +171,7 @@
   .router-link-exact-active span, .router-link-exact-active span, .at-dropdown-menu__item:hover {
     background: #f4f5f6;
     opacity: 1 !important;
+    color: #000;
   }
 
   .not-active{

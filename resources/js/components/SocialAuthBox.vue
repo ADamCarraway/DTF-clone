@@ -78,8 +78,6 @@
             provider: provider
           })
 
-          EventBus.$emit('loginModal', false);
-
           newWindow.location.href = url
         },
 
@@ -94,6 +92,8 @@
           this.$store.dispatch('auth/saveToken', {
             token: e.data.token
           })
+
+          EventBus.$emit('loginModal', false);
 
           // this.$router.push({ name: this.$route.name })
           location.reload()

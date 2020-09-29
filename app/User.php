@@ -34,7 +34,9 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     protected $appends = [
         'have_password',
         'category_notify',
-        'user_notify'
+        'user_notify',
+        'categories_ignore',
+        'users_ignore',
     ];
 
 
@@ -88,6 +90,16 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
         return $this->morphedByMany(Category::class, 'subs_notify');
     }
 
+    public function usersIgnore()
+    {
+        return $this->morphedByMany(User::class, 'ignoreable');
+    }
+
+    public function categoriesIgnore()
+    {
+        return $this->morphedByMany(Category::class, 'ignoreable');
+    }
+
     public function getCategoryNotifyAttribute()
     {
         return $this->categoriesNotify()->pluck('subs_notify_id');
@@ -96,5 +108,15 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     public function getUserNotifyAttribute()
     {
         return $this->usersNotify()->pluck('subs_notify_id');
+    }
+
+    public function getCategoriesIgnoreAttribute()
+    {
+        return $this->categoriesIgnore()->pluck('ignoreable_id');
+    }
+
+    public function getUsersIgnoreAttribute()
+    {
+        return $this->usersIgnore()->pluck('ignoreable_id');
     }
 }

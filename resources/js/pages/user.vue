@@ -26,27 +26,7 @@
             <div class="v-header__actions">
               <div
                 class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
-
-
-                <div @click="subscribe(0)" v-if="data.id in userUsersSubs && user"
-                     class="v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default">
-                  <div class="v-button__icon">
-                    <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
-                       aria-hidden="true"></i>
-                    <i v-else class="fas fa-times icon--ui_close"></i>
-                  </div>
-                  <span class="v-button__label">Отписаться</span>
-                </div>
-
-                <div @click="subscribe(1)" v-if="!(data.id in userUsersSubs) && user && data.id !== user.id"
-                     class="v-subscribe-button__subscribe v-button v-button--blue v-button--size-default">
-                  <div class="v-button__icon">
-                    <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
-                       aria-hidden="true"></i>
-                    <i v-else class="fas fa-plus icon--ui_plus"></i>
-                  </div>
-                  <span class="v-button__label">Подписаться</span>
-                </div>
+                <subscribe v-if="user && data.id !== user.id" :data="data" :type="'users'"> </subscribe>
 
                 <div v-if="(data.id in userUsersSubs) && !this.user.user_notify.includes(data.id)" @click="notify(1)"
                      class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
@@ -66,14 +46,21 @@
                   </div>
                 </div>
 
-
-                <router-link :to="{name: 'settings'}" v-if="this.user && this.user.id === this.$route.params.id"
+                <router-link :to="{name: 'settings'}" v-if="user && user.id == $route.params.id"
                              class="v-button v-button--default v-button--size-default">
                   <div class="v-button__icon">
                     <i class="fas fa-cog"></i>
                   </div>
                 </router-link>
               </div>
+
+              <at-dropdown trigger="click" class="etc_control">
+                <span><i class="fas fa-ellipsis-h"></i></span>
+                <at-dropdown-menu slot="menu" class="etc_control__list">
+                  <div v-if="!this.user.users_ignore.includes(data.id)" @click="toIgnore(1)" class="at-dropdown-menu__item etc_control__item">Игнорировать</div>
+                  <div v-else @click="toIgnore(0)" class="at-dropdown-menu__item etc_control__item">Не игнорировать</div>
+                </at-dropdown-menu>
+              </at-dropdown>
             </div>
 
             <div class="v-header__stats">
@@ -115,13 +102,13 @@
 <script>
   import {mapGetters} from "vuex";
   import moment from 'moment'
-  import SubscriptionButton from "../components/SubscriptionButton";
   import UserTabs from "../components/User/UserTabs";
   import axios from "axios";
+  import Subscribe from "../components/Buttons/Subscribe";
 
   export default {
-    components: {UserTabs, SubscriptionButton},
-    data(){
+    components: {Subscribe, UserTabs},
+    data() {
       return {
         loadingNotify: false,
         loadingSub: false,
@@ -144,29 +131,6 @@
       next()
     },
     methods: {
-      subscribe(type) {
-        this.loadingSub = true;
-        if (!type) {
-          axios.post('/api/' + this.data.id + '/users/unsubscribe', this.form).then((res) => {
-            this.$store.dispatch('auth/destroyUserUserSubscription', {id: this.data.id});
-            this.loadingSub = false;
-          }).catch(()=>{
-            this.loadingSub = false;
-          })
-        }
-
-        if (type) {
-          axios.post('/api/' + this.data.id + '/users/subscribe', this.form).then((res) => {
-            this.data['isSub'] = true;
-            this.data['isVisible'] = Object.keys(this.userCategoriesSubs).length < 7;
-
-            this.$store.dispatch('auth/addUserUserSubscription', {sub: this.data});
-            this.loadingSub = false;
-          }).catch(()=>{
-            this.loadingSub = false;
-          })
-        }
-      },
       notify(type) {
         this.loadingNotify = true;
         if (type) {
@@ -177,7 +141,7 @@
               message: 'Мы уведомим вас о новых записях'
             })
             this.loadingNotify = false;
-          }).catch(()=>{
+          }).catch(() => {
             this.loadingNotify = false;
           })
         }
@@ -192,12 +156,35 @@
               message: 'Вы отписались от уведомлений о новых записях'
             })
             this.loadingNotify = false;
-          }).catch(()=>{
+          }).catch(() => {
             this.loadingNotify = false;
           })
         }
       },
-      getData(id){
+      toIgnore(type) {
+        if (type) {
+          axios.post('/api/ignore/store/usersIgnore/' + this.data.id).then((res) => {
+            this.user.users_ignore.push(this.data.id)
+            this.$store.dispatch('auth/updateUser', {user: {'users_ignore': this.user.users_ignore}})
+            this.$Notify.success({
+              message: 'Пользователь добавлен в черный список'
+            })
+          })
+        }
+
+        if (!type) {
+          axios.post('/api/ignore/destroy/usersIgnore/' + this.data.id).then((res) => {
+            const index = this.user.users_ignore.indexOf(this.data.id);
+            this.user.users_ignore.splice(index, 1);
+
+            this.$store.dispatch('auth/updateUser', {user: {'users_ignore': this.user.users_ignore}})
+            this.$Notify.success({
+              message: 'Пользователь убран из черного списка'
+            })
+          })
+        }
+      },
+      getData(id) {
         axios.get('/api/u/' + id).then((res) => {
           this.data = res.data;
         })

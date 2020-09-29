@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-class SubscriptionController extends Controller
+class IgnoreController extends Controller
 {
-    public function store($id, $type)
+    public function store($type, $id)
     {
        return auth()->user()->$type()->attach($id);
     }
 
-    public function destroy($id, $type)
+    public function destroy($type, $id)
     {
        return auth()->user()->$type()->detach($id);
     }

@@ -100,15 +100,6 @@ sub {
     bottom: -.25em
 }
 
-.etc_control {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none
-}
-
 .l-mt-12 {
     margin-top: 12px;
 }
@@ -441,13 +432,6 @@ body {
     margin-right: 24px;
 }
 
-.site-header__item {
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    display: -ms-flexbox;
-    display: flex;
-}
-
 .site-header-logo {
     display: -ms-flexbox;
     display: flex;
@@ -472,13 +456,6 @@ body {
 
 .site-header__item--spaced {
     margin-right: 12px;
-}
-
-.site-header__item {
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    display: -ms-flexbox;
-    display: flex;
 }
 
 .search {
@@ -529,13 +506,6 @@ body {
 
 .site-header__item--spaced {
     margin-right: 12px;
-}
-
-.site-header__item {
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    display: -ms-flexbox;
-    display: flex;
 }
 
 .v-create-button {
@@ -631,38 +601,140 @@ body {
 }
 
 .site-header-user {
-    padding-right: 40px;
+    --offset-right: 15px;
+    --offset-left: 13px;
+    display: -ms-flexbox;
+    display: flex;
+    font-weight: 500;
 }
-
-.site-header-user {
-    padding-right: 20px;
+@media (min-width: 720px) {
+    .site-header-user {
+        --offset-right: 20px;
+    }
 }
-
-.site-header-user {
+@media (min-width: 860px) {
+    .site-header-user {
+        --offset-right: 40px;
+    }
+}
+@media (max-width: 719px) {
+    .site-header-user {
+        --offset-left: 11px;
+    }
+}
+.site-header-user .bubble {
+    top: 100%;
+    right: 24px;
+    margin-top: 0;
+    cursor: default;
+    font-weight: 400;
+}
+@media (max-width: 719px) {
+    .site-header-user .bubble {
+        right: 10px;
+    }
+}
+.site-header-user-login {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
     align-items: center;
+    padding-left: var(--offset-left);
+    padding-right: var(--offset-right);
     cursor: pointer;
-    padding-left: 13px;
-    padding-right: 40px;
-
-    font-weight: 500;
 }
-
-.site-header-user__avatar {
+.site-header-user-login:hover {
+    color: #4da0da;
+}
+@media (max-width: 719px) {
+    .site-header-user-login__label {
+        display: none;
+    }
+}
+.site-header-user-login .icon {
+    margin-right: 12px;
+    margin-left: -3px;
+}
+@media (max-width: 719px) {
+    .site-header-user-login .icon {
+        margin-right: 0;
+    }
+}
+.site-header-user-profile {
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+}
+.site-header-user-profile__avatar {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-left: var(--offset-left);
+}
+@media (max-width: 719px) {
+    .site-header-user-profile__avatar {
+        padding-right: var(--offset-right);
+    }
+}
+.site-header-user-profile__avatar:hover .site-header-user-profile__avatar-image {
+    opacity: 0.9;
+}
+.site-header-user-profile__avatar-image {
     --size: 40px;
     --image-radius: 7px;
     width: var(--size);
     height: var(--size);
     background-color: #dedede;
     border-radius: var(--image-radius);
-    -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: cover;
-    pointer-events: none;
+}
+@media (max-width: 719px) {
+    .site-header-user-profile__avatar-image {
+        --size: 32px;
+        --image-radius: 6px;
+    }
+}
+.site-header-user-profile__toggle {
+    padding-left: 12px;
+    padding-right: var(--offset-right);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+}
+@media (max-width: 719px) {
+    .site-header-user-profile__toggle {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0;
+    }
+    .site-header-user-profile__toggle .icon {
+        display: none;
+    }
+}
+.site-header-user-profile__toggle:hover {
+    opacity: 0.6;
+}
+
+.site-header-user-profile .at-dropdown__trigger{
+    padding-left: 12px;
+    padding-right: var(--offset-right);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+    height:100%;
+    font-size: 12px;
 }
 
 .bubble {
@@ -770,8 +842,8 @@ body {
 }
 
 .at-dropdown__popover {
-    top: 100% !important;
-    left: auto !important
+    /* top: 100% !important; */
+    left: auto !important;
 }
 
 .at-dropdown-menu {
@@ -788,6 +860,32 @@ body {
     font-weight: 400;
     z-index: 1;
     overflow: hidden;
+}
+
+.etc_control__list{
+    right: -30px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.07), 0 4px 8px 0 rgba(0,0,0,.07);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.07), 0 4px 8px 0 rgba(0,0,0,.07);
+    padding: 4px 0;
+    text-align: left;
+    border-radius: 5px;
+}
+
+.etc_control__item {
+    display: block;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 10px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #000;
+    white-space: nowrap;
+}
+
+.etc_control__item:hover{
+    color: #000;
+    background-color: #f8f8f8;
 }
 
 .at-dropdown__popover::before {
@@ -808,6 +906,10 @@ body {
 
 .at-dropdown__popover::before {
     right: -25px;
+}
+
+.etc_control .at-dropdown__popover::before{
+    right: -14px;
 }
 
 .main {
@@ -2748,4 +2850,35 @@ body {
 
 .v-island__grayed {
     color: rgba(0,0,0,0.65);
+}
+
+.etc_control:hover {
+    color: #000;
+}
+.etc_control {
+    cursor: pointer;
+    color: #595959;
+}
+
+.etc_control {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.etc_control {
+    --actions-gap: 10px;
+}
+@media (max-width: 959px) {
+    .etc_control:not(:first-child) {
+        margin-left: var(--actions-gap);
+    }
+}
+@media (min-width: 960px) {
+    .etc_control:not(:first-child) {
+        margin-right: var(--actions-gap);
+    }
 }

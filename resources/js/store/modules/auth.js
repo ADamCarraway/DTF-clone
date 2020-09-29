@@ -7,7 +7,7 @@ export const state = {
   user: null,
   token: Cookies.get('token'),
   userCategoriesSubs: {},
-  userUsersSubs: {}
+  userUsersSubs: {},
 }
 
 // getters
@@ -15,6 +15,7 @@ export const getters = {
   user: state => state.user,
   userCategoriesSubs: state => state.userCategoriesSubs,
   userUsersSubs: state => state.userUsersSubs,
+  userIgnoreCategories: state => state.userIgnoreCategories,
   token: state => state.token,
   check: state => state.user !== null
 }

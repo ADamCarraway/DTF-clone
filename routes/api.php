@@ -30,6 +30,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('/notifications/subscribe/{type}/{id}', 'SubsNotifyController@store')->name('subsNotify.store');
     Route::post('/notifications/unsubscribe/{type}/{id}', 'SubsNotifyController@destroy')->name('subsNotify.destroy');
+
+    Route::post('/ignore/store/{type}/{id}', 'IgnoreController@store')->name('ignore.store');
+    Route::post('/ignore/destroy/{type}/{id}', 'IgnoreController@destroy')->name('ignore.destroy');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

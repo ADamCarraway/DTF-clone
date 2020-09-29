@@ -40,26 +40,7 @@
             <div class="v-header__actions">
               <div
                 class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
-                <div @click="subscribe(0)" v-if="data.slug in userCategoriesSubs"
-                     class="v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default">
-                  <div class="v-button__icon">
-                    <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
-                       aria-hidden="true"></i>
-                    <i v-else class="fas fa-times icon--ui_close"></i>
-                  </div>
-                  <span class="v-button__label">Отписаться</span>
-                </div>
-
-                <div @click="subscribe(1)" v-if="!(data.slug in userCategoriesSubs)"
-                     class="v-subscribe-button__subscribe v-button v-button--blue v-button--size-default">
-                  <div class="v-button__icon">
-                    <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
-                       aria-hidden="true"></i>
-                    <i v-else class="fas fa-plus icon--ui_plus"></i>
-                  </div>
-                  <span class="v-button__label">Подписаться</span>
-                </div>
-
+                <subscribe :data="data" :type="'categories'"></subscribe>
                 <div v-if="(data.slug in userCategoriesSubs) && !this.user.category_notify.includes(data.id)" @click="notify(1)"
                      class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
                   <div class="v-button__icon">
@@ -78,6 +59,13 @@
                   </div>
                 </div>
               </div>
+              <at-dropdown trigger="click" class="etc_control">
+                <span><i class="fas fa-ellipsis-h"></i></span>
+                <at-dropdown-menu slot="menu" class="etc_control__list">
+                  <div v-if="!this.user.categories_ignore.includes(data.id)" @click="toIgnore(1)" class="at-dropdown-menu__item etc_control__item">Игнорировать</div>
+                  <div v-else @click="toIgnore(0)" class="at-dropdown-menu__item etc_control__item">Не игнорировать</div>
+                </at-dropdown-menu>
+              </at-dropdown>
             </div>
 
             <div class="v-header__tabs">
@@ -113,14 +101,15 @@
   import {mapGetters} from "vuex";
   import axios from "axios";
   import vue from "vue";
+  import Subscribe from "../../components/Buttons/Subscribe";
 
   export default {
     name: "category",
+    components: {Subscribe},
     data() {
       return {
         showDescription: false,
         loadingNotify: false,
-        loadingSub: false,
         data: []
       }
     },
@@ -133,29 +122,6 @@
       next()
     },
     methods: {
-      subscribe(type) {
-        this.loadingSub = true;
-        if (!type) {
-          axios.post('/api/' + this.data.id + '/categories/unsubscribe', this.form).then((res) => {
-            this.$store.dispatch('auth/destroyUserCategorySubscription', {slug: this.data.slug})
-            this.loadingSub = false;
-          }).catch(()=>{
-            this.loadingSub = false;
-          })
-        }
-
-        if (type) {
-          axios.post('/api/' + this.data.id + '/categories/subscribe', this.form).then((res) => {
-            this.data['isSub'] = true;
-            this.data['isVisible'] = Object.keys(this.userCategoriesSubs).length < 7;
-
-            this.$store.dispatch('auth/addUserCategorySubscription', {sub: this.data})
-            this.loadingSub = false;
-          }).catch(()=>{
-            this.loadingSub = false;
-          })
-        }
-      },
       notify(type) {
         this.loadingNotify = true;
         if (type) {
@@ -183,6 +149,29 @@
             this.loadingNotify = false;
           }).catch(()=>{
             this.loadingNotify = false;
+          })
+        }
+      },
+      toIgnore(type) {
+        if (type) {
+          axios.post('/api/ignore/store/categoriesIgnore/' + this.data.id).then((res) => {
+            this.user.categories_ignore.push(this.data.id)
+            this.$store.dispatch('auth/updateUser', {user: {'categories_ignore': this.user.categories_ignore}})
+            this.$Notify.success({
+              message: 'Подсайт добавлен в черный список'
+            })
+          })
+        }
+
+        if (!type) {
+          axios.post('/api/ignore/destroy/categoriesIgnore/' + this.data.id).then((res) => {
+            const index = this.user.categories_ignore.indexOf(this.data.id);
+            this.user.categories_ignore.splice(index, 1);
+
+            this.$store.dispatch('auth/updateUser', {user: {'categories_ignore': this.user.categories_ignore}})
+            this.$Notify.success({
+              message: 'Подсайт убран из черного списка'
+            })
           })
         }
       },

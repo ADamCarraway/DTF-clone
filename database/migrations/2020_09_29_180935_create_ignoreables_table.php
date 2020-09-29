@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubsNotifiesTable extends Migration
+class CreateIgnoreablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateSubsNotifiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('subs_notifies', function (Blueprint $table) {
-            $table->id('id');
+        Schema::create('ignoreables', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->index();
-            $table->integer('subs_notify_id')->index();
-            $table->string('subs_notify_type')->index();
+            $table->integer('ignoreable_id')->index();
+            $table->string('ignoreable_type')->index();
             $table->timestamps();
 
             $table->foreign('user_id')
@@ -34,6 +34,6 @@ class CreateSubsNotifiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subs_notify');
+        Schema::dropIfExists('ignorable');
     }
 }
