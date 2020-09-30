@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->string('title')->index();
             $table->string('slug')->index();
             $table->text('description');
+            $table->text('regulations')->nullable();
             $table->string('icon');
             $table->string('header')->nullable(true);
             $table->boolean('is_public')->default(false)->index();

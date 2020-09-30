@@ -91,9 +91,11 @@
 
     <div class="site-header__item" v-else @click="loginModal = true">
       <div data-ignore-outside-click="" class="site-header-user">
-        <i class="icon icon-user icon--signin fs-24"></i>
+        <div class="site-header-user-login">
+          <i class="icon icon-user icon--signin fs-24"></i>
 
-        <span class="fs-16">Войти</span>
+          <span class="fs-16">Войти</span>
+        </div>
       </div>
     </div>
 

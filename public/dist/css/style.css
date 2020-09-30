@@ -2843,7 +2843,7 @@ body {
 }
 
 .v-island__title {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.45em;
     font-weight: 500;
 }
@@ -2881,4 +2881,179 @@ body {
     .etc_control:not(:first-child) {
         margin-right: var(--actions-gap);
     }
+}
+
+.v-list {
+    --image-size: 24px;
+    --image-radius: 6px;
+    --grid-gap: 16px;
+}
+.v-list--default .v-list__label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.v-list--detailed {
+    --image-size: 44px;
+    --image-radius: 8px;
+    --grid-gap: 0;
+}
+.v-list--detailed .v-list__image {
+    margin-bottom: 12px;
+}
+.v-list--detailed .v-list__item {
+    -ms-flex-align: stretch;
+    align-items: stretch;
+}
+.v-list--detailed .v-list__item:not(:last-child) {
+    margin-bottom: 12px;
+}
+.v-list--detailed .v-list__item:not(:last-child) .v-list-details {
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.v-list--images {
+    --image-size: 32px;
+    --image-radius: 8px;
+    --grid-gap: 12px;
+}
+.v-list--images .v-list__content {
+    grid-template-columns: repeat(auto-fill, var(--image-size));
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.v-list__content {
+    display: grid;
+    grid-gap: var(--grid-gap);
+}
+.v-list__item {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    min-width: 0;
+}
+.v-list__image {
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    width: var(--image-size);
+    height: var(--image-size);
+    background-color: #dedede;
+    border-radius: var(--image-radius);
+    -webkit-box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.v-list__image:not(:last-child) {
+    margin-right: 12px;
+}
+.v-list__icon {
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    width: var(--image-size);
+    height: var(--image-size);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.v-list__icon:not(:last-child) {
+    margin-right: 12px;
+}
+.v-list__label a {
+    color: #346eb8;
+    border-bottom: 1px solid #bfd3ed;
+    cursor: pointer;
+}
+.v-list__label a:hover {
+    color: #cd192e;
+    border-bottom: 1px solid #f6b4bc;
+}
+.v-list__label b,
+.v-list__label strong {
+    font-weight: bold;
+}
+.v-list__label i,
+.v-list__label em {
+    font-style: italic;
+}
+.v-list__label mark {
+    background: rgba(145,222,255,0.22);
+    padding: 0.09em 0;
+}
+.v-list__more {
+    color: #346eb8;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-top: 16px;
+    margin-bottom: -4px;
+    display: block;
+}
+.v-list__more:hover {
+    color: #cd192e;
+}
+a.v-list__item:hover {
+    color: #346eb8;
+}
+.v-list-details {
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    min-width: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    aligm-items: flex-start;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.v-list-details__title,
+.v-list-details__text,
+.v-list-details__note {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.v-list-details__title {
+    font-weight: 500;
+}
+.v-list-details__text {
+    font-size: 14px;
+    line-height: 1.5em;
+}
+.v-list-details__note {
+    font-size: 14px;
+    line-height: 1.45em;
+    color: #595959;
+}
+
+.v-island__counter {
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    font-size: 14px;
+    line-height: 1.43em;
+    color: #595959;
+    white-space: nowrap;
+}
+
+.v-island__title:not(:last-child) {
+    margin-right: 8px;
+}
+
+.v-header__stat {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.v-header-stat strong {
+    font-weight: 500;
 }

@@ -27,24 +27,7 @@
               <div
                 class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
                 <subscribe v-if="user && data.id !== user.id" :data="data" :type="'users'"> </subscribe>
-
-                <div v-if="(data.id in userUsersSubs) && !this.user.user_notify.includes(data.id)" @click="notify(1)"
-                     class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
-                  <div class="v-button__icon">
-                    <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
-                       aria-hidden="true"></i>
-                    <i v-else class="far fa-bell"></i>
-                  </div>
-                </div>
-
-                <div v-if="(data.id in userUsersSubs) && this.user.user_notify.includes(data.id)" @click="notify(0)"
-                     class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
-                  <div class="v-button__icon">
-                    <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
-                       aria-hidden="true"></i>
-                    <i v-else class="fas fa-bell"></i>
-                  </div>
-                </div>
+                <notification v-if="(data.id in userUsersSubs)" :data="data" :type="'users'"></notification>
 
                 <router-link :to="{name: 'settings'}" v-if="user && user.id == $route.params.id"
                              class="v-button v-button--default v-button--size-default">
@@ -54,11 +37,10 @@
                 </router-link>
               </div>
 
-              <at-dropdown trigger="click" class="etc_control">
+              <at-dropdown v-if="user" trigger="click" class="etc_control">
                 <span><i class="fas fa-ellipsis-h"></i></span>
                 <at-dropdown-menu slot="menu" class="etc_control__list">
-                  <div v-if="!this.user.users_ignore.includes(data.id)" @click="toIgnore(1)" class="at-dropdown-menu__item etc_control__item">Игнорировать</div>
-                  <div v-else @click="toIgnore(0)" class="at-dropdown-menu__item etc_control__item">Не игнорировать</div>
+                  <ignore :data="data" :type="'users'"></ignore>
                 </at-dropdown-menu>
               </at-dropdown>
             </div>
@@ -82,16 +64,8 @@
 
       <div class="l-page__sidebar lm-hidden" style="position: relative;">
         <div data-v-07eabda5="" class="subsite-sidebar" style="width: 300px;">
-          <div data-v-07eabda5="" class="l-island-bg l-island-round v-island">
-            <div class="v-island__header">
-              <span class="v-island__title">
-                Подписчики
-              </span>
-            </div>
-            <div data-v-07eabda5="" class="v-island__grayed">
-              У вас ещё нет подписчиков
-            </div>
-          </div>
+          <subscribers-block :users="data.subscribers"></subscribers-block>
+          <user-categories-block :categories="data.categories"></user-categories-block>
         </div>
       </div>
     </div>
@@ -105,9 +79,13 @@
   import UserTabs from "../components/User/UserTabs";
   import axios from "axios";
   import Subscribe from "../components/Buttons/Subscribe";
+  import Notification from "../components/Buttons/Notification";
+  import Ignore from "../components/Buttons/Ignore";
+  import SubscribersBlock from "../components/Blocks/SubscribersBlock";
+  import UserCategoriesBlock from "../components/Blocks/UserCategoriesBlock";
 
   export default {
-    components: {Subscribe, UserTabs},
+    components: {UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, UserTabs, Notification},
     data() {
       return {
         loadingNotify: false,
@@ -131,59 +109,6 @@
       next()
     },
     methods: {
-      notify(type) {
-        this.loadingNotify = true;
-        if (type) {
-          axios.post('/api/notifications/subscribe/usersNotify/' + this.data.id).then((res) => {
-            this.user.user_notify.push(this.data.id)
-            this.$store.dispatch('auth/updateUser', {user: {'user_notify': this.user.user_notify}});
-            this.$Notify.success({
-              message: 'Мы уведомим вас о новых записях'
-            })
-            this.loadingNotify = false;
-          }).catch(() => {
-            this.loadingNotify = false;
-          })
-        }
-
-        if (!type) {
-          axios.post('/api/notifications/unsubscribe/usersNotify/' + this.data.id).then((res) => {
-            const index = this.user.user_notify.indexOf(this.data.id);
-            this.user.user_notify.splice(index, 1);
-
-            this.$store.dispatch('auth/updateUser', {user: {'user_notify': this.user.user_notify}});
-            this.$Notify.success({
-              message: 'Вы отписались от уведомлений о новых записях'
-            })
-            this.loadingNotify = false;
-          }).catch(() => {
-            this.loadingNotify = false;
-          })
-        }
-      },
-      toIgnore(type) {
-        if (type) {
-          axios.post('/api/ignore/store/usersIgnore/' + this.data.id).then((res) => {
-            this.user.users_ignore.push(this.data.id)
-            this.$store.dispatch('auth/updateUser', {user: {'users_ignore': this.user.users_ignore}})
-            this.$Notify.success({
-              message: 'Пользователь добавлен в черный список'
-            })
-          })
-        }
-
-        if (!type) {
-          axios.post('/api/ignore/destroy/usersIgnore/' + this.data.id).then((res) => {
-            const index = this.user.users_ignore.indexOf(this.data.id);
-            this.user.users_ignore.splice(index, 1);
-
-            this.$store.dispatch('auth/updateUser', {user: {'users_ignore': this.user.users_ignore}})
-            this.$Notify.success({
-              message: 'Пользователь убран из черного списка'
-            })
-          })
-        }
-      },
       getData(id) {
         axios.get('/api/u/' + id).then((res) => {
           this.data = res.data;

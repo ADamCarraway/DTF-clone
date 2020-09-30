@@ -73,7 +73,7 @@
 
         let i = 0;
         forEach(this.subs, (value, prop, obj) => {
-          this.subs[prop]['isVisible'] = i <= 6;
+          this.subs[prop]['isVisible'] = i <= 5;
           i++;
         });
       },

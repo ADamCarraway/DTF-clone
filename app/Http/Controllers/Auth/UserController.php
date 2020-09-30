@@ -25,7 +25,7 @@ class UserController extends Controller
 
     public function show(Request $request, $id)
     {
-        $user = User::query()->where('id', $id)->firstOrFail();
+        $user = User::query()->where('id', $id)->firstOrFail()->load(['subscribers', 'categories'])->toArray();
 
         return response()->json($user);
     }

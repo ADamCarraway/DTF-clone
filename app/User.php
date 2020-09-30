@@ -119,4 +119,9 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     {
         return $this->usersIgnore()->pluck('ignoreable_id');
     }
+
+    public function subscribers()
+    {
+        return $this->morphToMany(User::class, 'subscription');
+    }
 }
