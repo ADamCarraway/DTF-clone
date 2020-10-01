@@ -11,4 +11,21 @@ class CategoryController extends Controller
     {
         return Category::all();
     }
+
+    public function details($slug)
+    {
+        $category = Category::query()->where('slug', $slug)->firstOrFail();
+
+        return response()->json([
+            'users' => $category->users()->paginate(10),
+            'rules' => $category->regulations
+        ]);
+    }
+
+    public function subscribers($slug)
+    {
+        $category = Category::query()->where('slug', $slug)->firstOrFail();
+
+        return response()->json($category->users()->paginate(10));
+    }
 }

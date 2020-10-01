@@ -12,6 +12,6 @@ class AddSubsToUser
     {
         $id = Category::query()->whereIn('slug', self::SUBS)->pluck('id');
 
-        $event->user->subscriptions()->attach($id);
+        $event->user->categories()->attach($id);
     }
 }

@@ -6,6 +6,9 @@
     <div class="v-list v-list--text">
       <div class="v-list__content" v-html="data"></div>
     </div>
+    <router-link :to="{ name: 'subsite.rules' }" class="v-list__more">
+      Показать всех
+    </router-link>
   </div>
 </template>
 

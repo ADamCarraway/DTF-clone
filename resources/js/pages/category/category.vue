@@ -53,47 +53,26 @@
 
             <div class="v-header__stats">
               <div class="v-header__stat">
-                <i class="fas fa-users"></i>
-                <span style="font-weight: 500">{{ data.users_count }}</span>  подписчиков
+                <i class="fas fa-user-friends"></i>
+                <span style="font-weight: 500" class="mr-1">{{ data.users_count }}</span> подписчиков
               </div>
             </div>
 
-            <div class="v-header__tabs">
-              <div class="v-tabs">
-                <div class="v-tabs__scroll">
-                  <div class="v-tabs__content"><a href="https://dtf.ru/games/entries" class="v-tab v-tab--active"><span
-                    class="v-tab__label">
-            Статьи
+            <category-tabs :data="data"></category-tabs>
+            <mini-header></mini-header>
 
-            <span class="v-tab__counter">
-              16 038
-            </span></span></a><a href="https://dtf.ru/games/comments" class="v-tab"><span class="v-tab__label">
-            Комментарии
-
-            <span class="v-tab__counter">
-              10
-            </span></span></a><a href="https://dtf.ru/games/details" class="v-tab"><span class="v-tab__label">
-            Подробнее
-
-                    <!----></span></a></div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
       <div class="l-page__content">
-        Posts
+        <transition name="fade" mode="out-in">
+          <router-view/>
+        </transition>
       </div>
 
-      <div class="l-page__sidebar lm-hidden" style="position: relative;">
-        <div data-v-07eabda5="" class="subsite-sidebar" style="width: 300px;">
-          <subscribers-block :users="data.users" :count="data.users_count"></subscribers-block>
-          <regulations-box v-if="data.regulations !== null" :data="data.regulations"></regulations-box>
-        </div>
-      </div>
-
+      <subsite-sidebar v-if="$route.name === 'subsite'" :data="data" :type="'category'"></subsite-sidebar>
+      <details-sidebar v-else></details-sidebar>
     </div>
   </div>
 </template>
@@ -106,10 +85,19 @@
   import SubscribersBlock from "../../components/Blocks/SubscribersBlock";
   import UserCategoriesBlock from "../../components/Blocks/UserCategoriesBlock";
   import RegulationsBox from "../../components/Blocks/RegulationsBox";
+  import SubsiteSidebar from "../../components/User/SubsiteSidebar";
+  import CategoryTabs from "../../components/User/CategoryTabs";
+  import DetailsSidebar from "../../components/User/Details/Blocks/DetailsSidebar";
+  import MiniHeader from "../../components/User/MiniHeader";
 
   export default {
     name: "category",
-    components: {RegulationsBox, UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, Notification},
+    components: {
+      MiniHeader,
+      DetailsSidebar,
+      CategoryTabs,
+      SubsiteSidebar, RegulationsBox, UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, Notification
+    },
     data() {
       return {
         showDescription: false,
@@ -126,7 +114,6 @@
     methods: {
       get(slug) {
         this.data = window.config.categories[slug]
-        console.log(window.config.categories[slug])
       }
     },
     created() {

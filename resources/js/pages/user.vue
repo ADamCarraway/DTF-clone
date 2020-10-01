@@ -26,7 +26,7 @@
             <div class="v-header__actions">
               <div
                 class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
-                <subscribe v-if="user && data.id !== user.id" :data="data" :type="'users'"> </subscribe>
+                <subscribe v-if="user && data.id !== user.id" :data="data" :type="'users'"></subscribe>
                 <notification v-if="(data.id in userUsersSubs)" :data="data" :type="'users'"></notification>
 
                 <router-link :to="{name: 'settings'}" v-if="user && user.id == $route.params.id"
@@ -62,12 +62,8 @@
         </transition>
       </div>
 
-      <div class="l-page__sidebar lm-hidden" style="position: relative;">
-        <div data-v-07eabda5="" class="subsite-sidebar" style="width: 300px;">
-          <subscribers-block :users="data.subscribers"></subscribers-block>
-          <user-categories-block :categories="data.categories"></user-categories-block>
-        </div>
-      </div>
+      <subsite-sidebar :data="data" :type="'user'"></subsite-sidebar>
+
     </div>
   </div>
 
@@ -83,9 +79,10 @@
   import Ignore from "../components/Buttons/Ignore";
   import SubscribersBlock from "../components/Blocks/SubscribersBlock";
   import UserCategoriesBlock from "../components/Blocks/UserCategoriesBlock";
+  import SubsiteSidebar from "../components/User/SubsiteSidebar";
 
   export default {
-    components: {UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, UserTabs, Notification},
+    components: {SubsiteSidebar, UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, UserTabs, Notification},
     data() {
       return {
         loadingNotify: false,
@@ -104,8 +101,13 @@
         return moment(this.data.created_at).locale("ru").format('DD MMM YYYY')
       }
     },
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
+        vm.getData(to.params.id);
+      });
+    },
     beforeRouteUpdate(to, from, next) {
-      this.getData(to.params.id)
+      this.getData(to.params.id);
       next()
     },
     methods: {

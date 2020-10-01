@@ -52,3 +52,7 @@ Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
 Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 
 Route::get('/subs', 'CategoryController@index')->name('subs.index');
+
+Route::get('/{slug}/details', 'CategoryController@details')->name('subs.details');
+Route::get('/{slug}/details/subscribers', 'CategoryController@subscribers')->name('subs.subscribers');
+

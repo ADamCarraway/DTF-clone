@@ -28,7 +28,7 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     ];
 
     protected $with = [
-        'oauthProviders'
+        'oauthProviders',
     ];
 
     protected $appends = [

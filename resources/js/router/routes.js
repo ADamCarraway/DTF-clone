@@ -1,5 +1,8 @@
 import UserPosts from "../components/User/UserPosts";
 import UserComments from "../components/User/UserComments";
+import AllDetails from "../components/User/Details/AllDetails";
+import DetailsIndexSubs from "../components/User/Details/DetailsIndexSubs";
+import DetailsIndexRegulations from "../components/User/Details/DetailsIndexRegulations";
 
 function page(path) {
   return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
@@ -20,7 +23,23 @@ export default [
   },
   {path: '/settings', name: 'settings', component: page('settings/index.vue')},
   {path: '/subs', name: 'subs', component: page('category/index.vue')},
-  {path: '/:slug', name: 'subsite', component: page('category/category.vue'),},
+
+  {
+    path: '/:slug',
+    component: page('category/category.vue'),
+    children: [
+      {path: '', name: 'subsite', component: UserPosts},
+      {
+        path: 'details',
+        component: page('category/details/index.vue'),
+        children: [
+          {path: 'all', name: 'subsite.details', component: AllDetails},
+          {path: 'subscribers', name: 'subsite.subscribers', component: DetailsIndexSubs},
+          {path: 'rules', name: 'subsite.rules', component: DetailsIndexRegulations},
+        ]
+      }
+    ]
+  },
 
   {path: '*', component: page('errors/404.vue')}
 ]

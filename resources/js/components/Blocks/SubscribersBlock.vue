@@ -1,5 +1,5 @@
 <template>
-  <div class="l-island-bg l-island-round v-island">
+  <div v-if="users" class="l-island-bg l-island-round v-island">
     <div class="v-island__header">
       <span class="v-island__title">Подписчики</span>
       <span class="v-island__counter">{{ count }}</span>
@@ -12,9 +12,9 @@
         </router-link>
       </div>
 
-      <a href="https://dtf.ru/games/details/subscribers" class="v-list__more">
+      <router-link :to="to" class="v-list__more">
         Показать всех
-      </a>
+      </router-link>
     </div>
     <div v-else class="v-island__grayed">
       Пока что подписчиков нет =(
@@ -25,7 +25,12 @@
 <script>
   export default {
     name: "SubscribersBlock",
-    props: ['users', 'count']
+    props: ['users', 'count', 'type'],
+    computed: {
+      to: function () {
+        return this.type === 'category' ? { name: 'subsite.subscribers' } : 'users';
+      },
+    }
   }
 </script>
 
