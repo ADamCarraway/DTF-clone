@@ -1,5 +1,5 @@
 <template>
-  <div class="page page--subsites lm-mt-0 l-pb-15 lm-pb-0 l-clear">
+  <div class="page page--subsites lm-mt-0 l-pb-15 lm-pb-0 l-clear" style="width: 640px;padding-top: 16px;padding-bottom: 16px;">
     <div class="subsites_catalog">
       <div class="ui-tabs ui-tabs--default lm-hidden l-island-bg">
         <div class="ui-tabs__scroll">

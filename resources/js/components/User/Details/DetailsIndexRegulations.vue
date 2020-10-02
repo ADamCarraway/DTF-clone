@@ -1,12 +1,13 @@
 <template>
-  <div class="l-island-bg l-island-round v-island">
+  <div v-if="data" class="l-island-bg l-island-round v-island">
     <div class="v-island__header">
       <span class="v-island__title">
       Правила
     </span>
     </div>
     <div class="v-list v-list--text">
-      <div class="v-list__content" v-html="data.regulations"></div>
+      <div v-if="data.regulations" class="v-list__content" v-html="data.regulations"></div>
+      <div v-else class="v-island__grayed">Строгих правил нет. Но ведите себя хорошо 😉</div>
     </div>
   </div>
 </template>

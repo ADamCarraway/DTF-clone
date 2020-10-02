@@ -2,28 +2,53 @@
   <div v-if="data" class="l-island-bg l-island-round v-island">
     <div class="v-island__header">
       <span class="v-island__title">
-      Подписчики
+      {{ title }}
     </span> <span class="v-island__counter">
-      {{ data.total }}
+      {{ total }}
     </span>
     </div>
     <div class="v-list-subsites">
       <div class="v-list-subsites__content v-list-subsites__content--columns-1">
-        <div v-for="user in data.data" class="v-list-subsites-item">
-          <router-link :to="{ name: 'home', params: {id: user.id} }" :key="user.id"
+
+        <div v-for="item in data" v-if="item.type === 'user'" :key="item.slug" class="v-list-subsites-item">
+          <router-link :to="{ name: 'home', params: {id: item.id} }"
                        class="v-list-subsites-item__main">
             <div class="v-list-subsites-item__image"
                  lazy="loaded"
-                 :style="{ backgroundImage: `url('${user.avatar}')` }"
-            ></div>
+                 :style="{ backgroundImage: `url('${item.avatar}')` }">
+
+            </div>
             <div class="v-list-subsites-item__label">
-              {{ user.name }}
+              {{ item.name }}
             </div>
           </router-link>
           <div class="v-subscribe-button v-subscribe-button--short v-subscribe-button--state-inactive">
-            <subscribe v-if="user && data.id !== user.id" :data="user" :type="'users'"></subscribe>
+            <subscribe v-if="user && item.id !== user.id" :data="item" :type="'users'"></subscribe>
+          </div>
+
+        </div>
+
+        <div v-else class="v-list-subsites-item">
+          <router-link :to="{ name: 'subsite', params: {slug: item.slug} }"
+                       class="v-list-subsites-item__main">
+            <div class="v-list-subsites-item__image"
+                 lazy="loaded"
+                 :style="{ backgroundImage: `url('${item.icon}')` }">
+
+            </div>
+            <div class="v-list-subsites-item__label">
+              {{ item.title }}
+            </div>
+          </router-link>
+          <div class="v-subscribe-button v-subscribe-button--short v-subscribe-button--state-inactive">
+            <subscribe :data="item" :type="'categories'"></subscribe>
           </div>
         </div>
+
+
+        <infinite-loading :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
+          <div slot="no-more"></div>
+        </infinite-loading>
       </div>
     </div>
   </div>
@@ -33,31 +58,94 @@
   import axios from "axios";
   import {mapGetters} from "vuex";
   import Subscribe from "../../Buttons/Subscribe";
+  import InfiniteLoading from "vue-infinite-loading";
 
   export default {
     name: "DetailsIndexSubs",
-    components: {Subscribe},
+    components: {Subscribe, InfiniteLoading},
     data() {
       return {
-        data: {}
+        data: [],
+        url: '',
+        page: 1,
+        total: 0,
+        infiniteId: +new Date(),
       }
     },
     computed: {
       ...mapGetters({
         user: 'auth/user',
       }),
+      title: function () {
+        return this.$route.name === 'user.subscribers' || this.$route.name === 'subsite.subscribers' ? 'Подписчики' : 'Подписки';
+      },
+      routeName: function () {
+        return this.$route.name === 'user.subscribers' || this.$route.name === 'subsite.subscribers' ? 'home' : 'subsite';
+      },
+      key: function () {
+        return this.$route.name === 'user.subscribers' || this.$route.name === 'subsite.subscribers' ? 'id' : 'slug';
+      },
+      name: function () {
+        return this.$route.name === 'user.subscribers' || this.$route.name === 'subsite.subscribers' ? 'name' : 'title';
+      },
+      avatar: function () {
+        return this.$route.name === 'user.subscribers' || this.$route.name === 'subsite.subscribers' ? 'avatar' : 'icon';
+      },
+    },
+    // beforeRouteEnter(to, from, next) {
+    //   next(vm => {
+    //     vm.data = [];
+    //     vm.page = 1;
+    //     vm.infiniteId += 1;
+    //   });
+    // },
+    // beforeRouteUpdate (to, from, next) {
+    //   this.data = [];
+    //   this.page = 1;
+    //   this.infiniteId += 1;
+    //   next()
+    // },
+    beforeRouteLeave (to, from, next) {
+      this.data = [];
+      this.page = 1;
+      this.infiniteId += 1;
+      next();
     },
     methods: {
-      getData(slug) {
-        axios.get('/api/' + slug + '/details/subscribers').then((res) => {
-          this.data = res.data;
-          console.log(this.data)
+      getData() {
+        this.setUrl();
+        axios.get(this.url).then((res) => {
+          this.data = res.data.data;
         })
-      }
+      },
+      setUrl() {
+        if (this.$route.name === 'user.subscribers') {
+          this.url = '/api/u/' + this.$route.params.id + '/details/subscribers';
+        } else if (this.$route.name === 'user.subscriptions') {
+          this.url = '/api/u/' + this.$route.params.id + '/details/subscriptions';
+        } else {
+          this.url = '/api/' + this.$route.params.slug + '/details/subscribers';
+        }
+      },
+      infiniteHandler($state) {
+        this.setUrl();
+
+        Vue.http.get(this.url + '?page=' + this.page)
+          .then((data) => {
+            if (data.data.data.length) {
+              this.page = this.page + 1;
+              this.total = data.data.total;
+              $.each(data.data.data, (key, value) => {
+                this.data.push(value);
+              });
+
+              $state.loaded();
+            }else{
+              $state.complete();
+            }
+          });
+      },
     },
-    created() {
-      this.getData(this.$route.params.slug)
-    }
   }
 </script>
 

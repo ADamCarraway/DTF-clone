@@ -7,7 +7,7 @@
                                  class="v-tab"
                                  :class="{'v-tab--active': $route.name === tab.route}">
                       <span class="v-tab__label">{{ tab.name }}
-                      <span class="v-tab__counter">16 038</span>
+<!--                      <span class="v-tab__counter">16 038</span>-->
                     </span>
                     </router-link>
                 </div>
@@ -29,7 +29,11 @@
                     {
                         name: 'Комментарии',
                         route: 'user.comments'
-                    }
+                    },
+                  {
+                    name: 'Подробнее',
+                    route: 'user.details',
+                  }
                 ]
             }
         }

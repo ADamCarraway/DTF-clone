@@ -7,6 +7,7 @@ use App\Notifications\VerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Str;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
@@ -33,10 +34,8 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
 
     protected $appends = [
         'have_password',
-        'category_notify',
-        'user_notify',
-        'categories_ignore',
-        'users_ignore',
+        'type',
+        'slug'
     ];
 
 
@@ -68,6 +67,11 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     public function getHavePasswordAttribute()
     {
         return $this->password === null;
+    }
+
+    protected function getSlugAttribute()
+    {
+        return $this->id . '-' . Str::slug($this->name);
     }
 
     public function users()
@@ -120,8 +124,18 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
         return $this->usersIgnore()->pluck('ignoreable_id');
     }
 
+    public function getTypeAttribute()
+    {
+        return 'user';
+    }
+
     public function subscribers()
     {
         return $this->morphToMany(User::class, 'subscription');
+    }
+
+    public function allSubscriptions()
+    {
+        return $this->hasMany(Subscription::class);
     }
 }

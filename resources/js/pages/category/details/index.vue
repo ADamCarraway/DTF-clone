@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import AllDetails from "../../../components/User/Details/AllDetails";
+  import AllDetails from "../../../components/User/Details/CategoryAllDetails";
   import DetailsSidebar from "../../../components/User/Details/Blocks/DetailsSidebar";
   export default {
     name: "index",

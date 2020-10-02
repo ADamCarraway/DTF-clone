@@ -2730,7 +2730,7 @@ body {
     min-width: calc(var(--height) * 1.2);
 }
 
-.v-list-subsites__content .v-list-subsites-item .v-button--blue{
+.v-list-subsites__content .v-list-subsites-item .v-button{
     --height: 34px;
     background-color:#fff;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1), 0 4px 7px rgba(0,0,0,0.08), 0 -1px 0 rgba(0,0,0,0.05), -1px 0 0 rgba(0,0,0,0.05), 1px 0 0 rgba(0,0,0,0.05);
@@ -3371,3 +3371,4 @@ a.v-list-subsites-item__main:hover {
 .v-mini-header--active {
     visibility: visible;
 }
+

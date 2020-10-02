@@ -29,7 +29,9 @@
     "vform": "^1.0.0",
     "vue": "^2.6.10",
     "vue-i18n": "^8.11.2",
+    "vue-infinite-loading": "^2.4.5",
     "vue-meta": "^1.6.0",
+    "vue-resource": "^1.5.1",
     "vue-router": "^3.0.6",
     "vuex": "^3.1.0",
     "vuex-router-sync": "^5.0.0"

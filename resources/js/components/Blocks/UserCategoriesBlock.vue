@@ -1,5 +1,5 @@
 <template>
-  <div class="l-island-bg l-island-round v-island">
+  <div v-if="categories" class="l-island-bg l-island-round v-island">
     <div class="v-island__header">
       <span class="v-island__title">Подписки</span>
       <span class="v-island__counter">{{ Object.keys(categories).length }}</span>
@@ -14,9 +14,9 @@
           </div>
         </router-link>
       </div>
-      <a href="https://dtf.ru/games/details/subscriptions" class="v-list__more">
+      <router-link :to="{ name: 'user.subscriptions' }" class="v-list__more">
         Показать все
-      </a>
+      </router-link>
     </div>
     <div v-else class="v-island__grayed">
       Пока что подписок нет =(
@@ -27,7 +27,9 @@
 <script>
   export default {
     name: "UserCategoriesBlock",
-    props: ['categories']
+    props: ['categories'],
+    computed: {
+    }
   }
 </script>
 

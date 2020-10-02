@@ -7,6 +7,11 @@ import App from '~/components/App'
 import AtComponents from 'at-ui'
 Vue.use(AtComponents)
 
+window.Vue = require('vue');
+
+Vue.use(require('vue-resource'));
+
+Vue.component('InfiniteLoading', require('vue-infinite-loading'));
 
 import '~/plugins'
 import '~/components'

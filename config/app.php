@@ -173,7 +173,7 @@ return [
          */
         JD\Cloudder\CloudderServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
-
+        Barryvdh\Debugbar\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -235,6 +235,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

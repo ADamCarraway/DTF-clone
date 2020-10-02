@@ -56,3 +56,6 @@ Route::get('/subs', 'CategoryController@index')->name('subs.index');
 Route::get('/{slug}/details', 'CategoryController@details')->name('subs.details');
 Route::get('/{slug}/details/subscribers', 'CategoryController@subscribers')->name('subs.subscribers');
 
+Route::get('u/{id}/details', 'Auth\UserController@details')->name('user.details');
+Route::get('u/{id}/details/subscribers', 'Auth\UserController@subscribers')->name('user.subscribers');
+Route::get('u/{id}/details/subscriptions', 'Auth\UserController@subscriptions')->name('user.subscriptions');

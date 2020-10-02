@@ -62,7 +62,8 @@
         </transition>
       </div>
 
-      <subsite-sidebar :data="data" :type="'user'"></subsite-sidebar>
+      <subsite-sidebar  v-if="$route.name === 'home'" :data="data" :type="'user'"></subsite-sidebar>
+      <user-details-sidebar v-else ></user-details-sidebar>
 
     </div>
   </div>
@@ -80,9 +81,13 @@
   import SubscribersBlock from "../components/Blocks/SubscribersBlock";
   import UserCategoriesBlock from "../components/Blocks/UserCategoriesBlock";
   import SubsiteSidebar from "../components/User/SubsiteSidebar";
+  import DetailsSidebar from "../components/User/Details/Blocks/DetailsSidebar";
+  import UserDetailsSidebar from "../components/User/Details/Blocks/UserDetailsSidebar";
 
   export default {
-    components: {SubsiteSidebar, UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, UserTabs, Notification},
+    components: {
+      UserDetailsSidebar,
+      SubsiteSidebar, UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, UserTabs, Notification},
     data() {
       return {
         loadingNotify: false,
@@ -112,14 +117,19 @@
     },
     methods: {
       getData(id) {
+
+        if (this.user && this.user.id === this.$route.params.id){
+          return this.data = this.user
+        }
+
         axios.get('/api/u/' + id).then((res) => {
           this.data = res.data;
         })
       }
     },
-    created() {
-      this.data = this.user && this.user.id === this.$route.params.id ? this.user : this.getData(this.$route.params.id)
-    },
+    // created() {
+    //   this.data = this.user && this.user.id === this.$route.params.id ? this.user : this.getData(this.$route.params.id)
+    // },
     metaInfo() {
       return {title: this.$t('home')}
     }

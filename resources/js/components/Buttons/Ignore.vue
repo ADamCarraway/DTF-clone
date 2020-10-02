@@ -1,6 +1,6 @@
 <template>
-  <div v-if="data">
-    <div v-if="!this.user[key].includes(data.id)" @click="toIgnore(1)"
+  <div>
+    <div v-if="check" @click="toIgnore(1)"
          class="at-dropdown-menu__item etc_control__item">Игнорировать
     </div>
     <div v-else @click="toIgnore(0)" class="at-dropdown-menu__item etc_control__item">Не игнорировать</div>
@@ -20,6 +20,13 @@
       }),
       key: function () {
         return this.type === 'users' ? 'users_ignore' : 'categories_ignore';
+      },
+      check: function () {
+        if (!this.user) return true;
+
+        if (this.user[this.key] === null) return true;
+
+        return !this.user[this.key].includes(this.data.id);
       },
     },
     methods: {

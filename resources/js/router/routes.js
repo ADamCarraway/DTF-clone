@@ -1,8 +1,9 @@
 import UserPosts from "../components/User/UserPosts";
 import UserComments from "../components/User/UserComments";
-import AllDetails from "../components/User/Details/AllDetails";
+import CategoryAllDetails from "../components/User/Details/CategoryAllDetails";
 import DetailsIndexSubs from "../components/User/Details/DetailsIndexSubs";
 import DetailsIndexRegulations from "../components/User/Details/DetailsIndexRegulations";
+import UserAllDetails from "../components/User/Details/UserAllDetails";
 
 function page(path) {
   return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
@@ -18,7 +19,16 @@ export default [
     component: page('user.vue'),
     children: [
       {path: '', name: 'home', component: UserPosts},
-      {path: 'comments', name: 'user.comments', component: UserComments}
+      {path: 'comments', name: 'user.comments', component: UserComments},
+      {
+        path: 'details',
+        component: page('user/details/index.vue'),
+        children: [
+          {path: '', name: 'user.details', component: UserAllDetails},
+          {path: 'subscribers', name: 'user.subscribers', component: DetailsIndexSubs},
+          {path: 'subscriptions', name: 'user.subscriptions', component: DetailsIndexSubs},
+        ]
+      }
     ]
   },
   {path: '/settings', name: 'settings', component: page('settings/index.vue')},
@@ -33,7 +43,7 @@ export default [
         path: 'details',
         component: page('category/details/index.vue'),
         children: [
-          {path: 'all', name: 'subsite.details', component: AllDetails},
+          {path: '', name: 'subsite.details', component: CategoryAllDetails},
           {path: 'subscribers', name: 'subsite.subscribers', component: DetailsIndexSubs},
           {path: 'rules', name: 'subsite.rules', component: DetailsIndexRegulations},
         ]

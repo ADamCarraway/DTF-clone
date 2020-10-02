@@ -28,7 +28,7 @@
     props: ['users', 'count', 'type'],
     computed: {
       to: function () {
-        return this.type === 'category' ? { name: 'subsite.subscribers' } : 'users';
+        return this.type === 'category' ? { name: 'subsite.subscribers' } : { name: 'user.subscribers' };
       },
     }
   }
