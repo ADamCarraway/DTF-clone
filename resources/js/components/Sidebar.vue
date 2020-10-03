@@ -12,14 +12,22 @@
               </span>
             </div>
 
-            <router-link v-for="subsite in subs" :key="subsite.slug"
-                         v-show="subsite.isVisible"
-                         :to="{ name: subsite.type, params: {'slug': subsite.slug} }"
+            <router-link v-for="item in subs" :key="item.slug"
+                         v-show="item.isVisible"
+                         :to="{ name: item.type, params: {'slug': item.slug} }"
                          class="sidebar__tree-list__item lm-ph-15 sidebar__tree-list__item--with-image">
               <div class="sidebar-tree-list-item__link">
                 <img class="sidebar__tree-list__item__image"
-                     :src="subsite.icon" lazy="loaded" alt="">
-                <p class="sidebar__tree-list__item__name">{{ subsite.title }}</p>
+                     :src="item.icon" lazy="loaded" alt="">
+                <p class="sidebar__tree-list__item__name">{{ item.title }}</p>
+                <div v-if="item.is_favorite" @click="toFavorite(0,item.slug, item.type)"
+                     class="sidebar-tree-list-item__favourite sidebar-tree-list-item__favourite--active">
+                  <i class="fas fa-thumbtack"></i>
+                </div>
+                <div v-else @click="toFavorite(1,item.slug, item.type)"
+                     class="sidebar-tree-list-item__favourite">
+                  <i class="fas fa-thumbtack"></i>
+                </div>
               </div>
             </router-link>
 
@@ -39,6 +47,7 @@
   import EventBus from "../plugins/event-bus";
   import {mapGetters} from "vuex";
   import {forEach} from "../helpers"
+  import axios from "axios";
 
   export default {
     name: "Sidebar",
@@ -77,6 +86,29 @@
           i++;
         });
       },
+      toFavorite(value, slug, type) {
+        if (!value) {
+          axios.post('/api/' + slug + '/' + type + '/favorite/destroy').then((res) => {
+            this.$store.dispatch('auth/changeSubscriptionField', {
+              slug: slug,
+              key: 'is_favorite',
+              value: 0
+            });
+          }).catch(() => {
+          })
+        }
+
+        if (value) {
+          axios.post('/api/' + slug + '/' + type + '/favorite/store').then((res) => {
+            this.$store.dispatch('auth/changeSubscriptionField', {
+              slug: slug,
+              key: 'is_favorite',
+              value: 1
+            });
+          }).catch(() => {
+          })
+        }
+      }
     }
   }
 </script>

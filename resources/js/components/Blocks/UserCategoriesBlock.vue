@@ -8,7 +8,7 @@
         </div>
         <div v-if="data.subscriptions" class="v-list v-list--default">
             <div class="v-list__content">
-                <router-link v-for="item in data.subscriptions"
+                <router-link v-for="item in data.subscriptions_limit"
                              :to="{ name: item.type, params: { slug: item.slug } }"
                              :key="item.slug" class="v-list__item">
                     <div class="v-list__image" :style="{ backgroundImage: `url('${item.icon}')` }" lazy="loaded"></div>

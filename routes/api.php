@@ -33,6 +33,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('/ignore/store/{type}/{id}', 'IgnoreController@store')->name('ignore.store');
     Route::post('/ignore/destroy/{type}/{id}', 'IgnoreController@destroy')->name('ignore.destroy');
+
+    Route::post('/{slug}/{type}/favorite/store', 'FavoriteController@store')->name('favorite.store');
+    Route::post('/{slug}/{type}/favorite/destroy', 'FavoriteController@destroy')->name('favorite.destroy');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

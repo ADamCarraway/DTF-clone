@@ -4,6 +4,7 @@
       <span class="v-island__title">Подписчики</span>
       <span class="v-island__counter">{{ data.subscribers_count }}</span>
     </div>
+
     <div v-if="data.subscribers_count > 0" class="v-list v-list--images">
       <div class="v-list__content">
         <router-link v-for="item in data.subscribers" :to="{ name: item.type, params: {slug: item.slug} }" :key="item.slug"

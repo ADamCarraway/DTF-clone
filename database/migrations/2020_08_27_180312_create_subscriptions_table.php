@@ -18,6 +18,7 @@ class CreateSubscriptionsTable extends Migration
             $table->foreignId('user_id');
             $table->integer('subscription_id');
             $table->string('subscription_type');
+            $table->boolean('favorite')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')

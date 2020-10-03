@@ -20,18 +20,25 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $request = $user->load(['users'])->toArray();
-        $request['subscriptions'] = $user->allSubscriptions->map(function (Subscription $i) {
+        $request['subscriptions'] = $user->allSubscriptions->sortByDesc('date')->map(function (Subscription $i) {
+            $is_favorite = $i->favorite;
+            $date = $i->created_at;
             if ($i->subscription_type === Category::class) {
                 $i = Category::query()->where('id', $i->subscription_id)->first();
+                $i['is_favorite'] = $is_favorite;
+                $i['date'] = $date;
             } else {
                 $i = User::query()->where('id', $i->subscription_id)->first();
+                $i['is_favorite'] = $is_favorite;
+                $i['date'] = $date;
             }
 
             return $i;
-        })->keyBy('slug');
+        })->sortBy('type')->sortByDesc('is_favorite')->keyBy('slug')->toArray();
         $request['subscribers'] = $user->subscribers()->limit(12)->get();
         $request['subscribers_count'] = $user->subscribers()->count();
         $request['subscriptions_count'] = $user->allSubscriptions()->count();
+        $request['subscriptions_limit'] = array_slice($request['subscriptions'], 0, 5);
 
         return response()->json($request);
     }
@@ -39,11 +46,11 @@ class UserController extends Controller
     public function show(Request $request, $slug)
     {
         /** @var User $user */
-        $user = User::query()
+        $user = User::query()->withCount(['subscribers'])
             ->whereSlug($slug)
             ->firstOrFail();
 
-        $user['subscriptions'] = $user->allSubscriptions()->limit(5)->get()->map(function (Subscription $i) {
+        $user['subscriptions'] = $user->allSubscriptions->map(function (Subscription $i) {
             if ($i->subscription_type === Category::class) {
                 $i = Category::query()->where('id', $i->subscription_id)->first();
             } else {
@@ -51,10 +58,10 @@ class UserController extends Controller
             }
 
             return $i;
-        })->keyBy('slug');
+        })->keyBy('slug')->toArray();
         $user['subscribers'] = $user->subscribers()->limit(12)->get();
-        $user['subscribers_count'] = $user->subscribers()->count();
         $user['subscriptions_count'] = $user->allSubscriptions()->count();
+        $user['subscriptions_limit'] = array_slice($user['subscriptions'], 0, 5);
 
         return response()->json($user);
     }
