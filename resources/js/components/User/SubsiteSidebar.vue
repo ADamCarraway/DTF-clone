@@ -1,9 +1,9 @@
 <template>
   <div class="l-page__sidebar lm-hidden" style="position: relative;">
     <div class="subsite-sidebar" style="width: 300px;">
-      <subscribers-block :users="data[key]" :count="data[key+'_count']" :type="type"></subscribers-block>
-      <user-categories-block v-if="type === 'user'" :categories="data.categories" :type="type"></user-categories-block>
-      <regulations-box v-if="data.regulations" :data="data.regulations"></regulations-box>
+      <subscribers-block :data="data"></subscribers-block>
+      <user-categories-block v-if="data.type === 'user'" :data="data"></user-categories-block>
+      <regulations-box v-if="data.regulations && data.type === 'category'" :data="data.regulations"></regulations-box>
     </div>
   </div>
 </template>
@@ -15,16 +15,11 @@
 
   export default {
     name: "SubsiteSidebar",
-    props: ['data', 'type'],
+    props: ['data'],
     components: {
       RegulationsBox,
       UserCategoriesBlock, SubscribersBlock
     },
-    computed: {
-      key: function () {
-        return this.type === 'user' ? 'subscribers' : 'users';
-      },
-    }
   }
 </script>
 

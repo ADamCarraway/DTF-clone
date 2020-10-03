@@ -24,7 +24,7 @@
                 return [
                     {
                         name: 'Статьи',
-                        route: 'home'
+                        route: 'user'
                     },
                     {
                         name: 'Комментарии',

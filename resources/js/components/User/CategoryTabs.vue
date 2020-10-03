@@ -25,11 +25,11 @@
         return [
           {
             name: 'Статьи',
-            route: 'subsite',
+            route: 'category',
           },
           {
             name: 'Подробнее',
-            route: 'subsite.details',
+            route: 'category.details',
           }
         ]
       }

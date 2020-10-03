@@ -1,5 +1,6 @@
 <template>
-  <div class="page page--subsites lm-mt-0 l-pb-15 lm-pb-0 l-clear" style="width: 640px;padding-top: 16px;padding-bottom: 16px;">
+  <div class="page page--subsites lm-mt-0 l-pb-15 lm-pb-0 l-clear"
+       style="width: 640px;padding-top: 16px;padding-bottom: 16px;">
     <div class="subsites_catalog">
       <div class="ui-tabs ui-tabs--default lm-hidden l-island-bg">
         <div class="ui-tabs__scroll">
@@ -22,13 +23,13 @@
       <div class="subsites_catalog__content l-island-bg">
         <div v-for="item in subs" :key="item.slug" class="subsites_catalog_item l-island-a l-pv-20">
           <div class="subsite_card_simple">
-            <router-link :to="{ name: 'subsite', params: { slug: item.slug }  }"
+            <router-link :to="{ name: 'category', params: { slug: item.slug }  }"
                          class="subsite_card_simple__avatar l-block l-s-38 l-mins-38 lm-s-40 lm-mins-40">
               <img class="andropov_image " style="background-color: transparent;"
                    :src="item.icon">
             </router-link>
             <div class="subsite_card_simple__info l-ml-15 l-pt-1 l-block">
-              <router-link :to="{ name: 'subsite', params: { slug: item.slug }  }"
+              <router-link :to="{ name: 'category', params: { slug: item.slug }  }"
                            class="subsite_card_simple__title l-block l-fw-500">
                 <span>{{item.title}}</span>
               </router-link>
@@ -38,12 +39,12 @@
               <div
                 class="subsite_subscribe_button subsite_subscribe_button--size-small subsite_subscribe_button--notifications-disabled subsite_subscribe_button--active-short subsite_subscribe_button--mobile-short l-ml-12 subsite_subscribe_button--state-inactive ">
                 <div class="subsite_subscribe_button__main ui-splash">
-                  <at-button v-if="!item.isSub" icon="icon-plus"
-                             @click="subscribe(1, item.id, item.slug)">Подписаться
+                  <at-button v-if="!(item.slug in subscriptions)" icon="icon-plus"
+                             @click="subscribe(1, item.slug)">Подписаться
                   </at-button>
 
-                  <at-button style="margin-left: auto;color: green" v-if="item.isSub"
-                             @click="subscribe(0, item.id, item.slug)"
+                  <at-button style="margin-left: auto;color: green" v-if="item.slug in subscriptions"
+                             @click="subscribe(0, item.slug)"
                              icon="icon-check"></at-button>
                 </div>
               </div>
@@ -70,25 +71,22 @@
     computed: {
       ...mapGetters({
         user: 'auth/user',
-        userCategoriesSubs: 'auth/userCategoriesSubs',
+        subscriptions: 'auth/subscriptions',
       }),
     },
     methods: {
-      subscribe(type, id, slug) {
+      subscribe(type, slug) {
         if (!type) {
-          axios.post('/api/' + id + '/categories/unsubscribe', this.form).then((res) => {
-            this.subs[slug]['isSub'] = false;
-
-            this.$store.dispatch('auth/destroyUserCategorySubscription', {slug: slug})
+          axios.post('/api/' + slug + '/category/unsubscribe', this.form).then((res) => {
+            this.$store.dispatch('auth/destroySubscription', {slug: slug})
           })
         }
 
         if (type) {
-          axios.post('/api/' + id + '/categories/subscribe', this.form).then((res) => {
-            this.subs[slug]['isSub'] = true;
-            this.subs[slug]['isVisible'] = Object.keys(this.userCategoriesSubs).length < 7;
+          axios.post('/api/' + slug + '/category/subscribe', this.form).then((res) => {
+            this.subs[slug]['isVisible'] = Object.keys(this.subscriptions).length < 7;
 
-            this.$store.dispatch('auth/addUserCategorySubscription', {sub: this.subs[slug]})
+            this.$store.dispatch('auth/addSubscription', {sub: this.subs[slug]})
           })
         }
       },

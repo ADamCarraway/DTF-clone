@@ -4,6 +4,7 @@ namespace App;
 
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -34,6 +35,11 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
 
     protected $appends = [
         'have_password',
+        'icon',
+        'title',
+        'url',
+        'is_ignore',
+        'is_notify',
         'type',
         'slug'
     ];
@@ -104,25 +110,6 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
         return $this->morphedByMany(Category::class, 'ignoreable');
     }
 
-    public function getCategoryNotifyAttribute()
-    {
-        return $this->categoriesNotify()->pluck('subs_notify_id');
-    }
-
-    public function getUserNotifyAttribute()
-    {
-        return $this->usersNotify()->pluck('subs_notify_id');
-    }
-
-    public function getCategoriesIgnoreAttribute()
-    {
-        return $this->categoriesIgnore()->pluck('ignoreable_id');
-    }
-
-    public function getUsersIgnoreAttribute()
-    {
-        return $this->usersIgnore()->pluck('ignoreable_id');
-    }
 
     public function getTypeAttribute()
     {
@@ -137,5 +124,39 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     public function allSubscriptions()
     {
         return $this->hasMany(Subscription::class);
+    }
+
+    public function getIconAttribute()
+    {
+        return $this->avatar;
+    }
+
+    public function getTitleAttribute()
+    {
+        return $this->name;
+    }
+
+    public function getUrlAttribute()
+    {
+        return 'u/' . $this->slug;
+    }
+
+    public function getIsIgnoreAttribute()
+    {
+        if (!auth()->check() || auth()->id() === $this->id) return false;
+
+        return auth()->user()->usersIgnore()->where('ignoreable_id', $this->id)->exists();
+    }
+
+    public function getIsNotifyAttribute()
+    {
+        if (!auth()->check()) return false;
+
+        return auth()->user()->usersNotify()->where('subs_notify_id', $this->id)->exists();
+    }
+
+    public function scopeWhereSlug(Builder $query, $slug)
+    {
+        return $query->where('id', (int)stristr($slug, '-', true));
     }
 }

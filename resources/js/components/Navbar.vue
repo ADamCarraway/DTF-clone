@@ -55,21 +55,21 @@
     <div class="site-header__item" v-if="user">
       <div class="site-header-user">
         <div class="site-header-user-profile">
-          <router-link :to="{ name: 'home', params: {id: user.id} }"  class="site-header-user-profile__avatar not-active">
+          <router-link :to="{ name: 'user', params: {slug: user.slug} }"  class="site-header-user-profile__avatar not-active">
             <div class="site-header-user-profile__avatar-image" :style="{'background-image': 'url('+user.avatar+')'}"></div>
           </router-link>
             <at-dropdown trigger="click">
               <span><i class="icon icon-chevron-down"></i></span>
               <at-dropdown-menu slot="menu">
                 <div class="at-dropdown-menu-item__title">Профиль</div>
-                <router-link :to="{ name: 'home', params: {id: user.id} }" class="at-dropdown-menu__item item--selected">
+                <router-link :to="{ name: 'user', params: {slug: user.slug} }" class="at-dropdown-menu__item item--selected">
                   <div class="item__image">
                     <img :src="user.avatar">
                   </div>
                   <span class="item__text">{{ user.name }}</span>
                 </router-link>
 
-                <router-link :to="{ name: 'settings' }" class="at-dropdown-menu__item">
+                <router-link :to="{ name: 'user.settings', params: {slug: user.slug} }" class="at-dropdown-menu__item">
                   <div class="item__icon">
                     <i class="icon icon-settings"></i>
                   </div>

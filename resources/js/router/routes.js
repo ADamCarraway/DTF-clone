@@ -15,10 +15,10 @@ export default [
   {path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue')},
   {path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue')},
   {
-    path: '/u/:id',
+    path: '/u/:slug',
     component: page('user.vue'),
     children: [
-      {path: '', name: 'home', component: UserPosts},
+      {path: '', name: 'user', component: UserPosts},
       {path: 'comments', name: 'user.comments', component: UserComments},
       {
         path: 'details',
@@ -29,23 +29,23 @@ export default [
           {path: 'subscriptions', name: 'user.subscriptions', component: DetailsIndexSubs},
         ]
       }
-    ]
+    ],
   },
-  {path: '/settings', name: 'settings', component: page('settings/index.vue')},
+  {path: '/u/:slug/settings', name: 'user.settings', component: page('settings/index.vue')},
   {path: '/subs', name: 'subs', component: page('category/index.vue')},
 
   {
     path: '/:slug',
     component: page('category/category.vue'),
     children: [
-      {path: '', name: 'subsite', component: UserPosts},
+      {path: '', name: 'category', component: UserPosts},
       {
         path: 'details',
         component: page('category/details/index.vue'),
         children: [
-          {path: '', name: 'subsite.details', component: CategoryAllDetails},
-          {path: 'subscribers', name: 'subsite.subscribers', component: DetailsIndexSubs},
-          {path: 'rules', name: 'subsite.rules', component: DetailsIndexRegulations},
+          {path: '', name: 'category.details', component: CategoryAllDetails},
+          {path: 'subscribers', name: 'category.subscribers', component: DetailsIndexSubs},
+          {path: 'rules', name: 'category.rules', component: DetailsIndexRegulations},
         ]
       }
     ]

@@ -26,10 +26,11 @@
             <div class="v-header__actions">
               <div
                 class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
-                <subscribe v-if="user && data.id !== user.id" :data="data" :type="'users'"></subscribe>
-                <notification v-if="(data.id in userUsersSubs)" :data="data" :type="'users'"></notification>
+                <subscribe v-if="user && data.id !== user.id" :data="data" :type="data.type"></subscribe>
+                <notification :data="data" :type="'users'"></notification>
 
-                <router-link :to="{name: 'settings'}" v-if="user && user.id == $route.params.id"
+                <router-link :to="{name: 'user.settings', params: {slug: data.slug}}"
+                             v-if="data.slug && user && user.slug == $route.params.slug"
                              class="v-button v-button--default v-button--size-default">
                   <div class="v-button__icon">
                     <i class="fas fa-cog"></i>
@@ -37,7 +38,7 @@
                 </router-link>
               </div>
 
-              <at-dropdown v-if="user" trigger="click" class="etc_control">
+              <at-dropdown v-if="user && user.slug !== $route.params.slug" trigger="click" class="etc_control">
                 <span><i class="fas fa-ellipsis-h"></i></span>
                 <at-dropdown-menu slot="menu" class="etc_control__list">
                   <ignore :data="data" :type="'users'"></ignore>
@@ -62,8 +63,8 @@
         </transition>
       </div>
 
-      <subsite-sidebar  v-if="$route.name === 'home'" :data="data" :type="'user'"></subsite-sidebar>
-      <user-details-sidebar v-else ></user-details-sidebar>
+      <subsite-sidebar v-if="$route.name === 'user'" :data="data"></subsite-sidebar>
+      <user-details-sidebar v-else></user-details-sidebar>
 
     </div>
   </div>
@@ -87,7 +88,8 @@
   export default {
     components: {
       UserDetailsSidebar,
-      SubsiteSidebar, UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, UserTabs, Notification},
+      SubsiteSidebar, UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, UserTabs, Notification
+    },
     data() {
       return {
         loadingNotify: false,
@@ -98,8 +100,6 @@
     computed: {
       ...mapGetters({
         user: 'auth/user',
-        userUsersSubs: 'auth/userUsersSubs',
-        userCategoriesSubs: 'auth/userCategoriesSubs',
       }),
 
       date() {
@@ -108,30 +108,26 @@
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
-        vm.getData(to.params.id);
+        vm.getData(to.params.slug);
       });
     },
     beforeRouteUpdate(to, from, next) {
-      this.getData(to.params.id);
+      this.getData(to.params.slug);
       next()
     },
     methods: {
-      getData(id) {
-
-        if (this.user && this.user.id === this.$route.params.id){
-          return this.data = this.user
+      getData(slug) {
+        if (this.user && this.user.slug === slug) {
+          this.data = this.user
+        } else {
+          axios.get('/api/u/' + slug).then((res) => {
+            this.data = res.data;
+          })
         }
-
-        axios.get('/api/u/' + id).then((res) => {
-          this.data = res.data;
-        })
       }
     },
-    // created() {
-    //   this.data = this.user && this.user.id === this.$route.params.id ? this.user : this.getData(this.$route.params.id)
-    // },
     metaInfo() {
-      return {title: this.$t('home')}
+      return {title: this.data.name + ' - Блог'}
     }
   }
 </script>

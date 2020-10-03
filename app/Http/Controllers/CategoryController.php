@@ -17,7 +17,7 @@ class CategoryController extends Controller
         $category = Category::query()->where('slug', $slug)->firstOrFail();
 
         return response()->json([
-            'users' => $category->users()->paginate(10),
+            'users' => $category->subscribers()->paginate(10),
             'rules' => $category->regulations
         ]);
     }
@@ -26,6 +26,6 @@ class CategoryController extends Controller
     {
         $category = Category::query()->where('slug', $slug)->firstOrFail();
 
-        return response()->json($category->users()->paginate(10));
+        return response()->json($category->subscribers()->paginate(10));
     }
 }

@@ -107,7 +107,7 @@
 
               this.$store.dispatch('auth/fetchUser')
 
-              this.$router.push({name: 'home', params: {id: res.data.id}})
+              this.$router.push({name: 'user', params: {slug: res.data.slug}})
             });
 
             EventBus.$emit('loginModal', false);

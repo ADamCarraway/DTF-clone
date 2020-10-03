@@ -31,17 +31,17 @@
         return [
           {
             name: 'Обзор',
-            route: 'subsite.details',
+            route: 'category.details',
             icon: 'fa-eye'
           },
           {
             name: 'Подписчики',
-            route: 'subsite.subscribers',
+            route: 'category.subscribers',
             icon: 'fa-user-friends'
           },
           {
             name: 'Правила',
-            route: 'subsite.rules',
+            route: 'category.rules',
             icon: 'fa-clipboard'
           }
         ]

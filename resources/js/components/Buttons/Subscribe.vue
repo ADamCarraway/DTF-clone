@@ -1,6 +1,6 @@
 <template>
   <div v-if="data">
-    <div @click="subscribe(0)" v-if="data[key] in inObj"
+    <div @click="subscribe(0)" v-if="data.slug in subscriptions"
          class="v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default">
       <div class="v-button__icon">
         <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
@@ -10,7 +10,7 @@
       <span class="v-button__label">Отписаться</span>
     </div>
 
-    <div @click="subscribe(1)" v-if="!(data[key] in inObj)"
+    <div @click="subscribe(1)" v-if="!(data.slug in subscriptions)"
          class="v-subscribe-button__subscribe v-button v-button--blue v-button--size-default">
       <div class="v-button__icon">
         <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
@@ -37,22 +37,14 @@
     computed: {
       ...mapGetters({
         user: 'auth/user',
-        categories: 'auth/userCategoriesSubs',
-        users: 'auth/userUsersSubs',
+        subscriptions: 'auth/subscriptions',
       }),
-      key: function () {
-        return this.type === 'users' ? 'id' : 'slug';
-      },
-      inObj: function () {
-        return this.type === 'users' ? this.users : this.categories;
-      }
-
     },
     methods: {
       subscribe(type) {
         this.loadingSub = true;
         if (!type) {
-          axios.post('/api/' + this.data.id + '/' + this.type + '/unsubscribe', this.form).then((res) => {
+          axios.post('/api/' + this.data.slug + '/' + this.data.type + '/unsubscribe', this.form).then((res) => {
             this.changeForUnSubscribe();
             this.loadingSub = false;
           }).catch(() => {
@@ -61,7 +53,7 @@
         }
 
         if (type) {
-          axios.post('/api/' + this.data.id + '/' + this.type + '/subscribe', this.form).then((res) => {
+          axios.post('/api/' + this.data.slug + '/' + this.data.type + '/subscribe', this.form).then((res) => {
             this.changeForSubscribe();
             this.loadingSub = false;
           }).catch(() => {
@@ -70,23 +62,23 @@
         }
       },
       changeForSubscribe() {
-        if (this.type === 'categories') {
+        if (this.type === 'category') {
           this.data['isSub'] = true;
-          this.data['isVisible'] = Object.keys(this.categories).length < 7;
+          this.data['isVisible'] = Object.keys(this.subscriptions).length < 7;
 
-          this.$store.dispatch('auth/addUserCategorySubscription', {sub: this.data})
+          this.$store.dispatch('auth/addSubscription', {sub: this.data})
         }else{
-          this.$store.dispatch('auth/addUserUserSubscription', {sub: this.data});
+          this.$store.dispatch('auth/addSubscription', {sub: this.data});
         }
       },
       changeForUnSubscribe() {
-        if (this.type === 'categories') {
-          this.$store.dispatch('auth/destroyUserCategorySubscription', {slug: this.data.slug})
+        if (this.type === 'category') {
+          this.$store.dispatch('auth/destroySubscription', {slug: this.data.slug})
         }else {
-          this.$store.dispatch('auth/destroyUserUserSubscription', {id: this.data.id});
+          this.$store.dispatch('auth/destroySubscription', {slug: this.data.slug});
         }
-      }
-    }
+      },
+    },
   }
 </script>
 

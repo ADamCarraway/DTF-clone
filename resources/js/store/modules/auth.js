@@ -6,24 +6,21 @@ import vue from 'vue'
 export const state = {
   user: null,
   token: Cookies.get('token'),
-  userCategoriesSubs: {},
-  userUsersSubs: {},
-}
+  subscriptions: {},
+};
 
 // getters
 export const getters = {
   user: state => state.user,
-  userCategoriesSubs: state => state.userCategoriesSubs,
-  userUsersSubs: state => state.userUsersSubs,
-  userIgnoreCategories: state => state.userIgnoreCategories,
+  subscriptions: state => state.subscriptions,
   token: state => state.token,
   check: state => state.user !== null
-}
+};
 
 // mutations
 export const mutations = {
   [types.SAVE_TOKEN](state, {token, remember}) {
-    state.token = token
+    state.token = token;
     Cookies.set('token', token, {expires: remember ? 365 : null})
   },
 
@@ -32,13 +29,13 @@ export const mutations = {
   },
 
   [types.FETCH_USER_FAILURE](state) {
-    state.token = null
+    state.token = null;
     Cookies.remove('token')
   },
 
   [types.LOGOUT](state) {
-    state.user = null
-    state.token = null
+    state.user = null;
+    state.token = null;
 
     Cookies.remove('token')
   },
@@ -49,32 +46,25 @@ export const mutations = {
     });
   },
 
-  [types.DESTROY_USER_CATEGORY_SUBSCRIPTIONS](state, {slug}) {
-    vue.delete(state.userCategoriesSubs, slug)
+  [types.DESTROY_SUBSCRIPTIONS](state, {slug}) {
+    vue.delete(state.subscriptions, slug)
   },
 
-  [types.FETCH_USER_CATEGORY_SUBSCRIPTIONS](state, {subs}) {
-    if (Object.keys(subs).length === 0) return state.userCategoriesSubs = {};
-    state.userCategoriesSubs = subs
+  [types.FETCH_SUBSCRIPTIONS](state, {subs}) {
+    if (Object.keys(subs).length === 0) return state.subscriptions = {};
+    Object.keys(subs).forEach(key => {
+      vue.set(state.subscriptions, key, subs[key]);
+    });
   },
 
-  [types.ADD_USER_CATEGORY_SUBSCRIPTION](state, {sub}) {
-    vue.set(state.userCategoriesSubs, sub.slug, sub);
-  },
-//  -----------------
-  [types.DESTROY_USER_USER_SUBSCRIPTIONS](state, {id}) {
-    vue.delete(state.userUsersSubs, id)
+  [types.ADD_SUBSCRIPTION](state, {sub}) {
+    vue.set(state.subscriptions, sub.slug, sub);
   },
 
-  [types.FETCH_USER_USER_SUBSCRIPTIONS](state, {subs}) {
-    if (Object.keys(subs).length === 0) return state.userUsersSubs = {};
-    state.userUsersSubs = subs
+  [types.CHANGE_SUBSCRIPTION_FIELD](state, {slug, key, value}) {
+    vue.set(state.subscriptions[slug], key, value);
   },
-
-  [types.ADD_USER_USER_SUBSCRIPTION](state, {sub}) {
-    vue.set(state.userUsersSubs, sub.id, sub);
-  }
-}
+};
 
 // actions
 export const actions = {
@@ -84,10 +74,9 @@ export const actions = {
 
   async fetchUser({commit}) {
     try {
-      const {data} = await axios.get('/api/user')
+      const {data} = await axios.get('/api/user');
 
-      commit(types.FETCH_USER_USER_SUBSCRIPTIONS, {subs: data.users})
-      commit(types.FETCH_USER_CATEGORY_SUBSCRIPTIONS, {subs: data.categories})
+      commit(types.FETCH_SUBSCRIPTIONS, {subs: data.subscriptions});
       commit(types.FETCH_USER_SUCCESS, {user: data})
     } catch (e) {
       commit(types.FETCH_USER_FAILURE)
@@ -98,20 +87,16 @@ export const actions = {
     commit(types.UPDATE_USER, payload)
   },
 
-  addUserCategorySubscription({commit}, payload) {
-    commit(types.ADD_USER_CATEGORY_SUBSCRIPTION, payload)
+  addSubscription({commit}, payload) {
+    commit(types.ADD_SUBSCRIPTION, payload)
   },
 
-  destroyUserCategorySubscription({commit}, payload) {
-    commit(types.DESTROY_USER_CATEGORY_SUBSCRIPTIONS, payload)
+  destroySubscription({commit}, payload) {
+    commit(types.DESTROY_SUBSCRIPTIONS, payload)
   },
 
-  addUserUserSubscription({commit}, payload) {
-    commit(types.ADD_USER_USER_SUBSCRIPTION, payload)
-  },
-
-  destroyUserUserSubscription({commit}, payload) {
-    commit(types.DESTROY_USER_USER_SUBSCRIPTIONS, payload)
+  changeSubscriptionField({commit}, payload) {
+    commit(types.CHANGE_SUBSCRIPTION_FIELD, payload)
   },
 
   async logout({commit}) {
@@ -124,8 +109,8 @@ export const actions = {
   },
 
   async fetchOauthUrl(ctx, {provider}) {
-    const {data} = await axios.post(`/api/oauth/${provider}`)
+    const {data} = await axios.post(`/api/oauth/${provider}`);
 
     return data.url
   }
-}
+};

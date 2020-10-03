@@ -18,14 +18,14 @@
       }
     },
     methods: {
-      getData(id) {
-        axios.get('/api/u/'+id+'/details').then((res) => {
+      getData(slug) {
+        axios.get('/api/u/'+slug+'/details').then((res) => {
           this.data = res.data;
         })
       }
     },
     created() {
-      this.getData(this.$route.params.id)
+      this.getData(this.$route.params.slug);
     }
   }
 </script>

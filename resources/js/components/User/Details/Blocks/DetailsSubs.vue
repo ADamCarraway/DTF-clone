@@ -52,7 +52,7 @@
         return this.type === 'users' ? 'Подписчики' : 'Подписки';
       },
       routeName: function () {
-        return this.type === 'users' ? 'home' : 'subsite';
+        return this.type === 'users' ? 'user' : 'category';
       },
       key: function () {
         return this.type === 'users' ? 'id' : 'slug';
@@ -69,7 +69,7 @@
         } else if (this.$route.name === 'user.details' && this.type !== 'users') {
           return {name: 'user.subscriptions'};
         } else {
-          return {name: 'subsite.subscribers'};
+          return {name: 'category.subscribers'};
         }
       },
     },

@@ -9,27 +9,8 @@
     </div>
     <div class="v-list-subsites">
       <div class="v-list-subsites__content v-list-subsites__content--columns-1">
-
-        <div v-for="item in data" v-if="item.type === 'user'" :key="item.slug" class="v-list-subsites-item">
-          <router-link :to="{ name: 'home', params: {id: item.id} }"
-                       class="v-list-subsites-item__main">
-            <div class="v-list-subsites-item__image"
-                 lazy="loaded"
-                 :style="{ backgroundImage: `url('${item.avatar}')` }">
-
-            </div>
-            <div class="v-list-subsites-item__label">
-              {{ item.name }}
-            </div>
-          </router-link>
-          <div class="v-subscribe-button v-subscribe-button--short v-subscribe-button--state-inactive">
-            <subscribe v-if="user && item.id !== user.id" :data="item" :type="'users'"></subscribe>
-          </div>
-
-        </div>
-
-        <div v-else class="v-list-subsites-item">
-          <router-link :to="{ name: 'subsite', params: {slug: item.slug} }"
+        <div v-for="item in data" :key="item.slug" class="v-list-subsites-item">
+          <router-link :to="{ name: item.type, params: {slug: item.slug} }"
                        class="v-list-subsites-item__main">
             <div class="v-list-subsites-item__image"
                  lazy="loaded"
@@ -41,10 +22,10 @@
             </div>
           </router-link>
           <div class="v-subscribe-button v-subscribe-button--short v-subscribe-button--state-inactive">
-            <subscribe :data="item" :type="'categories'"></subscribe>
+            <subscribe v-if="user && item.id !== user.id" :data="item"></subscribe>
           </div>
-        </div>
 
+        </div>
 
         <infinite-loading :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
           <div slot="no-more"></div>
@@ -77,19 +58,7 @@
         user: 'auth/user',
       }),
       title: function () {
-        return this.$route.name === 'user.subscribers' || this.$route.name === 'subsite.subscribers' ? 'Подписчики' : 'Подписки';
-      },
-      routeName: function () {
-        return this.$route.name === 'user.subscribers' || this.$route.name === 'subsite.subscribers' ? 'home' : 'subsite';
-      },
-      key: function () {
-        return this.$route.name === 'user.subscribers' || this.$route.name === 'subsite.subscribers' ? 'id' : 'slug';
-      },
-      name: function () {
-        return this.$route.name === 'user.subscribers' || this.$route.name === 'subsite.subscribers' ? 'name' : 'title';
-      },
-      avatar: function () {
-        return this.$route.name === 'user.subscribers' || this.$route.name === 'subsite.subscribers' ? 'avatar' : 'icon';
+        return this.$route.name === 'user.subscribers' || this.$route.name === 'category.subscribers' ? 'Подписчики' : 'Подписки';
       },
     },
     // beforeRouteEnter(to, from, next) {
@@ -120,9 +89,9 @@
       },
       setUrl() {
         if (this.$route.name === 'user.subscribers') {
-          this.url = '/api/u/' + this.$route.params.id + '/details/subscribers';
+          this.url = '/api/u/' + this.$route.params.slug + '/details/subscribers';
         } else if (this.$route.name === 'user.subscriptions') {
-          this.url = '/api/u/' + this.$route.params.id + '/details/subscriptions';
+          this.url = '/api/u/' + this.$route.params.slug + '/details/subscriptions';
         } else {
           this.url = '/api/' + this.$route.params.slug + '/details/subscribers';
         }

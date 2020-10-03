@@ -7,7 +7,7 @@
     </div>
     <div data-v-cab153d2="" class="v-list v-list--text">
       <div class="v-list__content" v-html="data"></div>
-      <router-link :to="{ name: 'subsite.rules' }"  class="v-list__more">
+      <router-link :to="{ name: 'category.rules' }"  class="v-list__more">
         Показать все
       </router-link>
     </div>

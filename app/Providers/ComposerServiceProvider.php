@@ -16,12 +16,13 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('spa', function ($view) {
-            $view->with('categories', Category::query()->withCount('users')->get()->keyBy('slug')->map(function (Category $category) {
-                $category['isSub'] = auth()->check() ? auth()->user()->categories->where('id', $category->id)->count() != 0 : false;
-                $category['users'] = $category->users()->limit(12)->get();
+            $categories = Category::query()->withCount('subscribers')->get()->keyBy('slug')->map(function (Category $category) {
+                $category['subscribers'] = $category->subscribers()->limit(12)->get();
 
                 return $category;
-            }));
+            });
+
+            $view->with('categories', $categories);
         });
     }
 

@@ -18,15 +18,10 @@
       ...mapGetters({
         user: 'auth/user',
       }),
-      key: function () {
-        return this.type === 'users' ? 'users_ignore' : 'categories_ignore';
-      },
       check: function () {
         if (!this.user) return true;
 
-        if (this.user[this.key] === null) return true;
-
-        return !this.user[this.key].includes(this.data.id);
+        return !this.data.is_ignore;
       },
     },
     methods: {
@@ -44,38 +39,30 @@
         }
       },
       changeForIgnore() {
-        if (this.type === 'categories') {
-          this.user.categories_ignore.push(this.data.id)
-          this.$store.dispatch('auth/updateUser', {user: {'categories_ignore': this.user.categories_ignore}})
-          this.$Notify.success({
-            message: 'Подсайт добавлен в черный список'
-          })
-        } else {
-          this.user.users_ignore.push(this.data.id)
-          this.$store.dispatch('auth/updateUser', {user: {'users_ignore': this.user.users_ignore}})
-          this.$Notify.success({
-            message: 'Пользователь добавлен в черный список'
-          })
-        }
+        this.data.is_ignore = true;
+
+        this.$store.dispatch('auth/changeSubscriptionField', {
+          slug: this.data.slug,
+          key: 'is_ignore',
+          value: 'true'
+        });
+
+        this.$Notify.success({
+          message: 'Добавлено в черный список'
+        })
       },
       changeForUnIgnore() {
-        if (this.type === 'categories') {
-          const index = this.user.categories_ignore.indexOf(this.data.id);
-          this.user.categories_ignore.splice(index, 1);
+        this.data.is_ignore = false;
 
-          this.$store.dispatch('auth/updateUser', {user: {'categories_ignore': this.user.categories_ignore}})
-          this.$Notify.success({
-            message: 'Подсайт убран из черного списка'
-          })
-        } else {
-          const index = this.user.users_ignore.indexOf(this.data.id);
-          this.user.users_ignore.splice(index, 1);
+        this.$store.dispatch('auth/changeSubscriptionField', {
+          slug: this.data.slug,
+          key: 'is_ignore',
+          value: 'false'
+        });
 
-          this.$store.dispatch('auth/updateUser', {user: {'users_ignore': this.user.users_ignore}})
-          this.$Notify.success({
-            message: 'Пользователь убран из черного списка'
-          })
-        }
+        this.$Notify.success({
+          message: 'Убрано из черного списка'
+        })
       }
     }
   }

@@ -18,27 +18,50 @@ class UserController extends Controller
      */
     public function current()
     {
-        $request = auth()->user()->load(['categories', 'users'])->toArray();
-        $request['categories'] = collect($request['categories'])->keyBy('slug');
-        $request['users'] = collect($request['users'])->keyBy('id');
-        $request['category_notify'] = auth()->user()->category_notify;
-        $request['user_notify'] = auth()->user()->user_notify;
-        $request['categories_ignore'] = auth()->user()->categories_ignore;
-        $request['users_ignore'] = auth()->user()->users_ignore;
+        $user = auth()->user();
+        $request = $user->load(['users'])->toArray();
+        $request['subscriptions'] = $user->allSubscriptions->map(function (Subscription $i) {
+            if ($i->subscription_type === Category::class) {
+                $i = Category::query()->where('id', $i->subscription_id)->first();
+            } else {
+                $i = User::query()->where('id', $i->subscription_id)->first();
+            }
+
+            return $i;
+        })->keyBy('slug');
+        $request['subscribers'] = $user->subscribers()->limit(12)->get();
+        $request['subscribers_count'] = $user->subscribers()->count();
+        $request['subscriptions_count'] = $user->allSubscriptions()->count();
 
         return response()->json($request);
     }
 
-    public function show(Request $request, $id)
+    public function show(Request $request, $slug)
     {
-        $user = User::query()->withCount('allSubscriptions')->where('id', $id)->firstOrFail()->load(['subscribers', 'categories'])->toArray();
+        /** @var User $user */
+        $user = User::query()
+            ->whereSlug($slug)
+            ->firstOrFail();
+
+        $user['subscriptions'] = $user->allSubscriptions()->limit(5)->get()->map(function (Subscription $i) {
+            if ($i->subscription_type === Category::class) {
+                $i = Category::query()->where('id', $i->subscription_id)->first();
+            } else {
+                $i = User::query()->where('id', $i->subscription_id)->first();
+            }
+
+            return $i;
+        })->keyBy('slug');
+        $user['subscribers'] = $user->subscribers()->limit(12)->get();
+        $user['subscribers_count'] = $user->subscribers()->count();
+        $user['subscriptions_count'] = $user->allSubscriptions()->count();
 
         return response()->json($user);
     }
 
-    public function details($id)
+    public function details($slug)
     {
-        $user = User::query()->where('id', $id)->firstOrFail();
+        $user = User::query()->whereSlug($slug)->firstOrFail();
 
         return response()->json([
             'subscribers' => $user->subscribers()->paginate(6),
@@ -46,16 +69,16 @@ class UserController extends Controller
         ]);
     }
 
-    public function subscribers($id)
+    public function subscribers($slug)
     {
-        $user = User::query()->where('id', $id)->firstOrFail();
+        $user = User::query()->whereSlug($slug)->firstOrFail();
 
         return response()->json($user->subscribers()->paginate(10));
     }
 
-    public function subscriptions($id)
+    public function subscriptions($slug)
     {
-        $user = User::query()->where('id', $id)->firstOrFail();
+        $user = User::query()->whereSlug($slug)->firstOrFail();
 
         $subs = $user->allSubscriptions()->paginate(10)
             ->getCollection()

@@ -14,7 +14,7 @@
 
             <router-link v-for="subsite in subs" :key="subsite.slug"
                          v-show="subsite.isVisible"
-                         :to="{ name: 'subsite', params: {'slug': subsite.slug} }"
+                         :to="{ name: subsite.type, params: {'slug': subsite.slug} }"
                          class="sidebar__tree-list__item lm-ph-15 sidebar__tree-list__item--with-image">
               <div class="sidebar-tree-list-item__link">
                 <img class="sidebar__tree-list__item__image"
@@ -52,10 +52,10 @@
     },
     computed: mapGetters({
       user: 'auth/user',
-      userCategoriesSubs: 'auth/userCategoriesSubs',
+      subscriptions: 'auth/subscriptions',
     }),
     mounted() {
-      this.subs = this.user ? this.userCategoriesSubs : window.config.categories;
+      this.subs = this.user ? this.subscriptions : window.config.categories;
       this.showAll(false)
 
       EventBus.$on('sidebarShow', (status) => {
