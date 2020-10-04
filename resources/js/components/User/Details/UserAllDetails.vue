@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data">
+  <div>
     <details-subs :data="data.subscribers" :type="'users'"></details-subs>
     <details-subs :data="data.subscriptions" :type="'categories'"></details-subs>
   </div>
@@ -14,7 +14,10 @@
     components: {DetailsSubs},
     data(){
       return{
-        data: null
+        data: {
+          subscribers: [],
+          subscriptions: []
+        }
       }
     },
     methods: {

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data">
+  <div>
     <details-subs :data="data.users" :type="'users'"></details-subs>
     <details-regulations :data="data.rules"></details-regulations>
   </div>
@@ -15,7 +15,10 @@
     components: {DetailsRegulations, DetailsSubs},
     data(){
       return{
-        data: null
+        data: {
+          users: [],
+          rules: ''
+        }
       }
     },
     methods: {

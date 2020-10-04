@@ -19,12 +19,11 @@
         <input class="subsites_catalog__search__bar l-ml-15" placeholder="Поиск"
                data-gtm="Subsites catalog – Search">
       </div>
-
       <div class="subsites_catalog__content l-island-bg">
         <div v-for="item in subs" :key="item.slug" class="subsites_catalog_item l-island-a l-pv-20">
-          <div class="subsite_card_simple">
+          <div class="subsite_card_simple" :class="{'subsite_card_simple_short': (item.slug in subscriptions)}">
             <router-link :to="{ name: 'category', params: { slug: item.slug }  }"
-                         class="subsite_card_simple__avatar l-block l-s-38 l-mins-38 lm-s-40 lm-mins-40">
+                         class="subsite_card_simple__avatar l-block l-s-30 l-mins-30">
               <img class="andropov_image " style="background-color: transparent;"
                    :src="item.icon">
             </router-link>
@@ -33,7 +32,14 @@
                            class="subsite_card_simple__title l-block l-fw-500">
                 <span>{{item.title}}</span>
               </router-link>
-              <p class="subsite_card_simple__description l-mt-2">{{ item.description }}</p>
+              <p v-if="!(item.slug in subscriptions)" class="subsite_card_simple__description l-mt-2">
+                <span v-if="item.description.length > 97">
+                  {{ item.description.slice(0,97)+'...' }}
+                </span>
+                <span v-else>
+                  {{ item.description}}
+                </span>
+              </p>
             </div>
             <div class="subsite_card_simple__controls l-ml-30">
               <div
@@ -93,6 +99,9 @@
     },
     created() {
       this.subs = window.config.categories;
+    },
+    metaInfo() {
+      return {title: 'Каталог подсайтов'}
     }
   }
 </script>

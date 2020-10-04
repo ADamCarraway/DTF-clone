@@ -40,13 +40,13 @@
             <div class="v-header__actions">
               <div
                 class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
-                <subscribe :data="data" :type="'categories'"></subscribe>
-                <notification :data="data" :type="'categories'"></notification>
+                <subscribe :data="data"></subscribe>
+                <notification :data="data"></notification>
               </div>
               <at-dropdown trigger="click" class="etc_control">
                 <span><i class="fas fa-ellipsis-h"></i></span>
                 <at-dropdown-menu slot="menu" class="etc_control__list">
-                  <ignore :data="data" :type="'categories'"></ignore>
+                  <ignore :data="data"></ignore>
                 </at-dropdown-menu>
               </at-dropdown>
             </div>
@@ -59,7 +59,7 @@
             </div>
 
             <category-tabs :data="data"></category-tabs>
-            <mini-header></mini-header>
+            <mini-header :data="data"></mini-header>
 
           </div>
         </div>

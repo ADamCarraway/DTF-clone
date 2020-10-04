@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data">
+  <div>
     <div class="l-page l-page--header-content-sidebar l-mt-12 l-mb-12">
 
       <div class="l-page__header">
@@ -8,15 +8,15 @@
             <div v-if="data.header" class="v-header-cover v-header__cover"
                  :style="{ backgroundImage: `url('${data.header}')`, backgroundPosition: `50% 0%` }"></div>
 
-            <div class="v-header__avatar v-header-avatar"
+            <div :class="{'preloader': !data.avatar}" class="v-header__avatar v-header-avatar"
                  :style="{ backgroundImage: `url('${data.avatar}')` }">
-
             </div>
+
             <div class="v-header__content">
               <div class="v-header__title">
                 <div class="v-header-title">
                   <div class="v-header-title__main">
-                    <div class="v-header-title__item v-header-title__name">
+                    <div :class="{'preloader preloader-name': !data.name}"  class="v-header-title__item v-header-title__name">
                       {{ data.name }}
                     </div>
                   </div>
@@ -24,8 +24,9 @@
               </div>
             </div>
             <div class="v-header__actions">
-              <div
-                class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
+              <div v-if="!data.id" class="preloader preloader-actions"></div>
+              <div v-else
+                   class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
                 <subscribe v-if="user && data.id !== user.id" :data="data" :type="data.type"></subscribe>
                 <notification :data="data" :type="'users'"></notification>
 
@@ -47,12 +48,13 @@
             </div>
 
             <div class="v-header__stats">
-              <div class="v-header__stat">
+              <div :class="{'preloader preloader-stat': !data.created_at}" class="v-header__stat">
                 <i class="fas fa-egg"></i>
                 На проекте с {{ date }}
               </div>
             </div>
             <user-tabs/>
+            <mini-header :data="data"></mini-header>
           </div>
         </div>
       </div>
@@ -84,9 +86,11 @@
   import SubsiteSidebar from "../components/User/SubsiteSidebar";
   import DetailsSidebar from "../components/User/Details/Blocks/DetailsSidebar";
   import UserDetailsSidebar from "../components/User/Details/Blocks/UserDetailsSidebar";
+  import MiniHeader from "../components/User/MiniHeader";
 
   export default {
     components: {
+      MiniHeader,
       UserDetailsSidebar,
       SubsiteSidebar, UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, UserTabs, Notification
     },
@@ -112,6 +116,7 @@
       });
     },
     beforeRouteUpdate(to, from, next) {
+      this.data = {}
       this.getData(to.params.slug);
       next()
     },

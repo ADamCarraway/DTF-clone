@@ -20,7 +20,7 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $request = $user->load(['users'])->toArray();
-        $request['subscriptions'] = $user->allSubscriptions->sortByDesc('date')->map(function (Subscription $i) {
+        $request['subscriptions'] = $user->allSubscriptions->sortBy('type')->map(function (Subscription $i) {
             $is_favorite = $i->favorite;
             $date = $i->created_at;
             if ($i->subscription_type === Category::class) {
@@ -34,7 +34,7 @@ class UserController extends Controller
             }
 
             return $i;
-        })->sortBy('type')->sortByDesc('is_favorite')->keyBy('slug')->toArray();
+        })->sortByDesc('date')->sortByDesc('is_favorite')->keyBy('slug')->toArray();
         $request['subscribers'] = $user->subscribers()->limit(12)->get();
         $request['subscribers_count'] = $user->subscribers()->count();
         $request['subscriptions_count'] = $user->allSubscriptions()->count();

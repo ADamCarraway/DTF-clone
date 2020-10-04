@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data" class="l-island-bg l-island-round v-island">
+  <div v-if="Object.keys(data).length !== 0" class="l-island-bg l-island-round v-island">
     <div class="v-island__header">
       <span class="v-island__title">
       {{ title }}
@@ -10,14 +10,14 @@
     <div class="v-list-subsites">
       <div class="v-list-subsites__content v-list-subsites__content--columns-2">
         <div v-for="item in data.data" class="v-list-subsites-item">
-          <router-link :to="{ name: routeName, params: {[key]: item[key]} }" :key="item.id"
+          <router-link :to="{ name: item.type, params: {slug: item.slug} }" :key="item.slug"
                        class="v-list-subsites-item__main">
             <div class="v-list-subsites-item__image"
                  lazy="loaded"
-                 :style="{ backgroundImage: `url('${item[avatar]}')` }"
-            ></div>
+                 :style="{ backgroundImage: `url('${item.icon}')` }">
+            </div>
             <div class="v-list-subsites-item__label">
-              {{ item[name] }}
+              {{ item.title }}
             </div>
           </router-link>
           <div v-if="type === 'users'"
@@ -34,15 +34,17 @@
       </router-link>
     </div>
   </div>
+  <details-sub-pre-block v-else></details-sub-pre-block>
 </template>
 
 <script>
   import Subscribe from "../../../Buttons/Subscribe";
   import {mapGetters} from "vuex";
+  import DetailsSubPreBlock from "../../../Preloaders/DetailsSubPreBlock";
 
   export default {
     name: "DetailsSubs",
-    components: {Subscribe},
+    components: {DetailsSubPreBlock, Subscribe},
     props: ['data', 'type'],
     computed: {
       ...mapGetters({
@@ -51,18 +53,7 @@
       title: function () {
         return this.type === 'users' ? 'Подписчики' : 'Подписки';
       },
-      routeName: function () {
-        return this.type === 'users' ? 'user' : 'category';
-      },
-      key: function () {
-        return this.type === 'users' ? 'id' : 'slug';
-      },
-      name: function () {
-        return this.type === 'users' ? 'name' : 'title';
-      },
-      avatar: function () {
-        return this.type === 'users' ? 'avatar' : 'icon';
-      },
+
       to: function () {
         if (this.$route.name === 'user.details' && this.type === 'users') {
           return {name: 'user.subscribers'};

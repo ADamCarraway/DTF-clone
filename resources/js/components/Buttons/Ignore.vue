@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-if="check" @click="toIgnore(1)"
+    <div v-if="check" @click="toIgnore(true)"
          class="at-dropdown-menu__item etc_control__item">Игнорировать
     </div>
-    <div v-else @click="toIgnore(0)" class="at-dropdown-menu__item etc_control__item">Не игнорировать</div>
+    <div v-else @click="toIgnore(false)" class="at-dropdown-menu__item etc_control__item">Не игнорировать</div>
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 
   export default {
     name: "Ignore",
-    props: ['data', 'type'],
+    props: ['data'],
     computed: {
       ...mapGetters({
         user: 'auth/user',
@@ -27,43 +27,37 @@
     methods: {
       toIgnore(type) {
         if (type) {
-          axios.post('/api/ignore/store/' + this.type + 'Ignore/' + this.data.id).then((res) => {
-            this.changeForIgnore();
+          axios.post('/api/ignore/store/' + this.data.type + 'Ignore/' + this.data.id).then((res) => {
+            this.changeForIgnore(type);
           })
         }
 
         if (!type) {
-          axios.post('/api/ignore/destroy/' + this.type + 'Ignore/' + this.data.id).then((res) => {
-            this.changeForUnIgnore()
+          axios.post('/api/ignore/destroy/' + this.data.type + 'Ignore/' + this.data.id).then((res) => {
+            this.changeForIgnore(type)
           })
         }
       },
-      changeForIgnore() {
-        this.data.is_ignore = true;
+      changeForIgnore(status) {
+        this.data.is_ignore = status;
 
         this.$store.dispatch('auth/changeSubscriptionField', {
           slug: this.data.slug,
           key: 'is_ignore',
-          value: 'true'
+          value: status
         });
 
-        this.$Notify.success({
-          message: 'Добавлено в черный список'
-        })
+        if (status) {
+          this.$Notify.success({
+            message: 'Добавлено в черный список'
+          })
+        } else {
+          this.$Notify.success({
+            message: 'Убрано из черного списка'
+          })
+        }
       },
-      changeForUnIgnore() {
-        this.data.is_ignore = false;
 
-        this.$store.dispatch('auth/changeSubscriptionField', {
-          slug: this.data.slug,
-          key: 'is_ignore',
-          value: 'false'
-        });
-
-        this.$Notify.success({
-          message: 'Убрано из черного списка'
-        })
-      }
     }
   }
 </script>

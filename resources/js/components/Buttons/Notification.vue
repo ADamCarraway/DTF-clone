@@ -1,7 +1,7 @@
 <template>
     <div v-if="data && data.slug in subscriptions"
          class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
-        <div v-if="!data.is_notify" @click="notify(1)">
+        <div v-if="!data.is_notify" @click="notify(true)">
             <div class="v-button__icon">
                 <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
                    aria-hidden="true"></i>
@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <div v-if="data.is_notify" @click="notify(0)">
+        <div v-if="data.is_notify" @click="notify(false)">
             <div class="v-button__icon">
                 <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
                    aria-hidden="true"></i>
@@ -25,7 +25,7 @@
 
     export default {
         name: "Notification",
-        props: ['data', 'type'],
+        props: ['data'],
         data() {
             return {
                 loadingNotify: false,
@@ -41,49 +41,40 @@
             notify(type) {
                 this.loadingNotify = true;
                 if (type) {
-                    axios.post('/api/notifications/subscribe/' + this.type + 'Notify/' + this.data.id).then((res) => {
-                        this.changeForNotify();
+                    axios.post('/api/notifications/subscribe/' + this.data.type + 'Notify/' + this.data.id).then((res) => {
+                        this.changeForNotify(type);
                     }).catch(() => {
                         this.loadingNotify = false;
                     })
                 }
 
                 if (!type) {
-                    axios.post('/api/notifications/unsubscribe/' + this.type + 'Notify/' + this.data.id).then((res) => {
-                        this.changeForUnNotify();
+                    axios.post('/api/notifications/unsubscribe/' + this.data.type + 'Notify/' + this.data.id).then((res) => {
+                        this.changeForNotify(type);
                     }).catch(() => {
                         this.loadingNotify = false;
                     })
                 }
+                this.loadingNotify = false;
             },
-            changeForNotify() {
-                this.data.is_notify = true;
+            changeForNotify(status) {
+                this.data.is_notify = status;
                 this.$store.dispatch('auth/changeSubscriptionField', {
                     slug: this.data.slug,
                     key: 'is_notify',
-                    value: 'true'
+                    value: status
                 });
 
-
-                this.$Notify.success({
-                    message: 'Мы уведомим вас о новых записях'
-                });
-                this.loadingNotify = false;
+                if (status) {
+                    this.$Notify.success({
+                        message: 'Мы уведомим вас о новых записях'
+                    });
+                } else {
+                    this.$Notify.success({
+                        message: 'Вы отписались от уведомлений о новых записях'
+                    });
+                }
             },
-            changeForUnNotify() {
-                this.data.is_notify = false;
-                this.$store.dispatch('auth/changeSubscriptionField', {
-                    slug: this.data.slug,
-                    key: 'is_notify',
-                    value: 'false'
-                });
-
-
-                this.$Notify.success({
-                    message: 'Вы отписались от уведомлений о новых записях'
-                });
-                this.loadingNotify = false;
-            }
         },
     }
 </script>

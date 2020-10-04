@@ -1,100 +1,70 @@
 <template>
-  <div class="v-mini-header l-island-bg l-island-round" style="--width:960px;">
+  <div v-if="data" class="v-mini-header l-island-bg l-island-round" :class="{'v-mini-header--active': tabsPos <= 60}"
+       style="--width:960px;">
     <div class="v-header-avatar"
-         style="background-image: url(&quot;https://leonardo.osnova.io/e5348320-b11a-9419-fb85-f7b63e2de194/-/scale_crop/224x224/center/&quot;);">
-      <!----> <!----></div>
+         :style="{ backgroundImage: `url('${data.icon}')` }">
+    </div>
     <div class="v-mini-header__title">
-      Игры
+      {{ data.title }}
     </div>
-    <div class="v-tabs">
-      <div class="v-tabs__scroll">
-        <div class="v-tabs__content"><a href="https://dtf.ru/games/entries" class="v-tab"><span class="v-tab__label">
-            Статьи
 
-            <span class="v-tab__counter">
-              16 139
-            </span></span></a><a href="https://dtf.ru/games/comments" class="v-tab"><span class="v-tab__label">
-            Комментарии
-
-            <span class="v-tab__counter">
-              10
-            </span></span></a><a href="https://dtf.ru/games/details" class="v-tab v-tab--active"><span
-          class="v-tab__label">
-            Подробнее
-
-          <!----></span></a></div>
-      </div>
+    <div v-if="data.type === 'user'">
+      <user-tabs/>
     </div>
-    <div class="v-header-actions v-header-actions--mini">
-      <div data-v-66557ed4="" data-subsite-id="64953"
-           class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-inactive">
-        <button data-layout-mobile="icon,label" data-layout-desktop="icon,label"
-                class="v-subscribe-button__subscribe v-button v-button--blue v-button--size-default"
-                data-button="subscribe">
-          <div class="v-button__icon">
-            <svg height="14" width="14" class="icon icon--ui_plus">
-              <use xlink:href="#ui_plus"></use>
-            </svg>
-          </div>
-          <span class="v-button__label">
-      Подписаться
-    </span></button>
-        <button data-layout-mobile="icon,label" data-layout-desktop="icon,label"
-                class="v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default"
-                data-button="subscribe">
-          <div class="v-button__icon">
-            <svg height="12" width="12" class="icon icon--ui_close">
-              <use xlink:href="#ui_close"></use>
-            </svg>
-          </div>
-          <span class="v-button__label">
-      Отписаться
-    </span></button>
-        <button data-layout-mobile="icon,label" data-layout-desktop="icon,label"
-                class="v-subscribe-button__subscribed v-button v-button--default v-button--size-default">
-          <div class="v-button__icon">
-            <svg height="11" width="14" class="icon icon--ui_check">
-              <use xlink:href="#ui_check"></use>
-            </svg>
-          </div>
-          <span class="v-button__label">
-      Подписан
-    </span></button>
-        <button data-layout-mobile="icon,label" data-layout-desktop="icon,label"
-                class="v-subscribe-button__notifications v-button v-button--default v-button--size-default"
-                data-button="notifications">
-          <div class="v-button__icon">
-            <svg height="16" width="16" class="icon icon--bell">
-              <use xlink:href="#bell"></use>
-            </svg>
-          </div> <!----></button>
+    <div v-else>
+      <category-tabs :data="data"></category-tabs>
+    </div>
+
+
+    <div class="v-header-actions v-header-actions--mini" v-if="user && user.slug !== $route.params.slug">
+      <div
+        class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
+        <subscribe :data="data" :type="data.type"></subscribe>
+        <notification :data="data" :type="data.type"></notification>
       </div>
-      <button data-v-66557ed4="" data-layout-mobile="icon" data-layout-desktop="icon,label"
-              class="v-button v-button--default v-button--size-default">
-        <div class="v-button__icon">
-          <svg height="19" width="21" class="icon icon--icon-messenger">
-            <use xlink:href="#icon-messenger"></use>
-          </svg>
-        </div>
-        <span class="v-button__label">
-        Написать
-      </span></button> <!---->
-      <div data-v-66557ed4="" air-module="module.etc_controls" data-mobile-align="right" data-user-id="64953"
-           data-subsite-url="https://dtf.ru/games" data-ignore_user_toggle-state="0" data-ignore_user_toggle_3-state="0"
-           data-ban-state="0" data-subsite-id="64953"
-           data-permissions="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7Imlnbm9yZV91c2VyX3RvZ2dsZV8zIjo2NDk1MywiYmFuIjo2NDk1MywiY29tcGxhaW5fc3Vic2l0ZSI6bnVsbH0sImlhdCI6MTYwMTU3NjYwNiwiZXhwIjoxNjAxNjYzMDA2fQ.BNXIpImu7vPjrGe1xrXlTcZ0ag-ZIKhdFdG5jF_-gA4"
-           class="etc_control">
-        <svg data-v-66557ed4="" height="8" width="18" class="icon icon--ui_etc">
-          <use xlink:href="#ui_etc"></use>
-        </svg>
-      </div>
+      <at-dropdown trigger="click" class="etc_control">
+        <span><i class="fas fa-ellipsis-h"></i></span>
+        <at-dropdown-menu slot="menu" class="etc_control__list">
+          <ignore :data="data" :type="data.type"></ignore>
+        </at-dropdown-menu>
+      </at-dropdown>
     </div>
   </div>
 </template>
 
 <script>
+  import CategoryTabs from "./CategoryTabs";
+  import Subscribe from "../Buttons/Subscribe";
+  import Ignore from "../Buttons/Ignore";
+  import Notification from "../../components/Buttons/Notification";
+  import UserTabs from "./UserTabs";
+  import {mapGetters} from "vuex";
+
   export default {
-    name: "MiniHeader"
+    name: "MiniHeader",
+    components: {UserTabs, Ignore, Subscribe, CategoryTabs, Notification},
+    props: ['data'],
+    computed: {
+      ...mapGetters({
+        user: 'auth/user',
+      }),
+    },
+    data() {
+      return {
+        scrollPos: 0,
+        tabsPos: 299,
+      }
+    },
+    mounted() {
+      let t = this;
+
+      window.addEventListener('scroll', function (e) {
+        t.scrollPos = window.scrollY;
+        if (document.querySelector(".v-header__tabs") !== null) {
+          t.tabsPos = document.querySelector(".v-header__tabs").getBoundingClientRect().top
+        }
+      })
+    },
   }
 </script>
 

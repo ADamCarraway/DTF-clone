@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\CancelSubscriptionEvent;
 use App\Listeners\AddSubsToUser;
+use App\Listeners\UserNotifyRemove;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -26,6 +28,10 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\\Facebook\\FacebookExtendSocialite@handle',
             'SocialiteProviders\\Google\\GoogleExtendSocialite@handle',
         ],
+
+        CancelSubscriptionEvent::class => [
+            UserNotifyRemove::class
+        ]
     ];
 
     /**

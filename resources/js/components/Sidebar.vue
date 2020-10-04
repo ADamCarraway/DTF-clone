@@ -1,5 +1,5 @@
 <template>
-  <div class="layout__left-column layout__sticky">
+  <div class="layout__left-column layout__sticky" v-show="!hideSidebar">
     <div class="sidebar">
       <div class="sidebar__scroll vb vb-visible" style="position: relative; overflow: hidden;">
         <div class="vb-content"
@@ -20,14 +20,7 @@
                 <img class="sidebar__tree-list__item__image"
                      :src="item.icon" lazy="loaded" alt="">
                 <p class="sidebar__tree-list__item__name">{{ item.title }}</p>
-                <div v-if="item.is_favorite" @click="toFavorite(0,item.slug, item.type)"
-                     class="sidebar-tree-list-item__favourite sidebar-tree-list-item__favourite--active">
-                  <i class="fas fa-thumbtack"></i>
-                </div>
-                <div v-else @click="toFavorite(1,item.slug, item.type)"
-                     class="sidebar-tree-list-item__favourite">
-                  <i class="fas fa-thumbtack"></i>
-                </div>
+                <favorite :data="item"></favorite>
               </div>
             </router-link>
 
@@ -48,12 +41,14 @@
   import {mapGetters} from "vuex";
   import {forEach} from "../helpers"
   import axios from "axios";
+  import Favorite from "./Buttons/Favorite";
 
   export default {
     name: "Sidebar",
-    components: {MainList},
+    components: {Favorite, MainList},
     data() {
       return {
+        hideSidebar: false,
         hide: true,
         subs: {},
         active: []
@@ -67,8 +62,8 @@
       this.subs = this.user ? this.subscriptions : window.config.categories;
       this.showAll(false)
 
-      EventBus.$on('sidebarShow', (status) => {
-        this.show = status;
+      EventBus.$on('hideSidebar', () => {
+        this.hideSidebar = !this.hideSidebar;
       });
     },
 
@@ -85,29 +80,6 @@
           this.subs[prop]['isVisible'] = i <= 5;
           i++;
         });
-      },
-      toFavorite(value, slug, type) {
-        if (!value) {
-          axios.post('/api/' + slug + '/' + type + '/favorite/destroy').then((res) => {
-            this.$store.dispatch('auth/changeSubscriptionField', {
-              slug: slug,
-              key: 'is_favorite',
-              value: 0
-            });
-          }).catch(() => {
-          })
-        }
-
-        if (value) {
-          axios.post('/api/' + slug + '/' + type + '/favorite/store').then((res) => {
-            this.$store.dispatch('auth/changeSubscriptionField', {
-              slug: slug,
-              key: 'is_favorite',
-              value: 1
-            });
-          }).catch(() => {
-          })
-        }
       }
     }
   }

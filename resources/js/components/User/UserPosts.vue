@@ -1,13 +1,15 @@
 <template>
-    <div>
-      POSTS
-    </div>
+  <div class="l-mb-20">
+    <create-post-block></create-post-block>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "UserPosts"
-    }
+  import CreatePostBlock from "../Blocks/CreatePostBlock";
+  export default {
+    name: "UserPosts",
+    components: {CreatePostBlock}
+  }
 </script>
 
 <style scoped>

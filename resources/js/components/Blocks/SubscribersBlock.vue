@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data" class="l-island-bg l-island-round v-island">
+  <div v-if="Object.keys(data).length !== 0" class="l-island-bg l-island-round v-island">
     <div class="v-island__header">
       <span class="v-island__title">Подписчики</span>
       <span class="v-island__counter">{{ data.subscribers_count }}</span>
@@ -21,11 +21,14 @@
       Пока что подписчиков нет =(
     </div>
   </div>
+  <subscribers-pre-block v-else></subscribers-pre-block>
 </template>
 
 <script>
+  import SubscribersPreBlock from "../Preloaders/SubscribersPreBlock";
   export default {
     name: "SubscribersBlock",
+    components: {SubscribersPreBlock},
     props: ['data'],
     computed: {
     }

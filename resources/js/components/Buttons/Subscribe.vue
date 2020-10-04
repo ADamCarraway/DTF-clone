@@ -28,7 +28,7 @@
 
   export default {
     name: "Subscribe",
-    props: ['data', 'type'],
+    props: ['data'],
     data() {
       return {
         loadingSub: false,
@@ -62,7 +62,7 @@
         }
       },
       changeForSubscribe() {
-        if (this.type === 'category') {
+        if (this.data.type === 'category') {
           this.data['isSub'] = true;
           this.data['isVisible'] = Object.keys(this.subscriptions).length < 7;
 
@@ -72,11 +72,19 @@
         }
       },
       changeForUnSubscribe() {
-        if (this.type === 'category') {
+        this.data.is_notify = false;
+        this.$store.dispatch('auth/changeSubscriptionField', {
+          slug: this.data.slug,
+          key: 'is_notify',
+          value: false
+        });
+
+        if (this.data === 'category') {
           this.$store.dispatch('auth/destroySubscription', {slug: this.data.slug})
         }else {
           this.$store.dispatch('auth/destroySubscription', {slug: this.data.slug});
         }
+
       },
     },
   }

@@ -90,22 +90,22 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
         return $this->morphedByMany(Category::class, 'subscription');
     }
 
-    public function usersNotify()
+    public function userNotify()
     {
         return $this->morphedByMany(User::class, 'subs_notify');
     }
 
-    public function categoriesNotify()
+    public function categoryNotify()
     {
         return $this->morphedByMany(Category::class, 'subs_notify');
     }
 
-    public function usersIgnore()
+    public function userIgnore()
     {
         return $this->morphedByMany(User::class, 'ignoreable');
     }
 
-    public function categoriesIgnore()
+    public function categoryIgnore()
     {
         return $this->morphedByMany(Category::class, 'ignoreable');
     }
@@ -145,14 +145,14 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     {
         if (!auth()->check() || auth()->id() === $this->id) return false;
 
-        return auth()->user()->usersIgnore()->where('ignoreable_id', $this->id)->exists();
+        return auth()->user()->userIgnore()->where('ignoreable_id', $this->id)->exists();
     }
 
     public function getIsNotifyAttribute()
     {
         if (!auth()->check()) return false;
 
-        return auth()->user()->usersNotify()->where('subs_notify_id', $this->id)->exists();
+        return auth()->user()->userNotify()->where('subs_notify_id', $this->id)->exists();
     }
 
     public function scopeWhereSlug(Builder $query, $slug)

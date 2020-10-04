@@ -8,15 +8,45 @@
         </p>
 
         <div class="live__toggle">
-          <i class="icon icon-arrow-right fs-24" v-if="show"></i>
-          <i class="icon icon-arrow-left fs-24" v-else></i>
+          <i class="fas fa-chevron-right" v-if="show"></i>
+          <i class="fas fa-chevron-left" v-else></i>
         </div>
 
       </div>
       <div class="live__content" v-if="show">
         <div class="live__scrollable_parent">
           <div class="live__scrollable">
-            dsadsadsa
+            <div v-for="i in [1,2,3,4,5,6,7,8,9]" :key="i" class="live__item live__item--comment">
+              <div class="live__item__header">
+                <a href="https://dtf.ru/u/104087-konstantin-gavrilov" class="live__item__user">
+                  <img class="andropov_image live__item__user__image" air-module="module.andropov"
+                       src="https://leonardo.osnova.io/d0899f05-8489-abde-8cfc-60986c29cb96/-/scale_crop/224x224/center/">
+                  <p class="live__item__user__name">
+                    <span>Sergey Serousov</span>
+                  </p>
+                </a>
+                <a
+                  href="https://dtf.ru/games/224785-razrabotchiki-amnesia-rebirth-podelilis-novymi-podrobnostyami-horrora?comment=7045486"
+                  class="live__item__date">
+                  <time class="time" air-module="module.date" data-date="1601840057" data-type="short"></time>
+                </a>
+              </div>
+              <div>
+                <a
+                  href="https://dtf.ru/games/224785-razrabotchiki-amnesia-rebirth-podelilis-novymi-podrobnostyami-horrora?comment=7045486"
+                  class="live__item__content">
+                  <div class="live__item__text">Просто в момент очередного дропа задуматься и поступить на этот раз
+                    иначе. Сквозь страх…
+                  </div>
+                </a>
+              </div>
+              <a
+                href="https://dtf.ru/games/224785-razrabotchiki-amnesia-rebirth-podelilis-novymi-podrobnostyami-horrora"
+                class="live__item__title "
+                title="Разработчики Amnesia: Rebirth поделились новыми подробностями хоррора">
+                <span>Разработчики Amnesia: Rebirth…</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -44,8 +74,8 @@
     width: auto;
   }
 
-  .live__caption_border-hide::after{
-    display:none;
+  .live__caption_border-hide::after {
+    display: none;
   }
 
 </style>

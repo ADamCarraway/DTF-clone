@@ -27,13 +27,13 @@ class Category extends Model
     {
         if (!auth()->check()) return false;
 
-        return auth()->user()->categoriesIgnore()->where('ignoreable_id', $this->id)->exists();
+        return auth()->user()->categoryIgnore()->where('ignoreable_id', $this->id)->exists();
     }
 
     public function getIsNotifyAttribute()
     {
         if (!auth()->check()) return false;
 
-        return auth()->user()->categoriesNotify()->where('subs_notify_id', $this->id)->exists();
+        return auth()->user()->categoryNotify()->where('subs_notify_id', $this->id)->exists();
     }
 }

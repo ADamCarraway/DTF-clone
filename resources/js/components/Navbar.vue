@@ -122,7 +122,6 @@
     data: () => ({
       appName: window.config.appName,
       loginModal: false,
-      sidebarShow: true
     }),
 
     computed: mapGetters({
@@ -147,8 +146,7 @@
         location.reload()
       },
       sidebarChange() {
-        EventBus.$emit('sidebarShow', !this.sidebarShow);
-        this.sidebarShow = !this.sidebarShow
+        EventBus.$emit('hideSidebar');
       }
     }
   }

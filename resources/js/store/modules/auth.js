@@ -2,6 +2,8 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import * as types from '../mutation-types'
 import vue from 'vue'
+import moment from "moment";
+
 // state
 export const state = {
   user: null,
@@ -59,6 +61,7 @@ export const mutations = {
 
   [types.ADD_SUBSCRIPTION](state, {sub}) {
     vue.set(state.subscriptions, sub.slug, sub);
+    vue.set(state.subscriptions[sub.slug], 'date', moment().format());
   },
 
   [types.CHANGE_SUBSCRIPTION_FIELD](state, {slug, key, value}) {

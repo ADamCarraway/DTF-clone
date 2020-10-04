@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Events\CancelSubscriptionEvent;
 use App\User;
 
 class SubscriptionController extends Controller
@@ -22,6 +23,8 @@ class SubscriptionController extends Controller
 
     public function destroy($slug, $type)
     {
+        event(new CancelSubscriptionEvent($slug, $type));
+
         if ($type === 'category') {
             $category = Category::query()->where('slug', $slug)->firstOrFail();
 
