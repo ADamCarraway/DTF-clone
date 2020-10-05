@@ -1,11 +1,14 @@
 <template>
-  <div :class="{'miniEditor': true,'miniEditor--active': editorShow}" class="l-island-a l-island-bg l-island-round"
+  <div :class="{'miniEditor': true,'miniEditor--active': editorShow}"
+       class="l-island-a l-island-bg l-island-round"
+       v-if="user"
+       v-click-outside="editorHide"
        @click="editorShowed()">
     <div class="miniEditor__full" v-if="editorShow">
       <i class="fas fa-expand-arrows-alt"></i>
     </div>
     <div class="miniEditor__avatar" v-if="!editorShow">
-      <img src="https://leonardo.osnova.io/d0899f05-8489-abde-8cfc-60986c29cb96/-/scale_crop/64x64/center/">
+      <img :src="user.avatar">
     </div>
     <div class="miniEditor__text">
       Новая запись
@@ -32,7 +35,7 @@
         <span class="ui_preloader__dot"></span>
         <span class="ui_preloader__dot"></span>
       </span>
-      <div class="ui-button ui-button--1" v-show="editorShow">
+      <div class="ui-button ui-button--1" v-show="editorShow" @click="create()">
         Опубликовать
       </div>
     </div>
@@ -41,14 +44,16 @@
 
 <script>
   import EditorJS from '@editorjs/editorjs';
+  import ClickOutside from 'vue-click-outside'
 
   import Header from "@editorjs/header";
   import Paragraph from "@editorjs/paragraph";
   import List from "@editorjs/list";
+  import axios from "axios";
 
   export default {
     name: "CreatePostBlock",
-    props: ['data'],
+    props: ['user'],
     data() {
       return {
         editorShow: false
@@ -57,6 +62,9 @@
     methods: {
       editorShowed() {
         this.editorShow = true;
+      },
+      editorHide() {
+        this.editorShow = false;
       },
       myEditor: function () {
         window.editor = new EditorJS({
@@ -88,22 +96,33 @@
             console.log("change");
           }
         });
+      },
+      create() {
+        axios.post('/api/'+this.$route.params.slug+'/posts/store').then((response) => {
+          this.$Notify.success({
+            message: 'Материал опубликован'
+          });
+        })
       }
     },
     mounted: function () {
+      this.popupItem = this.$el
       this.myEditor();
+    },
+    directives: {
+      ClickOutside
     }
   }
 </script>
 
 <style>
-  .miniEditor--active .ce-block:first-child {
-    margin-right: 35px;
-  }
-
-  .codex-editor__redactor {
+  .miniEditor__editor .codex-editor__redactor {
     max-width: 680px;
     padding-bottom: 143px !important;
+  }
+
+  .miniEditor__editor .ce-toolbar__actions {
+    display: none;
   }
 
 </style>

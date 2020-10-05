@@ -32,6 +32,7 @@
     "sweetalert2": "^8.10.0",
     "vform": "^1.0.0",
     "vue": "^2.6.10",
+    "vue-click-outside": "^1.1.0",
     "vue-i18n": "^8.11.2",
     "vue-infinite-loading": "^2.4.5",
     "vue-meta": "^1.6.0",

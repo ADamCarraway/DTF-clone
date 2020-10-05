@@ -36,4 +36,9 @@ class Category extends Model
 
         return auth()->user()->categoryNotify()->where('subs_notify_id', $this->id)->exists();
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

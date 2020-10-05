@@ -28,4 +28,11 @@ class CategoryController extends Controller
 
         return response()->json($category->subscribers()->paginate(10));
     }
+
+    public function posts($slug)
+    {
+        $category = Category::query()->where('slug', $slug)->firstOrFail();
+
+        return $category->posts()->paginate(10);
+    }
 }

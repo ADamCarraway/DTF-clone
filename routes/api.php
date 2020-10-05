@@ -56,8 +56,10 @@ Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallba
 
 Route::get('/subs', 'CategoryController@index')->name('subs.index');
 
-Route::get('/{slug}/details', 'CategoryController@details')->name('subs.details');
-Route::get('/{slug}/details/subscribers', 'CategoryController@subscribers')->name('subs.subscribers');
+Route::get('/{slug}/posts', 'CategoryController@posts')->name('category.posts');
+Route::post('/{slug}/posts/store', 'PostController@store')->name('post.store');
+Route::get('/{slug}/details', 'CategoryController@details')->name('category.details');
+Route::get('/{slug}/details/subscribers', 'CategoryController@subscribers')->name('category.subscribers');
 
 Route::get('u/{slug}/details', 'Auth\UserController@details')->name('user.details');
 Route::get('u/{slug}/details/subscribers', 'Auth\UserController@subscribers')->name('user.subscribers');

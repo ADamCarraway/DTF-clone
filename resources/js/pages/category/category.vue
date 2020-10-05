@@ -65,11 +65,9 @@
         </div>
       </div>
 
-      <div class="l-page__content">
         <transition name="fade" mode="out-in">
           <router-view/>
         </transition>
-      </div>
 
       <subsite-sidebar v-if="$route.name === 'category'" :data="data" :type="'category'"></subsite-sidebar>
       <details-sidebar v-else></details-sidebar>
