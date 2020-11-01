@@ -29,7 +29,9 @@ class ProfileController extends Controller
         ]);
 
         $avatar = Cloudder::upload($request->file('avatar')->getRealPath(),
-            User::AVATAR_PATH . $request->file('avatar')->getClientOriginalName(), [], auth()->user()->id.'-'.auth()->user()->name);
+            User::AVATAR_PATH . time() . '-' . str_replace('.' . $request->file('avatar')->getClientOriginalExtension(), "", $request->file('avatar')->getClientOriginalName()),
+            [],
+            auth()->user()->id . '-' . auth()->user()->name);
 
         $avatar_status = $avatar->getResult();
 

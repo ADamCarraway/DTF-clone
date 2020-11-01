@@ -29,14 +29,14 @@
 
     <div class="site-header__item site-header__item--spaced site-header__item--desktop site-header__item--centered">
       <div class="v-create-button">
-        <a href="/writing?to=u" class="v-create-button__main">
+        <router-link :to="{name: 'editor'}" class="v-create-button__main ">
           <div class="v-split-button__icon">
             <i class="fas fa-pencil-alt"></i>
           </div>
           <div class="v-create-button__label">
             Новая запись
           </div>
-        </a>
+        </router-link>
       </div>
     </div>
 
@@ -159,20 +159,20 @@
     margin: -.375rem 0;
   }
 
-  .router-link-exact-active, .item--focused, .item:hover {
-    background: #f4f5f6;
-    opacity: 1 !important;
-  }
+  /*.router-link-exact-active, .item--focused, .item:hover {*/
+  /*  background: #f4f5f6;*/
+  /*  opacity: 1 !important;*/
+  /*}*/
 
-  .router-link-exact-active {
-    font-weight: bold;
-  }
+  /*.router-link-exact-active {*/
+  /*  font-weight: bold;*/
+  /*}*/
 
-  .router-link-exact-active span, .router-link-exact-active span, .at-dropdown-menu__item:hover {
-    background: #f4f5f6;
-    opacity: 1 !important;
-    color: #000;
-  }
+  /*.router-link-exact-active span, .router-link-exact-active span, .at-dropdown-menu__item:hover {*/
+  /*  background: #f4f5f6;*/
+  /*  opacity: 1 !important;*/
+  /*  color: #000;*/
+  /*}*/
 
   .not-active{
     background: #d9f5ff;

@@ -11,9 +11,11 @@ function page(path) {
 
 export default [
   {path: '/', name: 'index', component: page('index.vue')},
+  {path: '/subs', name: 'subs', component: page('category/index.vue')},
   {path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue')},
   {path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue')},
   {path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue')},
+  {path: '/writing', name: 'editor', component: page('user/editor.vue')},
   {
     path: '/u/:slug',
     component: page('user.vue'),
@@ -32,7 +34,7 @@ export default [
     ],
   },
   {path: '/u/:slug/settings', name: 'user.settings', component: page('settings/index.vue')},
-  {path: '/subs', name: 'subs', component: page('category/index.vue')},
+  {path: '/u/:slug/:postSlug', name: 'user.post', component: page('post.vue')},
 
   {
     path: '/:slug',
@@ -50,6 +52,8 @@ export default [
       }
     ]
   },
+
+  {path: '/:slug/:postSlug', name: 'post', component: page('post.vue')},
 
   {path: '*', component: page('errors/404.vue')}
 ]

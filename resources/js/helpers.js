@@ -18,3 +18,8 @@ export var forEach = function (collection, callback, scope) {
     }
   }
 };
+
+export function removeFromArray(array, element) {
+  const index = array.indexOf(element);
+  array.splice(index, 1);
+}

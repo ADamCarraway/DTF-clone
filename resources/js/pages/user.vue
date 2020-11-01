@@ -61,7 +61,7 @@
 
       <div class="l-page__content">
         <transition name="fade" mode="out-in">
-          <router-view/>
+          <router-view :data="data"/>
         </transition>
       </div>
 
@@ -87,6 +87,7 @@
   import DetailsSidebar from "../components/User/Details/Blocks/DetailsSidebar";
   import UserDetailsSidebar from "../components/User/Details/Blocks/UserDetailsSidebar";
   import MiniHeader from "../components/User/MiniHeader";
+  import EventBus from "../plugins/event-bus";
 
   export default {
     components: {
@@ -118,6 +119,7 @@
     beforeRouteUpdate(to, from, next) {
       this.data = {}
       this.getData(to.params.slug);
+      EventBus.$emit('changePostsRoute');
       next()
     },
     methods: {

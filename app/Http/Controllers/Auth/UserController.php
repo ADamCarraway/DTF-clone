@@ -104,4 +104,11 @@ class UserController extends Controller
             'total' => Subscription::query()->where('user_id', $user->id)->count()
         ]);
     }
+
+    public function posts($slug)
+    {
+        $user = User::query()->whereSlug($slug)->firstOrFail();
+
+        return $user->posts()->with(['category', 'user'])->paginate(10);
+    }
 }

@@ -1,45 +1,41 @@
 <template>
-  <div class="feed__item l-island-round" data-gtm="Feed — Item 1 — Click">
+  <div class="feed__item l-island-round">
 
-    <div class="l-mb-28 lm-mb-20 content-feed content-feed--games content-feed--225339 l-island-bg l-island-round"
-         air-module="module.entry" air-click="feed_item_clicked?content_id=225339" air-entry-type="short"
-         data-feed-item-id="content_225339" data-content-id="225339" data-publish-date="1601906728"
-         data-location="my-feed">
+    <div class="l-mb-28 lm-mb-20 content-feed content-feed--games content-feed--225339 l-island-bg l-island-round">
 
-
-      <!-- Плашка с пояснением, почему эта запись видна в ленте -->
-
-      <div class="
-    content-header
-    content-header--short
-        ">
-
+      <div class="content-header content-header--short">
         <div class="l-pt-20"></div>
-
-
         <div class="content-header__info l-island-a">
 
           <div class="content-header__left">
 
             <!-- Подсайт, в котором опубликована статья -->
-            <a class="content-header-author content-header-author--subsite content-header__item"
-               href="https://dtf.ru/u/50884-sem-speyd">
+            <router-link v-if="data.category"  :to="{ name: 'category', params: {slug: data.category.slug} }" class="content-header-author content-header-author--subsite content-header__item">
               <div class="content-header-author__avatar">
 
-                <img class="andropov_image  andropov_image--bordered" air-module="module.andropov"
-                     data-andropov-type="image"
-                     data-image-src="https://leonardo.osnova.io/958c9484-3aeb-8282-c37b-395201222235/"
-                     data-image-name="" style="background-color: transparent;"
-                     src="https://leonardo.osnova.io/958c9484-3aeb-8282-c37b-395201222235/-/scale_crop/64x64/center/">
+                <img class="andropov_image  andropov_image--bordered"
+                     :src="data.category.icon">
               </div>
 
               <div class="content-header-author__name">
-                Сэм Спейд
+                {{ data.category.title }}
               </div>
 
-            </a>
+            </router-link>
 
             <!-- Автор -->
+            <router-link v-if="data.user"  :to="{ name: 'user', params: {slug: data.user.slug} }" class="content-header-author content-header-author--subsite content-header__item">
+              <div class="content-header-author__avatar">
+
+                <img class="andropov_image  andropov_image--bordered"
+                     :src="data.user.avatar">
+              </div>
+
+              <div class="content-header-author__name">
+                {{ data.user.name }}
+              </div>
+
+            </router-link>
 
             <!-- Время публикации -->
             <div class="content-header-number content-header__item">
@@ -76,24 +72,24 @@
 
         </div>
 
-        <h2 class="content-header__title l-island-a">
-          Кооперативный режим Legends для Ghost of Tsushima выйдет 16 <span class="l-no-wrap">октября
-          <a href="/editorial">
+        <h2 class="content-header__title l-island-a" v-if="data.title">
+          {{ data.title }}
+          <a href="#">
     <span class="content-editorial-tick">
      <i class="fas fa-check"></i>
     </span>
           </a>
-        </span>
+
         </h2>
 
       </div>
 
 
       <div class="content content--short  ">
-        <div class="l-island-a">
+        <div v-if="data.intro" class="l-island-a">
 
 
-          <p>В этот же день в самурайский экшен добавят режим «Новая игра+».</p>
+          <p>{{ data.intro }}</p>
 
         </div>
 
@@ -139,14 +135,7 @@
 
           <!-- Favorite -->
           <div class="content-footer__item">
-
-            <div class="favorite_marker favorite_marker--type-content favorite_marker--non_zero">
-              <i class="far fa-bookmark l-fs-20"></i>
-              <div class="favorite_marker__count">23</div>
-
-
-              <div class="favorite_marker__action"></div>
-            </div>
+            <bookmark :data="data"/>
           </div>
 
           <!-- Repost (all checks are inside) -->
@@ -168,22 +157,7 @@
 
           <!-- Vote -->
           <div class="content-footer__item">
-
-            <div class="vote vote--content vote--sum-positive">
-
-              <div class="vote__button vote__button--minus l-float-left">
-                -
-              </div>
-
-              <div class="vote__value l-float-left t-ff-1-500 l-fs-15">
-                <span class="vote__value__v vote__value__v--real">113</span>
-              </div>
-
-              <div class="vote__button vote__button--plus l-float-left">
-                +
-              </div>
-
-            </div>
+            <like :data="data"/>
           </div>
 
         </div>
@@ -196,9 +170,12 @@
 </template>
 
 <script>
+  import Like from "../Buttons/Like";
+  import Bookmark from "../Buttons/Bookmark";
   export default {
     name: "Post",
-    props: ['post']
+    components: {Bookmark, Like},
+    props: ['data']
   }
 </script>
 

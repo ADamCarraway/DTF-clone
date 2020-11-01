@@ -44,6 +44,10 @@
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.4.4",
+    "@editorjs/delimiter": "^1.2.0",
+    "@editorjs/image": "^2.6.0",
+    "@editorjs/link": "^2.3.0",
+    "@editorjs/simple-image": "^1.4.0",
     "babel-eslint": "^10.0.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",

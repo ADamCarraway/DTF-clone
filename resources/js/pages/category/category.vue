@@ -66,7 +66,7 @@
       </div>
 
         <transition name="fade" mode="out-in">
-          <router-view/>
+          <router-view :data="data"/>
         </transition>
 
       <subsite-sidebar v-if="$route.name === 'category'" :data="data" :type="'category'"></subsite-sidebar>
@@ -87,6 +87,7 @@
   import CategoryTabs from "../../components/User/CategoryTabs";
   import DetailsSidebar from "../../components/User/Details/Blocks/DetailsSidebar";
   import MiniHeader from "../../components/User/MiniHeader";
+  import EventBus from "../../plugins/event-bus";
 
   export default {
     name: "category",
@@ -107,6 +108,7 @@
     }),
     beforeRouteUpdate(to, from, next) {
       this.get(to.params.slug)
+      EventBus.$emit('changePostsRoute');
       next()
     },
     methods: {

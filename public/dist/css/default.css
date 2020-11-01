@@ -1316,19 +1316,10 @@ body {
 .andropov_image {
     overflow: hidden;
 }
-.andropov_preview--image {
-    background-color: #fff;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-}
-.andropov_preview {
-    border-radius: 4px;
-    overflow: hidden;
-    background-color: #fff;
+
+.andropov_image--bordered, .andropov_preview {
+    outline: 1px solid rgba(0, 0, 0, .1);
+    outline-offset: -1px;
 }
 
 .subsite_head__face .image_uploader {
@@ -2832,6 +2823,10 @@ body {
     color: #4da0da;
 }
 
+.router-link-exact-active {
+    background: #fff;
+}
+
 /* .router-link-exact-active:hover {
     background: #fff;
     border: 0;
@@ -4143,7 +4138,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .vote .vote__value {
     color: #595959;
-    /* cursor: default; */
+    cursor: default;
     text-align: center;
     white-space: nowrap;
 }
@@ -4179,172 +4174,3 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     z-index: 4;
 }
 
-.l-mb-28 {
-    margin-bottom: 28px;
-}
-
-.comment-file-input {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
-}
-
-.andropov_uploader__preview_item__remove {
-    pointer-events: auto;
-    cursor: pointer;
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: #fff;
-    top: -9px;
-    right: -15px;
-    background-image: url("https://dtfstaticbf19cf1-a.akamaihd.net/static/build/dtf.ru/images/writing-remove-similar.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 10px 10px;
-    border-radius: 50%;
-    border: 1px solid #dedede;
-}
-
-.attachesList .andropov_uploader__preview_item {
-    margin-top: 15px;
-}
-
-.andropov_uploader__preview_item:last-child {
-    margin-right: 0;
-}
-.andropov_uploader__preview_item {
-    position: relative;
-    margin-right: 25px;
-}
-
-.page {
-    position: relative;
-    z-index: 2;
-}
-
-.l-editor {
-    max-width: 680px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.l-fa-center {
-    -ms-flex-align: center;
-    align-items: center;
-}
-
-.ui-limited-input {
-    position: relative;
-}
-
-.ce-toolbar__plus{
-    margin-left: -33px;
-}
-
-.ce-block__content {
-    max-width: 680px;
-}
-
-
-
-.ce-block-indicator--cover {
-    left: -35px;
-}
-.ce-block-indicator {
-    color: #707684;
-    cursor: pointer;
-    width: 34px;
-    height: 34px;
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    position: absolute;
-    left: -100px;
-    top:3px;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    visibility:hidden;
-}
-
-.ce-block:hover .ce-block-indicator{
-    visibility:visible;
-}
-
-.ce-block-indicator:hover{
-    color:#000;
-}
-
-.ce-block-indicator__title {
-    position: absolute;
-    right: 100%;
-    /*     white-space: nowrap; */
-    font-size: 12px;
-    opacity: 0;
-    visibility: hidden;
-}
-
-.ce-block-indicator:hover, .ce-block--focused .ce-block-indicator{
-    opacity: 1;
-    visibility: visible;
-}
-
-.ce-block-indicator:hover .ce-block-indicator__title{
-    opacity: 1;
-    visibility: visible;
-}
-
-.ce-block-indicator--active {
-    opacity: 1;
-    visibility: visible;
-    color: #4da0da;
-}
-
-.favorite_marker--active, .favorite_marker--active i, .favorite_marker--active .favorite_marker__count{
-    color: #e84755;
-}
-
-.vote {
-    cursor:pointer;
-}
-.vote .vote__button {
-    color:#8989899c;
-    margin-right: 5px;
-}
-
-.vote .vote__button .vote__button_active {
-    color:rgb(224, 36, 94);
-}
-
-.like-btn-svg {
-    width: 80px;
-    height: 100px;
-    background: url(https://abs.twimg.com/a/1446542199/img/t1/web_heart_animation.png) no-repeat;
-    background-position: 0 0;
-    cursor: pointer;
-}
-
-input[type="checkbox"] {
-    display:none;
-}
-
-input:checked + .like-btn-svg{
-    transition: background 1s steps(28);
-    animation: fave-like-btn-svg 1s steps(28);
-    background-position: -2800px 0;
-}
-
-@keyframes fave-like-btn-svg {
-    0% {
-        background-position: 0 0;
-    }
-    100% {
-        background-position: -2800px 0;
-    }
-}

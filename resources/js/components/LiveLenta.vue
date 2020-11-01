@@ -55,13 +55,21 @@
 </template>
 
 <script>
+  import EventBus from "../plugins/event-bus";
+
   export default {
     name: "LiveLenta",
     data() {
       return {
-        show: true
+        show: true,
+        hideLive: false
       }
-    }
+    },
+    mounted() {
+      EventBus.$on('hideLive', () => {
+        this.show = !this.show;
+      });
+    },
   }
 </script>
 

@@ -14,23 +14,33 @@
 <script>
   import Post from "./Blocks/Post";
   import InfiniteLoading from "vue-infinite-loading";
+  import EventBus from "../plugins/event-bus";
 
   export default {
     name: "PostsList",
+    props: ['data'],
     components: {Post, InfiniteLoading},
     data() {
       return {
-        posts:[],
+        posts: [],
         url: '',
         page: 1,
         total: 0,
         infiniteId: +new Date(),
       }
     },
+    mounted() {
+      EventBus.$on('changePostsRoute', () => {
+        this.posts = [];
+        this.page = 1;
+        this.infiniteId += 1;
+      });
+    },
+
     methods: {
-      setUrl(){
-        let slug = this.$route.params.slug
-        this.url = '/api/'+slug+'/posts';
+      setUrl() {
+        let slug = this.$route.params.slug;
+        this.url = this.$route.name === 'user' ? '/api/u/' + slug + '/posts' : '/api/' + slug + '/posts'
       },
       infiniteHandler($state) {
         this.setUrl();

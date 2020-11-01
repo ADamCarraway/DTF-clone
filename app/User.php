@@ -13,9 +13,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, Concerns\Likes, Concerns\Bookmarks;
+
 
     const AVATAR_PATH = 'user/avatars/full/';
+    const COMMENT_FILE_PATH = 'comment/files/full/';
+    const POST_FILE_PATH = 'post/files/full/';
 
     protected $guarded = [
         'id'

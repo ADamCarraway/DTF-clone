@@ -36,6 +36,15 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('/{slug}/{type}/favorite/store', 'FavoriteController@store')->name('favorite.store');
     Route::post('/{slug}/{type}/favorite/destroy', 'FavoriteController@destroy')->name('favorite.destroy');
+
+    Route::post('file/upload', 'CloudderController@upload');
+    Route::post('file/destroy', 'CloudderController@destroy');
+
+    Route::post('like', 'LikeController@like');
+    Route::delete('like', 'LikeController@dislike');
+
+    Route::post('bookmark', 'BookmarkController@create');
+    Route::delete('bookmark', 'BookmarkController@destroy');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -64,3 +73,4 @@ Route::get('/{slug}/details/subscribers', 'CategoryController@subscribers')->nam
 Route::get('u/{slug}/details', 'Auth\UserController@details')->name('user.details');
 Route::get('u/{slug}/details/subscribers', 'Auth\UserController@subscribers')->name('user.subscribers');
 Route::get('u/{slug}/details/subscriptions', 'Auth\UserController@subscriptions')->name('user.subscriptions');
+Route::get('u/{slug}/posts', 'Auth\UserController@posts')->name('user.posts');
