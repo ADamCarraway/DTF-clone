@@ -10,7 +10,8 @@
           <div class="content-header__left">
 
             <!-- Подсайт, в котором опубликована статья -->
-            <router-link v-if="data.category"  :to="{ name: 'category', params: {slug: data.category.slug} }" class="content-header-author content-header-author--subsite content-header__item">
+            <router-link v-if="data.category" :to="{ name: 'category', params: {slug: data.category.slug} }"
+                         class="content-header-author content-header-author--subsite content-header__item">
               <div class="content-header-author__avatar">
 
                 <img class="andropov_image  andropov_image--bordered"
@@ -24,8 +25,9 @@
             </router-link>
 
             <!-- Автор -->
-            <router-link v-if="data.user"  :to="{ name: 'user', params: {slug: data.user.slug} }" class="content-header-author content-header-author--subsite content-header__item">
-              <div class="content-header-author__avatar">
+            <router-link v-if="data.user" :to="{ name: 'user', params: {slug: data.user.slug} }"
+                         class="content-header-author content-header-author--subsite content-header__item">
+              <div  v-if="!data.category" class="content-header-author__avatar">
 
                 <img class="andropov_image  andropov_image--bordered"
                      :src="data.user.avatar">
@@ -57,11 +59,7 @@
 
             <!-- Управление статьей -->
 
-            <div class="etc_control" air-module="module.etc_controls" data-parent-selector=".feed__item"
-                 data-permissions="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImVkaXRfZW50cnkiOjIyNTMzOSwidW5wdWJsaXNoX2VudHJ5IjoyMjUzMzksInJlbW92ZV9lbnRyeSI6MjI1MzM5LCJ1bmZvcmNlX2VudHJ5IjpudWxsLCJwaW5fY29udGVudCI6MjI1MzM5LCJiYW5fc3Vic2l0ZSI6eyJ3aG9JZCI6NTA4ODQsIndoZXJlSWQiOjY0OTUzfSwiYmFuX2NyZWF0b3JfY29udGVudCI6MjI1MzM5LCJjb21wbGFpbl9jb250ZW50IjpudWxsfSwiaWF0IjoxNjAxOTIyNjU5LCJleHAiOjE2MDIwMDkwNTl9.17wpVdlENLc9A60bgUb9-UA53ipLyoCx6kjHAj4PAK0"
-                 data-subsite-id="64953" data-content-id="225339" data-user-id="50884" data-remove_entry-state="0"
-                 data-unpublish_entry-state="0" data-pin_content-state="0" data-author-name="Сэм Спейд"
-                 data-subsite-name="Игры" data-ignore_user-state="0" data-unforce_entry-state="0">
+            <div class="etc_control">
               <svg class="icon icon--ui_etc" width="18" height="8" xmlns="http://www.w3.org/2000/svg">
                 <use xlink:href="#ui_etc"></use>
               </svg>
@@ -86,34 +84,29 @@
 
 
       <div class="content content--short  ">
-        <div v-if="data.intro" class="l-island-a">
-
-
-          <p>{{ data.intro }}</p>
-
+        <div  class="l-island-a" v-html="html[0]">
         </div>
 
+        <!--        <figure>-->
 
-        <figure>
+        <!--          <div class="l-island-b">-->
+        <!--            <div class="content-image">-->
 
-          <div class="l-island-b">
-            <div class="content-image">
+        <!--              <div class="andropov_image andropov_image&#45;&#45;zoomable" style="max-height: 600px;max-width: 1274px;">-->
 
-              <div class="andropov_image andropov_image--zoomable" style="max-height: 600px;max-width: 1274px;">
-
-                <div class="andropov_image__inner" style="padding-bottom: 0px; background: transparent;"><img
-                  src="https://leonardo.osnova.io/7a6199bd-6fdf-228e-2758-e7b8a019074c/-/resize/700/"></div>
-              </div>
-            </div>
-          </div>
+        <!--                <div class="andropov_image__inner" style="padding-bottom: 0px; background: transparent;"><img-->
+        <!--                  src="https://leonardo.osnova.io/7a6199bd-6fdf-228e-2758-e7b8a019074c/-/resize/700/"></div>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
 
 
-        </figure>
+        <!--        </figure>-->
 
       </div>
 
 
-      <div class="content-footer content-footer--short l-island-a l-pb-15" air-module="module.liveAnswers">
+      <div class="content-footer content-footer--short l-island-a">
 
         <div class="content-footer__left">
 
@@ -172,10 +165,23 @@
 <script>
   import Like from "../Buttons/Like";
   import Bookmark from "../Buttons/Bookmark";
+  import edjsHTML from "editorjs-html"
+
   export default {
     name: "Post",
     components: {Bookmark, Like},
-    props: ['data']
+    props: ['data'],
+    data(){
+      return {
+        html : ''
+      }
+    },
+    created() {
+      let test = new edjsHTML()
+      this.html = test.parse({
+        blocks: JSON.parse(this.data.blocks)
+      });
+    }
   }
 </script>
 

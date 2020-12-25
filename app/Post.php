@@ -49,11 +49,15 @@ class Post extends Model implements Likeable, Bookmarkable
 
     public function getIsLikeAttribute()
     {
+        if (!auth()->check()) return false;
+
         return auth()->user()->hasLiked($this);
     }
 
     public function getIsBookmarkedAttribute()
     {
+        if (!auth()->check()) return false;
+
         return auth()->user()->hasBookmark($this);
     }
 }

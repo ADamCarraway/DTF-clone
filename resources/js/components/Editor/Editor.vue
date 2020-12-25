@@ -110,8 +110,6 @@
     },
     methods: {
       editor: function () {
-        let t = this;
-        let cover = {};
         this.editorjs = new EditorJS({
 
           holder: "codex-editor",

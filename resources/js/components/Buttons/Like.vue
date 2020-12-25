@@ -5,8 +5,7 @@
       <div v-if="data.is_like" @click="like(0)" class="vote__button_active">
         <i class="fas fa-heart"></i>
       </div>
-      <div v-else @click="like(1)"
-           class="">
+      <div v-else @click="like(1)" class="">
         <i class="fas fa-heart"></i>
       </div>
     </div>
@@ -23,7 +22,7 @@
 
   export default {
     name: "Like",
-    props: ['data'],
+    props: ['data', 'list'],
     methods: {
       like(value) {
         if (!value) {

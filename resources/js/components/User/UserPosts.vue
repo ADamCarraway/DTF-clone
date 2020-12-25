@@ -3,7 +3,8 @@
     <div class="l-mb-20">
       <create-post-block :user="user" :data="data"></create-post-block>
     </div>
-    <posts-list v-if="data" :data="data"></posts-list>
+    <posts-filter :routes='{index: "user", new: "user.new"}'></posts-filter>
+    <posts-list v-if="data" :data="data" :url="['user', 'user.new'].includes(this.$route.name) ? '/api/u/' + data.slug + '/posts' : '/api/' + data.slug + '/posts'"></posts-list>
   </div>
 </template>
 
@@ -11,11 +12,12 @@
   import CreatePostBlock from "../Blocks/CreatePostBlock";
   import {mapGetters} from "vuex";
   import PostsList from "../PostsList";
+  import PostsFilter from "../PostsFilter";
 
   export default {
     name: "UserPosts",
     props:['data'],
-    components: {PostsList, CreatePostBlock},
+    components: {PostsFilter, PostsList, CreatePostBlock},
     computed: mapGetters({
       user: 'auth/user',
     }),

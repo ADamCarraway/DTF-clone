@@ -117,7 +117,7 @@
       });
     },
     beforeRouteUpdate(to, from, next) {
-      this.data = {}
+      this.data = {};
       this.getData(to.params.slug);
       EventBus.$emit('changePostsRoute');
       next()

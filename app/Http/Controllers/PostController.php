@@ -9,9 +9,17 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Post::query()->get();
+        $type = $request->get('type');
+
+        $posts = Post::query()->with(['category', 'user']);
+
+        if ($type == 'new'){
+            $posts->latest();
+        }
+
+        return response()->json($posts->paginate(10));
     }
 
     public function show(Post $post)
@@ -23,7 +31,7 @@ class PostController extends Controller
     {
         $category = null;
 
-        if ($slug != 'my') {
+        if ($slug === 'my' && $slug != auth()->user()->slug) {
             $category = Category::query()->where('slug', $slug)->firstOrFail();
         }
 
@@ -35,7 +43,7 @@ class PostController extends Controller
             'intro' => $request->get('intro') ?? '',
             'category_id' => $category->id ?? null,
             'blocks' => json_encode($request->get('blocks')),
-            'is_publish' => $request->get('is_publish'),
+            'is_publish' => $request->get('is_publish') ?? 1,
         ]);
 
         return response()->json([

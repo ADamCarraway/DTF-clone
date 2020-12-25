@@ -1,7 +1,7 @@
 <template>
   <div class="feed">
     <div class="feed__container">
-      <div class="feed__chunk">
+      <div class="feed__chunk page--index">
         <post v-for="item in posts" :data="item" :key="item.id"></post>
       </div>
     </div>
@@ -15,37 +15,40 @@
   import Post from "./Blocks/Post";
   import InfiniteLoading from "vue-infinite-loading";
   import EventBus from "../plugins/event-bus";
+  import PostsFilter from "./PostsFilter";
+  import axios from "axios";
 
   export default {
     name: "PostsList",
-    props: ['data'],
-    components: {Post, InfiniteLoading},
+    props: ['data', 'url'],
+    components: {PostsFilter, Post, InfiniteLoading},
     data() {
       return {
+        type: 'top',
         posts: [],
-        url: '',
         page: 1,
         total: 0,
         infiniteId: +new Date(),
       }
     },
     mounted() {
-      EventBus.$on('changePostsRoute', () => {
+      EventBus.$on('changePostsRoute', (type) => {
+        this.type = type;
         this.posts = [];
         this.page = 1;
         this.infiniteId += 1;
       });
+
+      // EventBus.$on('filterPosts', () => {
+      //   this.posts = [];
+      //   this.page = 1;
+      //   this.infiniteId += 1;
+      // });
     },
 
     methods: {
-      setUrl() {
-        let slug = this.$route.params.slug;
-        this.url = this.$route.name === 'user' ? '/api/u/' + slug + '/posts' : '/api/' + slug + '/posts'
-      },
       infiniteHandler($state) {
-        this.setUrl();
-
-        Vue.http.get(this.url + '?page=' + this.page)
+        axios.get(this.url+'?type='+this.type+'&page=' + this.page)
           .then((data) => {
             if (data.data.data.length) {
               this.page = this.page + 1;

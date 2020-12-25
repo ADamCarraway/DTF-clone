@@ -5,9 +5,9 @@
                 <i class="fas fa-fire-alt"></i>
                 <p class="sidebar__tree-list__item__name">Лента</p>
             </div>
-            <a title="Свежее" class="sidebar-tree-list-item__child-item">
+            <router-link :to="{ name: 'index.new'}" title="Свежее" class="sidebar-tree-list-item__child-item">
                 <i class="far fa-clock mr-0"></i>
-            </a>
+            </router-link>
         </router-link>
         <router-link :to="{ name: 'subs'}" class="sidebar__tree-list__item">
             <div class="sidebar-tree-list-item__link">
@@ -27,6 +27,9 @@
 
 <style scoped>
   .router-link-exact-active {
+    background: #fff;
+  }
+  .router-link-active {
     background: #fff;
   }
 </style>

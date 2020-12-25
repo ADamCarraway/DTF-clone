@@ -10,7 +10,14 @@ function page(path) {
 }
 
 export default [
-  {path: '/', name: 'index', component: page('index.vue')},
+  {
+    path: '/',
+    component: page('index.vue'),
+    name: 'index',
+    children: [
+      {path: 'new', name: 'index.new', component: page('index.vue')},
+    ],
+  },
   {path: '/subs', name: 'subs', component: page('category/index.vue')},
   {path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue')},
   {path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue')},
@@ -21,6 +28,7 @@ export default [
     component: page('user.vue'),
     children: [
       {path: '', name: 'user', component: UserPosts},
+      {path: 'new', name: 'user.new', component: UserPosts},
       {path: 'comments', name: 'user.comments', component: UserComments},
       {
         path: 'details',
@@ -41,6 +49,7 @@ export default [
     component: page('category/category.vue'),
     children: [
       {path: '', name: 'category', component: UserPosts},
+      {path: 'new', name: 'category.new', component: UserPosts},
       {
         path: 'details',
         component: page('category/details/index.vue'),

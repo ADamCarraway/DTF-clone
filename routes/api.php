@@ -58,6 +58,8 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('email/resend', 'Auth\VerificationController@resend');
 });
 
+Route::get('posts', 'PostController@index')->name('posts.index');
+
 Route::get('u/{slug}', 'Auth\UserController@show')->name('user.show');
 
 Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');

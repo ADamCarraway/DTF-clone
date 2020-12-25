@@ -47,17 +47,15 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = User::query()->withCount(['subscribers'])
-            ->whereSlug($slug)
+             ->whereSlug($slug)
             ->firstOrFail();
 
         $user['subscriptions'] = $user->allSubscriptions->map(function (Subscription $i) {
             if ($i->subscription_type === Category::class) {
-                $i = Category::query()->where('id', $i->subscription_id)->first();
+                return Category::query()->where('id', $i->subscription_id)->first();
             } else {
-                $i = User::query()->where('id', $i->subscription_id)->first();
+                return User::query()->where('id', $i->subscription_id)->first();
             }
-
-            return $i;
         })->keyBy('slug')->toArray();
         $user['subscribers'] = $user->subscribers()->limit(12)->get();
         $user['subscriptions_count'] = $user->allSubscriptions()->count();
@@ -91,12 +89,10 @@ class UserController extends Controller
             ->getCollection()
             ->transform(function (Subscription $i) {
                 if ($i->subscription_type === Category::class) {
-                    $i = Category::query()->where('id', $i->subscription_id)->first();
+                    return Category::query()->where('id', $i->subscription_id)->first();
                 } else {
-                    $i = User::query()->where('id', $i->subscription_id)->first();
+                    return User::query()->where('id', $i->subscription_id)->first();
                 }
-
-                return $i;
             });;
 
         return response()->json([
@@ -105,7 +101,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function posts($slug)
+    public function posts(Request $request, $slug)
     {
         $user = User::query()->whereSlug($slug)->firstOrFail();
 

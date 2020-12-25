@@ -69,9 +69,10 @@
 
   export default {
     name: "CreatePostBlock",
-    props: ['user'],
+    props: ['user', 'data'],
     data() {
       return {
+        editorjs: {},
         editorShow: false,
         loading: false,
         file: new FormData(),
@@ -86,7 +87,7 @@
         this.editorShow = false;
       },
       myEditor: function () {
-        window.editor = new EditorJS({
+        this.editorjs = new EditorJS({
           holder: "codex-editor",
           autofocus: true,
           /**
@@ -109,21 +110,25 @@
             }
           },
           onReady: function () {
-            console.log("ready");
           },
           onChange: function () {
-            console.log("change");
           }
         });
       },
       create() {
         this.loading = true;
-        axios.post('/api/' + this.data.slug + '/posts/store').then((response) => {
-          this.loading = false;
-          this.$Notify.success({
-            message: 'Материал опубликован'
-          });
-        })
+        this.editorjs.save().then((outputData) => {
+          outputData['is_publish'] = 1;
+          outputData['title'] = this.title;
+          outputData['id'] = this.id;
+
+          axios.post('/api/' + this.data.slug + '/posts/store', outputData).then((response) => {
+            this.loading = false;
+            this.$Notify.success({
+              message: 'Материал опубликован'
+            });
+          })
+        });
       },
       upload(e) {
         this.loading = true;
