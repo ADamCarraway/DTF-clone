@@ -44,7 +44,7 @@
               <a
                 href="https://dtf.ru/games/225339-kooperativnyy-rezhim-legends-dlya-ghost-of-tsushima-vyydet-16-oktyabrya"
                 class="t-link">
-                <time class="time" air-module="module.date" data-date="1601906728" data-type="medium">4&nbsp;часа</time>
+                <span class="time">{{ data.date }}</span>
               </a>
             </div>
 

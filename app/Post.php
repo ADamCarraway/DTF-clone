@@ -4,6 +4,7 @@ namespace App;
 
 use App\Contracts\Bookmarkable;
 use App\Contracts\Likeable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model implements Likeable, Bookmarkable
@@ -11,7 +12,7 @@ class Post extends Model implements Likeable, Bookmarkable
     use Concerns\Likeable, Concerns\Bookmarkable;
 
     protected $guarded = ['id'];
-    protected $appends = ['type', 'is_like', 'is_bookmarked'];
+    protected $appends = ['type', 'is_like', 'is_bookmarked', 'date'];
     protected $withCount = ['likes', 'bookmarks'];
 
     public static function boot()
@@ -45,6 +46,11 @@ class Post extends Model implements Likeable, Bookmarkable
     public function getTypeAttribute()
     {
         return 'Post';
+    }
+
+    public function getDateAttribute()
+    {
+        return Carbon::parse($this->created_at)->locale('ru')->calendar();
     }
 
     public function getIsLikeAttribute()
