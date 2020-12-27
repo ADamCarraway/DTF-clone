@@ -1,5 +1,6 @@
 <?php
 
+use App\Subscription;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::get('/', function () {
-//     dd(\App\User::query()->where('id', 2)->first()->users);
+//     dd(\App\User::query()->where('id', 2)->first()->allSubscriptions->sortBy('type')->map(function (Subscription $i) {
+//         return $i->toSubFormat();
+//     })->sortByDesc('date')->sortByDesc('is_favorite')->keyBy('slug')->toArray());
 // });

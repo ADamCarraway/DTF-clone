@@ -20,24 +20,12 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $request = $user->load(['users'])->toArray();
-        $request['subscriptions'] = $user->allSubscriptions->sortBy('type')->map(function (Subscription $i) {
-            $is_favorite = $i->favorite;
-            $date = $i->created_at;
-            if ($i->subscription_type === Category::class) {
-                $i = Category::query()->where('id', $i->subscription_id)->first();
-                $i['is_favorite'] = $is_favorite;
-                $i['date'] = $date;
-            } else {
-                $i = User::query()->where('id', $i->subscription_id)->first();
-                $i['is_favorite'] = $is_favorite;
-                $i['date'] = $date;
-            }
-
-            return $i;
+        $request['subscriptions'] = $user->subscriptions->sortBy('type')->map(function (Subscription $i) {
+            return $i->toSubFormat();
         })->sortByDesc('date')->sortByDesc('is_favorite')->keyBy('slug')->toArray();
         $request['subscribers'] = $user->subscribers()->limit(12)->get();
         $request['subscribers_count'] = $user->subscribers()->count();
-        $request['subscriptions_count'] = $user->allSubscriptions()->count();
+        $request['subscriptions_count'] = $user->subscriptions()->count();
         $request['subscriptions_limit'] = array_slice($request['subscriptions'], 0, 5);
 
         return response()->json($request);
@@ -50,15 +38,11 @@ class UserController extends Controller
              ->whereSlug($slug)
             ->firstOrFail();
 
-        $user['subscriptions'] = $user->allSubscriptions->map(function (Subscription $i) {
-            if ($i->subscription_type === Category::class) {
-                return Category::query()->where('id', $i->subscription_id)->first();
-            } else {
-                return User::query()->where('id', $i->subscription_id)->first();
-            }
+        $user['subscriptions'] = $user->subscriptions->map(function (Subscription $i) {
+            return $i->toSubFormat();
         })->keyBy('slug')->toArray();
         $user['subscribers'] = $user->subscribers()->limit(12)->get();
-        $user['subscriptions_count'] = $user->allSubscriptions()->count();
+        $user['subscriptions_count'] = $user->subscriptions()->count();
         $user['subscriptions_limit'] = array_slice($user['subscriptions'], 0, 5);
 
         return response()->json($user);
@@ -85,15 +69,11 @@ class UserController extends Controller
     {
         $user = User::query()->whereSlug($slug)->firstOrFail();
 
-        $subs = $user->allSubscriptions()->paginate(10)
+        $subs = $user->subscriptions()->paginate(10)
             ->getCollection()
             ->transform(function (Subscription $i) {
-                if ($i->subscription_type === Category::class) {
-                    return Category::query()->where('id', $i->subscription_id)->first();
-                } else {
-                    return User::query()->where('id', $i->subscription_id)->first();
-                }
-            });;
+                return $i->toSubFormat();
+            });
 
         return response()->json([
             'data' => $subs,

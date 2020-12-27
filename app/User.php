@@ -125,7 +125,7 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
         return $this->morphToMany(User::class, 'subscription');
     }
 
-    public function allSubscriptions()
+    public function subscriptions()
     {
         return $this->hasMany(Subscription::class);
     }
