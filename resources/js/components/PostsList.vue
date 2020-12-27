@@ -5,7 +5,14 @@
         <post v-for="item in posts" :data="item" :key="item.id"></post>
       </div>
     </div>
-    <infinite-loading :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
+    <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
+      <div slot="no-results">
+        <div class="l-island-bg v-island">
+          <div class="v-island__dummy">
+            Здесь еще нет публикаций
+          </div>
+        </div>
+      </div>
       <div slot="no-more"></div>
     </infinite-loading>
   </div>
@@ -24,7 +31,7 @@
     components: {PostsFilter, Post, InfiniteLoading},
     data() {
       return {
-        type: 'top',
+        type: this.$route.name.indexOf('.new') + 1 ? 'new' : 'top',
         posts: [],
         page: 1,
         total: 0,
@@ -68,5 +75,21 @@
 </script>
 
 <style scoped>
+  .v-island {
+    --offset-x: var(--island-offset-x, 20px);
+    padding: 15px var(--offset-x) 16px;
+    font-size: 16px;
+    line-height: 1.5em;
+  }
 
+  .v-island__dummy {
+    text-align: center;
+    padding: 84px 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-align: center;
+    align-items: center;
+  }
 </style>

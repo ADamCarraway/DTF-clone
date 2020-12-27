@@ -3,7 +3,8 @@
     <div class="v-island__header">
       <span class="v-island__title">
       {{ title }}
-    </span> <span class="v-island__counter">
+    </span>
+      <span class="v-island__counter" v-if="total">
       {{ total }}
     </span>
     </div>
@@ -74,9 +75,10 @@
     //   this.infiniteId += 1;
     //   next()
     // },
-    beforeRouteLeave (to, from, next) {
+    beforeRouteLeave(to, from, next) {
       this.data = [];
       this.page = 1;
+      this.total = 0;
       this.infiniteId += 1;
       next();
     },
@@ -109,7 +111,7 @@
               });
 
               $state.loaded();
-            }else{
+            } else {
               $state.complete();
             }
           });

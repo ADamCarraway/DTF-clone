@@ -25,7 +25,7 @@
                     {
                         name: 'Статьи',
                         route: 'user',
-                        active: ['user']
+                        active: ['user', 'user.new']
                     },
                     {
                         name: 'Комментарии',

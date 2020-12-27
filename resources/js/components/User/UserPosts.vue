@@ -3,8 +3,8 @@
     <div class="l-mb-20">
       <create-post-block :user="user" :data="data"></create-post-block>
     </div>
-    <posts-filter :routes='{index: "user", new: "user.new"}'></posts-filter>
-    <posts-list v-if="data" :data="data" :url="['user', 'user.new'].includes(this.$route.name) ? '/api/u/' + data.slug + '/posts' : '/api/' + data.slug + '/posts'"></posts-list>
+    <posts-filter :routes='{index: data.type, new: data.type+".new"}'></posts-filter>
+    <posts-list v-if="data.slug" :data="data" :url="['user', 'user.new'].includes(this.$route.name) ? '/api/u/' + data.slug + '/posts' : '/api/' + data.slug + '/posts'"></posts-list>
   </div>
 </template>
 

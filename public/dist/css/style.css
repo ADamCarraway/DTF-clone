@@ -2848,8 +2848,12 @@ body {
     color: #4da0da;
 }
 
-.router-link-exact-active .sidebar-tree-list-item__child-item i {
+.sidebar-tree-list-item__child-item.router-link-exact-active.router-link-active i {
     color: #4da0da;
+}
+
+.sidebar__tree-list__item.router-link-exact-active.router-link-active{
+    background-color: #fff;
 }
 
 /* .router-link-exact-active:hover {
@@ -3905,7 +3909,7 @@ a.v-list-subsites-item__main:hover {
     flex-wrap: wrap;
     -ms-flex-align: center;
     align-items: center;
-    padding: 15px 0;
+    padding: 15px;
 }
 
 @media (min-width: 860px) {

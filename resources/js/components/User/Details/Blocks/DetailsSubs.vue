@@ -3,11 +3,11 @@
     <div class="v-island__header">
       <span class="v-island__title">
       {{ title }}
-    </span> <span class="v-island__counter">
+    </span> <span class="v-island__counter" v-if="data.total > 0">
       {{ data.total }}
     </span>
     </div>
-    <div class="v-list-subsites">
+    <div class="v-list-subsites" v-if="data.total > 0">
       <div class="v-list-subsites__content v-list-subsites__content--columns-2">
         <div v-for="item in data.data" class="v-list-subsites-item">
           <router-link :to="{ name: item.type, params: {slug: item.slug} }" :key="item.slug"
@@ -33,6 +33,11 @@
         Показать всех
       </router-link>
     </div>
+    <div v-else >
+      <div class="v-island__grayed">
+        У блога ещё нет {{ noResultTitle }}
+      </div>
+    </div>
   </div>
   <details-sub-pre-block v-else></details-sub-pre-block>
 </template>
@@ -52,6 +57,10 @@
       }),
       title: function () {
         return this.type === 'users' ? 'Подписчики' : 'Подписки';
+      },
+
+      noResultTitle: function () {
+        return this.type === 'users' ? 'подписчиков' : 'подписок';
       },
 
       to: function () {

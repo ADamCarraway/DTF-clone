@@ -69,7 +69,7 @@
           <router-view :data="data"/>
         </transition>
 
-      <subsite-sidebar v-if="$route.name === 'category'" :data="data" :type="'category'"></subsite-sidebar>
+      <subsite-sidebar v-if="['category', 'category.new'].includes(this.$route.name)" :data="data" :type="'category'"></subsite-sidebar>
       <details-sidebar v-else></details-sidebar>
     </div>
   </div>

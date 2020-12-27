@@ -1,6 +1,6 @@
 <template>
-  <div data-v-b1807cea="" class="l-page__sidebar" style="position: relative;">
-    <div data-v-b1807cea="" class="l-island-bg l-island-round v-island"
+  <div class="l-page__sidebar" style="position: relative;">
+    <div class="l-island-bg l-island-round v-island"
          style="width: 300px; position: sticky; top: 140px;">
       <div class="v-island__header"><span class="v-island__title">
       Навигация

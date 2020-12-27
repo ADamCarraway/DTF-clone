@@ -2,7 +2,7 @@
   <div v-if="Object.keys(data).length !== 0" class="l-island-bg l-island-round v-island">
     <div class="v-island__header">
       <span class="v-island__title">Подписчики</span>
-      <span class="v-island__counter">{{ data.subscribers_count }}</span>
+      <span class="v-island__counter" v-if="data.subscribers_count">{{ data.subscribers_count }}</span>
     </div>
 
     <div v-if="data.subscribers_count > 0" class="v-list v-list--images">
@@ -18,7 +18,7 @@
       </router-link>
     </div>
     <div v-else class="v-island__grayed">
-      Пока что подписчиков нет =(
+      У блога ещё нет подписчиков
     </div>
   </div>
   <subscribers-pre-block v-else></subscribers-pre-block>

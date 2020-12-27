@@ -3,10 +3,9 @@
     <div class="v-island__header">
       <span class="v-island__title">Подписки</span>
       <span class="v-island__counter"
-            v-if="data.subscriptions">{{ data.subscriptions_count }}</span>
-      <span class="v-island__counter" v-else>0</span>
+            v-if="data.subscriptions_count">{{ data.subscriptions_count }}</span>
     </div>
-    <div v-if="data.subscriptions" class="v-list v-list--default">
+    <div v-if="data.subscriptions_count" class="v-list v-list--default">
       <div class="v-list__content">
         <router-link v-for="item in data.subscriptions_limit"
                      :to="{ name: item.type, params: { slug: item.slug } }"
@@ -22,7 +21,7 @@
       </router-link>
     </div>
     <div v-else class="v-island__grayed">
-      Пока что подписок нет =(
+      У блога ещё нет подписок
     </div>
   </div>
   <user-categories-pre-block v-else></user-categories-pre-block>
