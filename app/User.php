@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\CancelSubscriptionEvent;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
@@ -166,5 +167,41 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function subscribe(string $slug, string $type)
+    {
+        if ($type === 'category') {
+            $category = Category::query()->whereSlug($slug)->firstOrFail();
+
+            $this->categories()->attach($category->id, ['created_at' => now()]);
+        }
+
+        if ($type === 'user') {
+            $user = User::query()->whereSlug($slug)->firstOrFail();
+
+            $this->users()->attach($user->id, ['created_at' => now()]);
+        }
+
+        return true;
+    }
+
+    public function unsubscribe(string $slug, string $type)
+    {
+        event(new CancelSubscriptionEvent($slug, $type));
+
+        if ($type === 'category') {
+            $category = Category::query()->whereSlug($slug)->firstOrFail();
+
+            $this->categories()->detach($category->id);
+        }
+
+        if ($type === 'user') {
+            $user = User::query()->whereSlug($slug)->firstOrFail();
+
+            $this->users()->detach($user->id);
+        }
+
+        return true;
     }
 }

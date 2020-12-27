@@ -10,29 +10,11 @@ class SubscriptionController extends Controller
 {
     public function store($slug, $type)
     {
-        if ($type === 'category') {
-            $category = Category::query()->where('slug', $slug)->firstOrFail();
-
-            return auth()->user()->categories()->attach($category->id, ['created_at' => now()]);
-        } else {
-            $user = User::query()->whereSlug($slug)->firstOrFail();
-
-            return auth()->user()->users()->attach($user->id, ['created_at' => now()]);
-        }
+       return auth()->user()->subscribe($slug, $type);
     }
 
     public function destroy($slug, $type)
     {
-        event(new CancelSubscriptionEvent($slug, $type));
-
-        if ($type === 'category') {
-            $category = Category::query()->where('slug', $slug)->firstOrFail();
-
-            return auth()->user()->categories()->detach($category->id);
-        } else {
-            $user = User::query()->whereSlug($slug)->firstOrFail();
-
-            return auth()->user()->users()->detach($user->id);
-        }
+        return auth()->user()->unsubscribe($slug, $type);
     }
 }
