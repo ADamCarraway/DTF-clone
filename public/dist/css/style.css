@@ -4494,14 +4494,15 @@ input:checked + .like-btn-svg {
 }
 
 .ui-sorting--with-tabs {
-    margin-top: 18px;
+    /* margin-top: 18px; */
 }
 
 .ui-sorting {
     display: -ms-flexbox;
     display: flex;
-    padding: 0 8px 0 20px;
-    margin-top: 32px;
+    /* padding: 0 8px 0 20px; */
+    /* margin-top: 32px; */
+    margin-bottom: 13px;
 }
 
 .page--index .ui-filters--responsive.l-island-round {
@@ -4583,4 +4584,8 @@ input:checked + .like-btn-svg {
 .feed__item:hover {
     -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.06);
     box-shadow: 0 2px 4px rgba(0,0,0,.06);
+}
+
+.l-page__content .ui-sorting:first-child {
+    margin-top: 0;
 }

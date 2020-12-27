@@ -1,6 +1,6 @@
 <template>
   <div class="l-page__content">
-    <div class="l-mb-20">
+    <div class="l-mb-20" v-if="data.type === 'category' || data.id === user.id">
       <create-post-block :user="user" :data="data"></create-post-block>
     </div>
     <posts-filter :routes='{index: data.type, new: data.type+".new"}'></posts-filter>

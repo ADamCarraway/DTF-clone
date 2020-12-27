@@ -1,6 +1,5 @@
 <template>
   <div class="ui-sorting ui-sorting--with-tabs">
-    <div class="v-tabs"></div>
     <div class="ui-filters l-island-round ui-filters--responsive">
       <div class="ui-filters__inner">
         <div class="ui-rounded-button ui-rounded-button--responsive ui-rounded-button--has-active-child"

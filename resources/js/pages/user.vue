@@ -138,3 +138,9 @@
     }
   }
 </script>
+
+<style scoped>
+  .ui-sorting {
+    margin: 0;
+  }
+</style>

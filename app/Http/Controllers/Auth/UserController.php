@@ -20,9 +20,9 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $request = $user->load(['users'])->toArray();
-        $request['subscriptions'] = $user->subscriptions->sortBy('type')->map(function (Subscription $i) {
+        $request['subscriptions'] = $user->subscriptions->map(function (Subscription $i) {
             return $i->toSubFormat();
-        })->sortByDesc('date')->sortByDesc('is_favorite')->keyBy('slug')->toArray();
+        })->keyBy('slug')->sortByDesc('type')->sortByDesc('date')->sortByDesc('is_favorite')->toArray();
         $request['subscribers'] = $user->subscribers()->limit(12)->get();
         $request['subscribers_count'] = $user->subscribers()->count();
         $request['subscriptions_count'] = $user->subscriptions()->count();
@@ -38,7 +38,7 @@ class UserController extends Controller
              ->whereSlug($slug)
             ->firstOrFail();
 
-        $user['subscriptions'] = $user->subscriptions->map(function (Subscription $i) {
+        $user['subscriptions'] = $user->subscriptions()->limit(12)->get()->map(function (Subscription $i) {
             return $i->toSubFormat();
         })->keyBy('slug')->toArray();
         $user['subscribers'] = $user->subscribers()->limit(12)->get();
