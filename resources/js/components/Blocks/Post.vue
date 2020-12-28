@@ -3,9 +3,8 @@
 
     <div class="l-mb-28 lm-mb-20 content-feed content-feed--games content-feed--225339 l-island-bg l-island-round">
 
-      <div class="content-header content-header--short">
-        <div class="l-pt-20"></div>
-        <div class="content-header__info l-island-a">
+      <router-link :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }" class="content-header content-header--short">
+        <div class="content-header__info l-island-a" :class="{'content-header--empty-title': !data.title}">
 
           <div class="content-header__left">
 
@@ -73,17 +72,17 @@
         <h2 class="content-header__title l-island-a" v-if="data.title">
           {{ data.title }}
           <a href="#">
-    <span class="content-editorial-tick">
-     <i class="fas fa-check"></i>
-    </span>
+            <span class="content-editorial-tick">
+             <i class="fas fa-check"></i>
+            </span>
           </a>
 
         </h2>
 
-      </div>
+      </router-link>
 
 
-      <div class="content content--short  ">
+      <router-link :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }" class="content content--short  ">
         <div  class="l-island-a" v-html="html[0]">
         </div>
 
@@ -103,7 +102,7 @@
 
         <!--        </figure>-->
 
-      </div>
+      </router-link>
 
 
       <div class="content-footer content-footer--short l-island-a">
@@ -157,7 +156,7 @@
 
       </div>
       <a class="content-feed__link"
-         href="https://dtf.ru/games/225339-kooperativnyy-rezhim-legends-dlya-ghost-of-tsushima-vyydet-16-oktyabrya"></a>
+         :href="data.slug"></a>
     </div>
   </div>
 </template>

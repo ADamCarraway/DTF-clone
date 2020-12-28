@@ -16,23 +16,23 @@ class PostController extends Controller
         $posts = Post::query()->with(['category', 'user']);
 
         if ($type == 'new'){
-            $posts->latest();
+            $posts->latest('created_at');
         }
 
         return response()->json($posts->paginate(10));
     }
 
-    public function show(Post $post)
+    public function show($slug)
     {
-        return $post;
+        return response()->json(Post::query()->with(['category', 'user'])->whereSlug($slug)->first());
     }
 
     public function store(Request $request, $slug)
     {
         $category = null;
 
-        if ($slug === 'my' && $slug != auth()->user()->slug) {
-            $category = Category::query()->where('slug', $slug)->firstOrFail();
+        if ($slug !== 'my') {
+            $category = Category::query()->whereSlug($slug)->firstOrFail();
         }
 
         $post = auth()->user()->posts()->updateOrCreate([

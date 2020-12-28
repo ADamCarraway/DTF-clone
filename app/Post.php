@@ -22,6 +22,8 @@ class Post extends Model implements Likeable, Bookmarkable
         self::created(function ($model) {
             if ($model->slug == null) {
                 $model->update(['slug' => $model->id]);
+            }else{
+                $model->update(['slug' => $model->id.'-'.$model->slug]);
             }
         });
 
@@ -45,7 +47,7 @@ class Post extends Model implements Likeable, Bookmarkable
 
     public function getTypeAttribute()
     {
-        return 'Post';
+        return 'post';
     }
 
     public function getDateAttribute()

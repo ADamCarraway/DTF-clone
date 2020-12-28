@@ -59,6 +59,7 @@ Route::group(['middleware' => 'guest:api'], function () {
 });
 
 Route::get('posts', 'PostController@index')->name('posts.index');
+Route::get('/post/{slug}', 'PostController@show')->name('post.show');
 
 Route::get('u/{slug}', 'Auth\UserController@show')->name('user.show');
 
@@ -69,6 +70,8 @@ Route::get('/subs', 'CategoryController@index')->name('subs.index');
 
 Route::get('/{slug}/posts', 'CategoryController@posts')->name('category.posts');
 Route::post('/{slug}/posts/store', 'PostController@store')->name('post.store');
+
+
 Route::get('/{slug}/details', 'CategoryController@details')->name('category.details');
 Route::get('/{slug}/details/subscribers', 'CategoryController@subscribers')->name('category.subscribers');
 
