@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Post;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -29,10 +30,19 @@ class CategoryController extends Controller
         return response()->json($category->subscribers()->paginate(10));
     }
 
-    public function posts($slug)
+    public function posts(Request $request, $slug)
     {
-        $category = Category::query()->where('slug', $slug)->firstOrFail();
+        $category = Category::query()->whereSlug($slug)->firstOrFail();
 
-        return $category->posts()->paginate(10);
+        $type = $request->get('type');
+
+        $posts = Post::query()->with(['category', 'user'])
+            ->whereCategoryId($category->id);
+
+        if ($type == 'new') {
+            $posts->latest('created_at');
+        }
+
+        return response()->json($posts->paginate(10));
     }
 }

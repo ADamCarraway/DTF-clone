@@ -4278,7 +4278,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .vote .vote__value {
     color: #595959;
-    /* cursor: default; */
+    cursor: default;
     text-align: center;
     white-space: nowrap;
 }
@@ -4655,4 +4655,13 @@ input:checked + .like-btn-svg {
 
 .content-header--empty-title{
     margin-bottom: 0;
+}
+
+.content-header-number.content-header__item i{
+    margin-right: 6px;
+}
+
+.VueStar__ground, .VueStar__decoration{
+    width: auto!important;
+    height: auto!important;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="l-entry l-island-bg l-island-round l-pv-30 lm-pt-15 lm-pb-30 " v-if="data.slug">
+  <div class="l-entry l-island-bg l-island-round l-pv-30 lm-pt-15 lm-pb-30 w_1020" v-if="data.slug">
     <div class="l-entry__header l-island-a">
       <div class="content-header content-header--short">
         <div class="content-header__info l-island-a">
@@ -23,7 +23,7 @@
 
             <!-- Автор -->
             <router-link v-if="data.user" :to="{ name: 'user', params: {slug: data.user.slug} }"
-                         class="content-header-author content-header-author--subsite content-header__item">
+                         class="content-header-author content-header__item" :class="{'content-header-author--subsite': !data.category}">
               <div v-if="!data.category" class="content-header-author__avatar">
 
                 <img class="andropov_image  andropov_image--bordered"
@@ -38,11 +38,12 @@
 
             <!-- Время публикации -->
             <div class="content-header-number content-header__item">
-              <a
-                href="https://dtf.ru/games/225339-kooperativnyy-rezhim-legends-dlya-ghost-of-tsushima-vyydet-16-oktyabrya"
-                class="t-link">
                 <span class="time">{{ data.date }}</span>
-              </a>
+            </div>
+
+            <!-- Число просмотров -->
+            <div class="content-header-number content-header__item">
+              <i class="far fa-eye"></i> {{ data.unique_views_count }}
             </div>
 
             <!-- Закрепленный пост -->
@@ -76,56 +77,7 @@
 
     <div class="l-entry__content">
       <div class="content content--full" v-html="html"></div>
-      <div class="content-footer content-footer--short l-island-a">
-
-        <div class="content-footer__left">
-
-          <!-- Comments -->
-          <div class="content-footer__item">
-
-            <div
-              class="comments_counter comments_counter--nonzero comments_counter--num comments_counter--has_new l-inline-block l-fs-0">
-              <a
-                href="https://dtf.ru/games/225339-kooperativnyy-rezhim-legends-dlya-ghost-of-tsushima-vyydet-16-oktyabrya?comments"
-                class="comments_counter__count t-link">
-                <span class="comments_counter__count__ico l-inline-block l-va-middle l-lhr-1">
-                 <i class="far fa-comments l-fs-20"></i>
-                </span>
-                <span class="comments_counter__count__value l-inline-block l-va-middle">89</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- Favorite -->
-          <div class="content-footer__item">
-            <bookmark :data="data"/>
-          </div>
-
-          <!-- Repost (all checks are inside) -->
-
-          <div class="repost_button">
-
-            <div class="repost_button__button " title="Сделать репост">
-              <i class="fas fa-retweet l-fs-20"></i>
-              <div class="repost_button__counter l-ml-4"></div>
-            </div>
-
-            <div class="repost_button__list"></div>
-
-          </div>
-
-        </div>
-
-        <div class="content-footer__right">
-
-          <!-- Vote -->
-          <div class="content-footer__item">
-            <like :data="data"/>
-          </div>
-
-        </div>
-
-      </div>
+      <post-footer :data="data"/>
     </div>
 
     <div class="subsite-card-entry">
@@ -146,7 +98,7 @@
             <div v-if="!data.user.id" class="preloader preloader-actions"></div>
             <div v-else
                  class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
-              <subscribe v-if="data.user.id !== user.id" :data="data.user" :type="data.user.type"></subscribe>
+              <subscribe v-if="user && data.user.id !== user.id" :data="data.user" :type="data.user.type"></subscribe>
               <notification :data="data.user" :type="'users'"></notification>
             </div>
           </div>
@@ -165,10 +117,11 @@
   import Notification from "../components/Buttons/Notification";
   import {mapGetters} from "vuex";
   import moment from "moment";
+  import PostFooter from "../components/Blocks/PostFooter";
 
   export default {
     name: "post",
-    components: {Subscribe, Bookmark, Like, Notification},
+    components: {PostFooter, Subscribe, Bookmark, Like, Notification},
     data() {
       return {
         data: {},
@@ -221,18 +174,19 @@
   }
 
   .content-footer--short {
-    width: 600px;
+    width: 680px;
     margin-left: auto;
     margin-right: auto;
   }
 
   .content--full {
-    width: 600px;
+    width: 680px;
     margin-left: auto;
     margin-right: auto;
   }
 
   .l-entry__header {
+    width: 680px;
     padding-left: 0;
     padding-right: 0;
   }
@@ -243,7 +197,7 @@
   }
 
   .subsite-card-entry--short{
-    width: 600px;
+    width: 680px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -311,5 +265,10 @@
 
   .content-header__info{
     margin-bottom: 0px;
+  }
+
+  .w_1020{
+    max-width: 1020px;
+    min-width: 1020px;
   }
 </style>

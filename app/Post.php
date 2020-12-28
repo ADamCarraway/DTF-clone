@@ -6,13 +6,14 @@ use App\Contracts\Bookmarkable;
 use App\Contracts\Likeable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Post extends Model implements Likeable, Bookmarkable
 {
     use Concerns\Likeable, Concerns\Bookmarkable;
 
     protected $guarded = ['id'];
-    protected $appends = ['type', 'is_like', 'is_bookmarked', 'date'];
+    protected $appends = ['type', 'is_like', 'is_bookmarked', 'date', 'unique_views_count'];
     protected $withCount = ['likes', 'bookmarks'];
 
     public static function boot()
@@ -67,5 +68,15 @@ class Post extends Model implements Likeable, Bookmarkable
         if (!auth()->check()) return false;
 
         return auth()->user()->hasBookmark($this);
+    }
+
+    public function views(): MorphMany
+    {
+        return $this->morphMany(Views::class, 'viewable');
+    }
+
+    public function getUniqueViewsCountAttribute()
+    {
+        return $this->views()->groupBy('ip')->count();
     }
 }

@@ -1,9 +1,9 @@
 <template>
-  <div class="feed__item l-island-round">
+  <div class="feed__item l-island-round" v-if="data.slug">
 
     <div class="l-mb-28 lm-mb-20 content-feed content-feed--games content-feed--225339 l-island-bg l-island-round">
 
-      <router-link :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }" class="content-header content-header--short">
+      <div class="content-header content-header--short">
         <div class="content-header__info l-island-a" :class="{'content-header--empty-title': !data.title}">
 
           <div class="content-header__left">
@@ -25,8 +25,9 @@
 
             <!-- Автор -->
             <router-link v-if="data.user" :to="{ name: 'user', params: {slug: data.user.slug} }"
-                         class="content-header-author content-header-author--subsite content-header__item">
-              <div  v-if="!data.category" class="content-header-author__avatar">
+                         class="content-header-author content-header__item"
+                         :class="{'content-header-author--subsite': !data.category}">
+              <div v-if="!data.category" class="content-header-author__avatar">
 
                 <img class="andropov_image  andropov_image--bordered"
                      :src="data.user.avatar">
@@ -40,11 +41,7 @@
 
             <!-- Время публикации -->
             <div class="content-header-number content-header__item">
-              <a
-                href="https://dtf.ru/games/225339-kooperativnyy-rezhim-legends-dlya-ghost-of-tsushima-vyydet-16-oktyabrya"
-                class="t-link">
-                <span class="time">{{ data.date }}</span>
-              </a>
+              <span class="time">{{ data.date }}</span>
             </div>
 
             <!-- Закрепленный пост -->
@@ -68,22 +65,22 @@
           </div>
 
         </div>
-
-        <h2 class="content-header__title l-island-a" v-if="data.title">
-          {{ data.title }}
-          <a href="#">
+        <router-link router-link
+                     :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }">
+          <h2 class="content-header__title l-island-a" v-if="data.title">
+            {{ data.title }}
             <span class="content-editorial-tick">
              <i class="fas fa-check"></i>
             </span>
-          </a>
-
-        </h2>
-
-      </router-link>
+          </h2>
+        </router-link>
+      </div>
 
 
-      <router-link :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }" class="content content--short  ">
-        <div  class="l-island-a" v-html="html[0]">
+      <router-link
+        :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }"
+        class="content content--short  ">
+        <div class="l-island-a" v-html="html[0]">
         </div>
 
         <!--        <figure>-->
@@ -105,58 +102,7 @@
       </router-link>
 
 
-      <div class="content-footer content-footer--short l-island-a">
-
-        <div class="content-footer__left">
-
-          <!-- Comments -->
-          <div class="content-footer__item">
-
-            <div
-              class="comments_counter comments_counter--nonzero comments_counter--num comments_counter--has_new l-inline-block l-fs-0">
-              <a
-                href="https://dtf.ru/games/225339-kooperativnyy-rezhim-legends-dlya-ghost-of-tsushima-vyydet-16-oktyabrya?comments"
-                class="comments_counter__count t-link">
-                <span class="comments_counter__count__ico l-inline-block l-va-middle l-lhr-1">
-                 <i class="far fa-comments l-fs-20"></i>
-                </span>
-                <span class="comments_counter__count__value l-inline-block l-va-middle">89</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- Favorite -->
-          <div class="content-footer__item">
-            <bookmark :data="data"/>
-          </div>
-
-          <!-- Repost (all checks are inside) -->
-
-          <div class="repost_button">
-
-            <div class="repost_button__button " title="Сделать репост">
-              <i class="fas fa-retweet l-fs-20"></i>
-              <div class="repost_button__counter l-ml-4"></div>
-            </div>
-
-            <div class="repost_button__list"></div>
-
-          </div>
-
-        </div>
-
-        <div class="content-footer__right">
-
-          <!-- Vote -->
-          <div class="content-footer__item">
-            <like :data="data"/>
-          </div>
-
-        </div>
-
-      </div>
-      <a class="content-feed__link"
-         :href="data.slug"></a>
+      <post-footer :data="data"/>
     </div>
   </div>
 </template>
@@ -165,14 +111,15 @@
   import Like from "../Buttons/Like";
   import Bookmark from "../Buttons/Bookmark";
   import edjsHTML from "editorjs-html"
+  import PostFooter from "./PostFooter";
 
   export default {
     name: "Post",
-    components: {Bookmark, Like},
+    components: {PostFooter, Bookmark, Like},
     props: ['data'],
-    data(){
+    data() {
       return {
-        html : ''
+        html: ''
       }
     },
     created() {
