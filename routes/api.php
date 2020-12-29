@@ -70,7 +70,9 @@ Route::get('/subs', 'CategoryController@index')->name('subs.index');
 
 Route::get('/{slug}/posts', 'CategoryController@posts')->name('category.posts');
 Route::post('/{slug}/posts/store', 'PostController@store')->name('post.store');
-
+Route::get('/post/{slug}/comments', 'PostController@comments')->name('comment.index');
+Route::post('/comment/store', 'CommentController@store')->name('comment.add');
+Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
 
 Route::get('/{slug}/details', 'CategoryController@details')->name('category.details');
 Route::get('/{slug}/details/subscribers', 'CategoryController@subscribers')->name('category.subscribers');

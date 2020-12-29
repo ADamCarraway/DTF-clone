@@ -80,7 +80,7 @@
       <router-link
         :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }"
         class="content content--short  ">
-        <div class="l-island-a" v-html="html[0]">
+        <div class="content content--content l-island-a" v-html="html[0]">
         </div>
 
         <!--        <figure>-->

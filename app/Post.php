@@ -79,4 +79,9 @@ class Post extends Model implements Likeable, Bookmarkable
     {
         return $this->views()->groupBy('ip')->count();
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
+    }
 }

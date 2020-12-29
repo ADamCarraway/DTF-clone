@@ -1,6 +1,5 @@
 <template>
-  <div v-if="data" class="v-mini-header l-island-bg l-island-round" :class="{'v-mini-header--active': tabsPos <= 60}"
-       style="--width:960px;">
+  <div v-if="data" class="v-mini-header l-island-bg l-island-round" :class="{'v-mini-header--active': tabsPos <= 60}">
     <div class="v-header-avatar"
          :style="{ backgroundImage: `url('${data.icon}')` }">
     </div>
