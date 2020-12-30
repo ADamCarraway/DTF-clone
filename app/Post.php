@@ -14,7 +14,7 @@ class Post extends Model implements Likeable, Bookmarkable
 
     protected $guarded = ['id'];
     protected $appends = ['type', 'is_like', 'is_bookmarked', 'date', 'unique_views_count'];
-    protected $withCount = ['likes', 'bookmarks'];
+    protected $withCount = ['likes', 'bookmarks', 'comments'];
 
     public static function boot()
     {

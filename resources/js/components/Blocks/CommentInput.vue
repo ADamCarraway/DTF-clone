@@ -11,7 +11,9 @@
             :max-height="350"/>
           <div class="thesis__panel">
             <div class="thesis__attaches"></div>
-            <div class="thesis__custom_buttons"></div>
+            <div class="thesis__custom_buttons">
+              <div class="thesis__custom_button ui-button ui-button--4 ui-button--small" v-if="parent" @click="hideReplyForm()">Отменить</div>
+            </div>
             <div class="thesis__submit ui-button ui-button--1" @click="send()">Отправить</div>
           </div>
         </div>
@@ -26,20 +28,27 @@
 
   export default {
     name: "CommentInput",
-    props: ['postId'],
+    props: ['postId', 'parent'],
     data() {
       return {
-        comment: ''
+        comment: '',
+        url: 'comment/store'
       }
     },
     methods: {
       send() {
-        axios.post('/api/comment/store', {'comment': this.comment, 'id': this.postId}).then((res) => {
-          EventBus.$emit('createdComment', {comment: res.data});
+        if (this.parent){
+          this.url = 'reply/store'
+        }
+        axios.post('/api/'+this.url, {'comment': this.comment, 'id': this.postId, 'commentId': this.parent ? this.parent.id : null}).then((res) => {
+          EventBus.$emit('createdComment', {comment: res.data, parent: this.parent});
           this.comment = '';
         }).catch(() => {
         })
       },
+      hideReplyForm(){
+        EventBus.$emit('hideReplyForm');
+      }
     }
   }
 </script>

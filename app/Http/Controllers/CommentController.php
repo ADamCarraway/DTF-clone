@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public function comments(Request $request, $slug)
+    {
+        $type = $request->get('type');
+
+        $comments = Post::query()->whereSlug($slug)->firstOrFail()->comments()->withCount(['replies']);
+        if ($type == 'new'){
+            $comments->latest('created_at');
+        }
+
+        return $comments->get();
+    }
+
     public function store(Request $request)
     {
         $comment = new Comment;
@@ -19,7 +31,7 @@ class CommentController extends Controller
         /** @var Post $post */
         $post = Post::find($request->id);
 
-        return $post->comments()->save($comment);
+        return $post->comments()->save($comment)->load('replies');
     }
 
     public function replyStore(Request $request)
@@ -30,7 +42,7 @@ class CommentController extends Controller
 
         $reply->user()->associate(auth()->user());
 
-        $reply->parent_id = $request->get('comment_id');
+        $reply->parent_id = $request->get('commentId');
 
         /** @var Post $post */
         $post = Post::find($request->get('id'));

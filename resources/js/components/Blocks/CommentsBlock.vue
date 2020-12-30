@@ -3,7 +3,7 @@
     <div class="comments comments--ready">
       <div class="comments__body">
         <div class="comments__title l-island-a l-pb-10 lm-pt-30 l-fs-18 l-fw-700 l-mb-15" data-count="0">
-          <span class="comments__title__long">0&nbsp;комментариев</span>
+          <span class="comments__title__long">{{ count }} комментариев</span>
         </div>
 
         <div class="comments__navigation l-island-bg ui-border--bottom l-mb-15">
@@ -12,12 +12,12 @@
               <div class="ui-tabs ui-tabs--default ui-tabs--no-scroll ui-tabs--no-padding l-island-bg">
                 <div class="ui-tabs__scroll">
                   <div class="ui-tabs__content ">
-                    <div class="ui-tab ui-tab--active ">
+                    <div class="ui-tab" :class="{'ui-tab--active': activeTab === 'popular'}" @click="getComments('popular')">
                       <span class="ui-tab__label">
                         Популярные
                       </span>
                     </div>
-                    <div class="ui-tab">
+                    <div class="ui-tab" :class="{'ui-tab--active': activeTab === 'new'}"  @click="getComments('new')">
                       <span class="ui-tab__label">
                         По порядку
                       </span>
@@ -52,28 +52,43 @@
 
   export default {
     name: "CommentsBlock",
-    props: ['user', 'postId'],
+    props: ['user', 'postId', 'count'],
     components: {CommentInput, Comment, VueTextareaAutosize},
     data() {
       return {
         comment: '',
-        comments: []
+        comments: [],
+        activeTab: 'popular'
       }
     },
     mounted() {
       EventBus.$on('createdComment', (data) => {
-        this.comments.push(data.comment)
+        if (data.parent){
+          if (data.parent.parent_id){
+            this.comments.forEach((value, index, array) => {
+              if (value.id === data.parent.parent_id) this.comments[index].replies.push(data.comment)
+            });
+          }else{
+            this.comments.forEach((value, index, array) => {
+              if (value.id === data.parent.id) this.comments[index].replies.push(data.comment)
+            });
+          }
+          EventBus.$emit('hideReplyForm', false);
+        }else{
+          this.comments.push(data.comment)
+        }
       });
     },
     methods: {
-      getComments() {
-        axios.get('/api/post/'+this.$route.params.postSlug+'/comments').then((response) => {
+      getComments(type) {
+        this.activeTab = type;
+        axios.get('/api/post/'+this.$route.params.postSlug+'/comments?type='+type).then((response) => {
           this.comments = response.data;
         })
-      }
+      },
     },
     created() {
-      this.getComments()
+      this.getComments('popular')
     }
   }
 </script>

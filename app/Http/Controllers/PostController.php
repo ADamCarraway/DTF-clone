@@ -52,9 +52,4 @@ class PostController extends Controller
             'post' => $post
         ]);
     }
-
-    public function comments(Request $request, $slug)
-    {
-        return Post::query()->whereSlug($slug)->firstOrFail()->comments()->with('user')->get();
-    }
 }

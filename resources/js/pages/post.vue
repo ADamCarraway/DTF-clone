@@ -107,7 +107,7 @@
         </div>
       </div>
     </div>
-    <comments-block :postId="data.id" :user="user" />
+    <comments-block :postId="data.id" :user="user" :count="data.comments_count" />
   </div>
 </template>
 

@@ -5041,3 +5041,50 @@ input:checked + .like-btn-svg {
 .comments__footer {
     padding-bottom: 15px;
 }
+
+.comments__item__children {
+    padding-left: 32px;
+    border-left: 1px dashed #ccc;
+}
+
+.comments__item__other:hover>.comments__item__collapse_subtree {
+    display: block;
+}
+
+.comments__item__collapse_subtree:hover {
+    border-left: 2px solid #4086e0;
+}
+
+.comments__item__collapse_subtree {
+    display: none;
+    position: absolute;
+    width: 32px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.comments__item__other{
+    position:relative;
+}
+
+
+.comments__item__more--inner {
+    position: static;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-align: center;
+    align-items: center;
+    max-width: 100%;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.comments__item__expand, .comments__item__more--inner {
+    font-size: 14px;
+    line-height: 1;
+    color: #346eb8;
+    cursor: pointer;
+    background-color: #fff;
+}
