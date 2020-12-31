@@ -5,17 +5,39 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
     public function index(Request $request)
     {
-        $type = $request->get('type');
+        $filter = $request->get('filter');
+        $odds = \App\Post::ODDS;
+
+        if ($filter == 'popular'){
+            $posts = Post::query()->with(['category', 'user'])
+                ->leftJoin('comments', function ($q) {
+                    $q->on('posts.id', '=', 'comments.commentable_id')
+                        ->where('comments.commentable_type', '=', \App\Post::class);
+                })
+                ->leftJoin('views', function ($q) {
+                    $q->on('posts.id', '=', 'views.viewable_id')
+                        ->where('views.viewable_type', '=', \App\Post::class);
+                })
+                ->leftJoin('likes', function ($q) {
+                    $q->on('posts.id', '=', 'likes.likeable_id')
+                        ->where('likes.likeable_type', '=', \App\Post::class);
+                })
+                ->addSelect(DB::raw("('$odds[c]'+'$odds[a]'*LOG(1+count(DISTINCT likes.id))+'$odds[b]'*LOG(1+count(DISTINCT views.ip))+'$odds[d]'*LOG(1+count(DISTINCT comments.id))) as weight"))
+                ->groupBy('posts.id')->orderBy('weight', 'desc');
+
+            return response()->json($posts->paginate(10));
+        }
 
         $posts = Post::query()->with(['category', 'user']);
 
-        if ($type == 'new'){
+        if ($filter == 'new'){
             $posts->latest('created_at');
         }
 

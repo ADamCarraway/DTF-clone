@@ -34,32 +34,27 @@
           </div>
         </div>
 
-        <!-- Vote -->
-        <!--        <div class="vote vote&#45;&#45;comment" air-module="module.votes" data-id="8466578" data-type="4"-->
-        <!--             data-type-str="comment" data-symbols="—|–" data-state="0" data-with-users="1" data-content-id="285557"-->
-        <!--             data-subsite-id="91342" data-subsite-name="Adam Carraway"-->
-        <!--             data-subsite-avatar="https://leonardo.osnova.io/d0899f05-8489-abde-8cfc-60986c29cb96/"-->
-        <!--             data-subsite-url="https://dtf.ru/u/91342-adam-carraway" data-place="content" data-count="0">-->
 
-        <!--          <div class="vote__button vote__button&#45;&#45;minus">-->
-        <!--            <svg class="icon icon&#45;&#45;ui_arrow_down" width="14" height="12" xmlns="http://www.w3.org/2000/svg">-->
-        <!--              <use xlink:href="#ui_arrow_down"></use>-->
-        <!--            </svg>-->
-        <!--            <div class="vote__button__action"></div>-->
-        <!--          </div>-->
+<!--        <div class="vote vote&#45;&#45;comment">-->
+<!--          <div class="vote__button vote__button&#45;&#45;minus">-->
+<!--            <svg class="icon icon&#45;&#45;ui_arrow_down" width="14" height="12" xmlns="http://www.w3.org/2000/svg">-->
+<!--              <use xlink:href="#ui_arrow_down"></use>-->
+<!--            </svg>-->
+<!--            <div class="vote__button__action"></div>-->
+<!--          </div>-->
 
-        <!--          <div class="vote__value t-ff-1-500 l-fs-16">-->
-        <!--            <span class="vote__value__v vote__value__v&#45;&#45;real">0</span>-->
-        <!--          </div>-->
+<!--          <div class="vote__value t-ff-1-500 l-fs-16">-->
+<!--            <span class="vote__value__v vote__value__v&#45;&#45;real">0</span>-->
+<!--          </div>-->
 
-        <!--          <div class="vote__button vote__button&#45;&#45;plus">-->
-        <!--            <svg class="icon icon&#45;&#45;ui_arrow_up" width="14" height="12" xmlns="http://www.w3.org/2000/svg">-->
-        <!--              <use xlink:href="#ui_arrow_up"></use>-->
-        <!--            </svg>-->
-        <!--            <div class="vote__button__action"></div>-->
-        <!--          </div>-->
+<!--          <div class="vote__button vote__button&#45;&#45;plus">-->
+<!--            <svg class="icon icon&#45;&#45;ui_arrow_up" width="14" height="12" xmlns="http://www.w3.org/2000/svg">-->
+<!--              <use xlink:href="#ui_arrow_up"></use>-->
+<!--            </svg>-->
+<!--            <div class="vote__button__action"></div>-->
+<!--          </div>-->
 
-        <!--        </div>-->
+<!--        </div>-->
 
 
         <!-- Content -->
@@ -73,11 +68,9 @@
         <!-- Reply -->
         <div class="comments__item__reply" @click="toggle">Ответить</div>
 
-        <!-- Favorite -->
-        <div class="favorite_marker favorite_marker--type-comment favorite_marker--zero" data-count="0"
-             title="В закладки">
-          <i data-v-976b26e2="" class="far fa-bookmark"></i>
-        </div>
+        <bookmark :data="data"/>
+
+        <like :data="data" class="comments__item__like"/>
 
         <!-- Admin -->
         <!--        <div class="etc_control" air-module="module.etc_controls" >-->
@@ -89,7 +82,7 @@
     </div>
     <div class="comments__item__other">
 
-      <comment-input :postId="data.commentable_id" :parent="data"  v-if="show"/>
+      <comment-input :postId="data.commentable_id" :parent="data" v-if="show" :show="true" :type="'reply'"/>
 
       <!-- Children comments -->
       <div class="comments__item__children" v-show="repliesShow">
@@ -116,12 +109,15 @@
   import CommentInput from "./CommentInput";
   import EventBus from "../../plugins/event-bus";
   import Vue from 'vue'
+  import Like from "../Buttons/Like";
+  import Bookmark from "../Buttons/Bookmark";
 
-  const xxx = Vue.observable({ active: null });
+  const xxx = Vue.observable({active: null});
   let id = 0;
+
   export default {
     name: "Comment",
-    components: {CommentInput},
+    components: {Bookmark, Like, CommentInput},
     props: ['data', 'parent'],
     data() {
       return {

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Views extends Model
 {
-    protected $table = 'viewable';
+    protected $table = 'views';
     protected $primaryKey = null;
     public $incrementing = false;
     protected $guarded = [];

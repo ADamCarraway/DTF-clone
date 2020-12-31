@@ -12,9 +12,12 @@ class Post extends Model implements Likeable, Bookmarkable
 {
     use Concerns\Likeable, Concerns\Bookmarkable;
 
+    //a - like, b = views , d = comments
+    const ODDS = ['a' => 40, 'b' => 60, 'c' => 10, 'd' => 40];
+
     protected $guarded = ['id'];
-    protected $appends = ['type', 'is_like', 'is_bookmarked', 'date', 'unique_views_count'];
-    protected $withCount = ['likes', 'bookmarks', 'comments'];
+    protected $appends = ['type', 'is_like', 'is_bookmarked', 'date', 'unique_views_count', 'comments_count'];
+    protected $withCount = ['likes', 'bookmarks'];
 
     public static function boot()
     {
@@ -83,5 +86,15 @@ class Post extends Model implements Likeable, Bookmarkable
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
+    }
+
+    public function getCommentsCountAttribute()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->count();
+    }
+
+    public function getWeightAttribute()
+    {
+        return round(self::ODDS['c']+self::ODDS['a']*Log(1+$this->likes->count())+self::ODDS['b']*Log(1+$this->views->count())+self::ODDS['d']*Log(1+$this->comments->count()), 2);
     }
 }

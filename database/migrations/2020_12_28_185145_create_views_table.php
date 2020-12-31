@@ -13,7 +13,7 @@ class CreateViewableTable extends Migration
      */
     public function up()
     {
-        Schema::create('viewable', function (Blueprint $table) {
+        Schema::create('views', function (Blueprint $table) {
             $table->foreignId('user_id')->nullable(true);
             $table->morphs('viewable');
             $table->integer('count')->nullable(true);

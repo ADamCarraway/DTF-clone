@@ -59,7 +59,7 @@
             <div class="site-header-user-profile__avatar-image" :style="{'background-image': 'url('+user.avatar+')'}"></div>
           </router-link>
             <at-dropdown trigger="click">
-              <span><i class="icon icon-chevron-down"></i></span>
+              <span><i class="icon icon-chevron-down l-fs-22"></i></span>
               <at-dropdown-menu slot="menu">
                 <div class="at-dropdown-menu-item__title">Профиль</div>
                 <router-link :to="{ name: 'user', params: {slug: user.slug} }" class="at-dropdown-menu__item item--selected">

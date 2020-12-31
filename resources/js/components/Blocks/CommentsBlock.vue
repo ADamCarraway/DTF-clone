@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <comment-input :postId="postId"/>
+        <comment-input :postId="postId" :show="false"/>
 
         <div class="comments__content l-island-a l-mb-30">
           <comment v-for="c in comments" :data="c" :key="c.id"/>

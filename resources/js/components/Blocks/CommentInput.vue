@@ -1,6 +1,18 @@
 <template>
   <div class="comments__footer l-island-a l-clear">
-    <div class="comments_form">
+    <div class="comments_pseudo_form l-clear" v-if="!type && !formShow" @click="formShow = true">
+
+      <span class="comments_pseudo_form__text">Написать комментарий...</span>
+
+      <div class="comments_pseudo_form__button">
+        <i class="fas fa-link icon--attach-link"></i>
+      </div>
+      <div class="comments_pseudo_form__button">
+        <i class="far fa-image icon--ui_image"></i>
+      </div>
+
+    </div>
+    <div class="comments_form" v-if="show || formShow">
       <div class="comments_form__editor">
         <div class="thesis thesis--empty">
           <textarea-autosize
@@ -28,11 +40,12 @@
 
   export default {
     name: "CommentInput",
-    props: ['postId', 'parent'],
+    props: ['postId', 'parent', 'show', 'type'],
     data() {
       return {
         comment: '',
-        url: 'comment/store'
+        url: 'comment/store',
+        formShow: false
       }
     },
     methods: {

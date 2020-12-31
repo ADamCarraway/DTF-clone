@@ -4,7 +4,7 @@
       <div class="ui-filters__inner">
         <div class="ui-rounded-button ui-rounded-button--responsive ui-rounded-button--has-active-child"
              :class="{'ui-rounded-button--active': $route.name === routes.index}">
-          <router-link :to="{ name: routes.index }" class="ui-rounded-button__link" @click.native="open('top')">
+          <router-link :to="{ name: routes.index }" class="ui-rounded-button__link" @click.native="open('popular')">
             Популярное
           </router-link>
         </div>
@@ -26,8 +26,8 @@
     name: "PostsFilter",
     props: ['routes'],
     methods: {
-      open(type){
-        EventBus.$emit('changePostsRoute', (type))
+      open(filter){
+        EventBus.$emit('changePostsRoute', filter)
       }
     }
   }

@@ -31,7 +31,7 @@
     components: {PostsFilter, Post, InfiniteLoading},
     data() {
       return {
-        type: this.$route.name.indexOf('.new') + 1 ? 'new' : 'top',
+        filter: this.$route.name.indexOf('.new') + 1 ? 'new' : 'popular',
         posts: [],
         page: 1,
         total: 0,
@@ -39,8 +39,9 @@
       }
     },
     mounted() {
-      EventBus.$on('changePostsRoute', (type) => {
-        this.type = type;
+      EventBus.$on('changePostsRoute', (filter) => {
+        console.log('new ' + filter)
+        this.filter = filter;
         this.posts = [];
         this.page = 1;
         this.infiniteId += 1;
@@ -52,10 +53,17 @@
       //   this.infiniteId += 1;
       // });
     },
-
+    // beforeRouteUpdate (to, from, next) {
+    //   this.filter = this.$route.name.indexOf('.new') + 1 ? 'new' : 'popular';
+    //   this.posts = [];
+    //   this.page = 1;
+    //   this.infiniteId += 1;
+    //   next()
+    // },
     methods: {
       infiniteHandler($state) {
-        axios.get(this.url+'?type='+this.type+'&page=' + this.page)
+        console.log('this '+this.filter)
+        axios.get(this.url+'?filter='+this.filter+'&page=' + this.page)
           .then((data) => {
             if (data.data.data.length) {
               this.page = this.page + 1;
