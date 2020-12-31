@@ -62,7 +62,6 @@
     // },
     methods: {
       infiniteHandler($state) {
-        console.log('this '+this.filter)
         axios.get(this.url+'?filter='+this.filter+'&page=' + this.page)
           .then((data) => {
             if (data.data.data.length) {

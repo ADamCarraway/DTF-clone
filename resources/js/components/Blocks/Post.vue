@@ -65,14 +65,17 @@
           </div>
 
         </div>
-        <router-link router-link
+        <router-link class="content-header__title l-island-a" v-if="data.title"
                      :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }">
-          <h2 class="content-header__title l-island-a" v-if="data.title">
-            {{ data.title }}
-            <span class="content-editorial-tick">
-             <i class="fas fa-check"></i>
-            </span>
-          </h2>
+          {{ data.title }}
+          <span class="l-no-wrap">
+            <router-link
+              :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }">
+              <span class="content-editorial-tick">
+                 <i class="fas fa-check"></i>
+              </span>
+            </router-link>
+          </span>
         </router-link>
       </div>
 

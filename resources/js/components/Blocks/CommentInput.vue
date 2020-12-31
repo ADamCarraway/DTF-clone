@@ -1,6 +1,6 @@
 <template>
   <div class="comments__footer l-island-a l-clear">
-    <div class="comments_pseudo_form l-clear" v-if="!type && !formShow" @click="formShow = true">
+    <div class="comments_pseudo_form l-clear" v-if="!type && !formShow" @click="focusInput()">
 
       <span class="comments_pseudo_form__text">Написать комментарий...</span>
 
@@ -16,6 +16,7 @@
       <div class="comments_form__editor">
         <div class="thesis thesis--empty">
           <textarea-autosize
+            ref="myTextarea"
             class="content_editable"
             placeholder="Написать комментарий..."
             v-model="comment"
@@ -61,6 +62,13 @@
       },
       hideReplyForm(){
         EventBus.$emit('hideReplyForm');
+      },
+      focusInput(){
+        this.formShow = true
+        setTimeout(() => {
+          this.$refs.myTextarea.$el.select()
+        }, 1);
+
       }
     }
   }

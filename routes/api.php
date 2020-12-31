@@ -62,6 +62,7 @@ Route::group(['middleware' => 'guest:api'], function () {
 });
 
 Route::get('posts', 'PostController@index')->name('posts.index');
+Route::get('news', 'PostController@news')->name('posts.news');
 Route::get('/post/{slug}', 'PostController@show')->name('post.show')->middleware(['visitor']);
 
 Route::get('u/{slug}', 'Auth\UserController@show')->name('user.show');

@@ -17,7 +17,7 @@ class CommentController extends Controller
             $comments->latest('created_at');
         }
 
-        return $comments->get();
+        return $comments->paginate('10');
     }
 
     public function store(Request $request)

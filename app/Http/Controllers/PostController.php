@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -73,5 +74,18 @@ class PostController extends Controller
             'type' => is_null($category) ? 'user.post' : 'post',
             'post' => $post
         ]);
+    }
+
+    public function news()
+    {
+        $posts = Post::query()->with('category')
+            ->addSelect(DB::raw('DATE_FORMAT(posts.created_at, "%m.%d") as dateDay'))
+            ->addSelect(DB::raw('DATE_FORMAT(posts.created_at, "%H:%i") as dateHour'))
+            ->addSelect(DB::raw('DATE_FORMAT(posts.created_at, "%Y.%m.%d %H:%i") as newsDateFormat'))
+            ->whereIsOfficial(true)
+            ->latest('newsDateFormat')->paginate(4)->toArray();
+        $posts['currentDate'] = now()->locale('ru')->isoFormat('D MMMM , dddd');
+
+        return response()->json($posts);
     }
 }

@@ -38,6 +38,10 @@
         <div class="comments__content l-island-a l-mb-30">
           <comment v-for="c in comments" :data="c" :key="c.id"/>
         </div>
+        <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
+          <div slot="no-results"></div>
+          <div slot="no-more"></div>
+        </infinite-loading>
       </div>
     </div>
   </div>
@@ -49,16 +53,20 @@
   import Comment from "./Comment";
   import CommentInput from "./CommentInput";
   import EventBus from "../../plugins/event-bus";
+  import InfiniteLoading from "vue-infinite-loading";
+
 
   export default {
     name: "CommentsBlock",
     props: ['user', 'postId', 'count'],
-    components: {CommentInput, Comment, VueTextareaAutosize},
+    components: {CommentInput, Comment, VueTextareaAutosize, InfiniteLoading},
     data() {
       return {
         comment: '',
         comments: [],
-        activeTab: 'popular'
+        activeTab: 'popular',
+        page: 1,
+        infiniteId: +new Date(),
       }
     },
     mounted() {
@@ -77,19 +85,35 @@
         }else{
           this.comments.push(data.comment)
         }
+
+        this.$parent.data.comments_count += 1;
       });
+
     },
     methods: {
+      infiniteHandler($state) {
+        axios.get('/api/post/'+this.$route.params.postSlug+'/comments?page='+this.page+'&type='+this.activeTab)
+          .then((data) => {
+            if (data.data.data.length) {
+              this.page = this.page + 1;
+              $.each(data.data.data, (key, value) => {
+                this.comments.push(value);
+              });
+
+              $state.loaded();
+            } else {
+              $state.complete();
+            }
+          });
+      },
+
       getComments(type) {
-        this.activeTab = type;
-        axios.get('/api/post/'+this.$route.params.postSlug+'/comments?type='+type).then((response) => {
-          this.comments = response.data;
-        })
+        this.type = type;
+        this.comments = [];
+        this.page = 1;
+        this.infiniteId += 1;
       },
     },
-    created() {
-      this.getComments('popular')
-    }
   }
 </script>
 

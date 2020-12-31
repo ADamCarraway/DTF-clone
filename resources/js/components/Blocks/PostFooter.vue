@@ -24,18 +24,16 @@
             </div>
 
             <!-- Repost (all checks are inside) -->
-
-            <div class="repost_button">
-
+            <div class="content-footer__item">
+              <div class="repost_button">
                 <div class="repost_button__button " title="Сделать репост">
-                    <i class="fas fa-retweet l-fs-20"></i>
-                    <div class="repost_button__counter l-ml-4"></div>
+                  <i class="fas fa-retweet l-fs-20"></i>
+                  <div class="repost_button__counter l-ml-4"></div>
                 </div>
-
                 <div class="repost_button__list"></div>
-
+              </div>
             </div>
-
+            <share :data="data"/>
         </div>
 
         <div class="content-footer__right">
@@ -53,10 +51,11 @@
 <script>
     import Bookmark from "../Buttons/Bookmark";
     import Like from "../Buttons/Like";
+    import Share from "../Buttons/Share";
 
     export default {
         name: "PostFooter",
-        components: {Like, Bookmark},
+        components: {Share, Like, Bookmark},
         props: ['data']
     }
 </script>
