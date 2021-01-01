@@ -24,11 +24,12 @@
               </div>
               <div class="v-header__description">
                 <div class="v-header-description">
-                  <div class="v-header-description__content">
+                  <div class="v-header-description__content" v-if="data.description">
                     <p v-if="!showDescription && data.description.length > 97">
                       {{ data.description.slice(0,97)+' ...'}}
                       <span @click="showDescription = !showDescription" class="v-header-description__more">еще</span>
                     </p>
+                    <p v-else>{{ data.description }}</p>
                     <p v-if="showDescription">
                       {{ data.description}}
                       <span @click="showDescription = !showDescription" class="v-header-description__more">скрыть</span>
@@ -88,6 +89,7 @@
   import DetailsSidebar from "../../components/User/Details/Blocks/DetailsSidebar";
   import MiniHeader from "../../components/User/MiniHeader";
   import EventBus from "../../plugins/event-bus";
+  import axios from "axios";
 
   export default {
     name: "category",
@@ -107,16 +109,21 @@
       user: 'auth/user',
     }),
     beforeRouteUpdate(to, from, next) {
+      if (to.params.slug === from.params.slug) return next();
+
       this.get(to.params.slug)
       EventBus.$emit('changePostsRoute');
       next()
     },
     methods: {
       get(slug) {
-        this.data = window.config.categories[slug]
+        axios.get('/api/subs/'+slug)
+          .then((data) => {
+            this.data = data.data
+          });
       }
     },
-    created() {
+    mounted() {
       this.get(this.$route.params.slug)
     },
     metaInfo() {

@@ -8,9 +8,9 @@
             <a href="https://dtf.ru/subs" class="ui-tab ui-tab--active ">
               <span class="ui-tab__label"> Подписки</span>
             </a>
-            <a href="https://dtf.ru/subs/companies" class="ui-tab  ">
-              <span class="ui-tab__label">Компании</span>
-            </a>
+<!--            <a href="https://dtf.ru/subs/companies" class="ui-tab  ">-->
+<!--              <span class="ui-tab__label">Компании</span>-->
+<!--            </a>-->
           </div>
         </div>
       </div>
@@ -81,6 +81,9 @@
       }),
     },
     methods: {
+      getData(){
+
+      },
       subscribe(type, slug) {
         if (!type) {
           axios.post('/api/' + slug + '/category/unsubscribe', this.form).then((res) => {
@@ -98,7 +101,10 @@
       },
     },
     created() {
-      this.subs = window.config.categories;
+      axios.get('/api/subs')
+        .then((data) => {
+          this.subs = data.data
+        });
     },
     metaInfo() {
       return {title: 'Каталог подсайтов'}

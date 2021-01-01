@@ -71,6 +71,8 @@ Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
 Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 
 Route::get('/subs', 'CategoryController@index')->name('subs.index');
+Route::get('/subs/{sug}', 'CategoryController@show')->name('subs.show');
+Route::get('/subs/{sug}/regulation', 'CategoryController@regulation')->name('subs.regulation');
 
 Route::get('/{slug}/posts', 'CategoryController@posts')->name('category.posts');
 Route::post('/{slug}/posts/store', 'PostController@store')->name('post.store');

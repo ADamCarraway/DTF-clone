@@ -29,6 +29,9 @@
         </div>
 
         <infinite-loading :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
+          <div slot="no-results">
+            Здесь пока пусто
+          </div>
           <div slot="no-more"></div>
         </infinite-loading>
       </div>
@@ -51,6 +54,7 @@
         url: '',
         page: 1,
         total: 0,
+        done: false,
         infiniteId: +new Date(),
       }
     },
@@ -83,12 +87,6 @@
       next();
     },
     methods: {
-      getData() {
-        this.setUrl();
-        axios.get(this.url).then((res) => {
-          this.data = res.data.data;
-        })
-      },
       setUrl() {
         if (this.$route.name === 'user.subscribers') {
           this.url = '/api/u/' + this.$route.params.slug + '/details/subscribers';
@@ -99,10 +97,14 @@
         }
       },
       infiniteHandler($state) {
+        if (this.done) return  $state.complete();
+
         this.setUrl();
 
         Vue.http.get(this.url + '?page=' + this.page)
           .then((data) => {
+            if (data.data.to === data.data.total) this.done = true;
+
             if (data.data.data.length) {
               this.page = this.page + 1;
               this.total = data.data.total;

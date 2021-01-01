@@ -20,6 +20,8 @@ class ComposerServiceProvider extends ServiceProvider
     private function setCategories()
     {
         view()->composer('spa', function ($view) {
+            if (auth()->check()) return;
+
             /** @var Category $categories */
             $categories = Category::query()->withCount('subscribers')->get()->keyBy('slug')->map(function (Category $category) {
                 $category['subscribers'] = $category->subscribers()->limit(12)->get();

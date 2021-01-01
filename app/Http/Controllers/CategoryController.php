@@ -23,6 +23,19 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function show($slug)
+    {
+        $category = Category::query()->withCount('subscribers')->whereSlug($slug)->firstOrFail();
+        $category['subscribers'] = $category->subscribers()->limit(12)->get();
+
+        return response()->json($category);
+    }
+
+    public function regulation($slug)
+    {
+        return response()->json(Category::query()->withoutGlobalScopes()->whereSlug($slug)->firstOrFail()->regulations);
+    }
+
     public function subscribers($slug)
     {
         $category = Category::query()->where('slug', $slug)->firstOrFail();
