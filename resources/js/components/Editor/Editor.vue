@@ -19,21 +19,23 @@
       <div class="l-editor">
         <div class="subheader l-flex l-fa-center">
           <div class="subheader__item">
-            <at-select v-model="category" size="large" style="width: 190px">
-              <at-option :value="'my'" class="item" :key="'my'" :label="'Мой блог'">
+
+            <el-select v-model="category" placeholder="Select">
+              <el-option :value="'my'" class="item" :key="'my'" :label="'Мой блог'">
                 <div class="item__image">
                   <img :src="user.avatar" lazy="loaded">
                 </div>
                 <span class="item__text">Мой блог</span>
-              </at-option>
-              <at-option class="item" v-for="sub in subscriptions" :key="sub.slug" :value="sub.slug"
-                         v-if="sub.type === 'category'" :label="sub.title">
+              </el-option>
+              <el-option
+                class="item" v-for="sub in subscriptions" :key="sub.slug" :value="sub.slug"
+                v-if="sub.type === 'category'" :label="sub.title">
                 <div class="item__image">
                   <img :src="sub.icon" lazy="loaded">
                 </div>
                 <span class="item__text">{{ sub.title }}</span>
-              </at-option>
-            </at-select>
+              </el-option>
+            </el-select>
           </div>
           <div class="subheader__item">
             <div class="select select--disabled">

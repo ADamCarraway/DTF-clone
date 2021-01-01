@@ -7,9 +7,9 @@
           Комментарии
         </p>
 
-        <div class="live__toggle">
-          <i class="fas fa-chevron-right" v-if="show"></i>
-          <i class="fas fa-chevron-left" v-else></i>
+        <div class="live__toggle text-dark">
+          <i class="el-icon-arrow-right" v-if="show"></i>
+          <i class="el-icon-arrow-left" v-else></i>
         </div>
 
       </div>

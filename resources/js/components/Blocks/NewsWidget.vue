@@ -2,8 +2,8 @@
   <div class="news_widget l-island-bg l-island-a l-island-round l-mb-15 l-pv-20 lm-pv-18 l-fs-16">
 
     <div class="news_widget__toggle t-no_select l-fs-13"  @click="show = !show">
-      <i class="icon icon-chevron-up" v-if="show"></i>
-      <i class="icon icon-chevron-down" v-if="!show"></i>
+      <i class="el-icon-arrow-up" v-if="show"></i>
+      <i class="el-icon-arrow-down" v-if="!show"></i>
       <span class="news_widget__toggle__open" v-if="!show">развернуть</span>
       <span class="news_widget__toggle__close" v-if="show">свернуть</span>
     </div>
@@ -45,7 +45,7 @@
     <div class="news_widget__footer" v-if="show && !done">
       <p class="news_widget__load_more t-ff-1-700 l-fs-16 lm-fs-15 t-link" @click="getData()">
         <span>Показать ещё</span>
-        <i class="icon icon-chevron-down"></i>
+        <i class="el-icon-arrow-down"></i>
       </p>
 
       <span class="ui_preloader "></span>

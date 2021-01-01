@@ -33,7 +33,7 @@ class CategoryController extends Controller
 
     public function regulation($slug)
     {
-        return response()->json(Category::query()->withoutGlobalScopes()->whereSlug($slug)->firstOrFail()->regulations);
+        return response()->json(Category::query()->withoutGlobalScopes()->whereSlug($slug)->firstOrFail()->regulations ?? '');
     }
 
     public function subscribers($slug)

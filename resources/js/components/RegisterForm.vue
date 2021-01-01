@@ -19,8 +19,8 @@
       <!-- Name -->
       <div class="row at-row">
         <div class="col-md-24">
-          <at-input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" type="text" name="name"
-                    placeholder="Имя"></at-input>
+          <el-input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" type="text" name="name"
+                    placeholder="Имя"></el-input>
           <div class="ui_form__message ui_form__message--error ui_form__message--shown" v-if="errors.name">{{ errors.name[0] }}</div>
         </div>
       </div>
@@ -28,8 +28,8 @@
       <!-- Email -->
       <div class="row at-row">
         <div class="col-md-24">
-          <at-input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" type="email" name="email"
-                    placeholder="Почта"></at-input>
+          <el-input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" type="email" name="email"
+                    placeholder="Почта"></el-input>
           <div class="ui_form__message ui_form__message--error ui_form__message--shown" v-if="errors.email">{{ errors.email[0] }}</div>
         </div>
       </div>
@@ -37,8 +37,8 @@
       <!-- Password -->
       <div class="row at-row">
         <div class="col-md-24">
-          <at-input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" type="password" name="password"
-                    placeholder="Пароль"></at-input>
+          <el-input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" type="password" name="password"
+                    placeholder="Пароль"></el-input>
           <div class="ui_form__message ui_form__message--error ui_form__message--shown" v-if="errors.password">{{ errors.password[0] }}</div>
         </div>
       </div>
@@ -46,8 +46,8 @@
       <!-- Password Confirmation -->
       <div class="row at-row">
         <div class="col-md-24">
-          <at-input v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" type="password" name="password_confirmation"
-                    placeholder="Повторите пароль"></at-input>
+          <el-input v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" type="password" name="password_confirmation"
+                    placeholder="Повторите пароль"></el-input>
           <div class="ui_form__message ui_form__message--error ui_form__message--shown" v-if="errors.password_confirmation">{{ errors.password_confirmation[0] }}</div>
         </div>
       </div>

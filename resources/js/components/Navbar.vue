@@ -46,7 +46,7 @@
     <div class="site-header__item" v-if="user">
       <div class="head-notifies">
         <div class="head-notifies__toggler">
-          <i class="far fa-bell fs-24"></i>
+          <i class="el-icon-bell fs-24 text-dark"></i>
           <span class="head-notifies__badge head-notifies__badge--hidden">0</span>
         </div>
       </div>
@@ -58,9 +58,9 @@
           <router-link :to="{ name: 'user', params: {slug: user.slug} }"  class="site-header-user-profile__avatar not-active">
             <div class="site-header-user-profile__avatar-image" :style="{'background-image': 'url('+user.avatar+')'}"></div>
           </router-link>
-            <at-dropdown trigger="click">
-              <span><i class="icon icon-chevron-down l-fs-22"></i></span>
-              <at-dropdown-menu slot="menu">
+            <el-dropdown trigger="click" placement="">
+              <span class="el-dropdown-link site-header-user-profile__toggle"><i class="el-icon-arrow-down l-fs-22 text-dark"></i></span>
+              <el-dropdown-menu slot="dropdown">
                 <div class="at-dropdown-menu-item__title">Профиль</div>
                 <router-link :to="{ name: 'user', params: {slug: user.slug} }" class="at-dropdown-menu__item item--selected">
                   <div class="item__image">
@@ -71,39 +71,45 @@
 
                 <router-link :to="{ name: 'user.settings', params: {slug: user.slug} }" class="at-dropdown-menu__item">
                   <div class="item__icon">
-                    <i class="icon icon-settings"></i>
+                    <i class="el-icon-setting"></i>
                   </div>
                   <span class="item__text">Настройки</span>
                 </router-link>
 
                 <a href="#" class="at-dropdown-menu__item" @click.prevent="logout" style="color: rgb(233, 42, 64);">
                   <div class="item__icon">
-                    <i class="icon icon-log-out"></i>
+                    <i class="fas fa-sign-out-alt"></i>
                   </div>
                   Выйти
                 </a>
-              </at-dropdown-menu>
-            </at-dropdown>
+              </el-dropdown-menu>
+            </el-dropdown>
 
         </div>
       </div>
     </div>
 
     <div class="site-header__item" v-else @click="loginModal = true">
-      <div data-ignore-outside-click="" class="site-header-user">
+      <div class="site-header-user">
         <div class="site-header-user-login">
           <i class="icon icon-user icon--signin fs-24"></i>
-
           <span class="fs-16">Войти</span>
         </div>
       </div>
     </div>
 
-    <at-modal v-model="loginModal" :class="'loginBox'">
+    <el-dialog
+      :visible.sync="loginModal"
+      :custom-class="'loginBox'">
       <login-box/>
-      <div slot="footer">
-      </div>
-    </at-modal>
+      <span slot="footer"></span>
+    </el-dialog>
+
+<!--    <at-modal v-model="loginModal" :class="'loginBox'">-->
+<!--      <login-box/>-->
+<!--      <div slot="footer">-->
+<!--      </div>-->
+<!--    </at-modal>-->
   </div>
 </template>
 

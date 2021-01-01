@@ -39,12 +39,8 @@
                 </router-link>
               </div>
 
-              <at-dropdown v-if="user && user.slug !== $route.params.slug" trigger="click" class="etc_control">
-                <span><i class="fas fa-ellipsis-h"></i></span>
-                <at-dropdown-menu slot="menu" class="etc_control__list">
-                  <ignore :data="data" :type="'users'"></ignore>
-                </at-dropdown-menu>
-              </at-dropdown>
+              <ignore :data="data" :type="'users'"></ignore>
+
             </div>
 
             <div class="v-header__stats">

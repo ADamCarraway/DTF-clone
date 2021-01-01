@@ -21,12 +21,8 @@
         <subscribe :data="data" :type="data.type"></subscribe>
         <notification :data="data" :type="data.type"></notification>
       </div>
-      <at-dropdown trigger="click" class="etc_control">
-        <span><i class="fas fa-ellipsis-h"></i></span>
-        <at-dropdown-menu slot="menu" class="etc_control__list">
-          <ignore :data="data" :type="data.type"></ignore>
-        </at-dropdown-menu>
-      </at-dropdown>
+      <ignore :data="data" :type="data.type"></ignore>
+
     </div>
   </div>
 </template>

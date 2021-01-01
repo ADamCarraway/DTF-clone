@@ -1,10 +1,15 @@
 <template>
-  <div>
-    <div v-if="check" @click="toIgnore(true)"
-         class="at-dropdown-menu__item etc_control__item">Игнорировать
-    </div>
-    <div v-else @click="toIgnore(false)" class="at-dropdown-menu__item etc_control__item">Не игнорировать</div>
-  </div>
+  <el-dropdown trigger="click"  @command="toIgnore" v-if="user">
+  <span class="el-dropdown-link">
+   <i class="el-icon-more l-fs-22"></i>
+  </span>
+    <el-dropdown-menu slot="dropdown">
+      <el-dropdown-item v-if="check" command="true"
+           class="at-dropdown-menu__item etc_control__item">Игнорировать
+      </el-dropdown-item>
+      <el-dropdown-item v-else command="false" class="at-dropdown-menu__item etc_control__item">Не игнорировать</el-dropdown-item>
+    </el-dropdown-menu>
+  </el-dropdown>
 </template>
 
 <script>
@@ -48,12 +53,14 @@
         });
 
         if (status) {
-          this.$Notify.success({
-            message: 'Добавлено в черный список'
-          })
+          this.$notify({
+            message: 'Добавлено в черный список',
+            type: 'success'
+          });
         } else {
-          this.$Notify.success({
-            message: 'Убрано из черного списка'
+          this.$notify({
+            message: 'Убрано из черного списка',
+            type: 'success'
           })
         }
       },

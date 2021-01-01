@@ -1,11 +1,27 @@
 <template>
   <div class="content-footer__item">
+    <div class="repost_button">
+      <el-dropdown trigger="click" placement="bottom-start">
+      <span class="el-dropdown-link">
+        <i class="far fa-share-square l-fs-20"></i>
+      </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item class="v-shares-popover__item">
+              <div class="v-shares-popover__icon">
+                <i class="fas fa-link"></i>
+              </div>
+              <div class="v-shares-popover__title"><span>Копировать ссылку</span></div>
+          </el-dropdown-item>
+          <el-dropdown-item class="v-shares-popover__item">
+            <div class="v-shares-popover__icon">
+              <i class="fab fa-vk"></i>
+            </div>
+            <div class="v-shares-popover__title"><span>ВКонтакте</span></div>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
 
-  <div class="repost_button">
-    <div class="repost_button__button" title="Скопировать ссылку / Поделиться">
-      <i class="fas fa-share-alt l-fs-20"></i>
     </div>
-  </div>
   </div>
 </template>
 

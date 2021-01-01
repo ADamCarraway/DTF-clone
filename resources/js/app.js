@@ -3,13 +3,13 @@ import store from '~/store'
 import router from '~/router'
 import i18n from '~/plugins/i18n'
 import App from '~/components/App'
-
-import AtComponents from 'at-ui'
-Vue.use(AtComponents)
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 window.Vue = require('vue');
 
 Vue.use(require('vue-resource'));
+Vue.use(ElementUI);
 
 Vue.component('InfiniteLoading', require('vue-infinite-loading'));
 

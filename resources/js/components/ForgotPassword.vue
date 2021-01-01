@@ -13,8 +13,8 @@
       <!-- Email -->
       <div class="row at-row">
         <div class="col-md-24">
-          <at-input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" type="email" name="email"
-                    placeholder="Почта"></at-input>
+          <el-input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" type="email" name="email"
+                    placeholder="Почта"></el-input>
           <div class="ui_form__message ui_form__message--error ui_form__message--shown" v-if="errors.email"
                v-html="errors.email[0]"></div>
         </div>

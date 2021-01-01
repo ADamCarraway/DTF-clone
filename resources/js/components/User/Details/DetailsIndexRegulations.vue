@@ -1,5 +1,5 @@
 <template>
-  <div v-if="regulation" class="l-island-bg l-island-round v-island">
+  <div class="l-island-bg l-island-round v-island">
     <div class="v-island__header">
       <span class="v-island__title">
       Правила
@@ -19,7 +19,7 @@
     name: "DetailsIndexRegulations",
     data() {
       return {
-        regulation: null
+        regulation: ''
       }
     },
     methods: {
