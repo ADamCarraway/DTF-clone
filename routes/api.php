@@ -79,6 +79,7 @@ Route::post('/{slug}/posts/store', 'PostController@store')->name('post.store');
 Route::get('/post/{slug}/comments', 'CommentController@comments')->name('comment.index');
 
 
+
 Route::get('/{slug}/details', 'CategoryController@details')->name('category.details');
 Route::get('/{slug}/details/subscribers', 'CategoryController@subscribers')->name('category.subscribers');
 
@@ -86,3 +87,4 @@ Route::get('u/{slug}/details', 'Auth\UserController@details')->name('user.detail
 Route::get('u/{slug}/details/subscribers', 'Auth\UserController@subscribers')->name('user.subscribers');
 Route::get('u/{slug}/details/subscriptions', 'Auth\UserController@subscriptions')->name('user.subscriptions');
 Route::get('u/{slug}/posts', 'Auth\UserController@posts')->name('user.posts');
+Route::get('u/{slug}/comments', 'CommentController@userComments')->name('comment.userComments');

@@ -1210,6 +1210,13 @@ body {
 
 }
 
+@media (min-width: 1000px){
+    #page_wrapper {
+        width: 960px;
+        margin: 0 auto;
+    }
+}
+
 
 /* @media (min-width: 960px) {
     #page_wrapper {
@@ -2496,8 +2503,8 @@ body {
     background-color: #fff;
 }
 
-.v-header-avatar:not(:last-child) {
-    margin-bottom: 16px;
+.v-header__title {
+    margin-top: 8px;
 }
 
 .v-header-avatar:not(:first-child) {
@@ -2505,7 +2512,7 @@ body {
 }
 
 .v-header-avatar {
-    --size: 128px;
+    --size: 112px;
     --border-width: 4px;
     width: var(--size);
     border-radius: 6px;
@@ -2513,8 +2520,8 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    -webkit-box-shadow: 0 0 0 var(--border-width) #fff, inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 0 var(--border-width) #fff, inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 0 0 var(--border-width) #fff, inset 0 0 0 1px rgba(0,0,0,0.1);
+    box-shadow: 0 0 0 var(--border-width) #fff, inset 0 0 0 1px rgba(0,0,0,0.1);
     position: relative;
     z-index: 1;
     overflow: hidden;
@@ -3964,7 +3971,7 @@ a.v-list-subsites-item__main:hover {
     flex-wrap: wrap;
     -ms-flex-align: center;
     align-items: center;
-    padding: 15px;
+    padding: 20px;
 }
 
 @media (min-width: 860px) {
@@ -4843,7 +4850,8 @@ input:checked + .like-btn-svg {
     .subsites_catalog_item.l-island-a,
     .ui-tabs.ui-tabs--default.lm-hidden.l-island-bg,
     .subsites_catalog__search.l-island-a,
-    .news_widget.l-island-bg{
+    .news_widget.l-island-bg,
+    .profile_comment_favorite.l-island-a{
         padding-left: 20px;
         padding-right: 20px;
     }
@@ -5395,4 +5403,29 @@ input:checked + .like-btn-svg {
 
 .repost_button{
     cursor:pointer;
+}
+
+.comments__item__more--root--wide span, .comments__item__more--root--wide svg, .ui-button--wide span, .ui-button--wide svg {
+    margin-right: auto;
+}
+
+.comments__item__more--root--small svg, .ui-button--small i {
+    margin: 0 8px 0 -5px;
+}
+
+.comments__item__more--root--wide.comments__item__more--root--only-icon svg, .ui-button--wide.ui-button--only-icon i {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.subsites_catalog__dummy {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+
+}
+
+.l-pv-50 {
+    padding-top: 50px;
+    padding-bottom: 50px;
 }

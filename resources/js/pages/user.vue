@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="l-page l-page--header-content-sidebar l-mt-12 l-mb-12">
+    <div class="l-page l-page--header-content-sidebar l-mb-12">
 
       <div class="l-page__header">
         <div class="subsite-header"><!---->
-          <div class="l-island-bg v-header v-header--with-actions v-header--with-description">
+          <div class="l-island-bg v-header v-header--with-actions v-header--with-description br-top-0">
             <div v-if="data.header" class="v-header-cover v-header__cover"
                  :style="{ backgroundImage: `url('${data.header}')`, backgroundPosition: `50% 0%` }"></div>
 
@@ -113,6 +113,8 @@
       });
     },
     beforeRouteUpdate(to, from, next) {
+      if (to.params.slug === from.params.slug) return next();
+
       this.data = {};
       this.getData(to.params.slug);
       EventBus.$emit('changePostsRoute');

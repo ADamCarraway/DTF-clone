@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Category::all();
+        $categories = Category::query()->withCount('subscribers');
+
+        if ($search = $request->input('search', '')){
+            $categories = $categories->where('title','like', "%$search%")
+                ->orWhere('description', 'like', "%$search%");
+        }
+
+        return $categories->get()->keyBy('slug');
     }
 
     public function details($slug)

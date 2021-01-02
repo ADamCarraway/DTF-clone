@@ -53,7 +53,7 @@ class PostController extends Controller
     {
         $category = null;
 
-        if ($slug !== 'my') {
+        if ($slug !== 'my' && $slug != auth()->user()->slug) {
             $category = Category::query()->whereSlug($slug)->firstOrFail();
         }
 

@@ -28,6 +28,7 @@
     methods: {
       open(filter){
         EventBus.$emit('changePostsRoute', filter)
+        EventBus.$emit('changeCommentsRoute', filter)
       }
     }
   }

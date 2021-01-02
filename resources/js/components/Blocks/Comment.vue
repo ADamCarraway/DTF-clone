@@ -80,7 +80,7 @@
         <!--        </div>-->
       </div>
     </div>
-    <div class="comments__item__other">
+    <div class="comments__item__other" v-if="!type || type !== 'userComments'">
 
       <comment-input :postId="data.commentable_id" :parent="data" v-if="show" :show="true" :type="'reply'"/>
 
@@ -118,7 +118,7 @@
   export default {
     name: "Comment",
     components: {Bookmark, Like, CommentInput},
-    props: ['data', 'parent'],
+    props: ['data', 'parent', 'type'],
     data() {
       return {
         repliesShow: true,

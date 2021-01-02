@@ -30,6 +30,7 @@ export default [
       {path: '', name: 'user', component: UserPosts},
       {path: 'new', name: 'user.new', component: UserPosts},
       {path: 'comments', name: 'user.comments', component: UserComments},
+      {path: 'comments/new', name: 'user.comments.new', component: UserComments},
       {
         path: 'details',
         component: page('user/details/index.vue'),

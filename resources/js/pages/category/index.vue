@@ -8,15 +8,15 @@
             <a href="https://dtf.ru/subs" class="ui-tab ui-tab--active ">
               <span class="ui-tab__label"> Подписки</span>
             </a>
-<!--            <a href="https://dtf.ru/subs/companies" class="ui-tab  ">-->
-<!--              <span class="ui-tab__label">Компании</span>-->
-<!--            </a>-->
+            <!--            <a href="https://dtf.ru/subs/companies" class="ui-tab  ">-->
+            <!--              <span class="ui-tab__label">Компании</span>-->
+            <!--            </a>-->
           </div>
         </div>
       </div>
       <div class="subsites_catalog__search l-island-a l-island-bg l-pv-15">
         <i class="fas fa-search"></i>
-        <input class="subsites_catalog__search__bar l-ml-15" placeholder="Поиск"
+        <input v-model="search" class="subsites_catalog__search__bar l-ml-15" placeholder="Поиск"
                data-gtm="Subsites catalog – Search">
       </div>
       <div class="subsites_catalog__content l-island-bg">
@@ -45,19 +45,27 @@
               <div
                 class="subsite_subscribe_button subsite_subscribe_button--size-small subsite_subscribe_button--notifications-disabled subsite_subscribe_button--active-short subsite_subscribe_button--mobile-short l-ml-12 subsite_subscribe_button--state-inactive ">
                 <div class="subsite_subscribe_button__main ui-splash">
-                  <at-button v-if="!(item.slug in subscriptions)" icon="icon-plus"
-                             @click="subscribe(1, item.slug)">Подписаться
-                  </at-button>
+                  <div class="ui-button ui-button--subscribe ui-button--5 ui-button--wide ui-button--small"
+                       v-if="!(item.slug in subscriptions)"
+                       @click="subscribe(1, item.slug)">
+                    <i class="el-icon-plus"></i>
+                    <span>Подписаться</span>
+                  </div>
 
-                  <at-button style="margin-left: auto;color: green" v-if="item.slug in subscriptions"
-                             @click="subscribe(0, item.slug)"
-                             icon="icon-check"></at-button>
+                  <div v-if="item.slug in subscriptions" @mouseover="isHovering = true" @mouseout="isHovering = false"
+                       @click="subscribe(0, item.slug)"
+                       class="ui-button ui-button--subscribed ui-button--5 ui-button--wide ui-button--only-icon ui-button--small">
+                    <i class="fas fa-check"></i>
+                    <span>Подписан</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div v-show="subs.length === 0" class="subsites_catalog__dummy l-pv-50 subsites_catalog__dummy--shown">Ничего нет</div>
+
     </div>
   </div>
 </template>
@@ -71,7 +79,15 @@
     name: "index",
     data() {
       return {
-        subs: []
+        subs: [],
+        isHovering: false,
+        search: ''
+      }
+    },
+    watch: {
+      search(value) {
+        this.search = value;
+        this.getData()
       }
     },
     computed: {
@@ -81,8 +97,12 @@
       }),
     },
     methods: {
-      getData(){
-
+      getData() {
+        axios.get('/api/subs?search=' + this.search)
+          .then((data) => {
+            this.subs = data.data
+            console.log(this.subs)
+          });
       },
       subscribe(type, slug) {
         if (!type) {
@@ -101,10 +121,7 @@
       },
     },
     created() {
-      axios.get('/api/subs')
-        .then((data) => {
-          this.subs = data.data
-        });
+      this.getData();
     },
     metaInfo() {
       return {title: 'Каталог подсайтов'}
