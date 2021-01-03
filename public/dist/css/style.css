@@ -5429,3 +5429,92 @@ input:checked + .like-btn-svg {
     padding-top: 50px;
     padding-bottom: 50px;
 }
+
+.profile_comment_favorite__user__image {
+    display: inline-block;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    margin-right: 4px;
+    top: 3px;
+}
+
+.comments__item__more__avatar, .herzen__command_list__item img, .live__item--comment .live__item__user__image, .notification__image img, .profile_comment_favorite__header img, .subsite_card_short__avatar img, .subsite_card_simple__avatar img, .subsite_card_simple_short__avatar img, .subsite_widget__item__avatar img, .t-outline, .ui-tab__image img {
+    outline: 1px solid rgba(0,0,0,.1);
+    outline-offset: -1px;
+}
+
+.profile_comment_favorite__user__name {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 500;
+}
+
+.profile_comment_favorite__date {
+    display: inline-block;
+    margin-left: 13px;
+}
+
+.profile_comment_favorite time, .profile_comment_self time {
+    color: #595959;
+    text-transform: lowercase;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.profile_comment_favorite__text {
+    margin-top: 4px;
+}
+.profile_comment_favorite__text, .profile_comment_self__text {
+    font-size: 15px;
+    line-height: 22px;
+    overflow: hidden;
+}
+
+.profile_comment_favorite__text p:last-child, .profile_comment_self__text p:last-child {
+    margin-top: 0;
+}
+.profile_comment_favorite__text p, .profile_comment_self__text p {
+    margin-bottom: 5px;
+}
+
+.profile_comment_favorite__footer {
+    display: -ms-flexbox;
+    display: flex;
+    padding: 5px 0 14px;
+}
+
+.profile_comment_favorite, .profile_comment_self {
+    position: relative;
+    padding-top: 9px;
+    padding-bottom: 5px;
+}
+
+.profile_comment_favorite__header {
+    margin-bottom: 7px;
+    margin-top: 8px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.profile_comment_favorite__title {
+    margin-top: 5px;
+}
+.profile_comment_favorite__title, .profile_comment_self__title {
+    font-size: 15px;
+    line-height: 22px;
+    padding-right: 0;
+    font-weight: 700;
+}
+.profile_comment_favorite__title {
+    display: block;
+    padding-bottom: 1px;
+}
+
+.profile_comment_favorite__footer .favorite_marker {
+    margin-right: 20px;
+}

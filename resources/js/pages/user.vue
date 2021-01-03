@@ -61,7 +61,7 @@
         </transition>
       </div>
 
-      <subsite-sidebar v-if="['user', 'user.new', 'user.comments'].includes(this.$route.name)" :data="data"></subsite-sidebar>
+      <subsite-sidebar v-if="['user', 'user.new', 'user.comments', 'user.comments.new'].includes(this.$route.name)" :data="data"></subsite-sidebar>
       <user-details-sidebar v-else></user-details-sidebar>
 
     </div>

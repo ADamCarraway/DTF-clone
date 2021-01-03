@@ -30,7 +30,7 @@
                     {
                         name: 'Комментарии',
                         route: 'user.comments',
-                        active: ['user.comments']
+                        active: ['user.comments', 'user.comments.new']
                     },
                     {
                         name: 'Подробнее',

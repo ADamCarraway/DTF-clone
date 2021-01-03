@@ -4,11 +4,8 @@
     <div class="feed">
       <div class="feed__container">
         <div class="feed__chunk">
-          <!--for-->
-          <div  v-for="item in data" :key="item.id" class="feed__item l-island-round">
-            <div class="profile_comment_favorite l-island-a l-island-bg l-island-round l-mb-28 lm-mb-20">
-              <comment :data="item" :type="'userComments'"/>
-            </div>
+          <div v-for="item in data" :key="item.id" class="feed__item l-island-round">
+              <user-comment-block :data="item"/>
           </div>
         </div>
         <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
@@ -32,10 +29,11 @@
   import axios from "axios";
   import EventBus from "../../plugins/event-bus";
   import Comment from "../Blocks/Comment";
+  import UserCommentBlock from "../Blocks/UserCommentBlock";
 
   export default {
     name: "UserComments",
-    components: {Comment, PostsFilter, InfiniteLoading},
+    components: {UserCommentBlock, Comment, PostsFilter, InfiniteLoading},
     data(){
       return{
         filter: this.$route.name.indexOf('.new') + 1 ? 'new' : 'popular',

@@ -6,18 +6,37 @@ use App\Comment;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
     public function userComments(Request $request, $slug)
     {
-        $type = $request->get('type');
+        $filter = $request->get('filter');
+        $odds = Comment::ODDS;
 
         /** @var User $user */
         $user = User::query()->whereSlug($slug)->firstOrFail();
-        $comments = $user->comments();
+        $comments = $user->comments()->with('post');
 
-        if ($type == 'new'){
+        if ($filter == 'popular') {
+            $comments = $comments
+                ->leftJoin('comments as replies', function ($q) {
+                    $q->on('comments.id', '=', 'replies.parent_id');
+                })
+                ->leftJoin('likes', function ($q) {
+                    $q->on('comments.id', '=', 'likes.likeable_id')
+                        ->where('likes.likeable_type', '=', Comment::class);
+                })
+                ->leftJoin('bookmarks', function ($q) {
+                    $q->on('comments.id', '=', 'bookmarks.bookmarkable_id')
+                        ->where('bookmarks.bookmarkable_type', '=', Comment::class);
+                })
+                ->addSelect(DB::raw("('$odds[c]'+'$odds[a]'*LOG(1+count(DISTINCT likes.id))+'$odds[b]'*LOG(1+count(DISTINCT bookmarks.id))+'$odds[d]'*LOG(1+count(DISTINCT replies.id))) as weight"))
+                ->groupBy('comments.id')->orderBy('weight', 'desc');
+        }
+
+        if ($filter == 'new') {
             $comments->latest('created_at');
         }
 
@@ -29,7 +48,7 @@ class CommentController extends Controller
         $type = $request->get('type');
 
         $comments = Post::query()->whereSlug($slug)->firstOrFail()->comments()->withCount(['replies']);
-        if ($type == 'new'){
+        if ($type == 'new') {
             $comments->latest('created_at');
         }
 

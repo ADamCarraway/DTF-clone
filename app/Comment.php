@@ -11,11 +11,11 @@ class Comment extends Model implements Likeable, Bookmarkable
 {
     use Concerns\Likeable, Concerns\Bookmarkable;
 
-    //a - like, b = bookmarks
-    const ODDS = ['a' => 40, 'b' => 20, 'c' => 10];
+    //a - like, b = bookmarks, d = replies
+    const ODDS = ['a' => 80, 'b' => 50, 'c' => 10, 'd' => 30];
 
     protected $guarded = [];
-    protected $appends = ['type', 'date', 'is_like', 'is_bookmarked', 'weight'];
+    protected $appends = ['type', 'date', 'is_like', 'is_bookmarked'];
     protected $with = ['user', 'replies'];
     protected $withCount = ['likes', 'bookmarks'];
 
@@ -27,6 +27,11 @@ class Comment extends Model implements Likeable, Bookmarkable
     public function replies()
     {
         return $this->hasMany(Comment::class, 'parent_id');
+    }
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class,'commentable_id');
     }
 
     public function getTypeAttribute()
@@ -51,10 +56,5 @@ class Comment extends Model implements Likeable, Bookmarkable
         if (!auth()->check()) return false;
 
         return auth()->user()->hasBookmark($this);
-    }
-
-    public function getWeightAttribute()
-    {
-        return self::ODDS['c']+self::ODDS['a']*Log(1+$this->likes->count())+self::ODDS['b']*Log(1+$this->bookmarks->count());
     }
 }
