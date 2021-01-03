@@ -1,7 +1,7 @@
 <template>
   <div class="feed__item l-island-round" v-if="data.slug">
 
-    <div class="l-mb-28 lm-mb-20 content-feed content-feed--games content-feed--225339 l-island-bg l-island-round">
+    <div class="l-mb-28 lm-mb-20 content-feed l-island-bg l-island-round">
 
       <div class="content-header content-header--short">
         <div class="content-header__info l-island-a" :class="{'content-header--empty-title': !data.title}">

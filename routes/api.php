@@ -88,3 +88,4 @@ Route::get('u/{slug}/details/subscribers', 'Auth\UserController@subscribers')->n
 Route::get('u/{slug}/details/subscriptions', 'Auth\UserController@subscriptions')->name('user.subscriptions');
 Route::get('u/{slug}/posts', 'Auth\UserController@posts')->name('user.posts');
 Route::get('u/{slug}/comments', 'CommentController@userComments')->name('comment.userComments');
+Route::get('u/{slug}/favorites', 'BookmarkController@index')->name('bookmark.index');

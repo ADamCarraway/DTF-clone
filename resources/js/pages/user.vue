@@ -49,7 +49,7 @@
                 На проекте с {{ date }}
               </div>
             </div>
-            <user-tabs/>
+            <user-tabs v-if="data" :user="data"/>
             <mini-header :data="data"></mini-header>
           </div>
         </div>

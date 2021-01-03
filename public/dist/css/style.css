@@ -4851,7 +4851,8 @@ input:checked + .like-btn-svg {
     .ui-tabs.ui-tabs--default.lm-hidden.l-island-bg,
     .subsites_catalog__search.l-island-a,
     .news_widget.l-island-bg,
-    .profile_comment_favorite.l-island-a{
+    .profile_comment_favorite.l-island-a,
+    .ui-tabs__content.l-island-a{
         padding-left: 20px;
         padding-right: 20px;
     }
@@ -5517,4 +5518,16 @@ input:checked + .like-btn-svg {
 
 .profile_comment_favorite__footer .favorite_marker {
     margin-right: 20px;
+}
+
+.v-tab__counter {
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 6px;
+    color: #595959;
+}
+
+.subsite_content_dummy {
+    padding-top: 30px;
+    padding-bottom: 45px;
 }

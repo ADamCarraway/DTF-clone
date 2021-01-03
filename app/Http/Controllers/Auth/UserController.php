@@ -27,6 +27,9 @@ class UserController extends Controller
         $request['subscribers_count'] = $user->subscribers()->count();
         $request['subscriptions_count'] = $user->subscriptions()->count();
         $request['subscriptions_limit'] = array_slice($request['subscriptions'], 0, 5);
+        $request['posts_count'] = $user->posts()->count();
+        $request['comments_count'] = $user->comments()->count();
+        $request['bookmarks_count'] = $user->bookmarks()->count();
 
         return response()->json($request);
     }
@@ -34,7 +37,7 @@ class UserController extends Controller
     public function show(Request $request, $slug)
     {
         /** @var User $user */
-        $user = User::query()->withCount(['subscribers'])
+        $user = User::query()->withCount(['subscribers', 'posts', 'comments', 'bookmarks'])
              ->whereSlug($slug)
             ->firstOrFail();
 

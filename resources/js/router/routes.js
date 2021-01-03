@@ -31,6 +31,8 @@ export default [
       {path: 'new', name: 'user.new', component: UserPosts},
       {path: 'comments', name: 'user.comments', component: UserComments},
       {path: 'comments/new', name: 'user.comments.new', component: UserComments},
+      {path: 'favorites', name: 'user.favorites', component: page('user/favorites.vue')},
+      {path: 'favorites/comments', name: 'user.favorites.comments', component: page('user/favorites.vue')},
       {
         path: 'details',
         component: page('user/details/index.vue'),

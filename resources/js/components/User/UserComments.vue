@@ -5,7 +5,7 @@
       <div class="feed__container">
         <div class="feed__chunk">
           <div v-for="item in data" :key="item.id" class="feed__item l-island-round">
-              <user-comment-block :data="item"/>
+            <user-comment-block :data="item"/>
           </div>
         </div>
         <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
@@ -74,4 +74,3 @@
 <style scoped>
 
 </style>
-EventBus.$emit('changeCommentsRoute', filter)
