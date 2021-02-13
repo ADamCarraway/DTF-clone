@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ecfb77eedc14bcbbb839c4d966d03a5f",
+    "content-hash": "2d3c029897d367211a31d3d3947c9c91",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -883,6 +883,72 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "hypefactors/laravel-follow",
+            "version": "v6.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hypefactors/laravel-follow.git",
+                "reference": "cafe49af338a0585249abbe2fe819e875f07d3de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hypefactors/laravel-follow/zipball/cafe49af338a0585249abbe2fe819e875f07d3de",
+                "reference": "cafe49af338a0585249abbe2fe819e875f07d3de",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^7.0",
+                "php": ">=7.2.5"
+            },
+            "require-dev": {
+                "hypefactors/php-code-standards": "^1.0",
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^5.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "component": "package",
+                "branch-alias": {
+                    "dev-master": "6.0.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Hypefactors\\Laravel\\Follow\\FollowServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hypefactors\\Laravel\\Follow\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Hypefactors A/S",
+                    "email": "support@hypefactors.com",
+                    "homepage": "https://hypefactors.com"
+                }
+            ],
+            "description": "Laravel 7 Follow System for Eloquent models.",
+            "homepage": "https://hypefactors.com",
+            "keywords": [
+                "Follow",
+                "hypefactors",
+                "laravel",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/hypefactors/laravel-follow/issues",
+                "source": "https://github.com/hypefactors/laravel-follow/tree/6.x"
+            },
+            "time": "2020-03-03T19:13:06+00:00"
         },
         {
             "name": "intervention/image",
@@ -2965,6 +3031,53 @@
             ],
             "description": "Twitter OAuth1 Provider for Laravel Socialite",
             "time": "2018-04-26T03:12:51+00:00"
+        },
+        {
+            "name": "staudenmeir/eloquent-has-many-deep",
+            "version": "v1.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/staudenmeir/eloquent-has-many-deep.git",
+                "reference": "7417572873c9fb4fa84e894ebbf324629cbc63c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/staudenmeir/eloquent-has-many-deep/zipball/7417572873c9fb4fa84e894ebbf324629cbc63c0",
+                "reference": "7417572873c9fb4fa84e894ebbf324629cbc63c0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^7.0",
+                "php": "^7.2.5"
+            },
+            "require-dev": {
+                "illuminate/pagination": "^7.0",
+                "laravel/homestead": "^10.0",
+                "phpunit/phpunit": "^8.5",
+                "staudenmeir/eloquent-eager-limit": "^1.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Staudenmeir\\EloquentHasManyDeep\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonas Staudenmeir",
+                    "email": "mail@jonas-staudenmeir.de"
+                }
+            ],
+            "description": "Laravel Eloquent HasManyThrough relationships with unlimited levels",
+            "support": {
+                "issues": "https://github.com/staudenmeir/eloquent-has-many-deep/issues",
+                "source": "https://github.com/staudenmeir/eloquent-has-many-deep/tree/v1.12"
+            },
+            "time": "2020-01-31T12:37:57+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -8336,8 +8449,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2.5"
+        "php": "^7.4"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

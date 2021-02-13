@@ -66,20 +66,8 @@
         return this.$route.name === 'user.subscribers' || this.$route.name === 'category.subscribers' ? 'Подписчики' : 'Подписки';
       },
     },
-    // beforeRouteEnter(to, from, next) {
-    //   next(vm => {
-    //     vm.data = [];
-    //     vm.page = 1;
-    //     vm.infiniteId += 1;
-    //   });
-    // },
-    // beforeRouteUpdate (to, from, next) {
-    //   this.data = [];
-    //   this.page = 1;
-    //   this.infiniteId += 1;
-    //   next()
-    // },
     beforeRouteLeave(to, from, next) {
+      console.log('leave')
       this.data = [];
       this.page = 1;
       this.total = 0;
@@ -97,7 +85,7 @@
         }
       },
       infiniteHandler($state) {
-        if (this.done) return  $state.complete();
+        // if (this.done) return  $state.complete();
 
         this.setUrl();
 

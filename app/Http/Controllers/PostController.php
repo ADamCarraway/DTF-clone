@@ -21,15 +21,15 @@ class PostController extends Controller
                     $q->on('posts.id', '=', 'comments.commentable_id')
                         ->where('comments.commentable_type', '=', \App\Post::class);
                 })
-                ->leftJoin('views', function ($q) {
-                    $q->on('posts.id', '=', 'views.viewable_id')
-                        ->where('views.viewable_type', '=', \App\Post::class);
+                ->leftJoin('viewable', function ($q) {
+                    $q->on('posts.id', '=', 'viewable.viewable_id')
+                        ->where('viewable.viewable_type', '=', \App\Post::class);
                 })
                 ->leftJoin('likes', function ($q) {
                     $q->on('posts.id', '=', 'likes.likeable_id')
                         ->where('likes.likeable_type', '=', \App\Post::class);
                 })
-                ->addSelect(DB::raw("('$odds[c]'+'$odds[a]'*LOG(1+count(DISTINCT likes.id))+'$odds[b]'*LOG(1+count(DISTINCT views.ip))+'$odds[d]'*LOG(1+count(DISTINCT comments.id))) as weight"))
+                ->addSelect(DB::raw("('$odds[c]'+'$odds[a]'*LOG(1+count(DISTINCT likes.id))+'$odds[b]'*LOG(1+count(DISTINCT viewable.ip))+'$odds[d]'*LOG(1+count(DISTINCT comments.id))) as weight"))
                 ->groupBy('posts.id')->orderBy('weight', 'desc');
 
             return response()->json($posts->paginate(10));

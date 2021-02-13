@@ -2,10 +2,14 @@
 
 namespace App;
 
+use Hypefactors\Laravel\Follow\Contracts\CanBeFollowedContract;
+use Hypefactors\Laravel\Follow\Traits\CanBeFollowed;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Category extends Model implements CanBeFollowedContract
 {
+    use CanBeFollowed;
+
     protected $appends = ['is_notify', 'type', 'url', 'is_ignore'];
 
     public function getTypeAttribute()

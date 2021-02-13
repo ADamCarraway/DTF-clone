@@ -44,7 +44,7 @@
       subscribe(type) {
         this.loadingSub = true;
         if (!type) {
-          axios.post('/api/' + this.data.slug + '/' + this.data.type + '/unsubscribe', this.form).then((res) => {
+          axios.delete('/api/unFollow', {data: {'followable': this.data.type, 'id': this.data.id}}).then((res) => {
             this.changeForUnSubscribe();
             this.loadingSub = false;
           }).catch(() => {
@@ -53,7 +53,7 @@
         }
 
         if (type) {
-          axios.post('/api/' + this.data.slug + '/' + this.data.type + '/subscribe', this.form).then((res) => {
+          axios.post('/api/follow', { 'followable': this.data.type, 'id': this.data.id}).then((res) => {
             this.changeForSubscribe();
             this.loadingSub = false;
           }).catch(() => {

@@ -3,37 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\FollowRequest;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class FavoriteController extends Controller
 {
-    public function store($slug, $type)
+    public function store(FollowRequest $request)
     {
-        if ($type === 'category') {
-            $category = Category::query()->where('slug', $slug)->firstOrFail();
-            $sub = auth()->user()->categories()->where('subscription_id', $category->id)->first();
-
-            return $sub->pivot->update(['favorite' => 1]);
-        } else {
-            $user = User::query()->whereSlug($slug)->firstOrFail();
-            $sub = auth()->user()->users()->where('subscription_id', $user->id)->first();
-
-            return $sub->pivot->update(['favorite' => 1]);
-        }
+        return DB::table('followers')->where('id', $request->followable()->findFollower(auth()->user())->id)->update(['favorite' => 1]);
     }
 
-    public function destroy($slug, $type)
+    public function destroy(FollowRequest $request)
     {
-        if ($type === 'category') {
-            $category = Category::query()->where('slug', $slug)->firstOrFail();
-            $sub = auth()->user()->categories()->where('subscription_id', $category->id)->first();
-
-            return $sub->pivot->update(['favorite' => 0]);
-        } else {
-            $user = User::query()->whereSlug($slug)->firstOrFail();
-            $sub = auth()->user()->users()->where('subscription_id', $user->id)->first();
-
-            return $sub->pivot->update(['favorite' => 0]);
-        }
+        return DB::table('followers')->where('id', $request->followable()->findFollower(auth()->user())->id)->update(['favorite' => 0]);
     }
 }

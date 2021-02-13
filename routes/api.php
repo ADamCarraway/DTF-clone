@@ -25,8 +25,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('oauth/{driver}/attach', 'Auth\OAuthController@redirectToProvider')->name('oauth.attach');
     Route::post('oauth/{driver}/detach', 'Auth\OAuthController@detach')->name('oauth.detach');
 
-    Route::post('/{id}/{type}/subscribe', 'SubscriptionController@store')->name('sub.store');
-    Route::post('/{id}/{type}/unsubscribe', 'SubscriptionController@destroy')->name('sub.destroy');
+    Route::post('follow', 'FollowController@store')->name('follow.store');
+    Route::delete('unfollow', 'FollowController@destroy')->name('follow.destroy');
 
     Route::post('/notifications/subscribe/{type}/{id}', 'SubsNotifyController@store')->name('subsNotify.store');
     Route::post('/notifications/unsubscribe/{type}/{id}', 'SubsNotifyController@destroy')->name('subsNotify.destroy');
@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/ignore/destroy/{type}/{id}', 'IgnoreController@destroy')->name('ignore.destroy');
 
     Route::post('/{slug}/{type}/favorite/store', 'FavoriteController@store')->name('favorite.store');
-    Route::post('/{slug}/{type}/favorite/destroy', 'FavoriteController@destroy')->name('favorite.destroy');
+    Route::delete('/{slug}/{type}/favorite/destroy', 'FavoriteController@destroy')->name('favorite.destroy');
 
     Route::post('file/upload', 'CloudderController@upload');
     Route::post('file/destroy', 'CloudderController@destroy');

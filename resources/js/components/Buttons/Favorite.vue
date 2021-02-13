@@ -18,7 +18,7 @@
     methods: {
       toFavorite(value, slug, type) {
         if (!value) {
-          axios.post('/api/' + slug + '/' + type + '/favorite/destroy').then((res) => {
+          axios.delete('/api/' + slug + '/' + type + '/favorite/destroy', {data: {'followable': this.data.type, 'id': this.data.id}}).then((res) => {
             this.$store.dispatch('auth/changeSubscriptionField', {
               slug: slug,
               key: 'is_favorite',
@@ -29,8 +29,8 @@
         }
 
         if (value) {
-          axios.post('/api/' + slug + '/' + type + '/favorite/store').then((res) => {
-            this.$store.dispatch('auth/changeSubscriptionField', {
+            axios.post('/api/' + slug + '/' + type + '/favorite/store', { 'followable': this.data.type, 'id': this.data.id}).then((res) => {
+              this.$store.dispatch('auth/changeSubscriptionField', {
               slug: slug,
               key: 'is_favorite',
               value: 1

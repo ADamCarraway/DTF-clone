@@ -7,9 +7,9 @@
       {{ data.total }}
     </span>
     </div>
-    <div class="v-list-subsites" v-if="data.total > 0">
+    <div class="v-list-subsites" v-if="Object.keys(data).length > 0">
       <div class="v-list-subsites__content v-list-subsites__content--columns-2">
-        <div v-for="item in data.data" class="v-list-subsites-item">
+        <div v-for="item in data" class="v-list-subsites-item">
           <router-link :to="{ name: item.type, params: {slug: item.slug} }" :key="item.slug"
                        class="v-list-subsites-item__main">
             <div class="v-list-subsites-item__image"

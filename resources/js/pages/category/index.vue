@@ -47,13 +47,13 @@
                 <div class="subsite_subscribe_button__main ui-splash">
                   <div class="ui-button ui-button--subscribe ui-button--5 ui-button--wide ui-button--small"
                        v-if="!(item.slug in subscriptions)"
-                       @click="subscribe(1, item.slug)">
+                       @click="subscribe(1, item)">
                     <i class="el-icon-plus"></i>
                     <span>Подписаться</span>
                   </div>
 
                   <div v-if="item.slug in subscriptions" @mouseover="isHovering = true" @mouseout="isHovering = false"
-                       @click="subscribe(0, item.slug)"
+                       @click="subscribe(0, item)"
                        class="ui-button ui-button--subscribed ui-button--5 ui-button--wide ui-button--only-icon ui-button--small">
                     <i class="fas fa-check"></i>
                     <span>Подписан</span>
@@ -104,18 +104,18 @@
             console.log(this.subs)
           });
       },
-      subscribe(type, slug) {
+      subscribe(type, data) {
         if (!type) {
-          axios.post('/api/' + slug + '/category/unsubscribe', this.form).then((res) => {
-            this.$store.dispatch('auth/destroySubscription', {slug: slug})
+            axios.delete('/api/unFollow', {data: {'followable': this.data.type, 'id': this.data.id}}).then((res) => {
+              this.$store.dispatch('auth/destroySubscription', {slug: data.slug})
           })
         }
 
         if (type) {
-          axios.post('/api/' + slug + '/category/subscribe', this.form).then((res) => {
-            this.subs[slug]['isVisible'] = Object.keys(this.subscriptions).length < 7;
+          axios.post('/api/follow', {'followable': data.type, 'id': data.id}).then((res) => {
+            this.subs[data.slug]['isVisible'] = Object.keys(this.subscriptions).length < 7;
 
-            this.$store.dispatch('auth/addSubscription', {sub: this.subs[slug]})
+            this.$store.dispatch('auth/addSubscription', {sub: this.subs[data.slug]})
           })
         }
       },

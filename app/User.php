@@ -5,6 +5,10 @@ namespace App;
 use App\Events\CancelSubscriptionEvent;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
+use Hypefactors\Laravel\Follow\Contracts\CanBeFollowedContract;
+use Hypefactors\Laravel\Follow\Contracts\CanFollowContract;
+use Hypefactors\Laravel\Follow\Traits\CanBeFollowed;
+use Hypefactors\Laravel\Follow\Traits\CanFollow;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,10 +16,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
+class User extends Authenticatable implements JWTSubject, CanFollowContract, CanBeFollowedContract//, MustVerifyEmail
 {
-    use Notifiable, Concerns\Likes, Concerns\Bookmarks;
-
+    use Notifiable, Concerns\Likes, Concerns\Bookmarks, CanFollow, CanBeFollowed;
 
     const AVATAR_PATH = 'user/avatars/full/';
     const COMMENT_FILE_PATH = 'comment/files/full/';
@@ -44,6 +47,7 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
         'url',
         'is_ignore',
         'is_notify',
+        'is_favorite',
         'type',
         'slug'
     ];
@@ -84,15 +88,6 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
         return $this->id . '-' . Str::slug($this->name);
     }
 
-    public function users()
-    {
-        return $this->morphedByMany(User::class, 'subscription');
-    }
-
-    public function categories()
-    {
-        return $this->morphedByMany(Category::class, 'subscription');
-    }
 
     public function userNotify()
     {
@@ -118,16 +113,6 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
     public function getTypeAttribute()
     {
         return 'user';
-    }
-
-    public function subscribers()
-    {
-        return $this->morphToMany(User::class, 'subscription');
-    }
-
-    public function subscriptions()
-    {
-        return $this->hasMany(Subscription::class);
     }
 
     public function getIconAttribute()
@@ -169,44 +154,15 @@ class User extends Authenticatable implements JWTSubject//, MustVerifyEmail
         return $this->hasMany(Post::class);
     }
 
-    public function subscribe(string $slug, string $type)
-    {
-        if ($type === 'category') {
-            $category = Category::query()->whereSlug($slug)->firstOrFail();
-
-            $this->categories()->attach($category->id, ['created_at' => now()]);
-        }
-
-        if ($type === 'user') {
-            $user = User::query()->whereSlug($slug)->firstOrFail();
-
-            $this->users()->attach($user->id, ['created_at' => now()]);
-        }
-
-        return true;
-    }
-
-    public function unsubscribe(string $slug, string $type)
-    {
-        event(new CancelSubscriptionEvent($slug, $type));
-
-        if ($type === 'category') {
-            $category = Category::query()->whereSlug($slug)->firstOrFail();
-
-            $this->categories()->detach($category->id);
-        }
-
-        if ($type === 'user') {
-            $user = User::query()->whereSlug($slug)->firstOrFail();
-
-            $this->users()->detach($user->id);
-        }
-
-        return true;
-    }
-
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function getIsFavoriteAttribute()
+    {
+        if (!auth()->check() ||$this->id === auth()->user()->id) return false;
+
+        return (bool)$this->findFollower(auth()->user())->favorite;
     }
 }

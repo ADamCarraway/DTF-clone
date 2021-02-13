@@ -22,10 +22,11 @@ class CategoryController extends Controller
 
     public function details($slug)
     {
+        /** @var Category $category */
         $category = Category::query()->where('slug', $slug)->firstOrFail();
 
         return response()->json([
-            'users' => $category->subscribers()->paginate(10),
+            'users' => $category->followers()->with('follower')->limit(6)->get()->pluck('follower'),
             'rules' => $category->regulations
         ]);
     }
@@ -45,9 +46,16 @@ class CategoryController extends Controller
 
     public function subscribers($slug)
     {
+        /** @var Category $category */
         $category = Category::query()->where('slug', $slug)->firstOrFail();
 
-        return response()->json($category->subscribers()->paginate(10));
+        $paginator = tap($category->followers()->with('follower')->paginate(10),function($paginatedInstance){
+            return $paginatedInstance->getCollection()->transform(function ($follower) {
+                return $follower->follower;
+            });
+        });
+
+        return response()->json($paginator);
     }
 
     public function posts(Request $request, $slug)

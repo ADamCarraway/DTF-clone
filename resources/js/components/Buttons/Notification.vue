@@ -13,7 +13,7 @@
             <div class="v-button__icon">
                 <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
                    aria-hidden="true"></i>
-                <i v-else class="fas fa-bell"></i>
+                <i v-else class="far fa-bell-slash"></i>
             </div>
         </div>
     </div>
