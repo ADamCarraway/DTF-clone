@@ -163,6 +163,8 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
     {
         if (!auth()->check() ||$this->id === auth()->user()->id) return false;
 
-        return (bool)$this->findFollower(auth()->user())->favorite;
+        $record = $this->findFollower(auth()->user());
+
+        return $record ? (bool)$record->favorite : false;
     }
 }
