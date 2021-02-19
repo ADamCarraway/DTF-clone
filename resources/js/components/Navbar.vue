@@ -2,7 +2,7 @@
   <div class="site-header">
     <div class="site-header__item site-header__item--burger" @click="sidebarChange()">
       <div class="site-header-burger">
-        <i class="icon icon-menu icon--ui_burger fs-24"></i>
+        <i class="icon icon-menu fas fa-bars fs-24"></i>
       </div>
     </div>
     <div class="site-header__item site-header__item--logo">

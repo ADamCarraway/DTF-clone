@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIgnoreablesTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateIgnoreablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ignoreables', function (Blueprint $table) {
-            $table->id();
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->id('id');
             $table->foreignId('user_id')->index();
-            $table->integer('ignoreable_id')->index();
-            $table->string('ignoreable_type')->index();
+            $table->morphs('notifiable');
             $table->timestamps();
 
             $table->foreign('user_id')
@@ -34,6 +33,6 @@ class CreateIgnoreablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ignorable');
+        Schema::dropIfExists('subs_notify');
     }
 }

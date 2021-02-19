@@ -20,7 +20,7 @@
     <div class="feed">
       <div class="feed__container">
         <div class="feed__chunk">
-          <div v-for="item in data" :key="item.id" class="feed__item l-island-round"
+          <div v-for="item in data" :key="item.slu" class="feed__item l-island-round"
                :class="{'comment_favorite': $route.name === 'user.favorites.comments', 'post_favorite': $route.name === 'user.favorites'}">
             <user-comment-block :data="item" v-if="filter === 'comments'"/>
             <post :data="item" v-else/>

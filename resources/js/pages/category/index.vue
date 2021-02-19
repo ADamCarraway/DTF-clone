@@ -106,7 +106,7 @@
       },
       subscribe(type, data) {
         if (!type) {
-            axios.delete('/api/unFollow', {data: {'followable': this.data.type, 'id': this.data.id}}).then((res) => {
+            axios.delete('/api/unfollow', {data: {'followable': data.type, 'id': data.id}}).then((res) => {
               this.$store.dispatch('auth/destroySubscription', {slug: data.slug})
           })
         }

@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IgnoreRequest;
+
 class IgnoreController extends Controller
 {
-    public function store($type, $id)
+    public function store(IgnoreRequest $request)
     {
-       return auth()->user()->$type()->attach($id);
+       return auth()->user()->startIgnore($request->ignorable());
     }
 
-    public function destroy($type, $id)
+    public function destroy(IgnoreRequest $request)
     {
-       return auth()->user()->$type()->detach($id);
+       return auth()->user()->stopIgnore($request->ignorable());
     }
 }

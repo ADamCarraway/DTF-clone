@@ -1197,9 +1197,6 @@ body {
         max-width: 1020px;
         margin: 0 auto;
     }
-    .v-mini-header {
-        max-width: 1020px;
-    }
 }
 
 @media (max-width: 1559px) and (min-width: 640px){
@@ -1212,7 +1209,7 @@ body {
 
 @media (min-width: 1000px){
     #page_wrapper {
-        width: 960px;
+        /* width: 1020px; */
         margin: 0 auto;
     }
 }
@@ -4575,6 +4572,18 @@ input:checked + .like-btn-svg {
     margin-bottom: 13px;
 }
 
+.ui-sorting.ui-sorting--with-tabs{
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0 8px 0 20px;
+    margin-bottom:0;
+}
+
+.ui-sorting.ui-sorting--with-tabs > .v-tabs{
+    font-size:16px;
+
+}
+
 .page--index .ui-filters--responsive.l-island-round {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -4712,7 +4721,7 @@ input:checked + .like-btn-svg {
 
 .subsite-card-entry {
     width: 100%;
-    border-top: 1px solid rgba(0,0,0,.1);
+    /* border-top: 1px solid rgba(0,0,0,.1); */
     margin-top: 16px;
     padding-top: 24px;
     margin-bottom: -7px;
@@ -4774,7 +4783,6 @@ input:checked + .like-btn-svg {
     line-height: 50px;
     cursor: pointer;
     position: relative;
-
     margin-right: 25px;
 }
 .l-float-right {
@@ -5530,4 +5538,35 @@ input:checked + .like-btn-svg {
 .subsite_content_dummy {
     padding-top: 30px;
     padding-bottom: 45px;
+}
+
+@media (max-width: 1559px) and (min-width: 640px){
+    .page--entry .l-island-a, .page--entry .l-island-b, .page--entry .content-title, .page--entry .content.content--full > p, .page--entry .content-footer--short.l-island-a, .page--entry .subsite-card {
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: 1560px){
+    .page--entry .l-island-a, .page--entry .l-island-b, .page--entry .content-title, .page--entry .content.content--full > p, .page--entry .content-footer--short.l-island-a, .page--entry .subsite-card {
+        width: 680px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.rating{
+    padding:2px 6px;
+    border: 2px solid #4086e09e;
+    font-size:12px;
+    border-radius:3px;
+    background-color: #d9f5fff2;
+    vertical-align: super;
+}
+
+.comments__navigation .v-button--default{
+    box-shadow: none;
+    font-size: 20px;
+    height:-webkit-fill-available;
 }

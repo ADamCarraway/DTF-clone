@@ -4,23 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
-    public function index(Request $request)
+
+    public function index($filter, $feed = null)
     {
-        $filter = $request->get('filter');
         $odds = \App\Post::ODDS;
 
-        if ($filter == 'popular'){
-            $posts = Post::query()->with(['category', 'user'])
-                ->leftJoin('comments', function ($q) {
-                    $q->on('posts.id', '=', 'comments.commentable_id')
-                        ->where('comments.commentable_type', '=', \App\Post::class);
-                })
+        $posts = Post::query()->with(['category', 'user'])
+            ->where(function ($q) use ($feed) {
+                if ($feed !== 'all' && auth()->check()) {
+                    $users = auth()->user()->followings()->whereFollowableType(User::class)->pluck('followable_id')->toArray();
+                    $categories = auth()->user()->followings()->whereFollowableType(Category::class)->pluck('followable_id')->toArray();
+
+                    $q->whereIn('posts.category_id', $categories)
+                        ->orWhereIn('posts.user_id', $users);
+                }
+            });
+
+        if ($filter == 'popular') {
+            $posts = $posts->leftJoin('comments', function ($q) {
+                $q->on('posts.id', '=', 'comments.commentable_id')
+                    ->where('comments.commentable_type', '=', \App\Post::class);
+            })
                 ->leftJoin('viewable', function ($q) {
                     $q->on('posts.id', '=', 'viewable.viewable_id')
                         ->where('viewable.viewable_type', '=', \App\Post::class);
@@ -35,10 +46,8 @@ class PostController extends Controller
             return response()->json($posts->paginate(10));
         }
 
-        $posts = Post::query()->with(['category', 'user']);
-
-        if ($filter == 'new'){
-            $posts->latest('created_at');
+        if ($filter == 'new') {
+            $posts = $posts->latest('created_at');
         }
 
         return response()->json($posts->paginate(10));

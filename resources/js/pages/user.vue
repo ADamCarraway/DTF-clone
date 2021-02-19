@@ -18,6 +18,7 @@
                   <div class="v-header-title__main">
                     <div :class="{'preloader preloader-name': !data.name}"  class="v-header-title__item v-header-title__name">
                       {{ data.name }}
+                      <span class="rating">{{ data.rating }}</span>
                     </div>
                   </div>
                 </div>
@@ -39,7 +40,7 @@
                 </router-link>
               </div>
 
-              <ignore :data="data" :type="'users'"></ignore>
+              <ignore  v-if="data.slug && user && user.slug !== $route.params.slug" :data="data" :type="'users'"></ignore>
 
             </div>
 
@@ -61,7 +62,7 @@
         </transition>
       </div>
 
-      <subsite-sidebar v-if="['user', 'user.new', 'user.comments', 'user.comments.new'].includes(this.$route.name)" :data="data"></subsite-sidebar>
+      <subsite-sidebar v-if="routers.includes(this.$route.name)" :data="data"></subsite-sidebar>
       <user-details-sidebar v-else></user-details-sidebar>
 
     </div>
@@ -96,6 +97,7 @@
         loadingNotify: false,
         loadingSub: false,
         data: {},
+        routers: ['user', 'user.new', 'user.comments', 'user.comments.new', 'user.favorites', 'user.favorites.comments']
       }
     },
     computed: {

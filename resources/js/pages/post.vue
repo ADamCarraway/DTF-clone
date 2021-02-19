@@ -107,7 +107,7 @@
         </div>
       </div>
     </div>
-    <comments-block :postId="data.id" :user="user" :count="data.comments_count" />
+    <comments-block :data="data" :user="user" :count="data.comments_count" />
   </div>
 </template>
 
@@ -176,19 +176,19 @@
   }
 
   .content-footer--short {
-    width: 680px;
+
     margin-left: auto;
     margin-right: auto;
   }
 
   .content--full {
-    width: 680px;
+
     margin-left: auto;
     margin-right: auto;
   }
 
   .l-entry__header {
-    width: 680px;
+
     padding-left: 0;
     padding-right: 0;
   }
@@ -199,7 +199,7 @@
   }
 
   .subsite-card-entry--short{
-    width: 680px;
+
     margin-left: auto;
     margin-right: auto;
   }

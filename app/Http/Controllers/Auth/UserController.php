@@ -18,8 +18,9 @@ class UserController extends Controller
     {
         /** @var User $user */
         $request = $user = auth()->user();
+        $request['rating'] = $user->getRatingAttribute();
         $request['users'] = $user->followers()->whereFollowerType(User::class)->get()->toArray();
-        $request['subscriptions'] = $user->followings()->with('followable')->get()->pluck('followable')->keyBy('slug')->sortByDesc('type')->sortByDesc('date')->sortByDesc('is_favorite')->toArray();
+        $request['subscriptions'] = $user->followings()->with('followable')->get()->pluck('followable')->keyBy('slug')->sortByDesc('date')->sortByDesc('is_favorite')->toArray();
         $request['subscribers'] = $user->followers()->with('follower')->limit(12)->get()->pluck('follower');
         $request['subscribers_count'] = $user->followers()->count();
         $request['subscriptions_count'] = $user->followings()->count();
@@ -38,6 +39,7 @@ class UserController extends Controller
              ->whereSlug($slug)
             ->firstOrFail();
 
+        $user['rating'] = $user->getRatingAttribute();
         $user['subscriptions'] = $user->followings()->with('followable')->limit(12)->get()->pluck('followable')->keyBy('slug')->toArray();
         $user['subscribers'] = $user->followers()->with('follower')->limit(12)->get()->pluck('follower');
         $user['subscribers_count'] = $user->followers()->count();

@@ -44,7 +44,7 @@
       subscribe(type) {
         this.loadingSub = true;
         if (!type) {
-          axios.delete('/api/unFollow', {data: {'followable': this.data.type, 'id': this.data.id}}).then((res) => {
+          axios.delete('/api/unfollow', {data: {'followable': this.data.type, 'id': this.data.id}}).then((res) => {
             this.changeForUnSubscribe();
             this.loadingSub = false;
           }).catch(() => {

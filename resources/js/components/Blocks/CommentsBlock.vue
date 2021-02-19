@@ -1,5 +1,5 @@
 <template>
-  <div class='l-island-bg l-island-round l-pv-30 lm-pv-15 l-mt-15 w_1020'>
+  <div class='l-island-bg l-island-round l-pv-30 lm-pv-15 l-mt-15 w_1020 '>
     <div class="comments comments--ready">
       <div class="comments__body">
         <div class="comments__title l-island-a l-pb-10 lm-pt-30 l-fs-18 l-fw-700 l-mb-15" data-count="0">
@@ -28,12 +28,13 @@
             </div>
             <!--            comments__subscribe&#45;&#45;active-->
             <div class="comments__subscribe  l-ph-10 l-float-right">
-              <i class="far fa-bell fs-24"></i>
+<!--              <i class="far fa-bell fs-24"></i>-->
+              <notification :data="data"></notification>
             </div>
           </div>
         </div>
 
-        <comment-input :postId="postId" :show="false"/>
+        <comment-input :postId="data.id" :show="false"/>
 
         <div class="comments__content l-island-a l-mb-30">
           <comment v-for="c in comments" :data="c" :key="c.id"/>
@@ -49,6 +50,7 @@
 
 <script>
   import VueTextareaAutosize  from 'vue-textarea-autosize'
+  import Notification from "../../components/Buttons/Notification";
   import axios from "axios";
   import Comment from "./Comment";
   import CommentInput from "./CommentInput";
@@ -58,8 +60,8 @@
 
   export default {
     name: "CommentsBlock",
-    props: ['user', 'postId', 'count'],
-    components: {CommentInput, Comment, VueTextareaAutosize, InfiniteLoading},
+    props: ['user', 'data', 'count'],
+    components: {CommentInput, Comment, VueTextareaAutosize, InfiniteLoading, Notification},
     data() {
       return {
         comment: '',
@@ -109,6 +111,7 @@
 
       getComments(type) {
         this.type = type;
+        this.activeTab = type;
         this.comments = [];
         this.page = 1;
         this.infiniteId += 1;

@@ -2,8 +2,59 @@
   <div class="page page--index ">
     <news-widget/>
     <div class="app--content-feed">
-      <posts-filter :routes='{index: "index", new: "index.new"}'></posts-filter>
-      <posts-list v-if="data" :data="data" :url="'/api/posts'"></posts-list>
+      <!--      <posts-filter :routes='{index: "index", new: "index.new"}' :withTabs="true"></posts-filter>-->
+
+      <div class="ui-sorting ui-sorting--with-tabs">
+        <div class="v-tabs">
+          <div class="v-tabs__scroll">
+            <div class="v-tabs__content">
+              <router-link :to="{ name: 'index' }" class="v-tab"
+                           :class="{'v-tab--active': $route.name === 'index'}">
+                <span class="v-tab__label">Моя лента</span>
+              </router-link>
+              <router-link :to="{ name: 'index.all' }" class="v-tab"
+                           :class="{'v-tab--active': $route.name === 'index.all'}">
+                <span class="v-tab__label">Весь сайт</span>
+              </router-link>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-filters l-island-round ui-filters--responsive">
+          <div class="ui-filters__inner">
+            <div class="ui-rounded-button ui-rounded-button--responsive ui-rounded-button--has-active-child"
+                 :class="{'ui-rounded-button--active': $route.name === 'index' || $route.name === 'index.all'}">
+              <router-link :to="{ name: $route.name+'' }" class="ui-rounded-button__link">
+                Популярное
+              </router-link>
+            </div>
+            <div class="ui-rounded-button ui-rounded-button--responsive"
+                 :class="{'ui-rounded-button--active': $route.name === 'index.new' || $route.name === 'index.all.new'}">
+              <router-link :to="{ name: $route.name+'.new' }" class="ui-rounded-button__link">
+                Свежее
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feed">
+        <div class="feed__container">
+          <div class="feed__chunk page--index">
+            <post v-for="item in posts" :data="item" :key="item.id"></post>
+          </div>
+        </div>
+        <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
+          <div slot="no-results">
+            <div class="l-island-bg v-island">
+              <div class="v-island__dummy">
+                Здесь еще нет публикаций
+              </div>
+            </div>
+          </div>
+          <div slot="no-more"></div>
+        </infinite-loading>
+      </div>
     </div>
   </div>
 </template>
@@ -15,17 +66,53 @@
   import PostsFilter from "../components/PostsFilter";
   import EventBus from "../plugins/event-bus";
   import NewsWidget from "../components/Blocks/NewsWidget";
+  import Post from "../components/Blocks/Post";
+  import InfiniteLoading from "vue-infinite-loading";
 
   export default {
-    components: {NewsWidget, PostsFilter, PostsList, CreatePostBlock},
+    components: {Post, NewsWidget, PostsFilter, PostsList, CreatePostBlock, InfiniteLoading},
     data() {
       return {
-        data: []
+        filter: this.$route.name.indexOf('.new') + 1 ? 'new' : 'popular',
+        feed: this.$route.name.indexOf('.all') + 1 ? '/all' : '',
+        posts: [],
+        page: 1,
+        total: 0,
+        infiniteId: +new Date(),
       }
     },
-    methods: {},
+    beforeRouteUpdate(to, from, next) {
+      console.log('up')
+      this.filter = this.$route.name.indexOf('.new') + 1 ? 'new' : 'popular';
+      this.feed = this.$route.name.indexOf('.all') + 1 ? '/all' : '';
+      this.posts = [];
+      this.page = 1;
+      this.infiniteId += 1;
+      next()
+    },
+    methods: {
+      isPopular(){},
+      setFilter(filter, feed) {
+
+      },
+      infiniteHandler($state) {
+        axios.get('/api/posts' + this.feed + '/' + this.filter + '?page=' + this.page)
+          .then((data) => {
+            if (data.data.data.length) {
+              this.page = this.page + 1;
+              $.each(data.data.data, (key, value) => {
+                this.posts.push(value);
+              });
+
+              $state.loaded();
+            } else {
+              $state.complete();
+            }
+          });
+      },
+    },
     metaInfo() {
-      return {title: 'Def'}
+      return {title: 'Index'}
     }
   }
 </script>

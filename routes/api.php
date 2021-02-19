@@ -28,11 +28,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('follow', 'FollowController@store')->name('follow.store');
     Route::delete('unfollow', 'FollowController@destroy')->name('follow.destroy');
 
-    Route::post('/notifications/subscribe/{type}/{id}', 'SubsNotifyController@store')->name('subsNotify.store');
-    Route::post('/notifications/unsubscribe/{type}/{id}', 'SubsNotifyController@destroy')->name('subsNotify.destroy');
+    Route::post('/notification', 'NotificationController@store')->name('notification.store');
+    Route::delete('/notification', 'NotificationController@destroy')->name('notification.destroy');
 
-    Route::post('/ignore/store/{type}/{id}', 'IgnoreController@store')->name('ignore.store');
-    Route::post('/ignore/destroy/{type}/{id}', 'IgnoreController@destroy')->name('ignore.destroy');
+    Route::post('/ignore', 'IgnoreController@store')->name('ignore.store');
+    Route::delete('/ignore', 'IgnoreController@destroy')->name('ignore.destroy');
 
     Route::post('/{slug}/{type}/favorite/store', 'FavoriteController@store')->name('favorite.store');
     Route::delete('/{slug}/{type}/favorite/destroy', 'FavoriteController@destroy')->name('favorite.destroy');
@@ -61,7 +61,7 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('email/resend', 'Auth\VerificationController@resend');
 });
 
-Route::get('posts', 'PostController@index')->name('posts.index');
+Route::get('posts/{feed?}/{filter?}', 'PostController@index')->name('posts.index');
 Route::get('news', 'PostController@news')->name('posts.news');
 Route::get('/post/{slug}', 'PostController@show')->name('post.show')->middleware(['visitor']);
 

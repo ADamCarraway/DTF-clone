@@ -16,6 +16,8 @@ export default [
     name: 'index',
     children: [
       {path: 'new', name: 'index.new', component: page('index.vue')},
+      {path: 'all', name: 'index.all', component: page('index.vue')},
+      {path: 'all/new', name: 'index.all.new', component: page('index.vue')},
     ],
   },
   {path: '/subs', name: 'subs', component: page('category/index.vue')},

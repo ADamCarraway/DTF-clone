@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::get('/tester', function () {
+//
+//    dd();
+//
+//});
+
 //Route::get('/', function () {
 //    $odds = \App\Post::ODDS;
 //    $res = \App\Post::query()

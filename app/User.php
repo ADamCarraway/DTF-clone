@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Events\CancelSubscriptionEvent;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Hypefactors\Laravel\Follow\Contracts\CanBeFollowedContract;
@@ -16,9 +15,20 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject, CanFollowContract, CanBeFollowedContract//, MustVerifyEmail
+class User extends Authenticatable implements JWTSubject, CanFollowContract, CanBeFollowedContract, Contracts\Notifiable, Contracts\Ignorable//, MustVerifyEmail
 {
-    use Notifiable, Concerns\Likes, Concerns\Bookmarks, CanFollow, CanBeFollowed;
+    use Concerns\Likes,
+        Concerns\Bookmarks,
+        CanFollow,
+        CanBeFollowed,
+        Concerns\Notifications,
+        Concerns\Notifiable,
+        Concerns\Ignored,
+        Concerns\Ignorable;
+        //Notifiable,;
+
+    //a - postLikes, b = commentsLikes
+    const ODDS = ['a' => 0.02, 'b' => 0.05, 'c' => 1];
 
     const AVATAR_PATH = 'user/avatars/full/';
     const COMMENT_FILE_PATH = 'comment/files/full/';
@@ -88,28 +98,6 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         return $this->id . '-' . Str::slug($this->name);
     }
 
-
-    public function userNotify()
-    {
-        return $this->morphedByMany(User::class, 'subs_notify');
-    }
-
-    public function categoryNotify()
-    {
-        return $this->morphedByMany(Category::class, 'subs_notify');
-    }
-
-    public function userIgnore()
-    {
-        return $this->morphedByMany(User::class, 'ignoreable');
-    }
-
-    public function categoryIgnore()
-    {
-        return $this->morphedByMany(Category::class, 'ignoreable');
-    }
-
-
     public function getTypeAttribute()
     {
         return 'user';
@@ -134,14 +122,14 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
     {
         if (!auth()->check() || auth()->id() === $this->id) return false;
 
-        return auth()->user()->userIgnore()->where('ignoreable_id', $this->id)->exists();
+        return auth()->user()->ignored()->where('ignorable_type', self::class)->where('ignorable_id', $this->id)->exists();
     }
 
     public function getIsNotifyAttribute()
     {
         if (!auth()->check()) return false;
 
-        return auth()->user()->userNotify()->where('subs_notify_id', $this->id)->exists();
+        return auth()->user()->notifications()->where('notifiable_type', User::class)->where('notifiable_id', $this->id)->exists();
     }
 
     public function scopeWhereSlug(Builder $query, $slug)
@@ -166,5 +154,13 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         $record = $this->findFollower(auth()->user());
 
         return $record ? (bool)$record->favorite : false;
+    }
+
+    public function getRatingAttribute()
+    {
+        $commentLikes = Like::query()->where('likeable_type', Comment::class)->whereIn('likeable_id', $this->comments()->pluck('id'))->count();
+        $postsLikes = Like::query()->where('likeable_type', Post::class)->whereIn('likeable_id', $this->posts()->pluck('id'))->count();
+
+        return round(self::ODDS['c']+self::ODDS['a']*Log(1+$commentLikes)+self::ODDS['b']*Log(1+$postsLikes), 2);
     }
 }

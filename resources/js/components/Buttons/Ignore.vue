@@ -1,13 +1,14 @@
 <template>
-  <el-dropdown trigger="click"  @command="toIgnore" v-if="user">
+  <el-dropdown trigger="click" @command="toIgnore" v-if="user">
   <span class="el-dropdown-link">
    <i class="el-icon-more l-fs-22"></i>
   </span>
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item v-if="check" command="true"
-           class="at-dropdown-menu__item etc_control__item">Игнорировать
+      <el-dropdown-item v-if="!data.is_ignore" command="true"
+                        class="at-dropdown-menu__item etc_control__item">Игнорировать
       </el-dropdown-item>
-      <el-dropdown-item v-else command="false" class="at-dropdown-menu__item etc_control__item">Не игнорировать</el-dropdown-item>
+      <el-dropdown-item v-else command="false" class="at-dropdown-menu__item etc_control__item">Не игнорировать
+      </el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
 </template>
@@ -23,23 +24,16 @@
       ...mapGetters({
         user: 'auth/user',
       }),
-      check: function () {
-        if (!this.user) return true;
-
-        return !this.data.is_ignore;
-      },
     },
     methods: {
       toIgnore(type) {
-        if (type) {
-          axios.post('/api/ignore/store/' + this.data.type + 'Ignore/' + this.data.id).then((res) => {
-            this.changeForIgnore(type);
+        if (type == 'true') {
+          axios.post('/api/ignore', {'ignorable': this.data.type, 'id': this.data.id}).then((res) => {
+            this.changeForIgnore(true);
           })
-        }
-
-        if (!type) {
-          axios.post('/api/ignore/destroy/' + this.data.type + 'Ignore/' + this.data.id).then((res) => {
-            this.changeForIgnore(type)
+        }else {
+          axios.delete('/api/ignore', {data: {'ignorable': this.data.type, 'id': this.data.id}}).then((res) => {
+            this.changeForIgnore(false);
           })
         }
       },
@@ -52,17 +46,10 @@
           value: status
         });
 
-        if (status) {
-          this.$notify({
-            message: 'Добавлено в черный список',
-            type: 'success'
-          });
-        } else {
-          this.$notify({
-            message: 'Убрано из черного списка',
-            type: 'success'
-          })
-        }
+        this.$notify({
+          message: status ? 'Добавлено в черный список' : 'Убрано из черного списка',
+          type: 'success'
+        });
       },
 
     }

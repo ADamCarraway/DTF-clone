@@ -66,7 +66,7 @@
 
         </div>
         <!-- Reply -->
-        <div class="comments__item__reply" @click="toggle">Ответить</div>
+        <div class="comments__item__reply" @click="toggle"><i class="far fa-comment "></i> Ответить</div>
 
         <bookmark :data="data"/>
 
@@ -85,11 +85,11 @@
       <comment-input :postId="data.commentable_id" :parent="data" v-if="show" :show="true" :type="'reply'"/>
 
       <!-- Children comments -->
-      <div class="comments__item__children" v-show="repliesShow">
+      <div :class="{'comments__item__children': !parent}" v-show="repliesShow">
         <comment v-for="c in data.replies" :data="c" :parent="data" :key="c.id"/>
       </div>
       <!-- Collapse subtree stripe -->
-      <div class="comments__item__collapse_subtree" v-if="repliesShow" @click="repliesShow = false"></div>
+      <div class="comments__item__collapse_subtree" v-if="repliesShow && !parent" @click="repliesShow = false"></div>
 
       <div class="comments__item__more comments__item__more--inner" v-if="!repliesShow">
         <!--        <div class="comments__item__more__avatars">-->
@@ -97,7 +97,7 @@
         <!--        </div>-->
         <span class="comments__item__more__text">
           <span class="comments__item__more__count"
-                @click="repliesShow = true">{{ data.replies_count }} комментария</span>
+                @click="repliesShow = true">Развернуть ветку</span>
         </span>
       </div>
 
