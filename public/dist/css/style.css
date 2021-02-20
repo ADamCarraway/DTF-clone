@@ -746,7 +746,7 @@ body {
 }
 
 .site-header-user-profile__toggle {
-    padding-left: 10px;
+    /* padding-left: 10px; */
     padding-right: var(--offset-right);
     display: -ms-flexbox;
     display: flex;

@@ -112,7 +112,7 @@
       },
     },
     metaInfo() {
-      return {title: 'Index'}
+      return {title: 'DTF — игры, кино, сериалы, разработка, сообщество'}
     }
   }
 </script>
