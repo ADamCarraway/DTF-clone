@@ -5,11 +5,23 @@
     <transition name="page" mode="out-in">
       <component :is="layout" v-if="layout" />
     </transition>
+
+    <el-dialog
+      :visible.sync="loginModal"
+      :show-close="false"
+      :custom-class="'loginBox'">
+      <span slot="title"></span>
+      <login-box/>
+      <span slot="footer"></span>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import Loading from './Loading'
+import EventBus from "../plugins/event-bus";
+import LoginBox from "./LoginBox";
 
 // Load layout components dynamically.
 const requireContext = require.context('~/layouts', false, /.*\.vue$/)
@@ -27,12 +39,14 @@ export default {
   el: '#app',
 
   components: {
+    LoginBox,
     Loading
   },
 
   data: () => ({
     layout: null,
-    defaultLayout: 'default'
+    defaultLayout: 'default',
+    loginModal: false,
   }),
 
   metaInfo () {
@@ -45,6 +59,12 @@ export default {
   },
 
   mounted () {
+    let t = this;
+
+    EventBus.$on('loginModal', function (status) {
+      t.loginModal = status;
+    });
+
     this.$loading = this.$refs.loading
   },
 

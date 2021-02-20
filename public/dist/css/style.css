@@ -129,6 +129,10 @@ sub {
     font-size: 24px
 }
 
+.fs-28 {
+    font-size: 28px;
+}
+
 .l-pt-10 {
     padding-top: 10px
 }
@@ -686,7 +690,7 @@ body {
 }
 
 .site-header-user-login .icon {
-    margin-right: 12px;
+    margin-right: 10px;
     margin-left: -3px;
 }
 
@@ -1617,7 +1621,7 @@ body {
     width: 360px;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    padding: 10px 30px 25px;
+    padding: 20px 30px 25px;
     overflow: hidden;
 }
 
@@ -1645,6 +1649,7 @@ body {
     font-size: 18px;
     line-height: 1.3em;
     font-weight: 500;
+    color: #000;
 }
 
 .social-auth {
@@ -1656,9 +1661,13 @@ body {
     flex-wrap: wrap;
 }
 
+.social-auth__button:hover {
+    border-color: #ccc;
+}
+
 .social-auth__button {
     position: relative;
-    /* width: calc(50% - 7.5px); */
+    /* width: 90px; */
     height: 40px;
     margin-bottom: 15px;
     border-radius: 4px;
@@ -1668,12 +1677,16 @@ body {
     display: flex;
     -ms-flex-align: center;
     align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     cursor: pointer;
     font-size: 15px;
+    color: #000;
 }
 
 .social-auth__label {
     margin: 0 auto;
+    color: #000;
 }
 
 .auth-form__help, .auth-form__note {
@@ -5569,4 +5582,37 @@ input:checked + .like-btn-svg {
     box-shadow: none;
     font-size: 20px;
     height:-webkit-fill-available;
+}
+
+.auth-form__back {
+    color: #000;
+}
+
+.ui_form__fieldset{
+    margin-bottom: 20px;
+    line-height: 24px;
+}
+.ui_form__loginbtn{
+    display: inline-block;
+    color: #fff;
+    border: 0;
+    padding: 0 12px;
+    height: 34px;
+    font-size: 15px;
+    margin-right: 10px;
+    border-radius: 4px;
+    outline: 0;
+    cursor: pointer;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+    background-color: #4da0da;
+}
+
+.ui_form__loginbtn:hover{
+    background-color: #2c8ed3;
+}
+
+.el-dialog{
+    border-radius: 6px!important;
 }

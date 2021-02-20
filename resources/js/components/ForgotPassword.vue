@@ -2,8 +2,7 @@
   <div class="auth-form__tab auth_tab auth_tab--password">
     <div class="auth-form__back">
       <span class="t-link" @click="back('')">
-        <svg class="icon icon--ui_arrow_left" width="7" height="11">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui_arrow_left"></use></svg>
+        <i class="fas fa-angle-left"></i>
         К авторизации
       </span>
     </div>
@@ -11,9 +10,9 @@
       <alert-success :form="form" :message="status"/>
 
       <!-- Email -->
-      <div class="row at-row">
-        <div class="col-md-24">
-          <el-input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" type="email" name="email"
+      <div class="row ">
+        <div class="col-md-12">
+          <el-input v-model="form.email" class="ui_form__fieldset" :class="{ 'is-invalid': form.errors.has('email') }" type="email" name="email"
                     placeholder="Почта"></el-input>
           <div class="ui_form__message ui_form__message--error ui_form__message--shown" v-if="errors.email"
                v-html="errors.email[0]"></div>
@@ -21,9 +20,9 @@
       </div>
 
       <!-- Submit Button -->
-      <div class="row at-row">
-        <div class="col-md-24 ml-md-auto">
-          <button type="info" class="at-btn at-btn--primary">
+      <div class="row ">
+        <div class="col-md-12 ml-md-auto">
+          <button type="info" class="ui_form__loginbtn">
             <span class="at-btn__text">Восстановить пароль</span>
           </button>
         </div>
@@ -74,7 +73,5 @@
 </script>
 
 <style scoped>
-  .at-row {
-    margin-bottom: 12px;
-  }
+
 </style>

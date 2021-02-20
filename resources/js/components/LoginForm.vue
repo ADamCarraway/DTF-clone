@@ -2,50 +2,49 @@
   <div class="auth-form__tab auth_tab auth_tab--signin-email">
     <div class="auth-form__back">
       <span class="t-link" @click="show('')">
-        <svg class="icon icon--ui_arrow_left" width="7" height="11">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui_arrow_left"></use></svg>
+        <i class="fas fa-angle-left"></i>
         К авторизации
       </span>
     </div>
     <form @submit.prevent="login" @keydown="form.onKeydown($event)" class="auth-form__content">
       <div class="auth-form__title l-mb-5">Войти через почту</div>
-      <div class="auth-form__note l-mb-15">или <span class="t-link-inline" @click="show('register-form')">зарегистрироваться</span>
-
+      <div class="auth-form__note l-mb-15">
+        или
+        <span class="t-link-inline" @click="show('register-form')">зарегистрироваться</span>
       </div>
       <!-- Email -->
-      <div class="row at-row">
-        <div class="col-md-24">
-          <el-input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" type="email" name="email"
-                    placeholder="Почта"></el-input>
-          <div class="ui_form__message ui_form__message--error ui_form__message--shown" v-if="errors.email" v-html="errors.email[0]"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <el-input v-model="form.email" class="ui_form__fieldset" :class="{ 'is-invalid': form.errors.has('email') }" type="email" name="email"
+                    placeholder="Почта" ></el-input>
+          <div class="ui_form__message ui_form__message--error ui_form__message--shown" v-if="errors.email"
+               v-html="errors.email[0]"></div>
         </div>
       </div>
 
       <!-- Password -->
-      <div class="row at-row">
-        <div class="col-md-24">
-          <el-input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" type="password"
+      <div class="row">
+        <div class="col-md-12">
+          <el-input v-model="form.password" class="ui_form__fieldset" :class="{ 'is-invalid': form.errors.has('password') }" type="password"
                     name="password" placeholder="Пароль"></el-input>
-          <div class="ui_form__message ui_form__message--error ui_form__message--shown" v-if="errors.password">{{ errors.password[0] }}</div>
+          <div class="ui_form__message ui_form__message--error ui_form__message--shown" v-if="errors.password">{{
+            errors.password[0] }}
+          </div>
         </div>
       </div>
 
-      <!-- Remember Me -->
-      <div class="row at-row">
-        <div class="col-md-24 d-flex ">
-
-          <a @click="show('reset-password-form')" class="small ml-auto my-auto">
-            Я забыл пароль
-          </a>
-        </div>
-      </div>
-
-      <div class="row at-row">
-        <div class="col-md-24">
+      <div class="row">
+        <div class="col-md-6">
           <!-- Submit Button -->
-          <button type="info" class="at-btn at-btn--primary">
+          <button type="info" class="ui_form__loginbtn">
             <span class="at-btn__text">Войти</span>
           </button>
+        </div>
+        <div class="col-md-6 d-flex ">
+
+          <a @click="show('reset-password-form')" class="small ml-auto my-auto" style="cursor: pointer">
+            Я забыл пароль
+          </a>
         </div>
       </div>
     </form>

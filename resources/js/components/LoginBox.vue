@@ -6,6 +6,7 @@
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#site_logo"></use>
       </svg>
     </div>
+    <button type="button" aria-label="Close" class="el-dialog__headerbtn" @click="modalHide()"><i class="el-dialog__close el-icon el-icon-close"></i></button>
     <div class="auth-form__main">
       <login-form v-if="show === 'login-form'"/>
 
@@ -61,6 +62,21 @@
           t.showPanel = true;
         }
       });
+    },
+    methods:{
+      modalHide(){
+        EventBus.$emit('loginModal', false);
+      }
     }
   }
 </script>
+
+<style scoped>
+  .el-dialog__headerbtn{
+    top: 0;
+    right: 0;
+    padding: 9px 9px;
+    font-size: 19px;
+    color: #595959;
+  }
+</style>

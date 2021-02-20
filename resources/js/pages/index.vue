@@ -9,11 +9,11 @@
           <div class="v-tabs__scroll">
             <div class="v-tabs__content">
               <router-link :to="{ name: 'index' }" class="v-tab"
-                           :class="{'v-tab--active': $route.name === 'index'}">
+                           :class="{'v-tab--active': $route.name === 'index' || $route.name === 'index.new'}">
                 <span class="v-tab__label">Моя лента</span>
               </router-link>
               <router-link :to="{ name: 'index.all' }" class="v-tab"
-                           :class="{'v-tab--active': $route.name === 'index.all'}">
+                           :class="{'v-tab--active': $route.name === 'index.all' || $route.name === 'index.all.new'}">
                 <span class="v-tab__label">Весь сайт</span>
               </router-link>
             </div>
@@ -24,7 +24,7 @@
           <div class="ui-filters__inner">
             <div class="ui-rounded-button ui-rounded-button--responsive ui-rounded-button--has-active-child"
                  :class="{'ui-rounded-button--active': $route.name === 'index' || $route.name === 'index.all'}">
-              <router-link :to="{ name: $route.name+'' }" class="ui-rounded-button__link">
+              <router-link :to="{ name: $route.name.replace(/.new/i, '') }" class="ui-rounded-button__link">
                 Популярное
               </router-link>
             </div>

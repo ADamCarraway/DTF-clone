@@ -89,21 +89,16 @@
       </div>
     </div>
 
-    <div class="site-header__item" v-else @click="loginModal = true">
+    <div class="site-header__item" v-else @click="showLoginModal">
       <div class="site-header-user">
         <div class="site-header-user-login">
-          <i class="icon icon-user icon--signin fs-24"></i>
+          <i class="icon icon-user far fa-user-circle fs-28"></i>
           <span class="fs-16">Войти</span>
         </div>
       </div>
     </div>
 
-    <el-dialog
-      :visible.sync="loginModal"
-      :custom-class="'loginBox'">
-      <login-box/>
-      <span slot="footer"></span>
-    </el-dialog>
+
 
 <!--    <at-modal v-model="loginModal" :class="'loginBox'">-->
 <!--      <login-box/>-->
@@ -134,15 +129,10 @@
       user: 'auth/user'
     }),
 
-    mounted() {
-      let t = this;
-
-      EventBus.$on('loginModal', function (status) {
-        t.loginModal = status;
-      });
-    },
-
     methods: {
+      showLoginModal(){
+        EventBus.$emit('loginModal', true);
+      },
       async logout() {
         // Log out the user.
         await this.$store.dispatch('auth/logout')
