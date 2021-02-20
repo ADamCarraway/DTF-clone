@@ -92,7 +92,7 @@ class PostController extends Controller
             ->addSelect(DB::raw('DATE_FORMAT(posts.created_at, "%Y.%m.%d %H:%i") as newsDateFormat'))
             ->whereIsOfficial(true)
             ->latest('newsDateFormat')->paginate(4)->toArray();
-        $posts['currentDate'] = now()->locale('ru')->isoFormat('D MMMM , dddd');
+        $posts['currentDate'] = now()->locale('ru')->isoFormat('D MMMM, dddd');
 
         return response()->json($posts);
     }
