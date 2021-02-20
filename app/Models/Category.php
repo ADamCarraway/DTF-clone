@@ -14,6 +14,9 @@ class Category extends Model implements CanBeFollowedContract, IgnorableInterfac
 {
     use CanBeFollowed, Ignorable, Notifiable;
 
+    //a - postsLikes, b
+    const ODDS = ['a' => 0.02, 'c' => 1];
+
     protected $appends = ['is_notify', 'type', 'url', 'is_ignore'];
 
     public function getTypeAttribute()

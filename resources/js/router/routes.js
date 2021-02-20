@@ -20,6 +20,7 @@ export default [
       {path: 'all/new', name: 'index.all.new', component: page('index.vue')},
     ],
   },
+  {path: '/rating', name: 'rating', component: page('rating.vue')},
   {path: '/subs', name: 'subs', component: page('category/index.vue')},
   {path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue')},
   {path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue')},

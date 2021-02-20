@@ -55,6 +55,6 @@ class IgnoreRequest extends FormRequest
 
     protected function getClass($value): string
     {
-        return "App\\" . Str::studly($value);
+        return "App\Models\\" . Str::studly($value);
     }
 }

@@ -169,6 +169,6 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         $commentLikes = Like::query()->where('likeable_type', Comment::class)->whereIn('likeable_id', $this->comments()->pluck('id'))->count();
         $postsLikes = Like::query()->where('likeable_type', Post::class)->whereIn('likeable_id', $this->posts()->pluck('id'))->count();
 
-        return round(self::ODDS['c']+self::ODDS['a']*Log(1+$commentLikes)+self::ODDS['b']*Log(1+$postsLikes), 2);
+        return round(self::ODDS['c']+self::ODDS['a']*Log(1+$commentLikes)+self::ODDS['b']*Log(1+$postsLikes), 1);
     }
 }

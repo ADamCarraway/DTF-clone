@@ -1,7 +1,8 @@
 <?php
 
-use App\Subscription;
-use Doctrine\DBAL\Query\QueryBuilder;
+use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 //Route::get('/tester', function () {
 //
-//    dd();
 //
 //});
 

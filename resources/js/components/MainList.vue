@@ -10,6 +10,12 @@
         <i class="far fa-clock l-fs-22 mr-0"></i>
       </router-link>
     </div>
+    <router-link :to="{ name: 'rating'}" class="sidebar__tree-list__item">
+      <div class="sidebar-tree-list-item__link">
+        <i class="far fa-star l-fs-27"></i>
+        <p class="sidebar__tree-list__item__name">Рейтинг DTF</p>
+      </div>
+    </router-link>
     <router-link :to="{ name: 'subs'}" class="sidebar__tree-list__item">
       <div class="sidebar-tree-list-item__link">
         <i class="fas fa-list-ul l-fs-27"></i>
