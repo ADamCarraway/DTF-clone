@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Concerns\Ignorable;
+use App\Concerns\Notifiable;
+use App\Contracts\Ignorable as IgnorableInterface;
+use App\Contracts\Notifiable as NotifiableInterface;
 use Hypefactors\Laravel\Follow\Contracts\CanBeFollowedContract;
 use Hypefactors\Laravel\Follow\Traits\CanBeFollowed;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model implements CanBeFollowedContract, Contracts\Ignorable, Contracts\Notifiable
+class Category extends Model implements CanBeFollowedContract, IgnorableInterface, NotifiableInterface
 {
-    use CanBeFollowed, Concerns\Ignorable, Concerns\Notifiable;
+    use CanBeFollowed, Ignorable, Notifiable;
 
     protected $appends = ['is_notify', 'type', 'url', 'is_ignore'];
 

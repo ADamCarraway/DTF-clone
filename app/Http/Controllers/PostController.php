@@ -14,7 +14,7 @@ class PostController extends Controller
 
     public function index($filter, $feed = null)
     {
-        $odds = \App\Post::ODDS;
+        $odds = Post::ODDS;
 
         $posts = Post::query()->with(['category', 'user'])
             ->where(function ($q) use ($feed) {
@@ -30,15 +30,15 @@ class PostController extends Controller
         if ($filter == 'popular') {
             $posts = $posts->leftJoin('comments', function ($q) {
                 $q->on('posts.id', '=', 'comments.commentable_id')
-                    ->where('comments.commentable_type', '=', \App\Post::class);
+                    ->where('comments.commentable_type', '=', Post::class);
             })
                 ->leftJoin('viewable', function ($q) {
                     $q->on('posts.id', '=', 'viewable.viewable_id')
-                        ->where('viewable.viewable_type', '=', \App\Post::class);
+                        ->where('viewable.viewable_type', '=', Post::class);
                 })
                 ->leftJoin('likes', function ($q) {
                     $q->on('posts.id', '=', 'likes.likeable_id')
-                        ->where('likes.likeable_type', '=', \App\Post::class);
+                        ->where('likes.likeable_type', '=', Post::class);
                 })
                 ->addSelect(DB::raw("('$odds[c]'+'$odds[a]'*LOG(1+count(DISTINCT likes.id))+'$odds[b]'*LOG(1+count(DISTINCT viewable.ip))+'$odds[d]'*LOG(1+count(DISTINCT comments.id))) as weight"))
                 ->groupBy('posts.id')->orderBy('weight', 'desc');

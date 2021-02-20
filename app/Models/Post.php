@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-use App\Contracts\Bookmarkable;
-use App\Contracts\Likeable;
-use App\Contracts\Notifiable;
+use App\Concerns\Bookmarkable;
+use App\Concerns\Likeable;
+use App\Concerns\Notifiable;
+use App\Contracts\Bookmarkable as BookmarkableInterface;
+use App\Contracts\Likeable as LikeableInterface;
+use App\Contracts\Notifiable as NotifiableInterface;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class Post extends Model implements Likeable, Bookmarkable, Notifiable
+class Post extends Model implements BookmarkableInterface, LikeableInterface, NotifiableInterface
 {
-    use Concerns\Likeable, Concerns\Bookmarkable, Concerns\Notifiable;
+    use Likeable, Bookmarkable, Notifiable;
 
     //a - like, b = views , d = comments
     const ODDS = ['a' => 40, 'b' => 60, 'c' => 10, 'd' => 40];

@@ -10,8 +10,8 @@ class AddSubsToUser
 
     public function handle($event)
     {
-        $id = Category::query()->whereIn('slug', self::SUBS)->pluck('id');
+        $categories = Category::query()->whereIn('slug', self::SUBS)->get();
 
-        $event->user->categories()->attach($id);
+        $event->user->followMany($categories);
     }
 }

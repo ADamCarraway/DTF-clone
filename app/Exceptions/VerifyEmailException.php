@@ -2,12 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 class VerifyEmailException extends ValidationException
 {
     /**
-     * @param  \App\User $user
+     * @param  User $user
      * @return static
      */
     public static function forUser($user)

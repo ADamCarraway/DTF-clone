@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Concerns\Bookmarks;
+use App\Concerns\Ignored;
+use App\Concerns\Likes;
+use App\Concerns\Notifications;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Hypefactors\Laravel\Follow\Contracts\CanBeFollowedContract;
@@ -14,17 +18,21 @@ use Illuminate\Notifications\Notifiable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Concerns\Ignorable;
+use App\Concerns\Notifiable as NotifiableTrait;
+use App\Contracts\Ignorable as IgnorableInterface;
+use App\Contracts\Notifiable as NotifiableInterface;
 
-class User extends Authenticatable implements JWTSubject, CanFollowContract, CanBeFollowedContract, Contracts\Notifiable, Contracts\Ignorable//, MustVerifyEmail
+class User extends Authenticatable implements JWTSubject, CanFollowContract, CanBeFollowedContract, NotifiableInterface, IgnorableInterface//, MustVerifyEmail
 {
-    use Concerns\Likes,
-        Concerns\Bookmarks,
+    use Likes,
+        Bookmarks,
         CanFollow,
         CanBeFollowed,
-        Concerns\Notifications,
-        Concerns\Notifiable,
-        Concerns\Ignored,
-        Concerns\Ignorable;
+        Notifications,
+        NotifiableTrait,
+        Ignored,
+        Ignorable;
         //Notifiable,;
 
     //a - postLikes, b = commentsLikes

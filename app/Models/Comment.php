@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use App\Contracts\Bookmarkable;
-use App\Contracts\Likeable;
+use App\Concerns\Bookmarkable;
+use App\Concerns\Likeable;
+use App\Contracts\Bookmarkable as BookmarkableInterface;
+use App\Contracts\Likeable as LikeableInterface;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model implements Likeable, Bookmarkable
+class Comment extends Model implements LikeableInterface, BookmarkableInterface
 {
-    use Concerns\Likeable, Concerns\Bookmarkable;
+    use Likeable, Bookmarkable;
 
     //a - like, b = bookmarks, d = replies
     const ODDS = ['a' => 80, 'b' => 50, 'c' => 10, 'd' => 30];
