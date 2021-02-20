@@ -2,7 +2,7 @@
 
 namespace App\Concerns;
 
-use App\Bookmark;
+use App\Models\Bookmark;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait Bookmarkable

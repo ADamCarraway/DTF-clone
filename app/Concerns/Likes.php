@@ -3,7 +3,7 @@
 namespace App\Concerns;
 
 use App\Contracts\Likeable;
-use App\Like;
+use App\Models\Like;
 
 trait Likes
 {

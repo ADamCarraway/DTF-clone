@@ -2,8 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Category;
-use App\User;
+use App\Models\Category;
+use App\Models\User;
 
 class UserNotifyRemove
 {

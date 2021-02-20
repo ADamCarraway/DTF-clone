@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Models\Category;
 use App\Http\Requests\FollowRequest;
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class FavoriteController extends Controller

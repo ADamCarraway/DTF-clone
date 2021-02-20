@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Models\Category;
 use App\Events\CancelSubscriptionEvent;
 use App\Http\Requests\FollowRequest;
-use App\User;
+use App\Models\User;
 
 class FollowController extends Controller
 {

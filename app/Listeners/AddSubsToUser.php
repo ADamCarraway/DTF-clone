@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Category;
+use App\Models\Category;
 
 class AddSubsToUser
 {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Post;
+use App\Models\Post;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

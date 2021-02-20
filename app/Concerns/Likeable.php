@@ -2,7 +2,7 @@
 
 namespace App\Concerns;
 
-use App\Like;
+use App\Models\Like;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait Likeable

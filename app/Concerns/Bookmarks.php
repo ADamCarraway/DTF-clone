@@ -2,7 +2,7 @@
 
 namespace App\Concerns;
 
-use App\Bookmark;
+use App\Models\Bookmark;
 use App\Contracts\Bookmarkable;
 
 trait Bookmarks

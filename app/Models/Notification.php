@@ -1,15 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ignore extends Model
+class Notification extends Model
 {
-    protected $table = 'ignorable';
+    protected $table = 'notifications';
     protected $guarded = ['id'];
 
-    public function ignorable()
+    public function notifiable()
     {
         return $this->morphTo();
     }

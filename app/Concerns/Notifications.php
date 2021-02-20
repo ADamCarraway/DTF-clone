@@ -3,7 +3,7 @@
 namespace App\Concerns;
 
 use App\Contracts\Notifiable;
-use App\Notification;
+use App\Models\Notification;
 
 trait Notifications
 {

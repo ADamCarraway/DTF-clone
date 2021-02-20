@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Contracts\Bookmarkable;
 use App\Contracts\Likeable;

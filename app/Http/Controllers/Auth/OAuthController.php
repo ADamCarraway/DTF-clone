@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Exceptions\EmailTakenException;
 use App\Http\Controllers\Controller;
-use App\OAuthProvider;
-use App\User;
+use App\Models\OAuthProvider;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 

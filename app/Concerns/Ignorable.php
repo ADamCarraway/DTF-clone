@@ -2,7 +2,7 @@
 
 namespace App\Concerns;
 
-use App\Ignore;
+use App\Models\Ignore;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait Ignorable

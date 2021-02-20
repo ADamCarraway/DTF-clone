@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Bookmark;
-use App\Comment;
+use App\Models\Bookmark;
+use App\Models\Comment;
 use App\Http\Requests\BookmarkRequest;
-use App\Post;
-use App\User;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookmarkController extends Controller

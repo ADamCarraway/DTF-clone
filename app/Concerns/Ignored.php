@@ -3,7 +3,7 @@
 namespace App\Concerns;
 
 use App\Contracts\Ignorable;
-use App\Ignore;
+use App\Models\Ignore;
 
 trait Ignored
 {
