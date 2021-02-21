@@ -13,6 +13,7 @@ use Hypefactors\Laravel\Follow\Contracts\CanFollowContract;
 use Hypefactors\Laravel\Follow\Traits\CanBeFollowed;
 use Hypefactors\Laravel\Follow\Traits\CanFollow;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -170,5 +171,10 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         $postsLikes = Like::query()->where('likeable_type', Post::class)->whereIn('likeable_id', $this->posts()->pluck('id'))->count();
 
         return round(self::ODDS['c']+self::ODDS['a']*Log(1+$commentLikes)+self::ODDS['b']*Log(1+$postsLikes), 1);
+    }
+
+    public function ratingHistories(): MorphMany
+    {
+        return $this->morphMany(RatingHistory::class, 'hasRatingHistory', 'model_type','model_id');
     }
 }

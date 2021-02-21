@@ -9,6 +9,7 @@ use App\Contracts\Notifiable as NotifiableInterface;
 use Hypefactors\Laravel\Follow\Contracts\CanBeFollowedContract;
 use Hypefactors\Laravel\Follow\Traits\CanBeFollowed;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Category extends Model implements CanBeFollowedContract, IgnorableInterface, NotifiableInterface
 {
@@ -51,5 +52,10 @@ class Category extends Model implements CanBeFollowedContract, IgnorableInterfac
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function ratingHistories(): MorphMany
+    {
+        return $this->morphMany(RatingHistory::class, 'hasRatingHistory', 'model_type','model_id');
     }
 }
