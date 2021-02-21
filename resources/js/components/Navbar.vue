@@ -58,7 +58,7 @@
           <router-link :to="{ name: 'user', params: {slug: user.slug} }"  class="site-header-user-profile__avatar not-active">
             <div class="site-header-user-profile__avatar-image" :style="{'background-image': 'url('+user.avatar+')'}"></div>
           </router-link>
-            <el-dropdown trigger="click" placement="" style="display: flex;">
+            <el-dropdown trigger="click" placement="bottom-end" style="display: flex;">
               <span class="el-dropdown-link dropdown_down"><i class="el-icon-arrow-down l-fs-14 text-dark" style="font-weight: bolder;"></i></span>
               <el-dropdown-menu slot="dropdown">
                 <div class="at-dropdown-menu-item__title">Профиль</div>
@@ -176,7 +176,8 @@
   }
 
   .dropdown_down{
-    padding-left: 12px;
+    padding-left: 11px;
+    padding-right: 11px;
     display: flex;
     align-items: center;
     cursor: pointer;

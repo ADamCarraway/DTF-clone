@@ -8,9 +8,7 @@
             <div v-if="data.header" class="v-header-cover v-header__cover"
                  :style="{ backgroundImage: `url('${data.header}')`, backgroundPosition: `50% 0%` }"></div>
 
-            <div :class="{'preloader': !data.avatar}" class="v-header__avatar v-header-avatar"
-                 :style="{ backgroundImage: `url('${data.avatar}')` }">
-            </div>
+            <avatar :data="data"/>
 
             <div class="v-header__content">
               <div class="v-header__title">
@@ -29,7 +27,7 @@
               <div v-else
                    class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
                 <subscribe v-if="user && data.id !== user.id" :data="data" :type="data.type"></subscribe>
-                <notification :data="data" :type="'users'"></notification>
+                <notification :data="data" :type="'users'"  v-if="data.slug && user && user.slug !== $route.params.slug"></notification>
 
                 <router-link :to="{name: 'user.settings', params: {slug: data.slug}}"
                              v-if="data.slug && user && user.slug == $route.params.slug"
@@ -85,9 +83,11 @@
   import UserDetailsSidebar from "../components/User/Details/Blocks/UserDetailsSidebar";
   import MiniHeader from "../components/User/MiniHeader";
   import EventBus from "../plugins/event-bus";
+  import Avatar from "../components/User/Avatar";
 
   export default {
     components: {
+      Avatar,
       MiniHeader,
       UserDetailsSidebar,
       SubsiteSidebar, UserCategoriesBlock, SubscribersBlock, Ignore, Subscribe, UserTabs, Notification

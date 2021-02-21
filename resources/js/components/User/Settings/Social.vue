@@ -1,9 +1,7 @@
 <template>
-  <card title="Social" v-if="link">
-    <div class="island__social_links">
+    <div class="island__social_links island__social_links--type_1 d-flex">
       <social-button v-for="i in oauth_providers" :provider="i" :key="i.name"/>
     </div>
-  </card>
 </template>
 
 <script>
@@ -17,7 +15,7 @@
     data() {
       return {
         arr: {
-          'twitter': {name: 'twitter', status: false},
+          // 'twitter': {name: 'twitter', status: false},
           'facebook': {name: 'facebook', status: false},
           'google': {name: 'google', status: false},
           'twitch': {name: 'twitch', status: false}
@@ -62,10 +60,9 @@
         }
 
         this.oauth_providers[e.data.provider].status = e.data.status;
-        this.$Notify.success({
-          title: 'Успех!',
+        this.$notify({
           message: 'Аккаунт успешно привязан',
-          showClose: false
+          type: 'success'
         })
       }
     }

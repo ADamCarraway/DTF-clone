@@ -1,32 +1,34 @@
 <template>
-  <card :title="$t('your_info')">
-    <form @submit.prevent="update">
-      <!-- Name -->
-      <div class="row at-row">
-        <div class="col-md-24 mb-2">
-          <input v-model="name" class="form-control" type="text"
+  <div>
+    <form @submit.prevent="update" class="ui_form ui_form--nickname ui_form--2 l-mb-25">
+      <fieldset>
+        <label>Никнейм</label>
+        <div class="ui-limited-input ui-limited-input--showed" ref="inputElement" data-length="17">
+          <input v-model="name" class="form-control" type="text" maxlength="30"
                  name="name">
         </div>
-      </div>
-
-      <!-- Email -->
-      <div class="row at-row">
-        <div class="col-md-24 mb-2">
-          <input v-model="email" class="form-control"
-                 type="email" name="email">
+        <div class="nickname-controls l-inline-block">
+          <button class="nickname-controls__button nickname-controls__button--edit t-link-classic">
+            Изменить
+          </button>
         </div>
-      </div>
-
-      <!-- Submit Button -->
-      <div class="row at-row">
-        <div class="col-md-24 ml-md-auto">
-          <v-button type="success">
-            {{ $t('update') }}
-          </v-button>
-        </div>
-      </div>
+      </fieldset>
+      <p class="caption ld-pl-168">Смену никнейма можно производить не чаще раза в месяц</p>
     </form>
-  </card>
+
+    <form @submit.prevent="update" class="ui_form ui_form--nickname ui_form--2 l-mb-25">
+      <fieldset>
+        <label for="form_input_email">Эл. почта:</label>
+        <input v-model="email" class="form-control" maxlength="30"
+               name="email" type="email" id="form_input_email">
+        <div class="nickname-controls l-inline-block">
+          <button class="nickname-controls__button nickname-controls__button--edit t-link-classic">
+            Изменить
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -38,14 +40,17 @@
 
     scrollToTop: false,
 
-    metaInfo() {
-      return {title: this.$t('settings')}
-    },
-
     data() {
       return {
         name: '',
         email: '',
+      }
+    },
+
+    watch : {
+      name : function (val) {
+        this.$refs.inputElement.setAttribute('data-length', 30 - val.length);
+        this.name = val;
       }
     },
 
@@ -65,8 +70,11 @@
           'email': this.email,
         }
 
-        axios.post('/api/settings/profile', data).then(function (response) {
-
+        axios.post('/api/settings/profile', data).then((response) => {
+          this.$notify({
+            message: 'Данные изменены',
+            type: 'success'
+          });
         })
 
         this.$store.dispatch('auth/updateUser', {user: data})

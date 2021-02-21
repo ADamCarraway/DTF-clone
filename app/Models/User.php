@@ -99,7 +99,7 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
 
     public function getHavePasswordAttribute()
     {
-        return $this->password === null;
+        return $this->password !== null;
     }
 
     protected function getSlugAttribute()

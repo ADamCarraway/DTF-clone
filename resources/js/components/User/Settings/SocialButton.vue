@@ -1,16 +1,13 @@
 <template>
-  <div :class="['island__social_links__item',soc, {'island__social_links__item--active': provider.status}]">
+  <div :class="['island__social_links__item',soc, {'island__social_links__item--active': provider.status}]"
+       @click="syncProvider(provider.status ? 'detach' : 'attach', provider.name)">
     <i :class="['fab' , icon]"></i>
-    <span class="island__social_links__title">{{ provider.name }}</span>
-    <div class="island__social_links__item__delete" v-if="provider.status" @click="detach(provider.name)">
-      <i class="icon icon-x"></i>
-    </div>
-    <div class="island__social_links__item__delete" v-else @click="attach(provider.name)">
-      <i class="icon icon-plus"></i>
+    <span class="island__social_links__title" style="text-transform: capitalize;">{{ provider.name }}</span>
+    <div class="island__social_links__item__delete" v-if="provider.status">
+      <i class="fas fa-times"></i>
     </div>
   </div>
 </template>
-
 <script>
   import axios from "axios";
 
@@ -27,32 +24,38 @@
     },
 
     methods: {
+      syncProvider(type, provider) {
+        switch (type) {
+          case "attach":
+            this.attach(provider)
+            break;
+          case "detach":
+            this.detach(provider)
+            break;
+          default:
+        }
+      },
       detach(provider) {
         axios.post("/api/oauth/" + provider + "/detach").then(response => {
           this.provider.status = false
-
-          this.$Notify.success({
-            title: 'Успех!',
-            message: 'Аккаунт успешно отвязан'
-          })
+          this.$notify({
+            message: 'Аккаунт успешно отвязан',
+            type: 'success'
+          });
         }).catch(error => {
-          this.$Notify({
-            title: 'Ошибка!',
+          this.$notify({
             message: error.response.data.message,
             type: 'error',
-            showClose: false
           })
         })
       },
-      async  attach(provider) {
+      async attach(provider) {
 
         const newWindow = socialWindow('', this.$t('login'))
 
-        const url = await this.$store.dispatch('auth/fetchOauthUrl', {
+        newWindow.location.href = await this.$store.dispatch('auth/fetchOauthUrl', {
           provider: provider
         })
-
-        newWindow.location.href = url
       },
     },
   }

@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <title>{{ config('app.name') }}</title>
   <script>
-    window.opener.postMessage({status: "{{$status}}", message: "{{$message}}", provider: "{{ $provider }}"}, "{{ url('/') }}")
+    window.opener.postMessage({status: "{{$status}}", message: "{{$message}}", provider: "{{ $provider }}"}, "{{ url('/') }}");
     window.close()
   </script>
 </head>
