@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\OAuthProvider;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Response;
@@ -125,6 +126,8 @@ class OAuthController extends Controller
             'access_token' => $sUser->token,
             'refresh_token' => $sUser->refreshToken,
         ]);
+
+        event(new Registered($user));
 
         return $user;
     }
