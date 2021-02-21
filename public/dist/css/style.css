@@ -5259,7 +5259,7 @@ input:checked + .like-btn-svg {
 }
 
 .content-footer i {
-    font-size: 27px;
+    font-size: 24px;
 }
 
 
@@ -6106,7 +6106,7 @@ input:checked + .like-btn-svg {
     margin:0;
 }
 
-#page_wrapper {
+#page_wrapper:not(.page--entry) {
     padding-top: 16px;
     padding-bottom: 16px;
 }
