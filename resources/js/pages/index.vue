@@ -2,8 +2,6 @@
   <div class="page page--index ">
     <news-widget/>
     <div class="app--content-feed">
-      <!--      <posts-filter :routes='{index: "index", new: "index.new"}' :withTabs="true"></posts-filter>-->
-
       <div class="ui-sorting ui-sorting--with-tabs">
         <div class="v-tabs">
           <div class="v-tabs__scroll">
@@ -82,16 +80,16 @@
       }
     },
     beforeRouteUpdate(to, from, next) {
-      console.log('up')
-      this.filter = this.$route.name.indexOf('.new') + 1 ? 'new' : 'popular';
-      this.feed = this.$route.name.indexOf('.all') + 1 ? '/all' : '';
+      this.filter = to.name.indexOf('.new') + 1 ? 'new' : 'popular';
+      this.feed = to.name.indexOf('.all') + 1 ? '/all' : '';
       this.posts = [];
       this.page = 1;
       this.infiniteId += 1;
       next()
     },
     methods: {
-      isPopular(){},
+      isPopular() {
+      },
       setFilter(filter, feed) {
 
       },
