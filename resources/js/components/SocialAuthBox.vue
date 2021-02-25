@@ -5,18 +5,18 @@
       <div class="auth-form__title l-mb-20">Вход на DTF</div>
 
       <div class="social-auth__button" @click="login('google')">
-        <i class="fab fa-google l-fs-24"></i>
+        <ion-icon src="/icons/logo-google.svg"></ion-icon>
         <div class="social-auth__label">Google</div>
       </div>
 
       <div class="social-auth__button" @click="login('vk')">
-        <i class="fab fa-vk l-fs-24"></i>
+        <ion-icon src="/icons/logo-vk.svg"></ion-icon>
         <div class="social-auth__label">ВКонтакте</div>
       </div>
 
       <!-- Login Form Button -->
       <div class="social-auth__button" @click="showLoginForm()">
-        <i class="far fa-envelope l-fs-24"></i>
+        <ion-icon src="/icons/mail-outline.svg"></ion-icon>
         <div class="social-auth__label">Через почту</div>
       </div>
 
@@ -28,12 +28,12 @@
 <!--        </div>-->
         <div class="col-md-6">
           <div class="social-auth__button" @click="login('twitch')">
-            <i class="fab fa-twitch l-fs-24"></i>
+            <ion-icon src="/icons/logo-twitch.svg"></ion-icon>
           </div>
         </div>
         <div class="col-md-6">
           <div class="social-auth__button" @click="login('facebook')">
-            <i class="fab fa-facebook-f l-fs-24"></i>
+            <ion-icon src="/icons/logo-facebook.svg"></ion-icon>
           </div>
         </div>
       </div>

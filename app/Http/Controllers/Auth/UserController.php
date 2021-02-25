@@ -92,6 +92,6 @@ class UserController extends Controller
     {
         $user = User::query()->whereSlug($slug)->firstOrFail();
 
-        return $user->posts()->with(['category', 'user'])->paginate(10);
+        return $user->posts()->with(['category', 'user', 'parent', 'parent.user'])->paginate(10);
     }
 }

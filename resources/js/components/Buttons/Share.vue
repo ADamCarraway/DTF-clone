@@ -3,7 +3,7 @@
     <div class="repost_button">
       <el-dropdown trigger="click" @command="share" placement="bottom-start">
       <span class="el-dropdown-link">
-        <i class="far fa-share-square l-fs-20"></i>
+        <ion-icon src="/icons/share-outline.svg"></ion-icon>
       </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item class="v-shares-popover__item" command="link">

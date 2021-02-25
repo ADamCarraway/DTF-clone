@@ -48,6 +48,10 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('/comment/store', 'CommentController@store')->name('comment.add');
     Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
+
+    Route::post('/repost/{post}', 'PostController@repost')->name('post.repost.store');
+    Route::delete('/repost/{post}', 'PostController@deleteRepost')->name('post.repost.destroy');
+    Route::post('/{slug}/posts/store', 'PostController@store')->name('post.store');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -76,7 +80,7 @@ Route::get('/subs/{sug}', 'CategoryController@show')->name('subs.show');
 Route::get('/subs/{sug}/regulation', 'CategoryController@regulation')->name('subs.regulation');
 
 Route::get('/{slug}/posts', 'CategoryController@posts')->name('category.posts');
-Route::post('/{slug}/posts/store', 'PostController@store')->name('post.store');
+
 Route::get('/post/{slug}/comments', 'CommentController@comments')->name('comment.index');
 
 

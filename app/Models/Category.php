@@ -18,7 +18,7 @@ class Category extends Model implements CanBeFollowedContract, IgnorableInterfac
     //a - postsLikes, b
     const ODDS = ['a' => 0.02, 'c' => 1];
 
-    protected $appends = ['is_notify', 'type', 'url', 'is_ignore'];
+    protected $appends = ['is_notify', 'type', 'url', 'is_ignore', 'is_favorite', 'is_follow'];
 
     public function getTypeAttribute()
     {
@@ -37,14 +37,14 @@ class Category extends Model implements CanBeFollowedContract, IgnorableInterfac
 
     public function getIsIgnoreAttribute()
     {
-        if (!auth()->check()) return false;
+        if (!auth()->check() || $this->id === auth()->user()->id) return false;
 
         return auth()->user()->ignored()->where('ignorable_type', self::class)->where('ignorable_id', $this->id)->exists();
     }
 
     public function getIsNotifyAttribute()
     {
-        if (!auth()->check()) return false;
+        if (!auth()->check() || $this->id === auth()->user()->id) return false;
 
         return auth()->user()->notifications()->where('notifiable_type', Category::class)->where('notifiable_id', $this->id)->exists();
     }
@@ -54,8 +54,19 @@ class Category extends Model implements CanBeFollowedContract, IgnorableInterfac
         return $this->hasMany(Post::class);
     }
 
-    public function ratingHistories(): MorphMany
+    public function getIsFavoriteAttribute()
     {
-        return $this->morphMany(RatingHistory::class, 'hasRatingHistory', 'model_type','model_id');
+        if (!auth()->check() || $this->id === auth()->user()->id) return false;
+
+        $follower = $this->findFollower(auth()->user());
+
+        return $follower && !$follower->trashed() ? $follower->favorite : false;
+    }
+
+    public function getIsFollowAttribute()
+    {
+        if (!auth()->check() || $this->id === auth()->user()->id) return false;
+
+        return $this->hasFollower(auth()->user());
     }
 }

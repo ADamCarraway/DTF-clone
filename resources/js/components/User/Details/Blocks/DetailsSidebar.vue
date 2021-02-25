@@ -11,7 +11,7 @@
                      class="v-list-tab"
                      :class="{'v-list-tab--active': $route.name === tab.route}">
           <span class="v-list-tab__icon">
-            <i :class="['fas '+tab.icon]"></i>
+            <ion-icon :src="'/icons/'+tab.icon"></ion-icon>
           </span>
           <span class="v-list-tab__label">
             <span>{{ tab.name}}</span>
@@ -32,17 +32,17 @@
           {
             name: 'Обзор',
             route: 'category.details',
-            icon: 'fa-eye'
+            icon: 'eye-outline.svg'
           },
           {
             name: 'Подписчики',
             route: 'category.subscribers',
-            icon: 'fa-user-friends'
+            icon: 'people-outline.svg'
           },
           {
             name: 'Правила',
             route: 'category.rules',
-            icon: 'fa-clipboard'
+            icon: 'alert-outline.svg'
           }
         ]
       }

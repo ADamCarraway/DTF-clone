@@ -31,7 +31,7 @@
                 <span class="comments_counter__count__value_new"></span>
 
                 <span class="comments_counter__count__ico">
-                  <i class="far fa-comment-alt"></i>
+                  <ion-icon src="/icons/chatbubble-outline.svg" style="transform: scale(-1, 1);"></ion-icon>
                 </span>
                 <span class="comments_counter__count__value">{{ p.comments_count }}</span>
 

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data">
+  <div v-if="data" class="page--index">
     <div class="l-page l-page--header-content-sidebar l-mb-12">
 
       <div class="l-page__header">

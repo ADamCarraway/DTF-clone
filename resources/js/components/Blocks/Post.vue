@@ -1,47 +1,57 @@
 <template>
-  <div class="feed__item l-island-round" v-if="data.slug">
+  <div class="feed__item l-island-round" v-if="post && post.slug">
 
     <div class="l-mb-28 lm-mb-20 content-feed l-island-bg l-island-round">
 
+      <div class="content-header-repost l-island-a" v-if="data.parent_id">
+        <ion-icon src="/icons/repeat-outline.svg"></ion-icon>
+        <router-link v-if="data.user" :to="{ name: 'user', params: {slug: data.user.slug} }"
+                     class="content-header-repost__name l-inline-block l-mr-4 l-relative l-z-1 t-link"
+                     :title="data.user.name">
+          {{ data.user.name }}
+        </router-link>
+        сделал репост
+      </div>
+
       <div class="content-header content-header--short">
-        <div class="content-header__info l-island-a" :class="{'content-header--empty-title': !data.title}">
+        <div class="content-header__info l-island-a" :class="{'content-header--empty-title': !post.title}">
 
           <div class="content-header__left">
 
             <!-- Подсайт, в котором опубликована статья -->
-            <router-link v-if="data.category" :to="{ name: 'category', params: {slug: data.category.slug} }"
+            <router-link v-if="post.category" :to="{ name: 'category', params: {slug: post.category.slug} }"
                          class="content-header-author content-header-author--subsite content-header__item">
               <div class="content-header-author__avatar">
 
                 <img class="andropov_image  andropov_image--bordered"
-                     :src="data.category.icon">
+                     :src="post.category.icon">
               </div>
 
               <div class="content-header-author__name">
-                {{ data.category.title }}
+                {{ post.category.title }}
               </div>
 
             </router-link>
 
             <!-- Автор -->
-            <router-link v-if="data.user" :to="{ name: 'user', params: {slug: data.user.slug} }"
+            <router-link v-if="post.user" :to="{ name: 'user', params: {slug: post.user.slug} }"
                          class="content-header-author content-header__item"
-                         :class="{'content-header-author--subsite': !data.category}">
-              <div v-if="!data.category" class="content-header-author__avatar">
+                         :class="{'content-header-author--subsite': !post.category}">
+              <div v-if="!post.category" class="content-header-author__avatar">
 
                 <img class="andropov_image  andropov_image--bordered"
-                     :src="data.user.avatar">
+                     :src="post.user.avatar">
               </div>
 
               <div class="content-header-author__name">
-                {{ data.user.name }}
+                {{ post.user.name }}
               </div>
 
             </router-link>
 
             <!-- Время публикации -->
             <div class="content-header-number content-header__item">
-              <span class="time">{{ data.date }}</span>
+              <span class="time">{{ post.date }}</span>
             </div>
 
             <!-- Закрепленный пост -->
@@ -65,23 +75,22 @@
           </div>
 
         </div>
-        <router-link class="content-header__title l-island-a" v-if="data.title"
-                     :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }">
-          {{ data.title }}
-          <span class="l-no-wrap" v-if="data.is_official">
+        <router-link class="content-header__title l-island-a" v-if="post.title"
+                     :to="{ name: post.category ? 'post' :'user.post', params: {postSlug: post.slug, slug: post.category ? post.category.slug : post.user.slug} }">
+          {{ post.title }}
+          <span class="l-no-wrap" v-if="post.is_official">
             <router-link
-              :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }">
+              :to="{ name: post.category ? 'post' :'user.post', params: {postSlug: post.slug, slug: post.category ? post.category.slug : post.user.slug} }">
               <span class="content-editorial-tick">
-                 <i class="fas fa-check"></i>
+                <ion-icon src="/icons/checkmark.svg"></ion-icon>
               </span>
             </router-link>
           </span>
         </router-link>
       </div>
 
-
       <router-link
-        :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }"
+        :to="{ name: post.category ? 'post' :'user.post', params: {postSlug: post.slug, slug: post.category ? post.category.slug : post.user.slug} }"
         class="content content--short  ">
         <div class="content content--content l-island-a" v-html="html[0]">
         </div>
@@ -104,8 +113,7 @@
 
       </router-link>
 
-
-      <post-footer :data="data"/>
+      <post-footer :data="post"/>
     </div>
   </div>
 </template>
@@ -115,6 +123,7 @@
   import Bookmark from "../Buttons/Bookmark";
   import edjsHTML from "editorjs-html"
   import PostFooter from "./PostFooter";
+  import moment from "moment";
 
   export default {
     name: "Post",
@@ -125,10 +134,15 @@
         html: ''
       }
     },
+    computed:{
+      post() {
+        return this.data.parent_id ? this.data.parent : this.data
+      }
+    },
     created() {
       let test = new edjsHTML()
       this.html = test.parse({
-        blocks: JSON.parse(this.data.blocks)
+        blocks: JSON.parse(this.post.blocks)
       });
     }
   }

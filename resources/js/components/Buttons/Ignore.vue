@@ -1,8 +1,8 @@
 <template>
   <el-dropdown trigger="click" @command="toIgnore" v-if="user">
-  <span class="el-dropdown-link">
-   <i class="el-icon-more l-fs-22"></i>
-  </span>
+  <div class="el-dropdown-link">
+   <ion-icon src="/icons/ellipsis-horizontal-outline.svg"></ion-icon>
+  </div>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item v-if="!data.is_ignore" command="true"
                         class="at-dropdown-menu__item etc_control__item">Игнорировать
@@ -57,5 +57,13 @@
 </script>
 
 <style scoped>
+  .el-dropdown{
+    margin-right: 10px;
+  }
+
+  .el-dropdown ion-icon{
+    font-size: 24px;
+    vertical-align: bottom;
+  }
 
 </style>

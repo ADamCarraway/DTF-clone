@@ -1,11 +1,11 @@
 <template>
     <div v-if="data.is_favorite" @click="toFavorite(0,data.slug, data.type)"
          class="sidebar-tree-list-item__favourite sidebar-tree-list-item__favourite--active">
-      <i class="fas fa-thumbtack"></i>
+      <ion-icon src="/icons/lock-closed-outline.svg"></ion-icon>
     </div>
     <div v-else @click="toFavorite(1,data.slug, data.type)"
          class="sidebar-tree-list-item__favourite">
-      <i class="fas fa-thumbtack"></i>
+      <ion-icon src="/icons/lock-open-outline.svg"></ion-icon>
     </div>
 </template>
 

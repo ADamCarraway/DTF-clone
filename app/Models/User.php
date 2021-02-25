@@ -34,7 +34,8 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         NotifiableTrait,
         Ignored,
         Ignorable;
-        //Notifiable,;
+
+    //Notifiable,;
 
     //a - postLikes, b = commentsLikes
     const ODDS = ['a' => 0.02, 'b' => 0.05, 'c' => 1];
@@ -67,6 +68,7 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         'is_ignore',
         'is_notify',
         'is_favorite',
+        'is_follow',
         'type',
         'slug'
     ];
@@ -158,7 +160,7 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
 
     public function getIsFavoriteAttribute()
     {
-        if (!auth()->check() ||$this->id === auth()->user()->id) return false;
+        if (!auth()->check() || $this->id === auth()->user()->id) return false;
 
         $record = $this->findFollower(auth()->user());
 
@@ -170,11 +172,13 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         $commentLikes = Like::query()->where('likeable_type', Comment::class)->whereIn('likeable_id', $this->comments()->pluck('id'))->count();
         $postsLikes = Like::query()->where('likeable_type', Post::class)->whereIn('likeable_id', $this->posts()->pluck('id'))->count();
 
-        return round(self::ODDS['c']+self::ODDS['a']*Log(1+$commentLikes)+self::ODDS['b']*Log(1+$postsLikes), 1);
+        return round(self::ODDS['c'] + self::ODDS['a'] * Log(1 + $commentLikes) + self::ODDS['b'] * Log(1 + $postsLikes), 1);
     }
 
-    public function ratingHistories(): MorphMany
+    public function getIsFollowAttribute()
     {
-        return $this->morphMany(RatingHistory::class, 'hasRatingHistory', 'model_type','model_id');
+        if (!auth()->check() || $this->id === auth()->user()->id) return false;
+
+        return $this->hasFollower(auth()->user());
     }
 }

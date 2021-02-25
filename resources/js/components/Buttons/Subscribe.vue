@@ -1,23 +1,19 @@
 <template>
   <div v-if="data">
-    <div @click="subscribe(0)" v-if="data.slug in subscriptions"
+    <div @click="subscribe(0)" v-if="data.is_follow"
          :class="{'v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default': !small,
          'ui-button ui-button--subscribe ui-button--5 ui-button--only-icon ui-button--small': small}">
       <div class="v-button__icon">
-        <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
-           aria-hidden="true"></i>
-        <i v-else class="fas fa-times icon--ui_close color-red"></i>
+        <ion-icon src="/icons/close-outline.svg" :class="'color-red'"></ion-icon>
       </div>
       <span class="v-button__label">Отписаться</span>
     </div>
 
-    <div @click="subscribe(1)" v-if="!(data.slug in subscriptions)"
+    <div @click="subscribe(1)" v-if="!data.is_follow"
          :class="{'v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default': !small,
          'ui-button ui-button--subscribe ui-button--5 ui-button--only-icon ui-button--small': small}">
       <div class="v-button__icon">
-        <i v-if="loadingSub" class="spinner-border spinner-border-sm mr-10" role="status"
-           aria-hidden="true"></i>
-        <i v-else class="fas fa-plus icon--ui_plus color-green"></i>
+        <ion-icon src="/icons/add-outline.svg" :class="'color-green'"></ion-icon>
       </div>
       <span class="v-button__label">Подписаться</span>
     </div>
@@ -55,7 +51,7 @@
         }
 
         if (type) {
-          axios.post('/api/follow', { 'followable': this.data.type, 'id': this.data.id}).then((res) => {
+          axios.post('/api/follow', {'followable': this.data.type, 'id': this.data.id}).then((res) => {
             this.changeForSubscribe();
             this.loadingSub = false;
           }).catch(() => {
@@ -66,15 +62,17 @@
       changeForSubscribe() {
         if (this.data.type === 'category') {
           this.data['isSub'] = true;
+          this.data.is_follow = true;
           this.data['isVisible'] = Object.keys(this.subscriptions).length < 7;
 
           this.$store.dispatch('auth/addSubscription', {sub: this.data})
-        }else{
+        } else {
           this.$store.dispatch('auth/addSubscription', {sub: this.data});
         }
       },
       changeForUnSubscribe() {
         this.data.is_notify = false;
+        this.data.is_follow = false;
         this.$store.dispatch('auth/changeSubscriptionField', {
           slug: this.data.slug,
           key: 'is_notify',
@@ -83,7 +81,7 @@
 
         if (this.data === 'category') {
           this.$store.dispatch('auth/destroySubscription', {slug: this.data.slug})
-        }else {
+        } else {
           this.$store.dispatch('auth/destroySubscription', {slug: this.data.slug});
         }
 

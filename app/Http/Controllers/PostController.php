@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class PostController extends Controller
 {
 
-    public function index($filter, $feed = null)
+    public function index($feed, $filter = null)
     {
         $odds = Post::ODDS;
 
@@ -95,5 +95,19 @@ class PostController extends Controller
         $posts['currentDate'] = now()->locale('ru')->isoFormat('D MMMM, dddd');
 
         return response()->json($posts);
+    }
+
+    public function repost(Post $post)
+    {
+        return auth()->user()->posts()->create([
+            'slug' => $post->slug,
+            'parent_id' => $post->id,
+            'blocks' => '[]'
+        ])->repost_count;
+    }
+
+    public function deleteRepost(Post $post)
+    {
+        return auth()->user()->posts()->where('parent_id', $post->id)->delete();
     }
 }

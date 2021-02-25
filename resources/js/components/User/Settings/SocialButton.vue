@@ -1,10 +1,11 @@
 <template>
   <div :class="['island__social_links__item',soc, {'island__social_links__item--active': provider.status}]"
        @click="syncProvider(provider.status ? 'detach' : 'attach', provider.name)">
-    <i :class="['fab' , icon]"></i>
+
+    <ion-icon :src="'/icons/' + icon"></ion-icon>
     <span class="island__social_links__title" style="text-transform: capitalize;">{{ provider.name }}</span>
     <div class="island__social_links__item__delete" v-if="provider.status">
-      <i class="fas fa-times"></i>
+      <ion-icon src="/icons/close-outline.svg"></ion-icon>
     </div>
   </div>
 </template>
@@ -19,7 +20,7 @@
     data() {
       return {
         soc: 'island__social_links__item--' + this.provider.name,
-        icon: 'fa-' + this.provider.name
+        icon: this.provider.icon
       }
     },
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page--index">
     <div class="l-page l-page--header-content-sidebar l-mb-12">
 
       <div class="l-page__header">
@@ -33,7 +33,7 @@
                              v-if="data.slug && user && user.slug == $route.params.slug"
                              class="v-button v-button--default v-button--size-default">
                   <div class="v-button__icon">
-                    <i class="fas fa-cog"></i>
+                    <ion-icon src="/icons/settings-outline.svg"></ion-icon>
                   </div>
                 </router-link>
               </div>

@@ -44,7 +44,7 @@
 
               <!-- Число просмотров -->
               <div class="content-header-number content-header__item">
-                <i class="far fa-eye"></i> {{ data.unique_views_count }}
+                <ion-icon src="/icons/eye-outline.svg" :class="'mr-2'"></ion-icon> {{ data.unique_views_count }}
               </div>
 
               <!-- Закрепленный пост -->

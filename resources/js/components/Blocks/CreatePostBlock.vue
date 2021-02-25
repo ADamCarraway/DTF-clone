@@ -1,6 +1,6 @@
 <template>
   <div :class="{'miniEditor': true,'miniEditor--active': editorShow}"
-       class="l-island-a l-island-bg l-island-round"
+       class="l-island-bg l-island-round"
        v-if="user"
        v-click-outside="editorHide"
        @click="editorShowed()">
@@ -35,7 +35,7 @@
     <div class="miniEditor__actions">
       <label for="file">
         <div class="attachButton">
-          <i class="far fa-image"></i>
+          <ion-icon src="/icons/image-outline.svg"></ion-icon>
           <span class="attachButton__label">
           Фото и видео
         </span>

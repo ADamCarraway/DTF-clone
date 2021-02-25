@@ -1,19 +1,15 @@
 <template>
-  <div
+  <div v-if="data.is_follow"
     class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
     <div v-if="!data.is_notify" @click="notify(true)">
       <div class="v-button__icon">
-        <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
-           aria-hidden="true"></i>
-        <i v-else class="far fa-bell"></i>
+        <ion-icon src="/icons/notifications-outline.svg"></ion-icon>
       </div>
     </div>
 
     <div v-if="data.is_notify" @click="notify(false)">
       <div class="v-button__icon">
-        <i v-if="loadingNotify" class="spinner-border spinner-border-sm" role="status"
-           aria-hidden="true"></i>
-        <i v-else class="far fa-bell-slash"></i>
+        <ion-icon src="/icons/notifications-off-outline.svg"></ion-icon>
       </div>
     </div>
   </div>

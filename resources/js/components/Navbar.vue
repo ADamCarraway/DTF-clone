@@ -2,7 +2,8 @@
   <div class="site-header">
     <div class="site-header__item site-header__item--burger" @click="sidebarChange()">
       <div class="site-header-burger">
-        <i class="icon icon-menu fas fa-bars fs-24"></i>
+<!--        <i class="icon icon-menu fas fa-bars fs-24"></i>-->
+        <ion-icon src="/icons/menu-outline.svg"></ion-icon>
       </div>
     </div>
     <div class="site-header__item site-header__item--logo">
@@ -22,7 +23,8 @@
       <div class="search">
         <!--        //search&#45;&#45;active-->
         <div class="search__field">
-          <i class="icon icon-search icon--search fs-16"></i>
+<!--          <i class="icon icon-search icon&#45;&#45;search fs-16"></i>-->
+          <ion-icon src="/icons/search.svg"></ion-icon>
           <input type="text" placeholder="Поиск" class="search__input"></div>
       </div>
     </div>
@@ -31,7 +33,7 @@
       <div class="v-create-button">
         <router-link :to="{name: 'editor'}" class="v-create-button__main ">
           <div class="v-split-button__icon">
-            <i class="fas fa-pencil-alt"></i>
+            <ion-icon src="/icons/pencil-outline.svg"></ion-icon>
           </div>
           <div class="v-create-button__label">
             Новая запись
@@ -46,7 +48,8 @@
     <div class="site-header__item" v-if="user">
       <div class="head-notifies">
         <div class="head-notifies__toggler">
-          <i class="el-icon-bell fs-24 text-dark"></i>
+<!--          <i class="el-icon-bell fs-24 text-dark"></i>-->
+          <ion-icon src="/icons/notifications-outline.svg"></ion-icon>
           <span class="head-notifies__badge head-notifies__badge--hidden">0</span>
         </div>
       </div>
@@ -59,7 +62,10 @@
             <div class="site-header-user-profile__avatar-image" :style="{'background-image': 'url('+user.avatar+')'}"></div>
           </router-link>
             <el-dropdown trigger="click" placement="bottom-end" style="display: flex;">
-              <span class="el-dropdown-link dropdown_down"><i class="el-icon-arrow-down l-fs-14 text-dark" style="font-weight: bolder;"></i></span>
+              <span class="el-dropdown-link dropdown_down">
+<!--                <i class="el-icon-arrow-down l-fs-14 text-dark" style="font-weight: bolder;"></i>-->
+                <ion-icon src="/icons/chevron-down-outline.svg"></ion-icon>
+              </span>
               <el-dropdown-menu slot="dropdown">
                 <div class="at-dropdown-menu-item__title">Профиль</div>
                 <router-link :to="{ name: 'user', params: {slug: user.slug} }" class="at-dropdown-menu__item item--selected">
@@ -71,14 +77,14 @@
 
                 <router-link :to="{ name: 'user.settings', params: {slug: user.slug} }" class="at-dropdown-menu__item">
                   <div class="item__icon">
-                    <i class="el-icon-setting"></i>
+                    <ion-icon src="/icons/settings-outline.svg"></ion-icon>
                   </div>
                   <span class="item__text">Настройки</span>
                 </router-link>
 
                 <a href="#" class="at-dropdown-menu__item" @click.prevent="logout" style="color: rgb(233, 42, 64);">
                   <div class="item__icon">
-                    <i class="fas fa-sign-out-alt"></i>
+                    <ion-icon src="/icons/log-out-outline.svg"></ion-icon>
                   </div>
                   Выйти
                 </a>
@@ -93,7 +99,7 @@
     <div class="site-header__item" v-else @click="showLoginModal">
       <div class="site-header-user">
         <div class="site-header-user-login">
-          <i class="icon icon-user far fa-user-circle fs-28"></i>
+          <ion-icon src="/icons/person-circle-outline.svg"></ion-icon>
           <span class="fs-16">Войти</span>
         </div>
       </div>
@@ -176,11 +182,15 @@
   }
 
   .dropdown_down{
-    padding-left: 11px;
-    padding-right: 11px;
+    padding-left: 9px;
+    padding-right: 10px;
     display: flex;
     align-items: center;
     cursor: pointer;
   }
 
+  .dropdown_down ion-icon{
+    font-size: 17px;
+    color: #000;
+  }
 </style>

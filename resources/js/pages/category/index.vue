@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="subsites_catalog__search l-island-a l-island-bg l-pv-15">
-        <i class="fas fa-search"></i>
+        <ion-icon src="/icons/search-outline.svg"></ion-icon>
         <input v-model="search" class="subsites_catalog__search__bar l-ml-15" placeholder="Поиск"
                data-gtm="Subsites catalog – Search">
       </div>
@@ -55,7 +55,7 @@
                   <div v-if="item.slug in subscriptions" @mouseover="isHovering = true" @mouseout="isHovering = false"
                        @click="subscribe(0, item)"
                        class="ui-button ui-button--subscribed ui-button--5 ui-button--wide ui-button--only-icon ui-button--small">
-                    <i class="fas fa-check"></i>
+                    <ion-icon src="/icons/checkmark-outline.svg"></ion-icon>
                     <span>Подписан</span>
                   </div>
                 </div>

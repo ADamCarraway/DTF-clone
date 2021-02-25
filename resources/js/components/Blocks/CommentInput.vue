@@ -5,10 +5,10 @@
       <span class="comments_pseudo_form__text">Написать комментарий...</span>
 
       <div class="comments_pseudo_form__button">
-        <i class="fas fa-link icon--attach-link"></i>
+        <ion-icon src="/icons/link-outline.svg" :class="'icon--attach-link'"></ion-icon>
       </div>
       <div class="comments_pseudo_form__button">
-        <i class="far fa-image icon--ui_image"></i>
+        <ion-icon src="/icons/image-outline.svg" :class="'icon--ui_image'"></ion-icon>
       </div>
 
     </div>
