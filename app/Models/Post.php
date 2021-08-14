@@ -27,7 +27,7 @@ class Post extends Model implements BookmarkableInterface, LikeableInterface, No
     {
         parent::boot();
 
-        self::created(function ($model) {
+        self::created(function (Post $model) {
             if ($model->slug == null) {
                 $model->update(['slug' => $model->id]);
             } else {
@@ -106,7 +106,7 @@ class Post extends Model implements BookmarkableInterface, LikeableInterface, No
     {
         if (!auth()->check()) return false;
 
-        return auth()->user()->notifications()->where('notifiable_type', self::class)->where('notifiable_id', $this->id)->exists();
+        return auth()->user()->follower_notifications()->where('notifiable_type', self::class)->where('notifiable_id', $this->id)->exists();
     }
 
     public function getVkUrlAttribute()

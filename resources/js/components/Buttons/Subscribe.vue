@@ -60,15 +60,11 @@
         }
       },
       changeForSubscribe() {
-        if (this.data.type === 'category') {
           this.data['isSub'] = true;
           this.data.is_follow = true;
           this.data['isVisible'] = Object.keys(this.subscriptions).length < 7;
 
           this.$store.dispatch('auth/addSubscription', {sub: this.data})
-        } else {
-          this.$store.dispatch('auth/addSubscription', {sub: this.data});
-        }
       },
       changeForUnSubscribe() {
         this.data.is_notify = false;
@@ -79,11 +75,7 @@
           value: false
         });
 
-        if (this.data === 'category') {
-          this.$store.dispatch('auth/destroySubscription', {slug: this.data.slug})
-        } else {
-          this.$store.dispatch('auth/destroySubscription', {slug: this.data.slug});
-        }
+        this.$store.dispatch('auth/destroySubscription', {slug: this.data.slug})
 
       },
     },

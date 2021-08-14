@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('follow', 'FollowController@store')->name('follow.store');
     Route::delete('unfollow', 'FollowController@destroy')->name('follow.destroy');
 
+    Route::get('/notification', 'NotificationController@index')->name('notification.index');
     Route::post('/notification', 'NotificationController@store')->name('notification.store');
     Route::delete('/notification', 'NotificationController@destroy')->name('notification.destroy');
 

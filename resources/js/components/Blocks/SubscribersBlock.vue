@@ -2,10 +2,10 @@
   <div v-if="Object.keys(data).length !== 0" class="l-island-bg l-island-round v-island">
     <div class="v-island__header">
       <span class="v-island__title">Подписчики</span>
-      <span class="v-island__counter" v-if="data.subscribers_count">{{ data.subscribers_count }}</span>
+      <span class="v-island__counter" v-if="data.followers_count">{{ data.subscribers_count }}</span>
     </div>
 
-    <div v-if="data.subscribers_count > 0" class="v-list v-list--images">
+    <div v-if="data.followers_count > 0" class="v-list v-list--images">
       <div class="v-list__content">
         <router-link v-for="item in data.subscribers" :to="{ name: item.type, params: {slug: item.slug} }" :key="item.slug"
                      class="v-list__item">

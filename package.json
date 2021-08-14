@@ -2,12 +2,12 @@
   "private": true,
   "scripts": {
     "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "npm run development -- --watch",
     "watch-poll": "npm run watch -- --watch-poll",
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js",
     "lint": "eslint --fix --ext .js,.vue resources/js"
   },
   "dependencies": {
@@ -28,8 +28,10 @@
     "element-ui": "^2.14.1",
     "jquery": "^3.5.1",
     "js-cookie": "^2.2.0",
+    "laravel-echo": "^1.11.1",
     "moment": "^2.27.0",
     "popper.js": "^1.15.0",
+    "pusher-js": "^7.0.3",
     "sweetalert2": "^8.10.0",
     "vform": "^1.0.0",
     "vue": "^2.6.10",
@@ -64,9 +66,11 @@
     "laravel-mix": "^4.0.15",
     "laravel-mix-versionhash": "^1.0.7",
     "resolve-url-loader": "^2.3.1",
-    "sass": "^1.26.10",
-    "sass-loader": "^7.1.0",
+    "sass": "^1.37.5",
+    "sass-loader": "^7.3.1",
     "vue-template-compiler": "^2.6.10",
-    "webpack-bundle-analyzer": "^3.3.2"
+    "webpack": "^4.44.1",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^4.7.2"
   }
 }

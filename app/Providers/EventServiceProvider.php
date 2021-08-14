@@ -31,7 +31,7 @@ class EventServiceProvider extends ServiceProvider
 
         CancelSubscriptionEvent::class => [
             UserNotifyRemove::class
-        ]
+        ],
     ];
 
     /**

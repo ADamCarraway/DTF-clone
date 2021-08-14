@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -23,8 +24,8 @@ class ComposerServiceProvider extends ServiceProvider
             if (auth()->check()) return;
 
             /** @var Category $categories */
-            $categories = Category::query()->withCount('subscribers')->get()->keyBy('slug')->map(function (Category $category) {
-                $category['subscribers'] = $category->subscribers()->limit(12)->get();
+            $categories = Category::query()->withCount(['followers'])->get()->keyBy('slug')->map(function (Category $category) {
+                $category['subscribers'] = User::query()->whereIn('id', $category->followers()->limit(12)->pluck('id')->toArray())->get();
 
                 return $category;
             });

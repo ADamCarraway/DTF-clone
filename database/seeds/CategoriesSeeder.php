@@ -11,7 +11,7 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
-        \App\Category::query()->insert([
+        \App\Models\Category::query()->insert([
             [
                 'title'=> 'Игры',
                 'slug'=> 'games',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use App\Notifications\AddCommentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -66,7 +67,14 @@ class CommentController extends Controller
         /** @var Post $post */
         $post = Post::find($request->id);
 
-        return $post->comments()->save($comment)->load('replies');
+        /** @var Comment $saveComment */
+        $saveComment = $post->comments()->save($comment)->load('post');
+
+        if($post->user->id != auth()->user()->id){
+            $post->user->notify(new AddCommentNotification($saveComment));
+        }
+
+        return $saveComment->load('replies');
     }
 
     public function replyStore(Request $request)

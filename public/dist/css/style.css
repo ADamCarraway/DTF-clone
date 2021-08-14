@@ -6259,3 +6259,251 @@ input:checked + .like-btn-svg {
 .l-ml-4 {
     margin-left: 4px;
 }
+
+.head-notifies--showed .head-notifies__panel {
+    display: block;
+}
+.head-notifies__panel {
+    position: absolute;
+    top: 100%;
+    right: -5px;
+    width: 430px;
+    background: #fff;
+    color: #000;
+    -webkit-box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
+    box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
+    z-index: 2;
+    display: none;
+}
+
+.head-notifies__header {
+    display: -ms-flexbox;
+    display: flex;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.t-ff-1-500 {
+    font-family: 'Roboto', Tahoma;
+    font-weight: 500;
+}
+.head-notifies__header-title {
+    padding: 12px 13px;
+}
+
+.head-notifies__header-link {
+    margin-left: auto;
+    color: #346eb8;
+    padding: 15px;
+}
+
+.u-notification--unread {
+    background: #f5fcff;
+}
+
+.head-notifies__items-wrapper {
+    max-height: 450px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+
+.head-notifies__footer {
+    padding: 15px;
+    border-top: 1px solid #f2f2f2;
+    text-align: center;
+}
+
+.head-notifies__footer-link {
+    display: block;
+    margin: -15px;
+    padding: 15px;
+}
+
+.u-notification--border:last-of-type {
+    border-bottom: none;
+}
+
+.u-notification--border:first-of-type {
+    border-top: none;
+}
+.u-notification--border {
+    border-bottom: 1px solid #f2f2f2;
+}
+.u-notification {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    font-size: 13px;
+    line-height: 18px;
+    padding: 9px 15px;
+    cursor: pointer;
+    position: relative;
+}
+
+.u-notification__image--relative {
+    position: relative;
+}
+
+.u-notification__image {
+    min-width: 36px;
+    min-height: 36px;
+    width: 36px;
+    height: 36px;
+    margin-right: 12px;
+    -ms-flex-negative: 2;
+    flex-shrink: 2;
+}
+
+.u-notification__image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    outline-offset: -1px;
+    outline: 1px solid rgba(0,0,0,.1);
+}
+
+.u-notification__content {
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    word-break: break-word;
+}
+
+.u-notification__content a {
+    position: relative;
+    z-index: 2;
+}
+
+.u-notification__content b, .vacancy_edit__mode__info span, .vacancy_edit__mode__title {
+    font-weight: 500;
+}
+
+.u-notification__content__date {
+    color: #595959;
+    text-transform: lowercase;
+}
+
+.u-notification__content__reply-text {
+    font-size: 12px;
+    line-height: 16px;
+    background: rgba(0,0,0,.05);
+    padding: 4px 8px 5px;
+    margin-top: 5px;
+}
+
+.u-notification__content__reply-text p {
+    margin-bottom: .5em;
+}
+
+.u-notification__content__button {
+    position: relative;
+    z-index: 2;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-size: 12px;
+    line-height: 24px;
+    color: #346eb8;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.u-notification--blue .u-notification__avatar-icon {
+    background: #66a6ed;
+}
+
+.u-notification__avatar-icon ion-icon{
+    font-size:9px;
+}
+
+.u-notification__avatar-icon {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    background: #595959;
+    color: #fff;
+    right: -5px;
+    bottom: -5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+.u-notification__avatar-icon, .u-notification__image-icon {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.u-notification__image .icon {
+    position: static;
+}
+
+.head-notifies--showed .head-notifies__toggler::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -8px;
+    width: 0;
+    height: 0;
+    border-top: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #fff;
+}
+
+.head-notifies--showed .head-notifies__toggler ion-icon {
+    -webkit-transform: rotate(10deg);
+    transform: rotate(10deg);
+}
+
+.head-notifies--showed .head-notifies__toggler ion-icon, .head-notifies__toggler:hover ion-icon {
+    fill: #4da0da;
+    color: #4da0da;
+}
+
+.head-notifies__toggler ion-icon {
+    position: static;
+}
+
+.u-notification--hover:hover {
+    background: #f3f3f3;
+}
+
+.notification__image ion-icon{
+    font-size:32px;
+
+}
+
+.notification__image {
+    display: inline-block;
+    position: absolute;
+    left: 15px;
+}
+
+.notification__text {
+    text-align: left;
+}
+
+.l-mr-10 {
+    margin-right: 10px;
+}
+
+.notification {
+    position: relative;
+    padding: .8em .8em .8em calc(1em + 40px + 1em);
+    line-height: 1.4em;
+    z-index: initial;
+    background: #fff;
+}
+
+.u-notification__link {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}

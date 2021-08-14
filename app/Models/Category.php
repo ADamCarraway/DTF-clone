@@ -46,7 +46,7 @@ class Category extends Model implements CanBeFollowedContract, IgnorableInterfac
     {
         if (!auth()->check() || $this->id === auth()->user()->id) return false;
 
-        return auth()->user()->notifications()->where('notifiable_type', Category::class)->where('notifiable_id', $this->id)->exists();
+        return auth()->user()->follower_notifications()->where('notifiable_type', Category::class)->where('notifiable_id', $this->id)->exists();
     }
 
     public function posts()

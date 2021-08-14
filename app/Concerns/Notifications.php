@@ -7,7 +7,7 @@ use App\Models\Notification;
 
 trait Notifications
 {
-    public function notifications()
+    public function follower_notifications()
     {
         return $this->hasMany(Notification::class);
     }

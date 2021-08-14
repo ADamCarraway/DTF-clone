@@ -45,15 +45,7 @@
 
     <div class="site-header__spacer"></div>
 
-    <div class="site-header__item" v-if="user">
-      <div class="head-notifies">
-        <div class="head-notifies__toggler">
-<!--          <i class="el-icon-bell fs-24 text-dark"></i>-->
-          <ion-icon src="/icons/notifications-outline.svg"></ion-icon>
-          <span class="head-notifies__badge head-notifies__badge--hidden">0</span>
-        </div>
-      </div>
-    </div>
+    <notifications/>
 
     <div class="site-header__item" v-if="user">
       <div class="site-header-user">
@@ -120,9 +112,11 @@
   import LocaleDropdown from './LocaleDropdown'
   import LoginBox from "./LoginBox";
   import EventBus from "../plugins/event-bus";
+  import Notifications from "./Blocks/Notifications";
 
   export default {
     components: {
+      Notifications,
       LoginBox,
       LocaleDropdown
     },

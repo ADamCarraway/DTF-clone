@@ -77,6 +77,8 @@ class PostController extends Controller
             'is_publish' => $request->get('is_publish') ?? 1,
         ]);
 
+        auth()->user()->addNotification($post);
+
         return response()->json([
             'category' => $category->slug ?? auth()->user()->slug,
             'type' => is_null($category) ? 'user.post' : 'post',

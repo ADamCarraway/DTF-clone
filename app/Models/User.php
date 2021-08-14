@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Concerns\Bookmarks;
 use App\Concerns\Ignored;
 use App\Concerns\Likes;
-use App\Concerns\Notifications;
+use App\Concerns\Notifications as NotificationsTrait;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Hypefactors\Laravel\Follow\Contracts\CanBeFollowedContract;
@@ -30,12 +30,11 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         Bookmarks,
         CanFollow,
         CanBeFollowed,
-        Notifications,
+        NotificationsTrait,
         NotifiableTrait,
         Ignored,
-        Ignorable;
-
-    //Notifiable,;
+        Ignorable,
+        Notifiable;
 
     //a - postLikes, b = commentsLikes
     const ODDS = ['a' => 0.02, 'b' => 0.05, 'c' => 1];
@@ -140,7 +139,7 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
     {
         if (!auth()->check()) return false;
 
-        return auth()->user()->notifications()->where('notifiable_type', User::class)->where('notifiable_id', $this->id)->exists();
+        return auth()->user()->follower_notifications()->where('notifiable_type', User::class)->where('notifiable_id', $this->id)->exists();
     }
 
     public function scopeWhereSlug(Builder $query, $slug)

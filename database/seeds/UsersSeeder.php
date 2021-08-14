@@ -1,6 +1,6 @@
 <?php
 
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder
@@ -15,7 +15,7 @@ class UsersSeeder extends Seeder
         $user = factory(User::class, 200)->create();
 
         $user->each(function (User $user){
-           $categories = \App\Category::all()->random(10)->pluck('id');
+           $categories = \App\Models\Category::all()->random(10)->pluck('id');
            $users = User::all()->random(10)->pluck('id');
 
            $user->categories()->attach($categories);

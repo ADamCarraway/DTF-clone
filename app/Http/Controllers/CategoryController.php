@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = Category::query()->withCount('subscribers');
+        $categories = Category::query()->withCount('followers');
 
         if ($search = $request->input('search', '')){
             $categories = $categories->where('title','like', "%$search%")
@@ -33,8 +33,8 @@ class CategoryController extends Controller
 
     public function show($slug)
     {
-        $category = Category::query()->withCount('subscribers')->whereSlug($slug)->firstOrFail();
-        $category['subscribers'] = $category->subscribers()->limit(12)->get();
+        $category = Category::query()->withCount('followers')->whereSlug($slug)->firstOrFail();
+        $category['subscribers'] = $category->followers()->with('follower')->limit(12)->get()->pluck('follower');
 
         return response()->json($category);
     }

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data.is_follow"
+  <div
     class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
     <div v-if="!data.is_notify" @click="notify(true)">
       <div class="v-button__icon">
