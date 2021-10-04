@@ -27,7 +27,7 @@ class PostController extends Controller
                 }
             });
 
-        if ($filter == 'popular') {
+        if (!$filter ? $feed == 'popular' : $filter == 'popular') {
             $posts = $posts->leftJoin('comments', function ($q) {
                 $q->on('posts.id', '=', 'comments.commentable_id')
                     ->where('comments.commentable_type', '=', Post::class);
@@ -46,7 +46,7 @@ class PostController extends Controller
             return response()->json($posts->paginate(10));
         }
 
-        if ($filter == 'new') {
+        if (!$filter ? $feed == 'new': $filter == 'new') {
             $posts = $posts->latest('created_at');
         }
 
