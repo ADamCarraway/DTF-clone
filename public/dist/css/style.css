@@ -6152,7 +6152,7 @@ input:checked + .like-btn-svg {
 }
 
 #page_wrapper:not(.page--entry .page--index) {
-    padding-top: 16px;
+    /*padding-top: 16px;*/
     padding-bottom: 16px;
 }
 

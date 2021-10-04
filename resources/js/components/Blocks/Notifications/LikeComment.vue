@@ -17,7 +17,8 @@
         </router-link>
         оценил комментарий к записи &nbsp;
         <span class="u-notification__content__date">
-          <time class="time">{{ date }}</time>
+          <time class="time">{{ item.data.date }}</time>
+          {{item.data.date}}
         </span>
       </div>
       <div class="u-notification__content__reply-text" :class="{'l-hidden': !show}">
@@ -44,11 +45,6 @@
         'show': false
       }
     },
-    computed :{
-      date() {
-        return moment().calendar(this.item.data.date);
-      },
-    }
   }
 </script>
 

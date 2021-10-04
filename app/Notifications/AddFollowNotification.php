@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
@@ -39,7 +40,7 @@ class AddFollowNotification extends Notification
     {
         return new BroadcastMessage([
             'user' => $this->user,
-            'date' => now(),
+            'date' => Carbon::parse(now())->locale('ru')->calendar(),
         ]);
     }
 
@@ -49,7 +50,7 @@ class AddFollowNotification extends Notification
             'read_at' => null,
             'data'    => [
                 'user' => $this->user,
-                'date' => now(),
+                'date' => Carbon::parse(now())->locale('ru')->calendar(),
             ],
         ]);
     }

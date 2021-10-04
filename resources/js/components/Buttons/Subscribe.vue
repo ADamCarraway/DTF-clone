@@ -60,7 +60,7 @@
         }
       },
       changeForSubscribe() {
-          this.data['isSub'] = true;
+          this.data.is_follow = true;
           this.data.is_follow = true;
           this.data['isVisible'] = Object.keys(this.subscriptions).length < 7;
 

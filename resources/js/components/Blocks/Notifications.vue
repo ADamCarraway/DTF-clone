@@ -12,7 +12,7 @@
           <span class="head-notifies__header-title t-ff-1-500 lm-hidden">
             <span>Уведомления</span>
           </span>
-          <span class="head-notifies__header-link t-link-inline l-hidden">
+          <span class="head-notifies__header-link t-link-inline" @click="readAll" v-if="showAllReadBtn">
             <span>Пометить все как прочитанные</span>
           </span>
         </header>
@@ -32,6 +32,11 @@
           <div class="head-notifies__loader" style="display: none;">
             <div class="v-loader ui_preloader"><span class="ui_preloader__dot"></span> <span
               class="ui_preloader__dot"></span> <span class="ui_preloader__dot"></span></div>
+          </div>
+          <div v-if="user && notifications.length === 0">
+            <div class="u-notification u-notification--border u-notification--hover text-center">
+              Непрочитанных уведомлений нет
+            </div>
           </div>
         </div>
         <footer class="head-notifies__footer t-ff-1-500">
@@ -62,6 +67,7 @@
       return {
         'show': false,
         'notReading': 0,
+        'showAllReadBtn': false,
         'notifications': [],
         'page': 1,
         'needLoading': true
@@ -86,17 +92,32 @@
         axios.get('/api/notification' + '?page=' + this.page)
           .then((data) => {
             if (data.data.data.length) {
+              this.showAllReadBtn = true
               this.page = this.page + 1;
               $.each(data.data.data, (key, value) => {
                 this.notifications.push(value);
               });
-
               $state.loaded();
             } else {
               $state.complete();
             }
           });
+
+        // const uniqueElementsBy = (arr, fn) =>
+        //   arr.reduce((acc, v) => {
+        //     if (!acc.some(x => fn(v, x))) acc.push(v);
+        //     return acc;
+        //   }, []);
+        //
+        // this.notifications =  uniqueElementsBy(this.notifications,(a, b) => a.type + + a.data.user.id == b.type + + b.data.user.id);
       },
+
+      readAll() {
+        axios.post('/api/notification/readAll')
+          .then((data) => {
+            this.showAllReadBtn = false;
+          });
+      }
     }
   }
 </script>

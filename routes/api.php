@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/notification', 'NotificationController@index')->name('notification.index');
     Route::post('/notification', 'NotificationController@store')->name('notification.store');
     Route::delete('/notification', 'NotificationController@destroy')->name('notification.destroy');
+    Route::post('/notification/readAll', 'NotificationController@readAll')->name('notification.readAll');
 
     Route::post('/ignore', 'IgnoreController@store')->name('ignore.store');
     Route::delete('/ignore', 'IgnoreController@destroy')->name('ignore.destroy');

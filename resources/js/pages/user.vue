@@ -16,7 +16,7 @@
                   <div class="v-header-title__main">
                     <div :class="{'preloader preloader-name': !data.name}"  class="v-header-title__item v-header-title__name">
                       {{ data.name }}
-                      <span class="rating">{{ data.rating }}</span>
+<!--                      <span class="rating">{{ data.rating }}</span>-->
                     </div>
                   </div>
                 </div>
@@ -27,7 +27,7 @@
               <div v-else
                    class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
                 <subscribe v-if="user && data.id !== user.id" :data="data" :type="data.type"></subscribe>
-                <notification :data="data" :type="'users'"  v-if="data.slug && user && user.slug !== $route.params.slug"></notification>
+                <notification :data="data" :type="'users'"  v-if="data.slug && user && user.slug !== $route.params.slug && data.is_follow"></notification>
 
                 <router-link :to="{name: 'user.settings', params: {slug: data.slug}}"
                              v-if="data.slug && user && user.slug == $route.params.slug"
@@ -44,7 +44,9 @@
 
             <div class="v-header__stats">
               <div :class="{'preloader preloader-stat': !data.created_at}" class="v-header__stat">
-                <i class="fas fa-egg"></i>
+                <i>
+                  <ion-icon name="planet-outline"></ion-icon>
+                </i>
                 На проекте с {{ date }}
               </div>
             </div>

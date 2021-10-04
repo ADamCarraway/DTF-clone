@@ -42,7 +42,7 @@
               <div
                 class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
                 <subscribe :data="data"></subscribe>
-                <notification :data="data"></notification>
+                <notification v-if="data.is_follow" :data="data"></notification>
               </div>
               <ignore :data="data"></ignore>
             </div>

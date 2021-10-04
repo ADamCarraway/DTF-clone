@@ -9,9 +9,12 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        /** @var User $user */
-        $user = auth()->user();
-        return response()->json($user->notifications()->orderBy('created_at', 'desc')->paginate(20));
+        return response()->json(
+            auth()->user()->notifications()
+                ->orderBy('created_at', 'desc')
+                ->whereNull('read_at')
+                ->paginate(5)
+        );
     }
 
     public function store(NotificationRequest $request)
@@ -22,5 +25,13 @@ class NotificationController extends Controller
     public function destroy(NotificationRequest $request)
     {
         return auth()->user()->removeNotification($request->notifiable());
+    }
+
+    public function readAll()
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        return $user->notifications()->update(['read_at' => now()]);
     }
 }

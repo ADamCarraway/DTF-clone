@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Models\Comment;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
@@ -47,7 +48,7 @@ class AddLikeNotification extends Notification
         return new BroadcastMessage([
             'user'    => $this->user,
             'comment' => $this->comment,
-            'date'    => now(),
+            'date'    => Carbon::parse(now())->locale('ru')->calendar(),
         ]);
     }
 
@@ -58,7 +59,7 @@ class AddLikeNotification extends Notification
             'data'    => [
                 'user'    => $this->user,
                 'comment' => $this->comment,
-                'date'    => now(),
+                'date'    => Carbon::parse(now())->locale('ru')->calendar(),
             ],
         ]);
     }

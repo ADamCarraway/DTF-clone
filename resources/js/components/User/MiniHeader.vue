@@ -8,7 +8,7 @@
     </div>
 
     <div v-if="data.type === 'user'">
-      <user-tabs/>
+      <user-tabs :user="data"/>
     </div>
     <div v-else>
       <category-tabs :data="data"></category-tabs>
@@ -19,7 +19,7 @@
       <div
         class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
         <subscribe :data="data" :type="data.type"></subscribe>
-        <notification :data="data" :type="data.type"></notification>
+        <notification v-if="data.is_follow" :data="data" :type="data.type"></notification>
       </div>
       <ignore :data="data" :type="data.type"></ignore>
 

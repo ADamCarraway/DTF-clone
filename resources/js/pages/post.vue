@@ -100,7 +100,7 @@
               <div v-else
                    class="v-subscribe-button v-subscribe-button--full v-subscribe-button--with-notifications v-subscribe-button--state-active">
                 <subscribe v-if="user && data.user.id !== user.id" :data="data.user" :type="data.user.type"></subscribe>
-                <notification :data="data.user" :type="'users'"></notification>
+                <notification v-if="user && data.user.id !== user.id && data.user.is_follow" :data="data.user" :type="'users'"></notification>
               </div>
             </div>
           </div>
