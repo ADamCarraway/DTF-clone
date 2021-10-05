@@ -40,7 +40,7 @@ class AddFollowNotification extends Notification
     {
         return new BroadcastMessage([
             'user' => $this->user,
-            'date' => Carbon::parse(now())->locale('ru')->calendar(),
+            'date' => now(),
         ]);
     }
 
@@ -50,7 +50,7 @@ class AddFollowNotification extends Notification
             'read_at' => null,
             'data'    => [
                 'user' => $this->user,
-                'date' => Carbon::parse(now())->locale('ru')->calendar(),
+                'date' => now(),
             ],
         ]);
     }

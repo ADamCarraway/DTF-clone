@@ -48,7 +48,7 @@ class AddLikeNotification extends Notification
         return new BroadcastMessage([
             'user'    => $this->user,
             'comment' => $this->comment,
-            'date'    => Carbon::parse(now())->locale('ru')->calendar(),
+            'date'    => now(),
         ]);
     }
 
@@ -59,7 +59,7 @@ class AddLikeNotification extends Notification
             'data'    => [
                 'user'    => $this->user,
                 'comment' => $this->comment,
-                'date'    => Carbon::parse(now())->locale('ru')->calendar(),
+                'date'    => now(),
             ],
         ]);
     }

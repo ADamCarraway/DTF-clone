@@ -49,6 +49,11 @@ class CommentController extends Controller
         $type = $request->get('type');
 
         $comments = Post::query()->whereSlug($slug)->firstOrFail()->comments()->withCount(['replies']);
+
+        if ($type == 'old') {
+            $comments->orderBy('created_at');
+        }
+
         if ($type == 'new') {
             $comments->latest('created_at');
         }

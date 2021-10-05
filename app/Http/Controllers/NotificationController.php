@@ -12,7 +12,7 @@ class NotificationController extends Controller
         return response()->json(
             auth()->user()->notifications()
                 ->orderBy('created_at', 'desc')
-                ->whereNull('read_at')
+                ->orderBy('read_at')
                 ->paginate(5)
         );
     }
