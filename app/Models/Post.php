@@ -20,7 +20,20 @@ class Post extends Model implements BookmarkableInterface, LikeableInterface, No
     const ODDS = ['a' => 40, 'b' => 60, 'c' => 10, 'd' => 40];
 
     protected $guarded = ['id'];
-    protected $appends = ['type', 'is_like', 'is_bookmarked', 'date', 'unique_views_count', 'comments_count', 'is_notify', 'url', 'vk_url', 'is_reposted', 'repost_count'];
+    protected $appends = [
+        'type',
+        'is_like',
+        'is_bookmarked',
+        'date',
+        'unique_views_count',
+        'comments_count',
+        'is_notify',
+        'url',
+        'vk_url',
+        'is_reposted',
+        'repost_count',
+        'short_title'
+    ];
     protected $withCount = ['likes', 'bookmarks'];
 
     public static function boot()
@@ -134,5 +147,12 @@ class Post extends Model implements BookmarkableInterface, LikeableInterface, No
     public function getRepostCountAttribute()
     {
         return self::query()->where('parent_id', $this->id)->count();
+    }
+
+    public function getShortTitleAttribute()
+    {
+        if (iconv_strlen($this->title) <= 26) return $this->title;
+
+        return substr($this->title, 0, strrpos(substr($this->title, 0, 52), ' ')) . '...';
     }
 }

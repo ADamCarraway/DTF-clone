@@ -18,10 +18,11 @@
         </header>
         <div class="head-notifies__items-wrapper"><!---->
           <div class="head-notifies__items" v-if="user">
-            <div class="u-notification--border" v-for="item in notifications" :key="item.id">
+            <div class="u-notification--border" v-for="item in notifications">
               <new-comment v-if="item.type === 'App\\Notifications\\AddCommentNotification'" :item="item"/>
               <new-follow v-if="item.type === 'App\\Notifications\\AddFollowNotification'" :item="item"/>
-              <like-comment v-if="item.type === 'App\\Notifications\\AddLikeNotification'" :item="item"/>
+              <like-comment v-if="item.type === 'App\\Notifications\\AddLikeToCommentNotification'" :item="item"/>
+              <new-post v-if="item.type === 'App\\Notifications\\AddPostNotification'" :item="item"/>
             </div>
           </div>
           <notification-for-guest v-else/>
@@ -59,10 +60,12 @@
   import InfiniteLoading from "vue-infinite-loading";
   import NewFollow from "./Notifications/NewFollow";
   import LikeComment from "./Notifications/LikeComment";
+  import LikePost from "./Notifications/LikePost";
+  import NewPost from "./Notifications/NewPost";
 
   export default {
     name: "Notifications",
-    components: {LikeComment, NewFollow, NewComment, NotificationForGuest, InfiniteLoading},
+    components: {NewPost, LikePost, LikeComment, NewFollow, NewComment, NotificationForGuest, InfiniteLoading},
     data() {
       return {
         'show': false,
@@ -92,7 +95,7 @@
         axios.get('/api/notification' + '?page=' + this.page)
           .then((data) => {
             if (data.data.data.length) {
-              this.showAllReadBtn = true
+              this.showAllReadBtn = data.data.notRead
               this.page = this.page + 1;
               $.each(data.data.data, (key, value) => {
                 this.notifications.push(value);
@@ -115,7 +118,7 @@
       readAll() {
         axios.post('/api/notification/readAll')
           .then((data) => {
-            this.showAllReadBtn = false;
+            this.showAllReadBtn = 0;
           });
       }
     }

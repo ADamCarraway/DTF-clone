@@ -28,6 +28,9 @@ class UserController extends Controller
         $request['posts_count'] = $user->posts()->count();
         $request['comments_count'] = $user->comments()->count();
         $request['bookmarks_count'] = $user->bookmarks()->count();
+        $request['notifications_count'] = $user->notifications()
+            ->whereNull('read_at')
+            ->count();
 
         return response()->json($request);
     }

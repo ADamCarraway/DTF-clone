@@ -99,7 +99,7 @@
         loadingNotify: false,
         loadingSub: false,
         data: {},
-        routers: ['user', 'user.new', 'user.comments', 'user.comments.new', 'user.favorites', 'user.favorites.comments']
+        routers: ['user', 'user.new', 'user.comments', 'user.comments.new', 'user.favorites', 'user.favorites.comments','user.notifications']
       }
     },
     computed: {

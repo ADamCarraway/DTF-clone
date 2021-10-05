@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Notifications\AddCommentNotification;
 use App\Notifications\AddFollowNotification;
-use App\Notifications\AddLikeNotification;
+use App\Notifications\AddLikeToCommentNotification;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;

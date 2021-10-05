@@ -71,6 +71,7 @@
 
           <h1 class="content-title" itemprop="headline">
             {{ data.title }}
+            {{ data.short_title }}
           </h1>
 
         </div>

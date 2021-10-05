@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\AddPostNotificationJob;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -78,6 +79,8 @@ class PostController extends Controller
         ]);
 
         auth()->user()->addNotification($post);
+
+        dispatch_now(new AddPostNotificationJob($post));
 
         return response()->json([
             'category' => $category->slug ?? auth()->user()->slug,

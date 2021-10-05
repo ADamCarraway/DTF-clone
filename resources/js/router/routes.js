@@ -4,6 +4,7 @@ import CategoryAllDetails from "../components/User/Details/CategoryAllDetails";
 import DetailsIndexSubs from "../components/User/Details/DetailsIndexSubs";
 import DetailsIndexRegulations from "../components/User/Details/DetailsIndexRegulations";
 import UserAllDetails from "../components/User/Details/UserAllDetails";
+import UserNotifications from "../components/User/UserNotifications";
 
 function page(path) {
   return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
@@ -36,6 +37,7 @@ export default [
       {path: 'comments/new', name: 'user.comments.new', component: UserComments},
       {path: 'favorites', name: 'user.favorites', component: page('user/favorites.vue')},
       {path: 'favorites/comments', name: 'user.favorites.comments', component: page('user/favorites.vue')},
+      {path: 'notifications', name: 'user.notifications', component: UserNotifications},
       {
         path: 'details',
         component: page('user/details/index.vue'),

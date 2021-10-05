@@ -2,13 +2,12 @@
 
 namespace App\Notifications;
 
-use App\Models\Comment;
+use App\Models\Post;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class AddLikeNotification extends Notification
+class AddLikeToPostNotification extends Notification
 {
 //    use Queueable;
     /**
@@ -16,19 +15,19 @@ class AddLikeNotification extends Notification
      */
     private User $user;
     /**
-     * @var Comment
+     * @var Post
      */
-    private Comment $comment;
+    private Post $post;
 
     /**
      * AddFollowNotification constructor.
      * @param User $user
-     * @param Comment $comment
+     * @param Post $post
      */
-    public function __construct(User $user, Comment $comment)
+    public function __construct(User $user, Post $post)
     {
-        $this->user    = $user;
-        $this->comment = $comment;
+        $this->user = $user;
+        $this->post = $post;
     }
 
     public function via($notifiable)
@@ -46,20 +45,19 @@ class AddLikeNotification extends Notification
     public function toDatabase($notifiable)
     {
         return new BroadcastMessage([
-            'user'    => $this->user,
-            'comment' => $this->comment,
-            'date'    => now(),
+            'user' => $this->user,
+            'post' => $this->post,
+            'date' => now(),
         ]);
     }
 
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'read_at' => null,
-            'data'    => [
-                'user'    => $this->user,
-                'comment' => $this->comment,
-                'date'    => now(),
+            'data' => [
+                'user' => $this->user,
+                'post' => $this->post,
+                'date' => now(),
             ],
         ]);
     }

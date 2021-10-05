@@ -9,11 +9,15 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        return response()->json(
-            auth()->user()->notifications()
+        return response()->json(array_merge(auth()->user()->notifications()
                 ->orderBy('created_at', 'desc')
                 ->orderBy('read_at')
-                ->paginate(5)
+                ->paginate(5)->toArray(), [
+                    'notRead' => auth()->user()->notifications()
+                        ->whereNull('read_at')
+                        ->count()
+                ]
+            )
         );
     }
 
