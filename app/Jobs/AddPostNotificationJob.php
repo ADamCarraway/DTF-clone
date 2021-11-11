@@ -12,6 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class AddPostNotificationJob //implements ShouldQueue
 {
@@ -35,7 +36,7 @@ class AddPostNotificationJob //implements ShouldQueue
                 $q->where('notifiable_id', $this->post->user->id)
                     ->where('notifiable_type', User::class);
             })
-            ->groupBy('user_id')
+//            ->groupBy('user_id')
             ->each(function (Notification $notification){
                $notification->user->notify(new AddPostNotification($this->post));
             });

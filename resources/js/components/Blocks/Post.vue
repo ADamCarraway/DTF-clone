@@ -62,14 +62,10 @@
 
           <div class="content-header__right">
             <!-- Бейдж черновика -->
+            <div class="content-header__item content-header-label content-header-label--draft" v-if="!post.is_publish">Черновик</div>
 
             <!-- Управление статьей -->
-
-            <div class="etc_control">
-              <svg class="icon icon--ui_etc" width="18" height="8" xmlns="http://www.w3.org/2000/svg">
-                <use xlink:href="#ui_etc"></use>
-              </svg>
-            </div>
+            <post-management :data="post"></post-management>
 
             <!-- Кнопка «Подписаться» -->
           </div>
@@ -124,10 +120,11 @@
   import edjsHTML from "editorjs-html"
   import PostFooter from "./PostFooter";
   import moment from "moment";
+  import PostManagement from "./PostManagement";
 
   export default {
     name: "Post",
-    components: {PostFooter, Bookmark, Like},
+    components: {PostManagement, PostFooter, Bookmark, Like},
     props: ['data'],
     data() {
       return {

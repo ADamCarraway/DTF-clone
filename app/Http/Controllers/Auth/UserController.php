@@ -16,40 +16,17 @@ class UserController extends Controller
      */
     public function current()
     {
-        /** @var User $user */
-        $request = $user = auth()->user();
-        $request['rating'] = $user->getRatingAttribute();
-        $request['users'] = $user->followers()->whereFollowerType(User::class)->get()->toArray();
-        $request['subscriptions'] = $user->followings()->with('followable')->get()->pluck('followable')->keyBy('slug')->sortByDesc('date')->sortByDesc('is_favorite')->toArray();
-        $request['subscribers'] = $user->followers()->with('follower')->limit(12)->get()->pluck('follower');
-        $request['subscribers_count'] = $user->followers()->count();
-        $request['subscriptions_count'] = $user->followings()->count();
-        $request['subscriptions_limit'] = array_slice($request['subscriptions'], 0, 5);
-        $request['posts_count'] = $user->posts()->count();
-        $request['comments_count'] = $user->comments()->count();
-        $request['bookmarks_count'] = $user->bookmarks()->count();
-        $request['notifications_count'] = $user->notifications()
-            ->whereNull('read_at')
-            ->count();
-
-        return response()->json($request);
+        return response()->json(auth()->user()->toVueFormat());
     }
 
     public function show(Request $request, $slug)
     {
         /** @var User $user */
-        $user = User::query()->withCount(['followers', 'posts', 'comments', 'bookmarks'])
+        $user = User::query()
              ->whereSlug($slug)
             ->firstOrFail();
 
-        $user['rating'] = $user->getRatingAttribute();
-        $user['subscriptions'] = $user->followings()->with('followable')->limit(12)->get()->pluck('followable')->keyBy('slug')->toArray();
-        $user['subscribers'] = $user->followers()->with('follower')->limit(12)->get()->pluck('follower');
-        $user['subscribers_count'] = $user->followers()->count();
-        $user['subscriptions_count'] = $user->followings()->count();
-        $user['subscriptions_limit'] = array_slice($user['subscriptions'], 0, 5);
-
-        return response()->json($user);
+        return response()->json($user->toVueFormat());
     }
 
     public function details($slug)
@@ -93,8 +70,25 @@ class UserController extends Controller
 
     public function posts(Request $request, $slug)
     {
+        /** @var User $user */
         $user = User::query()->whereSlug($slug)->firstOrFail();
 
-        return $user->posts()->with(['category', 'user', 'parent', 'parent.user'])->paginate(10);
+        return response()->json(
+            $user->posts()
+                ->public()
+                ->with(['category', 'user', 'parent', 'parent.user'])
+                ->paginate(10)
+        );
+    }
+
+    public function drafts(Request $request)
+    {
+        return response()->json(
+            auth()->user()
+                ->posts()
+                ->draft()
+                ->with(['category', 'user', 'parent', 'parent.user'])
+                ->paginate(10)
+        );
     }
 }

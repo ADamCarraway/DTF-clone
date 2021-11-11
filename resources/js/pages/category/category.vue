@@ -49,7 +49,6 @@
 
             <div class="v-header__stats">
               <div class="v-header__stat">
-                <i class="fas fa-user-friends"></i>
                 <span style="font-weight: 500" class="mr-1">{{ data.followers_count }}</span> подписчиков
               </div>
             </div>

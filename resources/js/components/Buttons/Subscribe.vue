@@ -4,16 +4,17 @@
          :class="{'v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default': !small,
          'ui-button ui-button--subscribe ui-button--5 ui-button--only-icon ui-button--small': small}">
       <div class="v-button__icon">
-        <ion-icon src="/icons/close-outline.svg" :class="'color-red'"></ion-icon>
+<!--        <ion-icon name="close" :class="'v-button__icon v-button__icon&#45;&#45;new color-red'"></ion-icon>-->
+        <img src="/icons/close.svg" width="20" height="20" class="v-button__icon v-button__icon--new color-red" alt="">
       </div>
       <span class="v-button__label">Отписаться</span>
     </div>
 
     <div @click="subscribe(1)" v-if="!data.is_follow"
-         :class="{'v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default': !small,
+         :class="{'v-subscribe-button__subscribe v-button v-button--blue v-button--size-default': !small,
          'ui-button ui-button--subscribe ui-button--5 ui-button--only-icon ui-button--small': small}">
       <div class="v-button__icon">
-        <ion-icon src="/icons/add-outline.svg" :class="'color-green'"></ion-icon>
+        <ion-icon name="person-add-outline" :class="'v-button__icon v-button__icon--new'"></ion-icon>
       </div>
       <span class="v-button__label">Подписаться</span>
     </div>

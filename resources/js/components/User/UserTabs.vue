@@ -21,23 +21,23 @@
 import store from '~/store'
 
 export default {
-  name: "UserTabs",
+  name: 'UserTabs',
   props: ['user'],
   computed: {
-    tabs() {
+    tabs () {
       return [
         {
           name: 'Статьи',
           route: 'user',
           active: ['user', 'user.new'],
-          count: this.user ? this.user.posts_count : 0,
+          count: this.user ? this.user.posts_count : '',
           if: true
         },
         {
           name: 'Комментарии',
           route: 'user.comments',
           active: ['user.comments', 'user.comments.new'],
-          count: this.user ? this.user.comments_count : 0,
+          count: this.user ? this.user.comments_count : '',
           if: true
         },
         {
@@ -52,6 +52,13 @@ export default {
           route: 'user.notifications',
           active: ['user.notifications'],
           count: store.getters['auth/user'].notifications_count === 0 ? '' : store.getters['auth/user'].notifications_count,
+          if: this.user ? store.getters['auth/user'].slug === this.user.slug : false
+        },
+        {
+          name: 'Черновики',
+          route: 'user.drafts',
+          active: ['user.drafts'],
+          count: store.getters['auth/user'].drafts_count === 0 ? '' : store.getters['auth/user'].drafts_count,
           if: this.user ? store.getters['auth/user'].slug === this.user.slug : false
         },
         {

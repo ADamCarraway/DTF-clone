@@ -5,6 +5,7 @@ import DetailsIndexSubs from "../components/User/Details/DetailsIndexSubs";
 import DetailsIndexRegulations from "../components/User/Details/DetailsIndexRegulations";
 import UserAllDetails from "../components/User/Details/UserAllDetails";
 import UserNotifications from "../components/User/UserNotifications";
+import UserDrafts from "../components/User/UserDrafts";
 
 function page(path) {
   return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
@@ -26,7 +27,7 @@ export default [
   {path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue')},
   {path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue')},
   {path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue')},
-  {path: '/writing', name: 'editor', component: page('user/editor.vue')},
+  {path: '/writing/:postSlug?', name: 'editor', component: page('user/editor.vue'), props: true},
   {
     path: '/u/:slug',
     component: page('user.vue'),
@@ -38,6 +39,7 @@ export default [
       {path: 'favorites', name: 'user.favorites', component: page('user/favorites.vue')},
       {path: 'favorites/comments', name: 'user.favorites.comments', component: page('user/favorites.vue')},
       {path: 'notifications', name: 'user.notifications', component: UserNotifications},
+      {path: 'drafts', name: 'user.drafts', component: UserDrafts},
       {
         path: 'details',
         component: page('user/details/index.vue'),

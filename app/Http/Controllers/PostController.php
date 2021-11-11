@@ -47,7 +47,7 @@ class PostController extends Controller
             return response()->json($posts->paginate(10));
         }
 
-        if (!$filter ? $feed == 'new': $filter == 'new') {
+        if (!$filter ? $feed == 'new' : $filter == 'new') {
             $posts = $posts->latest('created_at');
         }
 
@@ -56,7 +56,7 @@ class PostController extends Controller
 
     public function show($slug)
     {
-        return response()->json(Post::query()->with(['category', 'user'])->whereSlug($slug)->first());
+        return response()->json(Post::query()->with(['category', 'user'])->whereSlug($slug)->firstOrFail());
     }
 
     public function store(Request $request, $slug)
@@ -68,25 +68,30 @@ class PostController extends Controller
         }
 
         $post = auth()->user()->posts()->updateOrCreate([
-            'id' => $request->get('id')
+            'id' => $request->input('id')
         ], [
-            'title' => $request->get('title') ?? '',
-            'slug' => Str::slug($request->get('title')),
-            'intro' => $request->get('intro') ?? '',
+            'title'       => $request->input('title') ?? '',
+            'slug'        => Str::slug($request->input('title')),
+            'intro'       => $request->input('intro') ?? '',
             'category_id' => $category->id ?? null,
-            'blocks' => json_encode($request->get('blocks')),
-            'is_publish' => $request->get('is_publish') ?? 1,
+            'blocks'      => json_encode($request->input('blocks')),
+            'is_publish'  => $request->input('is_publish') ?? 1,
         ]);
 
-        auth()->user()->addNotification($post);
-
-        dispatch_now(new AddPostNotificationJob($post));
+        if (!$request->input('id') && $request->input('is_publish')) {
+            dispatch_now(new AddPostNotificationJob($post));
+        }
 
         return response()->json([
             'category' => $category->slug ?? auth()->user()->slug,
-            'type' => is_null($category) ? 'user.post' : 'post',
-            'post' => $post
+            'type'     => is_null($category) ? 'user.post' : 'post',
+            'post'     => $post
         ]);
+    }
+
+    public function destroy(Post $post)
+    {
+        return response()->json($post->delete());
     }
 
     public function news()
@@ -105,9 +110,9 @@ class PostController extends Controller
     public function repost(Post $post)
     {
         return auth()->user()->posts()->create([
-            'slug' => $post->slug,
+            'slug'      => $post->slug,
             'parent_id' => $post->id,
-            'blocks' => '[]'
+            'blocks'    => '[]'
         ])->repost_count;
     }
 

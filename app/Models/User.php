@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -179,5 +180,30 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         if (!auth()->check() || $this->id === auth()->user()->id) return false;
 
         return $this->hasFollower(auth()->user());
+    }
+
+    public function toVueFormat(): array
+    {
+        return array_merge($this->toArray(), [
+            'subscriptions'       => $subscriptions = $this->followings()
+                ->with('followable')
+                ->get()
+                ->pluck('followable')
+                ->keyBy('slug')
+                ->sortByDesc('date')
+                ->sortByDesc('is_favorite')
+                ->toArray(),
+            'subscribers'         => $this->followers()->with('follower')->limit(12)->get()->pluck('follower'),
+            'subscribers_count'   => $this->followers()->count(),
+            'subscriptions_count' => $this->followings()->count(),
+            'subscriptions_limit' => array_slice($subscriptions, 0, 5),
+            'posts_count'         => $this->posts()->public()->count(),
+            'comments_count'      => $this->comments()->count(),
+            'bookmarks_count'     => $this->bookmarks()->count(),
+            'notifications_count' => $this->notifications()
+                ->whereNull('read_at')
+                ->count(),
+            'drafts_count'        => $this->posts()->draft()->count()
+        ]);
     }
 }

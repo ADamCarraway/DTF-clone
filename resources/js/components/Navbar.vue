@@ -2,7 +2,7 @@
   <div class="site-header">
     <div class="site-header__item site-header__item--burger" @click="sidebarChange()">
       <div class="site-header-burger">
-<!--        <i class="icon icon-menu fas fa-bars fs-24"></i>-->
+        <!--        <i class="icon icon-menu fas fa-bars fs-24"></i>-->
         <ion-icon src="/icons/menu-outline.svg"></ion-icon>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <div class="search">
         <!--        //search&#45;&#45;active-->
         <div class="search__field">
-<!--          <i class="icon icon-search icon&#45;&#45;search fs-16"></i>-->
+          <!--          <i class="icon icon-search icon&#45;&#45;search fs-16"></i>-->
           <ion-icon src="/icons/search.svg"></ion-icon>
           <input type="text" placeholder="Поиск" class="search__input"></div>
       </div>
@@ -50,40 +50,43 @@
     <div class="site-header__item" v-if="user">
       <div class="site-header-user">
         <div class="site-header-user-profile">
-          <router-link :to="{ name: 'user', params: {slug: user.slug} }"  class="site-header-user-profile__avatar not-active">
-            <div class="site-header-user-profile__avatar-image" :style="{'background-image': 'url('+user.avatar+')'}"></div>
+          <router-link :to="{ name: 'user', params: {slug: user.slug} }"
+                       class="site-header-user-profile__avatar not-active">
+            <div class="site-header-user-profile__avatar-image"
+                 :style="{'background-image': 'url('+user.avatar+')'}"></div>
           </router-link>
-            <el-dropdown trigger="click" placement="bottom-end" style="display: flex;">
+          <el-dropdown trigger="click" placement="bottom-end" style="display: flex;">
               <span class="el-dropdown-link dropdown_down">
 <!--                <i class="el-icon-arrow-down l-fs-14 text-dark" style="font-weight: bolder;"></i>-->
                 <ion-icon src="/icons/chevron-down-outline.svg"></ion-icon>
               </span>
-              <el-dropdown-menu slot="dropdown">
-                <div class="at-dropdown-menu-item__title">Профиль</div>
-                <router-link :to="{ name: 'user', params: {slug: user.slug} }" class="at-dropdown-menu__item item--selected">
-                  <div class="item__image">
-                    <img :src="user.avatar">
-                  </div>
-                  <span class="item__text">{{ user.name }}</span>
-                </router-link>
+            <el-dropdown-menu slot="dropdown">
+              <div class="at-dropdown-menu-item__title">Профиль</div>
+              <router-link :to="{ name: 'user', params: {slug: user.slug} }"
+                           class="at-dropdown-menu__item item--selected">
+                <div class="item__image">
+                  <img :src="user.avatar">
+                </div>
+                <span class="item__text">{{ user.name }}</span>
+              </router-link>
 
-                <router-link :to="{ name: 'user.settings', params: {slug: user.slug} }" class="at-dropdown-menu__item">
-                  <div class="item__icon">
-                    <ion-icon src="/icons/settings-outline.svg"></ion-icon>
-                  </div>
-                  <span class="item__text">Настройки</span>
-                </router-link>
+              <router-link :to="{ name: 'user.settings', params: {slug: user.slug} }" class="at-dropdown-menu__item">
+                <div class="item__icon">
+                  <ion-icon src="/icons/settings-outline.svg"></ion-icon>
+                </div>
+                <span class="item__text">Настройки</span>
+              </router-link>
 
-                <a href="#" class="at-dropdown-menu__item" @click.prevent="logout" style="color: rgb(233, 42, 64);">
-                  <div class="item__icon">
-                    <ion-icon src="/icons/log-out-outline.svg"></ion-icon>
-                  </div>
-                  Выйти
-                </a>
-              </el-dropdown-menu>
+              <a href="#" class="at-dropdown-menu__item" @click.prevent="logout" style="color: rgb(233, 42, 64);">
+                <div class="item__icon">
+                  <ion-icon src="/icons/log-out-outline.svg"></ion-icon>
+                </div>
+                Выйти
+              </a>
+            </el-dropdown-menu>
 
-            </el-dropdown>
-            <span class="site-header-user-profile__toggle"></span>
+          </el-dropdown>
+          <span class="site-header-user-profile__toggle"></span>
         </div>
       </div>
     </div>
@@ -91,100 +94,99 @@
     <div class="site-header__item" v-else @click="showLoginModal">
       <div class="site-header-user">
         <div class="site-header-user-login">
-          <ion-icon src="/icons/person-circle-outline.svg"></ion-icon>
+          <ion-icon src="/icons/person-outline.svg"></ion-icon>
           <span class="fs-16">Войти</span>
         </div>
       </div>
     </div>
 
 
-
-<!--    <at-modal v-model="loginModal" :class="'loginBox'">-->
-<!--      <login-box/>-->
-<!--      <div slot="footer">-->
-<!--      </div>-->
-<!--    </at-modal>-->
+    <!--    <at-modal v-model="loginModal" :class="'loginBox'">-->
+    <!--      <login-box/>-->
+    <!--      <div slot="footer">-->
+    <!--      </div>-->
+    <!--    </at-modal>-->
   </div>
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import LocaleDropdown from './LocaleDropdown'
-  import LoginBox from "./LoginBox";
-  import EventBus from "../plugins/event-bus";
-  import Notifications from "./Blocks/Notifications";
+import {mapGetters} from 'vuex'
+import LocaleDropdown from './LocaleDropdown'
+import LoginBox from "./LoginBox";
+import EventBus from "../plugins/event-bus";
+import Notifications from "./Blocks/Notifications";
 
-  export default {
-    components: {
-      Notifications,
-      LoginBox,
-      LocaleDropdown
+export default {
+  components: {
+    Notifications,
+    LoginBox,
+    LocaleDropdown
+  },
+
+  data: () => ({
+    appName: window.config.appName,
+    loginModal: false,
+  }),
+
+  computed: mapGetters({
+    user: 'auth/user'
+  }),
+
+  methods: {
+    showLoginModal() {
+      EventBus.$emit('loginModal', true);
     },
+    async logout() {
+      // Log out the user.
+      await this.$store.dispatch('auth/logout')
 
-    data: () => ({
-      appName: window.config.appName,
-      loginModal: false,
-    }),
-
-    computed: mapGetters({
-      user: 'auth/user'
-    }),
-
-    methods: {
-      showLoginModal(){
-        EventBus.$emit('loginModal', true);
-      },
-      async logout() {
-        // Log out the user.
-        await this.$store.dispatch('auth/logout')
-
-        // Redirect to login.
-        // this.$router.push({name: 'index'})
-        location.reload()
-      },
-      sidebarChange() {
-        EventBus.$emit('hideSidebar');
-      }
+      // Redirect to login.
+      // this.$router.push({name: 'index'})
+      location.reload()
+    },
+    sidebarChange() {
+      EventBus.$emit('hideSidebar');
     }
   }
+}
 </script>
 
 <style scoped>
-  .profile-photo {
-    width: 2rem;
-    height: 2rem;
-    margin: -.375rem 0;
-  }
+.profile-photo {
+  width: 2rem;
+  height: 2rem;
+  margin: -.375rem 0;
+}
 
-  /*.router-link-exact-active, .item--focused, .item:hover {*/
-  /*  background: #f4f5f6;*/
-  /*  opacity: 1 !important;*/
-  /*}*/
+/*.router-link-exact-active, .item--focused, .item:hover {*/
+/*  background: #f4f5f6;*/
+/*  opacity: 1 !important;*/
+/*}*/
 
-  /*.router-link-exact-active {*/
-  /*  font-weight: bold;*/
-  /*}*/
+/*.router-link-exact-active {*/
+/*  font-weight: bold;*/
+/*}*/
 
-  /*.router-link-exact-active span, .router-link-exact-active span, .at-dropdown-menu__item:hover {*/
-  /*  background: #f4f5f6;*/
-  /*  opacity: 1 !important;*/
-  /*  color: #000;*/
-  /*}*/
+/*.router-link-exact-active span, .router-link-exact-active span, .at-dropdown-menu__item:hover {*/
+/*  background: #f4f5f6;*/
+/*  opacity: 1 !important;*/
+/*  color: #000;*/
+/*}*/
 
-  .not-active{
-    background: #d9f5ff;
-  }
+.not-active {
+  background: #d9f5ff;
+}
 
-  .dropdown_down{
-    padding-left: 9px;
-    padding-right: 10px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
+.dropdown_down {
+  padding-left: 9px;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 
-  .dropdown_down ion-icon{
-    font-size: 17px;
-    color: #000;
-  }
+.dropdown_down ion-icon {
+  font-size: 17px;
+  color: #000;
+}
 </style>

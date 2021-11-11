@@ -48,7 +48,6 @@ class Post extends Model implements BookmarkableInterface, LikeableInterface, No
             }
         });
 
-
         self::updating(function ($model) {
             if ($model->slug == null) {
                 $model->slug = $model->id;
@@ -154,5 +153,15 @@ class Post extends Model implements BookmarkableInterface, LikeableInterface, No
         if (iconv_strlen($this->title) <= 26) return $this->title;
 
         return substr($this->title, 0, strrpos(substr($this->title, 0, 52), ' ')) . '...';
+    }
+
+    public function scopePublic($q)
+    {
+        return $q->where('is_publish', true);
+    }
+
+    public function scopeDraft($q)
+    {
+        return $q->where('is_publish', false);
     }
 }

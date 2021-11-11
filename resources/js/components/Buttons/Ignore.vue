@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown trigger="click" @command="toIgnore" v-if="user">
+  <el-dropdown trigger="click" @command="toIgnore" v-if="user && data.is_follow">
   <div class="el-dropdown-link">
    <ion-icon src="/icons/ellipsis-horizontal-outline.svg"></ion-icon>
   </div>

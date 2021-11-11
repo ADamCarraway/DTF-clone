@@ -3,7 +3,7 @@
     <div class="sidebar">
       <div class="sidebar__scroll vb vb-visible" style="position: relative; overflow: hidden;">
         <div class="vb-content"
-             style="display: block; overflow: hidden scroll; height: 100%; width: calc(100% + 17px);">
+             style="display: block; overflow: hidden scroll; height: 100%; width: 100%;">
           <main-list/>
           <div class="sidebar__tree-list sidebar__tree-list--limited">
             <div class="sidebar__tree-list__title l-flex l-fa-center l-ph-20 lm-ph-15" v-if="!Object.keys(subs).length">

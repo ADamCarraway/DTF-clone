@@ -54,6 +54,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/repost/{post}', 'PostController@repost')->name('post.repost.store');
     Route::delete('/repost/{post}', 'PostController@deleteRepost')->name('post.repost.destroy');
     Route::post('/{slug}/posts/store', 'PostController@store')->name('post.store');
+    Route::delete('/posts/{post}/destroy', 'PostController@destroy')->name('post.destroy');
+
+    Route::get('/drafts', 'Auth\UserController@drafts')->name('user.drafts');
+
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

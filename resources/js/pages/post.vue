@@ -55,14 +55,10 @@
 
             <div class="content-header__right">
               <!-- Бейдж черновика -->
+              <div v-if="!data.is_publish" class="content-header__item content-header-label content-header-label--draft">Черновик</div>
 
               <!-- Управление статьей -->
-
-              <div class="etc_control">
-                <svg class="icon icon--ui_etc" width="18" height="8" xmlns="http://www.w3.org/2000/svg">
-                  <use xlink:href="#ui_etc"></use>
-                </svg>
-              </div>
+              <post-management :data="data"></post-management>
 
               <!-- Кнопка «Подписаться» -->
             </div>
@@ -124,10 +120,11 @@
   import PostFooter from "../components/Blocks/PostFooter";
   import CommentsBlock from "../components/Blocks/CommentsBlock";
   import Comment from "../components/Blocks/Comment";
+  import PostManagement from "../components/Blocks/PostManagement";
 
   export default {
     name: "post",
-    components: {CommentsBlock, Comment, PostFooter, Subscribe, Bookmark, Like, Notification},
+    components: {PostManagement, CommentsBlock, Comment, PostFooter, Subscribe, Bookmark, Like, Notification},
     data() {
       return {
         data: {},
