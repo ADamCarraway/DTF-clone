@@ -73,22 +73,7 @@
     },
     mounted() {
       EventBus.$on('createdComment', (data) => {
-        if (data.parent){
-          if (data.parent.parent_id){
-            this.comments.forEach((value, index, array) => {
-              if (value.id === data.parent.parent_id) this.comments[index].replies.push(data.comment)
-            });
-          }else{
-            this.comments.forEach((value, index, array) => {
-              if (value.id === data.parent.id) this.comments[index].replies.push(data.comment)
-            });
-          }
-          EventBus.$emit('hideReplyForm', false);
-        }else{
-          this.comments.push(data.comment)
-        }
-
-        this.$parent.data.comments_count += 1;
+        this.addComment(data)
       });
 
     },
@@ -116,6 +101,26 @@
         this.page = 1;
         this.infiniteId += 1;
       },
+
+      addComment(data) {
+        console.log(this.comments)
+        if (data.parent){
+          if (data.parent.parent_id){
+            this.comments.forEach((value, index, array) => {
+              if (value.id === data.parent.parent_id) this.comments[index].replies.push(data.comment)
+            });
+          }else{
+            this.comments.forEach((value, index, array) => {
+              if (value.id === data.parent.id) this.comments[index].replies.push(data.comment)
+            });
+          }
+          EventBus.$emit('hideReplyForm', false);
+        }else{
+          this.comments.push(data.comment)
+        }
+
+        this.$parent.data.comments_count += 1;
+      }
     },
   }
 </script>

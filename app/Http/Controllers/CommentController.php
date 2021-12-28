@@ -75,7 +75,7 @@ class CommentController extends Controller
         /** @var Comment $saveComment */
         $saveComment = $post->comments()->save($comment)->load('post');
 
-        if($post->user->id != auth()->user()->id){
+        if ($post->user->id != auth()->user()->id) {
             $post->user->notify(new AddCommentNotification($saveComment, auth()->user()));
         }
 
@@ -95,7 +95,12 @@ class CommentController extends Controller
         /** @var Post $post */
         $post = Post::find($request->get('id'));
 
-        return $post->comments()->save($reply);
+        $comment = $post->comments()->save($reply);
 
+        if ($post->user->id != auth()->user()->id) {
+            Comment::query()->where('id', $request->get('commentId'))->first()->user->notify(new AddCommentNotification($comment, auth()->user()));
+        }
+
+        return $reply;
     }
 }
