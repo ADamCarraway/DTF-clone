@@ -1,47 +1,56 @@
 <template>
+  <div class="v-form-section user-settings__container">
+    <label class="v-form-section__label">
+      Пароль
+    </label>
+    <form @submit.prevent="update" @keydown="form.onKeydown($event)" class="v-form-section__field d-flex justify-content-between">
 
-
-  <form @submit.prevent="update" @keydown="form.onKeydown($event)" class="ui_form ui_form--nickname ui_form--2 l-mb-25">
-    <fieldset>
-      <label for="password">Пароль</label>
-      <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control"
-             type="password" name="password" id="password">
-      <has-error :form="form" field="password"/>
-    </fieldset>
-    <fieldset>
-      <label for="password_confirmation">&nbsp;</label>
-      <input v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }"
-             class="form-control" type="password" name="password_confirmation">
-      <has-error :form="form" field="password_confirmation" id="password_confirmation"/>
-      <div class="nickname-controls l-inline-block">
-        <button class="nickname-controls__button nickname-controls__button--edit t-link-classic">
-          Изменить
-        </button>
+      <div class="v-field--text v-field v-field--default">
+        <div class="v-field__wrapper">
+          <div class="v-text-input v-text-input--default">
+            <input v-model="form.password" class="v-text-input__input"   type="password" name="password" id="password">
+          </div>
+        </div>
+        <has-error :form="form" field="password"/>
       </div>
-    </fieldset>
-  </form>
+      <div class="v-field--text v-field v-field--default">
+        <div class="v-field__wrapper">
+          <div class="v-text-input v-text-input--default">
+            <input v-model="form.password_confirmation" class="v-text-input__input"   type="password" name="password_confirmation">
+          </div>
+        </div>
+        <has-error :form="form" field="password_confirmation"/>
+      </div>
+
+      <button class="settings-hashtags__add-button v-button v-button--default v-button--size-default" style="margin-left: 12px">
+          <span class="v-button__label">
+            <span>Изменить</span>
+          </span>
+      </button>
+    </form>
+  </div>
 </template>
 
 <script>
-  import Form from 'vform'
-  import axios from "axios";
+import Form from 'vform'
+import axios from "axios";
 
-  export default {
-    name: "Password",
+export default {
+  name: "Password",
 
-    data: () => ({
-      form: new Form({
-        password: '',
-        password_confirmation: ''
-      })
-    }),
+  data: () => ({
+    form: new Form({
+      password: '',
+      password_confirmation: ''
+    })
+  }),
 
-    methods: {
-      async update() {
-        await this.form.post('/api/settings/password')
+  methods: {
+    async update() {
+      await this.form.post('/api/settings/password')
 
-        this.form.reset()
-      }
+      this.form.reset()
     }
   }
+}
 </script>

@@ -1,7 +1,15 @@
 <template>
-    <div class="island__social_links island__social_links--type_1 d-flex">
-      <social-button v-for="i in oauth_providers" :provider="i" :key="i.name"/>
+  <div class="v-form-section user-settings__container">
+    <label class="v-form-section__label">
+      Связанные аккаунты
+    </label>
+    <div class="v-form-section__field">
+      <div class="social-links">
+        <social-button v-for="i in oauth_providers" :provider="i" :key="i.name"/>
+
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

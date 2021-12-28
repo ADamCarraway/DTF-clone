@@ -1,86 +1,99 @@
 <template>
-  <div>
-    <form @submit.prevent="update" class="ui_form ui_form--nickname ui_form--2 l-mb-25">
-      <fieldset>
-        <label>Никнейм</label>
-        <div class="ui-limited-input ui-limited-input--showed" ref="inputElement" data-length="17">
-          <input v-model="name" class="form-control" type="text" maxlength="30"
-                 name="name">
+  <div class="v-form-section">
+    <label class="v-form-section__label">
+      Имя и почта
+    </label>
+    <form @submit.prevent="update" class="v-form-section__field d-flex justify-content-between">
+        <div class="v-field--text v-field v-field--default w-100" ref="inputElement" data-length="17">
+          <div class="v-field__wrapper">
+            <div class="v-text-input v-text-input--default">
+              <input v-model="name" class="v-text-input__input" type="text" maxlength="30" name="name">
+            </div>
+          </div>
+<!--          <p class="caption ">Смену никнейма можно производить не чаще раза в месяц</p>-->
         </div>
-        <div class="nickname-controls l-inline-block">
-          <button class="nickname-controls__button nickname-controls__button--edit t-link-classic">
-            Изменить
-          </button>
-        </div>
-      </fieldset>
-      <p class="caption ld-pl-168">Смену никнейма можно производить не чаще раза в месяц</p>
+
+        <button class="settings-hashtags__add-button v-button v-button--default v-button--size-default" style="margin-left: 12px">
+          <span class="v-button__label">
+            <span>Изменить</span>
+          </span>
+        </button>
     </form>
 
-    <form @submit.prevent="update" class="ui_form ui_form--nickname ui_form--2 l-mb-25">
-      <fieldset>
-        <label for="form_input_email">Эл. почта:</label>
-        <input v-model="email" class="form-control" maxlength="30"
-               name="email" type="email" id="form_input_email">
-        <div class="nickname-controls l-inline-block">
-          <button class="nickname-controls__button nickname-controls__button--edit t-link-classic">
-            Изменить
-          </button>
+    <form @submit.prevent="update" class="v-form-section__field d-flex justify-content-between">
+      <div class="v-field--text v-field v-field--default w-100">
+        <div class="v-field__wrapper">
+          <div class="v-text-input v-text-input--default">
+            <input v-model="email" class="v-text-input__input" maxlength="30" name="email" type="email" id="form_input_email">
+          </div>
         </div>
-      </fieldset>
+      </div>
+
+      <button class="settings-hashtags__add-button v-button v-button--default v-button--size-default" style="margin-left: 12px">
+          <span class="v-button__label">
+            <span>Изменить</span>
+          </span>
+      </button>
     </form>
+
+    <password/>
+
+    <social/>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
-  import {mapGetters} from 'vuex'
+import axios from 'axios'
+import {mapGetters} from 'vuex'
+import Password from "./Password";
+import Social from "./Social";
 
-  export default {
-    name: "MainInfo",
+export default {
+  name: "MainInfo",
+  components: {Social, Password},
+  scrollToTop: false,
 
-    scrollToTop: false,
-
-    data() {
-      return {
-        name: '',
-        email: '',
-      }
-    },
-
-    watch : {
-      name : function (val) {
-        this.$refs.inputElement.setAttribute('data-length', 30 - val.length);
-        this.name = val;
-      }
-    },
-
-    computed: mapGetters({
-      user: 'auth/user'
-    }),
-
-    created() {
-      this.name = this.user['name']
-      this.email = this.user['email']
-    },
-
-    methods: {
-      update() {
-        let data = {
-          'name': this.name,
-          'email': this.email,
-        }
-
-        axios.post('/api/settings/profile', data).then((response) => {
-          this.$notify({
-            message: 'Данные изменены',
-            type: 'success'
-          });
-        })
-
-        this.$store.dispatch('auth/updateUser', {user: data})
-      },
+  data() {
+    return {
+      name: '',
+      email: '',
     }
+  },
+
+  watch: {
+    name: function (val) {
+      this.$refs.inputElement.setAttribute('data-length', 30 - val.length);
+      this.name = val;
+    }
+  },
+
+  computed: mapGetters({
+    user: 'auth/user'
+  }),
+
+  created() {
+    this.name = this.user['name']
+    this.email = this.user['email']
+  },
+
+  methods: {
+    update() {
+      let data = {
+        'name': this.name,
+        'email': this.email,
+      }
+
+      axios.post('/api/settings/profile', data).then((response) => {
+        this.$notify({
+          message: 'Данные изменены',
+          type: 'success'
+        });
+      })
+
+      this.$store.dispatch('auth/updateUser', {user: data})
+    },
   }
+}
 </script>
 
 <style scoped>

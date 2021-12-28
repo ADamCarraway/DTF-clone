@@ -6,6 +6,8 @@ import DetailsIndexRegulations from "../components/User/Details/DetailsIndexRegu
 import UserAllDetails from "../components/User/Details/UserAllDetails";
 import UserNotifications from "../components/User/UserNotifications";
 import UserDrafts from "../components/User/UserDrafts";
+import MainInfo from "../components/User/Settings/MainInfo";
+import NotificationSetting from "../components/User/Settings/NotificationSetting";
 
 function page(path) {
   return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
@@ -48,12 +50,20 @@ export default [
           {path: 'subscribers', name: 'user.subscribers', component: DetailsIndexSubs},
           {path: 'subscriptions', name: 'user.subscriptions', component: DetailsIndexSubs},
         ]
-      }
+      },
     ],
   },
-  {path: '/u/:slug/settings', name: 'user.settings', component: page('settings/index.vue')},
+  {
+    path: '/u/:slug/settings',
+    component: page('user/settings/index.vue'),
+    name: 'user.settings',
+    children: [
+      {path: '', name: 'user.settings.main', component: MainInfo},
+      {path: 'notifications', name: 'user.settings.notifications', component: NotificationSetting},
+      // {path: 'blocklist', name: 'user.settings.blocklist', component: DetailsIndexSubs},
+    ]
+  },
   {path: '/u/:slug/:postSlug', name: 'user.post', component: page('post.vue')},
-
   {
     path: '/:slug',
     component: page('category/category.vue'),
@@ -75,4 +85,5 @@ export default [
   {path: '/:slug/:postSlug', name: 'post', component: page('post.vue')},
 
   {path: '*', component: page('errors/404.vue')}
+
 ]
