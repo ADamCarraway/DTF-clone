@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\CancelSubscriptionEvent;
+use App\Listeners\AddNotifyToUser;
 use App\Listeners\AddSubsToUser;
 use App\Listeners\UserNotifyRemove;
 use Illuminate\Auth\Events\Registered;
@@ -19,7 +20,8 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-            AddSubsToUser::class
+            AddSubsToUser::class,
+            AddNotifyToUser::class
         ],
 
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [

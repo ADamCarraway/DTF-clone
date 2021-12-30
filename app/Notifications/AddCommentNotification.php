@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\UserNotificationSetting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
@@ -32,7 +33,7 @@ class AddCommentNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['broadcast', 'database'];
+        return $notifiable->isNotificationEnabled(self::class) ? ['broadcast', 'database'] : [];
     }
 
     public function toArray($notifiable)

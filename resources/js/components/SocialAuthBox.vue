@@ -2,11 +2,12 @@
   <div class="auth-form__tab auth_tab auth_tab--signin-start">
 
     <div class="auth-form__content">
-      <div class="auth-form__title l-mb-20">Вход на DTF</div>
+      <div class="auth-form__title l-mb-20">Вход</div>
 
-      <div class="social-auth__button" @click="login('google')">
-        <ion-icon src="/icons/logo-google.svg"></ion-icon>
-        <div class="social-auth__label">Google</div>
+      <!-- Login Form Button -->
+      <div class="social-auth__button" @click="showLoginForm()">
+        <ion-icon src="/icons/mail-outline.svg"></ion-icon>
+        <div class="social-auth__label">Почта</div>
       </div>
 
       <div class="social-auth__button" @click="login('vk')">
@@ -14,10 +15,9 @@
         <div class="social-auth__label">ВКонтакте</div>
       </div>
 
-      <!-- Login Form Button -->
-      <div class="social-auth__button" @click="showLoginForm()">
-        <ion-icon src="/icons/mail-outline.svg"></ion-icon>
-        <div class="social-auth__label">Через почту</div>
+      <div class="social-auth__button" @click="login('google')">
+        <ion-icon src="/icons/logo-google.svg"></ion-icon>
+        <div class="social-auth__label">Google</div>
       </div>
 
       <div class="row">

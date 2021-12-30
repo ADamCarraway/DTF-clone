@@ -70,7 +70,7 @@
                 <span class="item__text">{{ user.name }}</span>
               </router-link>
 
-              <router-link :to="{ name: 'user.settings', params: {slug: user.slug} }" class="at-dropdown-menu__item">
+              <router-link :to="{ name: 'user.settings.main', params: {slug: user.slug} }" class="at-dropdown-menu__item">
                 <div class="item__icon">
                   <ion-icon src="/icons/settings-outline.svg"></ion-icon>
                 </div>

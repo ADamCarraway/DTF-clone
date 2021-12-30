@@ -1621,7 +1621,8 @@ body {
 }
 
 .auth-form__art {
-    width: 260px;
+    width: 216px;
+    height: 600px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
@@ -1635,10 +1636,11 @@ body {
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 360px;
+    width: 428px;
+    min-height: 600px;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    padding: 20px 30px 25px;
+    padding: 24px 50px 24px 50px;/* padding: 20px 30px 25px; */
     overflow: hidden;
 }
 
@@ -1690,10 +1692,9 @@ body {
 .social-auth__button {
     position: relative;
     /* width: 90px; */
-    height: 40px;
     margin-bottom: 15px;
-    border-radius: 4px;
-    border: 1px solid #dedede;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.08),inset 0 0 0 1px rgba(0,0,0,.06),inset 0 -1px 0 rgba(0,0,0,.12),inset 1px 0 0 rgba(0,0,0,.06),inset -1px 0 0 rgba(0,0,0,.06);
+    box-shadow: 0 1px 2px rgba(0,0,0,.08),inset 0 0 0 1px rgba(0,0,0,.06),inset 0 -1px 0 rgba(0,0,0,.12),inset 1px 0 0 rgba(0,0,0,.06),inset -1px 0 0 rgba(0,0,0,.06);
     padding: 0 10px;
     display: -ms-flexbox;
     display: flex;
@@ -1702,13 +1703,24 @@ body {
     -ms-flex-pack: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 15px;
+    background-color: #fff;
     color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    height: 48px;
+    border-radius: 8px;
+}
+
+.social-auth__button:hover {
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.12),inset 0 0 0 1px rgba(0,0,0,.06),inset 0 -1px 0 rgba(0,0,0,.12),inset 1px 0 0 rgba(0,0,0,.06),inset -1px 0 0 rgba(0,0,0,.06);
+    box-shadow: 0 1px 3px rgba(0,0,0,.12),inset 0 0 0 1px rgba(0,0,0,.06),inset 0 -1px 0 rgba(0,0,0,.12),inset 1px 0 0 rgba(0,0,0,.06),inset -1px 0 0 rgba(0,0,0,.06);
 }
 
 .social-auth__label {
     margin: 0 auto;
     color: #000;
+    font-weight: 500;
+    font-size: 16px;
 }
 
 .auth-form__help, .auth-form__note {
@@ -6663,7 +6675,7 @@ input:checked + .like-btn-svg {
 }
 
 .v-field {
-     --offset-x: 11px;
+    --offset-x: 11px;
 }
 
 .v-field__wrapper {
@@ -6812,3 +6824,67 @@ input:checked + .like-btn-svg {
     z-index: 10;
     border-top-color: rgba(0, 0, 0, 0.05);
 }
+
+.v-checkbox {
+    position: relative;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    min-width: 18px;
+    min-height: 32px;
+    cursor: pointer;
+}
+
+.v-checkbox__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.v-checkbox__control {
+    position: absolute;
+    z-index: 1;
+    top: 7px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    background-color: rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.03);
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: background-color 0.1s linear, border-color 0.1s linear, -webkit-box-shadow 0.1s linear;
+    transition: background-color 0.1s linear, border-color 0.1s linear, -webkit-box-shadow 0.1s linear;
+    transition: background-color 0.1s linear, border-color 0.1s linear, box-shadow 0.1s linear;
+    transition: background-color 0.1s linear, border-color 0.1s linear, box-shadow 0.1s linear, -webkit-box-shadow 0.1s linear;
+}
+
+.v-checkbox__caption {
+    padding: 4px 0 4px 26px;
+    font-size: 16px;
+    line-height: 1.5em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.user-settings__container .v-checkbox {
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.v-checkbox--checked .v-checkbox__control {
+    background-color: #4683d9;
+    border-color: #4683d9;
+    -webkit-transition: background-color 0s linear, border-color 0s linear, -webkit-box-shadow 0.1s linear;
+    transition: background-color 0s linear, border-color 0s linear, -webkit-box-shadow 0.1s linear;
+    transition: background-color 0s linear, border-color 0s linear, box-shadow 0.1s linear;
+    transition: background-color 0s linear, border-color 0s linear, box-shadow 0.1s linear, -webkit-box-shadow 0.1s linear;
+}
+

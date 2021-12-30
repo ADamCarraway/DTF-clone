@@ -22,7 +22,7 @@
         <has-error :form="form" field="password_confirmation"/>
       </div>
 
-      <button class="settings-hashtags__add-button v-button v-button--default v-button--size-default" style="margin-left: 12px">
+      <button class="settings-hashtags__add-button v-button v-button--default v-button--size-default" style="">
           <span class="v-button__label">
             <span>Изменить</span>
           </span>

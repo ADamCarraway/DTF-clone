@@ -33,7 +33,7 @@ class AddLikeToCommentNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['broadcast', 'database'];
+        return $notifiable->isNotificationEnabled(self::class) ? ['broadcast', 'database'] : [];
     }
 
     public function toArray($notifiable)

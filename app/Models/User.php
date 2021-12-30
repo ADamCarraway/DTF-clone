@@ -206,4 +206,14 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
             'drafts_count'        => $this->posts()->draft()->count()
         ]);
     }
+
+    public function notificationSettings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserNotificationSetting::class);
+    }
+
+    public function isNotificationEnabled($notification)
+    {
+        return $this->notificationSettings()->where('notification', $notification)->first()->status ?? 1;
+    }
 }

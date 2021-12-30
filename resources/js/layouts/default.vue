@@ -6,7 +6,7 @@
       <div class="layout__content l-relative">
         <child id="page_wrapper"/>
       </div>
-      <live-lenta v-if="($route.name).indexOf('user')+1 !== 1"/>
+      <live-lenta v-if="$route.name && ($route.name).indexOf('user')+1 !== 1"/>
     </div>
   </div>
 </template>

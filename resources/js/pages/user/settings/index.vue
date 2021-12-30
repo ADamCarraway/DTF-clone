@@ -6,7 +6,9 @@
           <div class="l-page__content">
             <a href="https://dtf.ru/u/24211-sergey-serousov" class="settings-header user-settings__header">
               <ion-icon name="chevron-back-outline" class="settings-header__icon icon icon--v_arrow_left"></ion-icon>
-              <span class="settings-header__text">{{ user.name }}</span>
+              <span class="settings-header__text">
+                <router-link :to="{ name: 'user', params: {slug: user.slug} }">{{ user.name }}</router-link>
+              </span>
             </a>
             <div class="user-settings__container">
               <transition name="fade" mode="out-in">

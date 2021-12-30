@@ -29,7 +29,7 @@
                 <subscribe v-if="user && data.id !== user.id" :data="data" :type="data.type"></subscribe>
                 <notification :data="data" :type="'users'"  v-if="data.slug && user && user.slug !== $route.params.slug && data.is_follow"></notification>
 
-                <router-link :to="{name: 'user.settings', params: {slug: data.slug}}"
+                <router-link :to="{name: 'user.settings.main', params: {slug: data.slug}}"
                              v-if="data.slug && user && user.slug == $route.params.slug"
                              class="v-button v-button--default v-button--size-default">
                   <div class="v-button__icon">

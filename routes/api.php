@@ -21,6 +21,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('settings/profile', 'Settings\ProfileController@update');
     Route::post('settings/profile/avatar/update', 'Settings\ProfileController@avatarUpdate');
     Route::post('settings/password', 'Settings\PasswordController@update');
+    Route::get('settings/notification', 'Settings\UserNotificationController@index');
+    Route::post('settings/notification', 'Settings\UserNotificationController@update');
+
 
     Route::post('oauth/{driver}/attach', 'Auth\OAuthController@redirectToProvider')->name('oauth.attach');
     Route::post('oauth/{driver}/detach', 'Auth\OAuthController@detach')->name('oauth.detach');
@@ -57,7 +60,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('/posts/{post}/destroy', 'PostController@destroy')->name('post.destroy');
 
     Route::get('/drafts', 'Auth\UserController@drafts')->name('user.drafts');
-
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

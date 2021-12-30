@@ -97,9 +97,9 @@ class CommentController extends Controller
 
         $comment = $post->comments()->save($reply);
 
-        if ($post->user->id != auth()->user()->id) {
-            Comment::query()->where('id', $request->get('commentId'))->first()->user->notify(new AddCommentNotification($comment, auth()->user()));
-        }
+//        if ($post->user->id != auth()->user()->id) {
+//            Comment::query()->where('id', $request->get('commentId'))->first()->user->notify(new AddCommentNotification($comment, auth()->user()));
+//        }
 
         return $reply;
     }
