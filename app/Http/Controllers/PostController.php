@@ -110,9 +110,10 @@ class PostController extends Controller
     public function repost(Post $post)
     {
         return auth()->user()->posts()->create([
-            'slug'      => $post->slug,
-            'parent_id' => $post->id,
-            'blocks'    => '[]'
+            'slug'       => $post->slug,
+            'parent_id'  => $post->id,
+            'blocks'     => '[]',
+            'is_publish' => true,
         ])->repost_count;
     }
 
