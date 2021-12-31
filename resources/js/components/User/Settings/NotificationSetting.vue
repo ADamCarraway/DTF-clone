@@ -37,6 +37,7 @@ export default {
       notifications: {},
       names: {
         'App\\Notifications\\AddCommentNotification': 'Новые комментарии к постам',
+        'App\\Notifications\\AddReplyCommentNotification': 'Ответы на мои комментарии',
         'App\\Notifications\\AddFollowNotification': 'Новые подписчики',
         'App\\Notifications\\AddLikeToCommentNotification': 'Оценки комментариев',
         'App\\Notifications\\AddLikeToPostNotification': 'Оценки записей',
@@ -44,6 +45,7 @@ export default {
       },
       form: {
         'App\\Notifications\\AddCommentNotification': true,
+        'App\\Notifications\\AddReplyCommentNotification': true,
         'App\\Notifications\\AddFollowNotification': true,
         'App\\Notifications\\AddLikeToCommentNotification': true,
         'App\\Notifications\\AddLikeToPostNotification': true,

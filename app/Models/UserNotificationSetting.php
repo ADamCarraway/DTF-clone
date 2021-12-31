@@ -7,6 +7,7 @@ use App\Notifications\AddFollowNotification;
 use App\Notifications\AddLikeToCommentNotification;
 use App\Notifications\AddLikeToPostNotification;
 use App\Notifications\AddPostNotification;
+use App\Notifications\AddReplyCommentNotification;
 use Illuminate\Database\Eloquent\Model;
 
 class UserNotificationSetting extends Model
@@ -16,7 +17,8 @@ class UserNotificationSetting extends Model
         AddFollowNotification::class,
         AddLikeToCommentNotification::class,
         AddLikeToPostNotification::class,
-        AddPostNotification::class
+        AddPostNotification::class,
+        AddReplyCommentNotification::class
     ];
 
     protected $guarded = ['id'];

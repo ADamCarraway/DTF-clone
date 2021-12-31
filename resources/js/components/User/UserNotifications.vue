@@ -12,6 +12,7 @@
     </div>
     <div class="u-notifications">
       <div class="u-notification--border" v-for="item in data">
+        <new-reply-comment v-if="item.type === 'App\\Notifications\\AddReplyCommentNotification'" :item="item"/>
         <new-comment v-if="item.type === 'App\\Notifications\\AddCommentNotification'" :item="item"/>
         <new-follow v-if="item.type === 'App\\Notifications\\AddFollowNotification'" :item="item"/>
         <like-comment v-if="item.type === 'App\\Notifications\\AddLikeToCommentNotification'" :item="item"/>
@@ -40,10 +41,13 @@ import LikeComment from "../Blocks/Notifications/LikeComment";
 import NewFollow from "../Blocks/Notifications/NewFollow";
 import NewComment from "../Blocks/Notifications/NewComment";
 import NotificationForGuest from "../Blocks/NotificationForGuest";
+import NewReplyComment from "../Blocks/Notifications/NewReplyComment";
 
 export default {
   name: "UserNotifications",
-  components: {NewPost, LikePost, LikeComment, NewFollow, NewComment, NotificationForGuest, InfiniteLoading},
+  components: {
+    NewReplyComment,
+    NewPost, LikePost, LikeComment, NewFollow, NewComment, NotificationForGuest, InfiniteLoading},
   data() {
     return {
       showAllReadBtn: false,

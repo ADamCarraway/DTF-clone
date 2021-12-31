@@ -19,6 +19,7 @@
         <div class="head-notifies__items-wrapper"><!---->
           <div class="head-notifies__items" v-if="user">
             <div class="u-notification--border" v-for="item in notifications">
+              <new-reply-comment v-if="item.type === 'App\\Notifications\\AddReplyCommentNotification'" :item="item"/>
               <new-comment v-if="item.type === 'App\\Notifications\\AddCommentNotification'" :item="item"/>
               <new-follow v-if="item.type === 'App\\Notifications\\AddFollowNotification'" :item="item"/>
               <like-comment v-if="item.type === 'App\\Notifications\\AddLikeToCommentNotification'" :item="item"/>
@@ -62,10 +63,13 @@
   import LikeComment from "./Notifications/LikeComment";
   import LikePost from "./Notifications/LikePost";
   import NewPost from "./Notifications/NewPost";
+  import NewReplyComment from "./Notifications/NewReplyComment";
 
   export default {
     name: "Notifications",
-    components: {NewPost, LikePost, LikeComment, NewFollow, NewComment, NotificationForGuest, InfiniteLoading},
+    components: {
+      NewReplyComment,
+      NewPost, LikePost, LikeComment, NewFollow, NewComment, NotificationForGuest, InfiniteLoading},
     data() {
       return {
         'show': false,

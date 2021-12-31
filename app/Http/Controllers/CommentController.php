@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use App\Notifications\AddCommentNotification;
+use App\Notifications\AddReplyCommentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -95,11 +96,11 @@ class CommentController extends Controller
         /** @var Post $post */
         $post = Post::find($request->get('id'));
 
-        $comment = $post->comments()->save($reply);
+        $comment = $post->comments()->save($reply)->load('post');
 
-//        if ($post->user->id != auth()->user()->id) {
-//            Comment::query()->where('id', $request->get('commentId'))->first()->user->notify(new AddCommentNotification($comment, auth()->user()));
-//        }
+        if ($post->user->id != auth()->user()->id) {
+            Comment::query()->where('id', $request->get('commentId'))->first()->user->notify(new AddReplyCommentNotification($comment, auth()->user()));
+        }
 
         return $reply;
     }
