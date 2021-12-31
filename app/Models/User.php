@@ -194,8 +194,8 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
                 ->sortByDesc('is_favorite')
                 ->toArray(),
             'subscribers'         => $this->followers()->with('follower')->limit(12)->get()->pluck('follower'),
-            'subscribers_count'   => $this->followers()->count(),
-            'subscriptions_count' => $this->followings()->count(),
+            'followers_count'   => $this->followers()->count(),
+            'followings_count' => $this->followings()->count(),
             'subscriptions_limit' => array_slice($subscriptions, 0, 5),
             'posts_count'         => $this->posts()->public()->count(),
             'comments_count'      => $this->comments()->count(),

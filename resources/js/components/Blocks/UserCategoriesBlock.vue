@@ -3,9 +3,9 @@
     <div class="v-island__header">
       <span class="v-island__title">Подписки</span>
       <span class="v-island__counter"
-            v-if="data.subscriptions_count">{{ data.subscriptions_count }}</span>
+            v-if="data.followings_count">{{ data.followings_count }}</span>
     </div>
-    <div v-if="data.subscriptions_count" class="v-list v-list--default">
+    <div v-if="data.followings_count" class="v-list v-list--default">
       <div class="v-list__content">
         <router-link v-for="item in data.subscriptions_limit"
                      :to="{ name: item.type, params: { slug: item.slug } }"
