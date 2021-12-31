@@ -1003,11 +1003,6 @@ body {
     }
 }
 
-@media (max-width: 1179px) {
-    .layout__left-column {
-        display: none;
-    }
-}
 
 
 .layout, .layout__left-column {
@@ -6887,4 +6882,35 @@ input:checked + .like-btn-svg {
     transition: background-color 0s linear, border-color 0s linear, box-shadow 0.1s linear;
     transition: background-color 0s linear, border-color 0s linear, box-shadow 0.1s linear, -webkit-box-shadow 0.1s linear;
 }
+
+@media (max-width: 1299px){
+    .page--index.layout__right-column {
+        display: none;
+    }
+}
+
+@media (min-width: 1180px){
+    .layout__right-column {
+        width: 320px;
+    }
+}
+
+@media (min-width: 940px) and (max-width: 1179px){
+    .layout__right-column {
+        display: none;
+    }
+}
+
+@media (min-width: 860px) {
+    .layout__left-column {
+        width: 220px;
+    }
+}
+
+@media (min-width: 1300px) and (max-width: 1539px) {
+    .page--index.layout__right-column {
+        display: none;
+    }
+}
+
 
