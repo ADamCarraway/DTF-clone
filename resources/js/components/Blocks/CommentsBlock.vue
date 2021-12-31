@@ -103,7 +103,6 @@
       },
 
       addComment(data) {
-        console.log(this.comments)
         if (data.parent){
           if (data.parent.parent_id){
             this.comments.forEach((value, index, array) => {

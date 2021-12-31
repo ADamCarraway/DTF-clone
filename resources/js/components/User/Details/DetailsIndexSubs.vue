@@ -67,7 +67,6 @@
       },
     },
     beforeRouteLeave(to, from, next) {
-      console.log('leave')
       this.data = [];
       this.page = 1;
       this.total = 0;

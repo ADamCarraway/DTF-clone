@@ -104,9 +104,8 @@
     }),
     beforeRouteUpdate(to, from, next) {
       if (to.params.slug === from.params.slug) return next();
-
       this.get(to.params.slug)
-      EventBus.$emit('changePostsRoute');
+      EventBus.$emit('changePostsRoute', {'url': '/api/'+to.params.slug+'/posts'});
       next()
     },
     methods: {

@@ -114,7 +114,6 @@ export default {
   },
   methods: {
     editor: function (data) {
-      console.log('2 ' + data)
       this.editorjs = new EditorJS({
         data: {
           blocks: JSON.parse(data)
@@ -187,7 +186,7 @@ export default {
           }
         })
       }).catch((error) => {
-        console.log('Saving failed: ', error)
+        // console.log('Saving failed: ', error)
       });
     },
   },

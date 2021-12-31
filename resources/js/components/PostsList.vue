@@ -19,84 +19,87 @@
 </template>
 
 <script>
-  import Post from "./Blocks/Post";
-  import InfiniteLoading from "vue-infinite-loading";
-  import EventBus from "../plugins/event-bus";
-  import PostsFilter from "./PostsFilter";
-  import axios from "axios";
+import Post from "./Blocks/Post";
+import InfiniteLoading from "vue-infinite-loading";
+import EventBus from "../plugins/event-bus";
+import PostsFilter from "./PostsFilter";
+import axios from "axios";
 
-  export default {
-    name: "PostsList",
-    props: ['data', 'url'],
-    components: {PostsFilter, Post, InfiniteLoading},
-    data() {
-      return {
-        filter: this.$route.name.indexOf('.new') + 1 ? 'new' : 'popular',
-        posts: [],
-        page: 1,
-        total: 0,
-        infiniteId: +new Date(),
-      }
-    },
-    mounted() {
-      EventBus.$on('changePostsRoute', (filter) => {
-        console.log('new ' + filter)
-        this.filter = filter;
-        this.posts = [];
-        this.page = 1;
-        this.infiniteId += 1;
-      });
+export default {
+  name: "PostsList",
+  props: ['data', 'url'],
+  components: {PostsFilter, Post, InfiniteLoading},
+  data() {
+    return {
+      filter: this.$route.name.indexOf('.new') + 1 ? 'new' : 'popular',
+      posts: [],
+      newUrl: '',
+      page: 1,
+      total: 0,
+      infiniteId: +new Date(),
+    }
+  },
+  mounted() {
+    EventBus.$on('changePostsRoute', (data) => {
+      this.newUrl = data.url ?? '';
+      this.filter = data.filter;
+      this.posts = [];
+      this.page = 1;
+      this.infiniteId += 1;
+    });
 
-      // EventBus.$on('filterPosts', () => {
-      //   this.posts = [];
-      //   this.page = 1;
-      //   this.infiniteId += 1;
-      // });
-    },
-    // beforeRouteUpdate (to, from, next) {
-    //   this.filter = this.$route.name.indexOf('.new') + 1 ? 'new' : 'popular';
+    // EventBus.$on('filterPosts', () => {
     //   this.posts = [];
     //   this.page = 1;
     //   this.infiniteId += 1;
-    //   next()
-    // },
-    methods: {
-      infiniteHandler($state) {
-        axios.get(this.url+'?filter='+this.filter+'&page=' + this.page)
-          .then((data) => {
-            if (data.data.data.length) {
-              this.page = this.page + 1;
-              $.each(data.data.data, (key, value) => {
-                this.posts.push(value);
-              });
+    // });
+  },
+  // beforeRouteUpdate (to, from, next) {
+  //   this.filter = this.$route.name.indexOf('.new') + 1 ? 'new' : 'popular';
+  //   this.posts = [];
+  //   this.page = 1;
+  //   this.infiniteId += 1;
+  //   next()
+  // },
+  methods: {
+    infiniteHandler($state) {
+      axios.get(this.newUrl !== '' ? this.newUrl : this.url + '?filter=' + this.filter + '&page=' + this.page)
+        .then((data) => {
+          if (data.data.data.length) {
+            this.page = this.page + 1;
+            $.each(data.data.data, (key, value) => {
+              this.posts.push(value);
+            });
 
-              $state.loaded();
-            } else {
-              $state.complete();
-            }
-          });
-      },
-    }
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+        });
 
+      this.newUrl = '';
+    },
   }
+
+}
 </script>
 
 <style scoped>
-  .v-island {
-    --offset-x: var(--island-offset-x, 20px);
-    padding: 15px var(--offset-x) 16px;
-    font-size: 16px;
-    line-height: 1.5em;
-  }
+.v-island {
+  --offset-x: var(--island-offset-x, 20px);
+  padding: 15px var(--offset-x) 16px;
+  font-size: 16px;
+  line-height: 1.5em;
+}
 
-  .v-island__dummy {
-    text-align: center;
-    padding: 84px 0;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -ms-flex-align: center;
-    align-items: center;
-  }
+.v-island__dummy {
+  text-align: center;
+  padding: 84px 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: center;
+  align-items: center;
+}
 </style>

@@ -61,7 +61,6 @@
     },
     mounted() {
       EventBus.$on('changeFilterForRatingTable', (filter) => {
-        console.log(filter)
         this.filter = filter;
         this.getData(true);
       });

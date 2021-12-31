@@ -121,7 +121,7 @@
 
       this.data = {};
       this.getData(to.params.slug);
-      EventBus.$emit('changePostsRoute');
+      EventBus.$emit('changePostsRoute', {});
       next()
     },
     methods: {

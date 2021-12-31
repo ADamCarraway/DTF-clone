@@ -88,7 +88,6 @@
     mounted() {
       if (this.user) {
         Echo.private(`App.Models.User.${this.$store.getters['auth/user']['id']}`).notification(notification => {
-          console.log(notification)
           this.notReading += 1;
           this.notifications.unshift({'type': notification.type, 'data': notification.data})
         });
