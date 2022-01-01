@@ -62,6 +62,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/drafts', 'Auth\UserController@drafts')->name('user.drafts');
 });
 
+Route::get('/live-lenta', 'LiveLentaController@index')->name('live-lenta.index');
+
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');

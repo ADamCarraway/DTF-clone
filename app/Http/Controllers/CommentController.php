@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CommentCreated;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -76,9 +77,7 @@ class CommentController extends Controller
         /** @var Comment $saveComment */
         $saveComment = $post->comments()->save($comment)->load('post');
 
-        if ($post->user->id != auth()->user()->id) {
-            $post->user->notify(new AddCommentNotification($saveComment, auth()->user()));
-        }
+        event(new CommentCreated($saveComment));
 
         return $saveComment->load('replies');
     }

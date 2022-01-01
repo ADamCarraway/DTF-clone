@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Events\CancelSubscriptionEvent;
+use App\Events\CommentCreated;
+use App\Listeners\AddCommentNotifyToAuthor;
+use App\Listeners\AddCommentNotifyToLiveLenta;
 use App\Listeners\AddNotifyToUser;
 use App\Listeners\AddSubsToUser;
 use App\Listeners\UserNotifyRemove;
@@ -34,6 +37,10 @@ class EventServiceProvider extends ServiceProvider
         CancelSubscriptionEvent::class => [
             UserNotifyRemove::class
         ],
+        CommentCreated::class => [
+            AddCommentNotifyToAuthor::class,
+            AddCommentNotifyToLiveLenta::class
+        ]
     ];
 
     /**

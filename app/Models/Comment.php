@@ -17,7 +17,7 @@ class Comment extends Model implements LikeableInterface, BookmarkableInterface
     const ODDS = ['a' => 80, 'b' => 50, 'c' => 10, 'd' => 30];
 
     protected $guarded = [];
-    protected $appends = ['type', 'date', 'is_like', 'is_bookmarked'];
+    protected $appends = ['type', 'date', 'date_minute', 'is_like', 'is_bookmarked'];
     protected $with = ['user', 'replies'];
     protected $withCount = ['likes', 'bookmarks'];
 
@@ -44,6 +44,11 @@ class Comment extends Model implements LikeableInterface, BookmarkableInterface
     public function getDateAttribute()
     {
         return Carbon::parse($this->created_at)->locale('ru')->calendar();
+    }
+
+    public function getDateMinuteAttribute(): string
+    {
+        return Carbon::parse($this->created_at)->locale('ru')->diffForHumans(['short' => true]);
     }
 
     public function getIsLikeAttribute()

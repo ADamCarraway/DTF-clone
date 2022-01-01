@@ -77,7 +77,8 @@
         'showAllReadBtn': false,
         'notifications': [],
         'page': 1,
-        'needLoading': true
+        'needLoading': true,
+        'exeptions': ['App\\Notifications\\LiveLentaAddCommentNotification']
       }
     },
 
@@ -88,8 +89,12 @@
     mounted() {
       if (this.user) {
         Echo.private(`App.Models.User.${this.$store.getters['auth/user']['id']}`).notification(notification => {
-          this.notReading += 1;
-          this.notifications.unshift({'type': notification.type, 'data': notification.data})
+          if (!this.exeptions.includes(notification.type)) {
+            this.notReading += 1;
+            this.notifications.unshift({'type': notification.type, 'data': notification.data})
+          }
+
+          EventBus.$emit('addNotification', {'notification':notification});
         });
       }
     },
