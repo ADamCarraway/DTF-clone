@@ -48,6 +48,8 @@ class CommentController extends Controller
 
     public function comments(Request $request, $slug)
     {
+        $odds = Comment::ODDS;
+
         $type = $request->get('type');
 
         $comments = Post::query()->whereSlug($slug)->firstOrFail()->comments()->withCount(['replies']);
@@ -56,8 +58,18 @@ class CommentController extends Controller
             $comments->orderBy('created_at');
         }
 
-        if ($type == 'new') {
-            $comments->latest('created_at');
+        if ($type == 'popular') {
+            $comments = $comments
+                ->leftJoin('likes', function ($q) {
+                    $q->on('comments.id', '=', 'likes.likeable_id')
+                        ->where('likes.likeable_type', '=', Comment::class);
+                })
+                ->leftJoin('bookmarks', function ($q) {
+                    $q->on('comments.id', '=', 'bookmarks.bookmarkable_id')
+                        ->where('bookmarks.bookmarkable_type', '=', Comment::class);
+                })
+                ->addSelect(DB::raw("('$odds[c]'+'$odds[a]'*LOG(1+count(DISTINCT likes.id))+'$odds[b]'*LOG(1+count(DISTINCT bookmarks.id))) as weight"))
+                ->groupBy('comments.id')->orderBy('weight', 'desc');
         }
 
         return $comments->paginate('10');

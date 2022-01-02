@@ -2,13 +2,15 @@
   <div class="comments__footer l-island-a l-clear">
     <div class="comments_pseudo_form l-clear" v-if="!type && !formShow" @click="focusInput()">
 
-      <span class="comments_pseudo_form__text">Написать комментарий...</span>
+      <span class="comments_pseudo_form__text w-100">Написать комментарий...</span>
 
-      <div class="comments_pseudo_form__button">
-        <ion-icon src="/icons/link-outline.svg" :class="'icon--attach-link'"></ion-icon>
-      </div>
-      <div class="comments_pseudo_form__button">
-        <ion-icon src="/icons/image-outline.svg" :class="'icon--ui_image'"></ion-icon>
+      <div class="comments_pseudo_form__buttons">
+        <div class="comments_pseudo_form__button">
+          <ion-icon src="/icons/link-outline.svg" :class="'icon--attach-link'"></ion-icon>
+        </div>
+        <div class="comments_pseudo_form__button">
+          <ion-icon src="/icons/image-outline.svg" :class="'icon--ui_image'"></ion-icon>
+        </div>
       </div>
 
     </div>

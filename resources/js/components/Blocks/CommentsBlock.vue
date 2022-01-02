@@ -12,9 +12,9 @@
               <div class="ui-tabs ui-tabs--default ui-tabs--no-scroll ui-tabs--no-padding l-island-bg">
                 <div class="ui-tabs__scroll">
                   <div class="ui-tabs__content ">
-                    <div class="ui-tab" :class="{'ui-tab--active': activeTab === 'new'}" @click="getComments('new')">
+                    <div class="ui-tab" :class="{'ui-tab--active': activeTab === 'popular'}" @click="getComments('popular')">
                       <span class="ui-tab__label">
-                        Новые
+                        Популярные
                       </span>
                     </div>
                     <div class="ui-tab" :class="{'ui-tab--active': activeTab === 'old'}"  @click="getComments('old')">
@@ -66,7 +66,7 @@
       return {
         comment: '',
         comments: [],
-        activeTab: 'new',
+        activeTab: 'popular',
         page: 1,
         infiniteId: +new Date(),
       }
