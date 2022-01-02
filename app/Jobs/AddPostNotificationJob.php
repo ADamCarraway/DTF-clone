@@ -29,16 +29,19 @@ class AddPostNotificationJob //implements ShouldQueue
     {
         Notification::query()
             ->where(function ($q) {
-                $q->where('notifiable_id', $this->post->category_id)
-                    ->where('notifiable_type', Category::class);
+                $q->where(function ($b) {
+                    $b->where('notifiable_id', $this->post->category_id)
+                        ->where('notifiable_type', Category::class);
+                })
+                    ->orWhere(function ($b) {
+                        $b->where('notifiable_id', $this->post->user_id)
+                            ->where('notifiable_type', User::class);
+                    });
             })
-            ->orWhere(function ($q) {
-                $q->where('notifiable_id', $this->post->user->id)
-                    ->where('notifiable_type', User::class);
-            })
+            ->where('user_id', '!=', $this->post->user_id)
 //            ->groupBy('user_id')
-            ->each(function (Notification $notification){
-               $notification->user->notify(new AddPostNotification($this->post));
+            ->each(function (Notification $notification) {
+                $notification->user->notify(new AddPostNotification($this->post));
             });
     }
 }

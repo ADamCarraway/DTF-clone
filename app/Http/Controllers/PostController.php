@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreated;
 use App\Jobs\AddPostNotificationJob;
 use App\Models\Category;
 use App\Models\Post;
@@ -79,7 +80,7 @@ class PostController extends Controller
         ]);
 
         if (!$request->input('id') && $request->input('is_publish')) {
-            dispatch_now(new AddPostNotificationJob($post));
+            event(new PostCreated($post));
         }
 
         return response()->json([
