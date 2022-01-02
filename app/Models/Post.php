@@ -17,7 +17,7 @@ class Post extends Model implements BookmarkableInterface, LikeableInterface, No
     use Likeable, Bookmarkable, Notifiable;
 
     //a - like, b = views , d = comments
-    const ODDS = ['a' => 40, 'b' => 60, 'c' => 10, 'd' => 40];
+    const ODDS = ['a' => 40, 'b' => 60, 'c' => 1, 'd' => 40];
 
     protected $guarded = ['id'];
     protected $appends = [
