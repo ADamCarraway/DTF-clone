@@ -39,6 +39,7 @@ class AddPostNotificationJob //implements ShouldQueue
                     });
             })
             ->where('user_id', '!=', $this->post->user_id)
+            ->groupBy('user_id')
             ->each(function (Notification $notification) {
                 $notification->user->notify(new AddPostNotification($this->post));
             });
