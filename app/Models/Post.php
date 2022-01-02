@@ -109,11 +109,6 @@ class Post extends Model implements BookmarkableInterface, LikeableInterface, No
         return $this->morphMany(Comment::class, 'commentable')->count();
     }
 
-    public function getWeightAttribute()
-    {
-        return round(self::ODDS['c'] + self::ODDS['a'] * Log(1 + $this->likes->count()) + self::ODDS['b'] * Log(1 + $this->views->count()) + self::ODDS['d'] * Log(1 + $this->comments->count()), 2);
-    }
-
     public function getIsNotifyAttribute()
     {
         if (!auth()->check()) return false;

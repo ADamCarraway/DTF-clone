@@ -15,8 +15,6 @@ class PostController extends Controller
 
     public function index($feed, $filter = null)
     {
-        $odds = Post::ODDS;
-
         $posts = Post::query()->with(['category', 'user'])
             ->where(function ($q) use ($feed) {
                 if ($feed !== 'all' && auth()->check()) {
@@ -29,20 +27,7 @@ class PostController extends Controller
             });
 
         if (!$filter ? $feed == 'popular' : $filter == 'popular') {
-            $posts = $posts->leftJoin('comments', function ($q) {
-                $q->on('posts.id', '=', 'comments.commentable_id')
-                    ->where('comments.commentable_type', '=', Post::class);
-            })
-                ->leftJoin('viewable', function ($q) {
-                    $q->on('posts.id', '=', 'viewable.viewable_id')
-                        ->where('viewable.viewable_type', '=', Post::class);
-                })
-                ->leftJoin('likes', function ($q) {
-                    $q->on('posts.id', '=', 'likes.likeable_id')
-                        ->where('likes.likeable_type', '=', Post::class);
-                })
-                ->addSelect(DB::raw("('$odds[c]'+'$odds[a]'*LOG(1+count(DISTINCT likes.id))+'$odds[b]'*LOG(1+count(DISTINCT viewable.ip))+'$odds[d]'*LOG(1+count(DISTINCT comments.id))) as weight"))
-                ->groupBy('posts.id')->orderBy('weight', 'desc');
+            $posts->orderBy('rating', 'desc');
 
             return response()->json($posts->paginate(10));
         }

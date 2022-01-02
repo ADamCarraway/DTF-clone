@@ -24,6 +24,7 @@ class CreatePostsTable extends Migration
             $table->boolean('is_block')->default(0)->index();
             $table->boolean('is_publish')->default(0)->index();
             $table->boolean('is_official')->default(0)->index();
+            $table->float('rating')->default(1.0)->index();
             $table->timestamps();
 
             $table->foreign('user_id')
