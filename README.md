@@ -3,6 +3,7 @@
 ![This is an image](https://i.imgur.com/awuEpIX.png)
 
 ## Installation
+>The project is under development and refactoring. You will not be able to upgrade to the next version. Complete reinstallation only.
 
 ## Clone the source code
 ```bash
