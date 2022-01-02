@@ -86,6 +86,7 @@
       this.posts = [];
       this.page = 1;
       this.infiniteId += 1;
+      if (this.$route.name === 'index.new') EventBus.$emit('clearNewPosts')
       next()
     },
     methods: {
@@ -109,6 +110,9 @@
             }
           });
       },
+    },
+    mounted() {
+      if (this.$route.name === 'index.new') EventBus.$emit('clearNewPosts')
     },
     metaInfo() {
       return {title: 'DTF — игры, кино, сериалы, разработка, сообщество'}

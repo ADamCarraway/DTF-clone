@@ -6952,4 +6952,14 @@ input:checked + .like-btn-svg {
     }
 }
 
-
+.sidebar-tree-list-item__badge {
+    padding: 0 8px;
+    text-align: center;
+    color: #fff;
+    background: #4683d9;
+    font-size: 12px;
+    line-height: 18px;
+    height: 18px;
+    margin-left: auto;
+    border-radius: 100px;
+}

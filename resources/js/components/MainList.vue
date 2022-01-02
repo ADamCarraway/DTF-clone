@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'index'}" @click.native="change('popular')"
                  class="sidebar__tree-list__item">
       <div class="sidebar-tree-list-item__link">
-        <ion-icon src="/icons/flame-outline.svg"  class="sidebar__icon"></ion-icon>
+        <ion-icon src="/icons/flame-outline.svg" class="sidebar__icon"></ion-icon>
         <p class="sidebar__tree-list__item__name">Лента</p>
       </div>
     </router-link>
@@ -11,6 +11,7 @@
       <div class="sidebar-tree-list-item__link">
         <ion-icon src="/icons/time-outline.svg" class="sidebar__icon"></ion-icon>
         <p class="sidebar__tree-list__item__name">Севежее</p>
+        <p class="sidebar-tree-list-item__badge" v-if="newCount">{{ newCount }}</p>
       </div>
     </router-link>
     <router-link :to="{ name: 'rating'}" class="sidebar__tree-list__item">
@@ -34,6 +35,21 @@ import EventBus from "../plugins/event-bus";
 
 export default {
   name: "MainList",
+  data: function () {
+    return {
+      newCount: 0
+    }
+  },
+  mounted() {
+    EventBus.$on('clearNewPosts', () => {
+      this.newCount = 0;
+    });
+    EventBus.$on('addNotification', (data) => {
+      if (data.notification.type === 'App\\Notifications\\AddPostNotificationNewCounter') {
+        this.newCount += 1;
+      }
+    });
+  },
   methods: {
     change(filter) {
       EventBus.$emit('changePostsRoute', filter)
@@ -46,7 +62,8 @@ export default {
 .router-link-exact-active {
   background: #fff;
 }
-.router-link-exact-active ion-icon{
+
+.router-link-exact-active ion-icon {
   color: #3793e5;
 }
 

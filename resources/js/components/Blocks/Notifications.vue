@@ -54,83 +54,87 @@
 </template>
 
 <script>
-  import {mapGetters} from "vuex";
-  import EventBus from "../../plugins/event-bus";
-  import NotificationForGuest from "./NotificationForGuest";
-  import NewComment from "./Notifications/NewComment";
-  import axios from "axios";
-  import InfiniteLoading from "vue-infinite-loading";
-  import NewFollow from "./Notifications/NewFollow";
-  import LikeComment from "./Notifications/LikeComment";
-  import LikePost from "./Notifications/LikePost";
-  import NewPost from "./Notifications/NewPost";
-  import NewReplyComment from "./Notifications/NewReplyComment";
+import {mapGetters} from "vuex";
+import EventBus from "../../plugins/event-bus";
+import NotificationForGuest from "./NotificationForGuest";
+import NewComment from "./Notifications/NewComment";
+import axios from "axios";
+import InfiniteLoading from "vue-infinite-loading";
+import NewFollow from "./Notifications/NewFollow";
+import LikeComment from "./Notifications/LikeComment";
+import LikePost from "./Notifications/LikePost";
+import NewPost from "./Notifications/NewPost";
+import NewReplyComment from "./Notifications/NewReplyComment";
 
-  export default {
-    name: "Notifications",
-    components: {
-      NewReplyComment,
-      NewPost, LikePost, LikeComment, NewFollow, NewComment, NotificationForGuest, InfiniteLoading},
-    data() {
-      return {
-        'show': false,
-        'notReading': 0,
-        'showAllReadBtn': false,
-        'notifications': [],
-        'page': 1,
-        'needLoading': true,
-        'exeptions': ['App\\Notifications\\LiveLentaAddCommentNotification']
-      }
-    },
+export default {
+  name: "Notifications",
+  components: {
+    NewReplyComment,
+    NewPost, LikePost, LikeComment, NewFollow, NewComment, NotificationForGuest, InfiniteLoading
+  },
+  data() {
+    return {
+      'show': false,
+      'notReading': 0,
+      'showAllReadBtn': false,
+      'notifications': [],
+      'page': 1,
+      'needLoading': true,
+      'exeptions': [
+        'App\\Notifications\\LiveLentaAddCommentNotification',
+        'App\\Notifications\\AddPostNotificationNewCounter'
+      ]
+    }
+  },
 
-    computed: mapGetters({
-      user: 'auth/user'
-    }),
+  computed: mapGetters({
+    user: 'auth/user'
+  }),
 
-    mounted() {
-      if (this.user) {
-        Echo.private(`App.Models.User.${this.$store.getters['auth/user']['id']}`).notification(notification => {
-          if (!this.exeptions.includes(notification.type)) {
-            this.notReading += 1;
-            // this.notifications.unshift({'type': notification.type, 'data': notification.data})
+  mounted() {
+    if (this.user) {
+      Echo.private(`App.Models.User.${this.$store.getters['auth/user']['id']}`).notification(notification => {
+        if (!this.exeptions.includes(notification.type)) {
+          this.notReading += 1;
+          // this.notifications.unshift({'type': notification.type, 'data': notification.data})
+        }
+
+        EventBus.$emit('addNotification', {'notification': notification});
+      });
+    }
+  },
+  methods: {
+    infiniteHandler($state) {
+      axios.get('/api/notification' + '?page=' + this.page)
+        .then((data) => {
+          this.notReading = 0;
+          if (data.data.data.length) {
+            this.showAllReadBtn = data.data.notRead
+            this.page = this.page + 1;
+            this.notifications = data.data.data;
+            $state.loaded();
+          } else {
+            $state.complete();
           }
-
-          EventBus.$emit('addNotification', {'notification':notification});
         });
-      }
+
+      // const uniqueElementsBy = (arr, fn) =>
+      //   arr.reduce((acc, v) => {
+      //     if (!acc.some(x => fn(v, x))) acc.push(v);
+      //     return acc;
+      //   }, []);
+      //
+      // this.notifications =  uniqueElementsBy(this.notifications,(a, b) => a.type + + a.data.user.id == b.type + + b.data.user.id);
     },
-    methods: {
-      infiniteHandler($state) {
-        axios.get('/api/notification' + '?page=' + this.page)
-          .then((data) => {
-            this.notReading = 0;
-            if (data.data.data.length) {
-              this.showAllReadBtn = data.data.notRead
-              this.page = this.page + 1;
-              this.notifications = data.data.data;
-              $state.loaded();
-            } else {
-              $state.complete();
-            }
-          });
 
-        // const uniqueElementsBy = (arr, fn) =>
-        //   arr.reduce((acc, v) => {
-        //     if (!acc.some(x => fn(v, x))) acc.push(v);
-        //     return acc;
-        //   }, []);
-        //
-        // this.notifications =  uniqueElementsBy(this.notifications,(a, b) => a.type + + a.data.user.id == b.type + + b.data.user.id);
-      },
-
-      readAll() {
-        axios.post('/api/notification/readAll')
-          .then((data) => {
-            this.showAllReadBtn = 0;
-          });
-      }
+    readAll() {
+      axios.post('/api/notification/readAll')
+        .then((data) => {
+          this.showAllReadBtn = 0;
+        });
     }
   }
+}
 </script>
 
 <style scoped>

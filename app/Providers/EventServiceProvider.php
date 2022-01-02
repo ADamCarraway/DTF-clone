@@ -9,6 +9,7 @@ use App\Listeners\AddCommentNotifyToLiveLenta;
 use App\Listeners\AddCommentNotify;
 use App\Listeners\AddNotifyToUser;
 use App\Listeners\AddPostNotify;
+use App\Listeners\AddPostNotifyNewCounter;
 use App\Listeners\AddSubsToUser;
 use App\Listeners\UserNotifyRemove;
 use Illuminate\Auth\Events\Registered;
@@ -46,7 +47,8 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         PostCreated::class => [
-            AddPostNotify::class
+            AddPostNotify::class,
+            AddPostNotifyNewCounter::class
         ]
     ];
 
