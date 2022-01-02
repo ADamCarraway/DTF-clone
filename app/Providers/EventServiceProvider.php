@@ -5,8 +5,8 @@ namespace App\Providers;
 use App\Events\CancelSubscriptionEvent;
 use App\Events\CommentCreated;
 use App\Events\PostCreated;
-use App\Listeners\AddCommentNotifyToAuthor;
 use App\Listeners\AddCommentNotifyToLiveLenta;
+use App\Listeners\AddCommentNotify;
 use App\Listeners\AddNotifyToUser;
 use App\Listeners\AddPostNotify;
 use App\Listeners\AddSubsToUser;
@@ -41,8 +41,8 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         CommentCreated::class => [
-            AddCommentNotifyToAuthor::class,
-            AddCommentNotifyToLiveLenta::class
+            AddCommentNotifyToLiveLenta::class,
+            AddCommentNotify::class
         ],
 
         PostCreated::class => [

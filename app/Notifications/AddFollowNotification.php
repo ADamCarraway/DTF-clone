@@ -40,7 +40,7 @@ class AddFollowNotification extends Notification
     {
         return new BroadcastMessage([
             'user' => $this->user,
-            'date' => now(),
+            'date' => now()->locale('ru')->calendar(),
         ]);
     }
 
@@ -50,7 +50,7 @@ class AddFollowNotification extends Notification
             'read_at' => null,
             'data'    => [
                 'user' => $this->user,
-                'date' => now(),
+                'date' => now()->calendar(),
             ],
         ]);
     }

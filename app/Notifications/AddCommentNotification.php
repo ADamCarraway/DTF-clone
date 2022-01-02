@@ -19,16 +19,14 @@ class AddCommentNotification extends Notification
      * @var Comment
      */
     private Comment $comment;
-    private User $user;
 
     /**
      * AddFollowNotification constructor.
      * @param Comment $comment
      */
-    public function __construct(Comment $comment, User $user)
+    public function __construct(Comment $comment)
     {
         $this->comment = $comment;
-        $this->user = $user;
     }
 
     public function via($notifiable)
@@ -46,7 +44,7 @@ class AddCommentNotification extends Notification
     public function toDatabase($notifiable)
     {
         return new BroadcastMessage([
-            'user'    => $this->user,
+            'user'    => $this->comment->user,
             'comment' => $this->comment,
         ]);
     }
@@ -56,7 +54,7 @@ class AddCommentNotification extends Notification
         return new BroadcastMessage([
             'read_at' => null,
             'data'    => [
-                'user'    => $this->user,
+                'user'    => $this->comment->user,
                 'comment' => $this->comment,
             ],
         ]);

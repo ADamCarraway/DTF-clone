@@ -16,10 +16,6 @@ class LikeController extends Controller
             $request->likeable()->user->notify(new AddLikeToCommentNotification($request->user(), $request->likeable()->load('post')));
         }
 
-//        if ($request->likeable() instanceof Post){
-//            $request->likeable()->user->notify(new AddLikeToPostNotification($request->user(), $request->likeable()));
-//        }
-
         return response()->json([
             'likes' => $request->likeable()->likes()->count()
         ]);

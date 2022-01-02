@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Notifications\AddCommentNotification;
 use App\Notifications\AddFollowNotification;
 use App\Notifications\AddLikeToCommentNotification;
-use App\Notifications\AddLikeToPostNotification;
 use App\Notifications\AddPostNotification;
 use Illuminate\Http\Request;
 

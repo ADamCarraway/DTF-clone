@@ -63,12 +63,15 @@ class PostController extends Controller
     public function store(Request $request, $slug)
     {
         $category = null;
+        /** @var User $user */
+        $user = auth()->user();
 
         if ($slug !== 'my' && $slug != auth()->user()->slug) {
             $category = Category::query()->whereSlug($slug)->firstOrFail();
         }
 
-        $post = auth()->user()->posts()->updateOrCreate([
+        /** @var Post $post */
+        $post = $user->posts()->updateOrCreate([
             'id' => $request->input('id')
         ], [
             'title'       => $request->input('title') ?? '',
@@ -81,6 +84,8 @@ class PostController extends Controller
 
         if (!$request->input('id') && $request->input('is_publish')) {
             event(new PostCreated($post));
+
+            $user->addNotification($post);
         }
 
         return response()->json([

@@ -50,9 +50,6 @@
 export default {
   name: "NewPost",
   props: ['item', 'isLenta'],
-  data() {
-
-  }
 }
 </script>
 

@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Notifications\AddCommentNotification;
 use App\Notifications\AddFollowNotification;
 use App\Notifications\AddLikeToCommentNotification;
-use App\Notifications\AddLikeToPostNotification;
 use App\Notifications\AddPostNotification;
 use App\Notifications\AddReplyCommentNotification;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +15,6 @@ class UserNotificationSetting extends Model
         AddCommentNotification::class,
         AddFollowNotification::class,
         AddLikeToCommentNotification::class,
-        AddLikeToPostNotification::class,
         AddPostNotification::class,
         AddReplyCommentNotification::class
     ];

@@ -42,10 +42,11 @@
           </div>
         </div>
         <footer class="head-notifies__footer t-ff-1-500">
-          <a href="/u/me/updates"
-             class="head-notifies__footer-link t-link-inline">
+          <router-link
+            :to="{ name: 'user.notifications', params: {'slug': user.slug} }"
+            class="head-notifies__footer-link t-link-inline">
             <span>Все уведомления</span>
-          </a>
+          </router-link>
         </footer>
       </div>
     </div>
