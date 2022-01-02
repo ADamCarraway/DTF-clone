@@ -1,5 +1,9 @@
 <template>
-  <div class="u-notification u-notification--blue u-notification--border u-notification--hover" :class="{'u-notification--unread': !item.read_at}">
+  <div :class="{
+     'u-notification u-notification--blue u-notification--border u-notification--hover': !isLenta,
+    'u-notification u-notification--blue u-notification--bg': isLenta,
+    'u-notification--unread': !item.read_at
+  }">
     <router-link
       :to="{ name: item.data.comment.post.category ? 'post' :'user.post', params: {postSlug: item.data.comment.post.slug, slug: item.data.comment.post.category ? item.data.comment.post.category.slug : item.data.comment.post.user.slug} }"
       class="u-notification__link"></router-link>
@@ -16,6 +20,7 @@
           <b>{{ item.data.comment.user.name }}</b>
         </router-link>
         прокомментировал публикацию, на которую вы подписаны &nbsp;
+        <br v-if="isLenta">
         <span class="u-notification__content__date">
           <time class="time">{{ item.data.comment.date }}</time>
         </span>
@@ -23,7 +28,7 @@
       <div class="u-notification__content__reply-text" :class="{'l-hidden': !show}">
         {{ item.data.comment.comment }}
       </div>
-      <div class="u-notification__content__buttons" @click="show = !show">
+      <div class="u-notification__content__buttons" @click="show = !show" v-if="!isLenta">
         <div class="u-notification__content__button" v-if="!show">Развернуть</div>
         <div class="u-notification__content__button" v-else>Свернуть</div>
       </div>
@@ -36,7 +41,7 @@
 <script>
   export default {
     name: "NewComment",
-    props: ['item'],
+    props: ['item', 'isLenta'],
     data(){
       return{
         'show': false

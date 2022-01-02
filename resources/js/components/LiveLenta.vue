@@ -42,7 +42,12 @@
                 </router-link>
               </div>
               <div v-else>
-                mamamamamama
+                <div class="live-lenta">
+                  <new-reply-comment v-if="comment.type === 'App\\Notifications\\AddReplyCommentNotification'" :item="comment" :isLenta="true"/>
+                  <new-comment v-if="comment.type === 'App\\Notifications\\AddCommentNotification'" :item="comment" :isLenta="true"/>
+                  <like-comment v-if="comment.type === 'App\\Notifications\\AddLikeToCommentNotification'" :item="comment" :isLenta="true"/>
+                  <new-post v-if="comment.type === 'App\\Notifications\\AddPostNotification'" :item="comment" :isLenta="true"/>
+                </div>
               </div>
             </div>
           </div>
@@ -56,9 +61,15 @@
 import EventBus from "../plugins/event-bus";
 import axios from "axios";
 import {mapGetters} from "vuex";
+import NewReplyComment from "./Blocks/Notifications/NewReplyComment";
+import NewComment from "./Blocks/Notifications/NewComment";
+import NewFollow from "./Blocks/Notifications/NewFollow";
+import LikeComment from "./Blocks/Notifications/LikeComment";
+import NewPost from "./Blocks/Notifications/NewPost";
 
 export default {
   name: "LiveLenta",
+  components: {NewPost, LikeComment, NewFollow, NewComment, NewReplyComment},
   data() {
     return {
       show: true,

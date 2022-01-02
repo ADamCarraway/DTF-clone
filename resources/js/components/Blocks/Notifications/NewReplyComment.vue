@@ -1,5 +1,9 @@
 <template>
-  <div class="u-notification u-notification--blue u-notification--border u-notification--hover" :class="{'u-notification--unread': !item.read_at}">
+  <div :class="{
+    'u-notification u-notification--blue u-notification--border u-notification--hover': !isLenta,
+    'u-notification u-notification--blue u-notification--bg': isLenta,
+    'u-notification--unread': !item.read_at
+  }">
     <router-link
       :to="{ name: item.data.comment.post.category ? 'post' :'user.post', params: {postSlug: item.data.comment.post.slug, slug: item.data.comment.post.category ? item.data.comment.post.category.slug : item.data.comment.post.user.slug} }"
       class="u-notification__link"></router-link>
@@ -15,7 +19,7 @@
         <router-link :to="{ name: 'user', params: {slug: item.data.comment.user.slug} }">
           <b>{{ item.data.comment.user.name }}</b>
         </router-link>
-        ответил на комментарий к записи  &nbsp;
+        ответил на комментарий к записи
         <router-link
           :to="{ name: item.data.comment.post.category ? 'post' :'user.post', params: {postSlug: item.data.comment.post.slug, slug: item.data.comment.post.category ? item.data.comment.post.category.slug : item.data.comment.post.user.slug} }"
           class="u-notification__link"><b>{{item.data.comment.post.short_title}}</b></router-link>
@@ -26,7 +30,7 @@
       <div class="u-notification__content__reply-text" :class="{'l-hidden': !show}">
         {{ item.data.comment.comment }}
       </div>
-      <div class="u-notification__content__buttons" @click="show = !show">
+      <div class="u-notification__content__buttons" @click="show = !show" v-if="!isLenta">
         <div class="u-notification__content__button" v-if="!show">Развернуть</div>
         <div class="u-notification__content__button" v-else>Свернуть</div>
       </div>
@@ -39,7 +43,7 @@
 <script>
   export default {
     name: "NewReplyComment",
-    props: ['item'],
+    props: ['item', 'isLenta'],
     data(){
       return{
         'show': false

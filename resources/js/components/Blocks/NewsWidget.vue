@@ -1,18 +1,18 @@
 <template>
   <div class="news_widget l-island-bg l-island-a l-island-round l-mb-15 l-pv-20 lm-pv-18 l-fs-16">
 
-    <div class="news_widget__toggle t-no_select l-fs-13"  @click="show = !show" v-if="posts">
+    <div class="news_widget__toggle t-no_select l-fs-13"  @click="show = !show" v-if="posts.length">
       <i class="el-icon-arrow-up" v-if="show"></i>
       <i class="el-icon-arrow-down" v-if="!show"></i>
       <span class="news_widget__toggle__open" v-if="!show">развернуть</span>
       <span class="news_widget__toggle__close" v-if="show">свернуть</span>
     </div>
-    <div class="news_widget__toggle t-no_select l-fs-13" v-else> =)</div>
+    <div class="news_widget__toggle t-no_select l-fs-13" v-else>👻</div>
     <div class="news_widget__header">
       <p class="l-fs-16 lm-fs-15 t-ff-1-700">{{ date }}</p>
     </div>
 
-    <div class="news_widget__content" v-if="show && posts">
+    <div class="news_widget__content" v-if="show && posts.length">
       <div class="news_widget__content__inner">
         <div class="news_item l-flex l-fa-baseline lm-block l-mv-9 lm-mv-8" v-for="p in posts" :key="p.id">
           <time class="time" v-if="now === p.dateDay">{{ p.dateHour}}</time>
@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <div class="news_widget__footer" v-if="show && !done && posts">
+    <div class="news_widget__footer" v-if="show && !done && posts.length">
       <p class="news_widget__load_more t-ff-1-700 l-fs-16 lm-fs-15 t-link" @click="getData()">
         <span>Показать ещё</span>
         <i class="el-icon-arrow-down"></i>
@@ -63,7 +63,7 @@
     data() {
       return {
         show: true,
-        posts: null,
+        posts: [],
         page: 1,
         done: false,
         date: null

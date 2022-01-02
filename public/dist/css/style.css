@@ -6362,6 +6362,10 @@ input:checked + .like-btn-svg {
     position: relative;
 }
 
+.u-notification--bg {
+    border-radius: 4px;
+}
+
 .u-notification__image--relative {
     position: relative;
 }
@@ -6492,6 +6496,14 @@ input:checked + .like-btn-svg {
 
 .u-notification--hover:hover {
     background: #f3f3f3;
+}
+
+.u-notification--green.u-notification--bg {
+    background: rgba(69,192,69,.1);
+}
+
+.u-notification--blue.u-notification--bg {
+    background: rgba(102,166,237,.1);
 }
 
 .notification__image ion-icon {

@@ -91,7 +91,7 @@
         Echo.private(`App.Models.User.${this.$store.getters['auth/user']['id']}`).notification(notification => {
           if (!this.exeptions.includes(notification.type)) {
             this.notReading += 1;
-            this.notifications.unshift({'type': notification.type, 'data': notification.data})
+            // this.notifications.unshift({'type': notification.type, 'data': notification.data})
           }
 
           EventBus.$emit('addNotification', {'notification':notification});
@@ -102,12 +102,11 @@
       infiniteHandler($state) {
         axios.get('/api/notification' + '?page=' + this.page)
           .then((data) => {
+            this.notReading = 0;
             if (data.data.data.length) {
               this.showAllReadBtn = data.data.notRead
               this.page = this.page + 1;
-              $.each(data.data.data, (key, value) => {
-                this.notifications.push(value);
-              });
+              this.notifications = data.data.data;
               $state.loaded();
             } else {
               $state.complete();
