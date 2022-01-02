@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Events\PostCreated;
-use App\Jobs\AddPostNotificationJob;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;

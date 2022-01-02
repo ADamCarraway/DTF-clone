@@ -36,19 +36,15 @@ class UsersSeeder extends Seeder
                     'user_id'     => $user->id,
                     'count'       => 1
                 ]);
-            });
 
-            Post::all()->random(rand(50, 100))->each(function (Post $post) use ($user) {
                 $user->addBookmark($post);
-            });
 
-            Post::all()->random(rand(50, 100))->each(function (Post $post) use ($user) {
                 $user->addLike($post);
             });
 
-            Comment::all()->random(500)->each(function (Comment $comment) use ($user) {
-                $user->addLike($comment);
-            });
+//            Comment::all()->random(500)->each(function (Comment $comment) use ($user) {
+//                $user->addLike($comment);
+//            });
         });
     }
 }

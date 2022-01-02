@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown trigger="click" @command="commands">
+  <el-dropdown trigger="click" @command="commands" v-if="user">
     <div class="el-dropdown-link">
       <ion-icon src="/icons/ellipsis-horizontal-outline.svg"></ion-icon>
     </div>
