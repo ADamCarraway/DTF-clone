@@ -27,7 +27,8 @@ class AddPostNotificationNewCounterJob //implements ShouldQueue
     public function handle()
     {
         /** @var Category $category */
-        $category = $this->post->category;
+        if (!$category = $this->post->category) return;
+
         $category->followers()
             ->each(function (Follower $follower) {
                 $follower->follower->notify(new AddPostNotificationNewCounter());
