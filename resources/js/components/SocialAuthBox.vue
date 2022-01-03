@@ -21,11 +21,6 @@
       </div>
 
       <div class="row">
-<!--        <div class="col-md-4">-->
-<!--          <div class="social-auth__button" @click="login('twitter')">-->
-<!--            <i class="fab fa-twitch l-fs-24"></i>-->
-<!--          </div>-->
-<!--        </div>-->
         <div class="col-md-6">
           <div class="social-auth__button" @click="login('twitch')">
             <ion-icon src="/icons/logo-twitch.svg"></ion-icon>

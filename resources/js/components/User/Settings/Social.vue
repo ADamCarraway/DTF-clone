@@ -23,7 +23,6 @@
     data() {
       return {
         arr: {
-          // 'twitter': {name: 'twitter', status: false},
           'facebook': {name: 'facebook', icon: 'logo-facebook.svg', status: false},
           'google': {name: 'google', icon: 'logo-google.svg', status: false},
           'twitch': {name: 'twitch', icon: 'logo-twitch.svg', status: false}
