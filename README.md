@@ -9,11 +9,21 @@
 ```bash
 git clone https://github.com/ADamCarraway/DTF-clone.git
 ```
-## Set the basic config
+## Set the config
 ```bash
 cp .env.example .env
 ```
 > Edit the .env file and set the database and other config for the system after you copy the .env.example file.
+
+## Install all packages:
+```bash
+composer install
+```
+
+## Generate config:
+```bash
+php artisan key:generate
+```
 
 ## Set up the database:
 ```bash
