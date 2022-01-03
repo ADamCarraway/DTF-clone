@@ -4,7 +4,6 @@ import CategoryAllDetails from "../components/User/Details/CategoryAllDetails";
 import DetailsIndexSubs from "../components/User/Details/DetailsIndexSubs";
 import DetailsIndexRegulations from "../components/User/Details/DetailsIndexRegulations";
 import UserAllDetails from "../components/User/Details/UserAllDetails";
-import UserNotifications from "../components/User/UserNotifications";
 import UserDrafts from "../components/User/UserDrafts";
 import MainInfo from "../components/User/Settings/MainInfo";
 import NotificationSetting from "../components/User/Settings/NotificationSetting";
@@ -38,9 +37,6 @@ export default [
       {path: 'new', name: 'user.new', component: UserPosts},
       {path: 'comments', name: 'user.comments', component: UserComments},
       {path: 'comments/new', name: 'user.comments.new', component: UserComments},
-      {path: 'favorites', name: 'user.favorites', component: page('user/favorites.vue')},
-      {path: 'favorites/comments', name: 'user.favorites.comments', component: page('user/favorites.vue')},
-      {path: 'notifications', name: 'user.notifications', component: UserNotifications},
       {path: 'drafts', name: 'user.drafts', component: UserDrafts},
       {
         path: 'details',
@@ -53,6 +49,9 @@ export default [
       },
     ],
   },
+  {path: '/u/:slug/favorites', name: 'user.favorites', component: page('user/favorites.vue')},
+  {path: '/u/:slug/favorites/comments', name: 'user.favorites.comments', component: page('user/favorites.vue')},
+  {path: '/u/:slug/notifications', name: 'user.notifications', component: page('user/notifications.vue')},
   {
     path: '/u/:slug/settings',
     component: page('user/settings/index.vue'),

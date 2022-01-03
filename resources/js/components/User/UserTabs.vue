@@ -41,20 +41,6 @@ export default {
           if: true
         },
         {
-          name: 'Закладки',
-          route: 'user.favorites',
-          active: ['user.favorites', 'user.favorites.comments'],
-          count: this.user ? this.user.bookmarks_count : 0,
-          if: this.user ? store.getters['auth/user'].slug === this.user.slug : false
-        },
-        {
-          name: 'Уведомления',
-          route: 'user.notifications',
-          active: ['user.notifications'],
-          count: store.getters['auth/user'].notifications_count === 0 ? '' : store.getters['auth/user'].notifications_count,
-          if: this.user ? store.getters['auth/user'].slug === this.user.slug : false
-        },
-        {
           name: 'Черновики',
           route: 'user.drafts',
           active: ['user.drafts'],

@@ -1,17 +1,19 @@
 <template>
-  <div>
-    <div class="ui-tabs ui-tabs--small ui-border--bottom l-island-round l-island-bg" style="    margin-bottom: 13px;">
+  <div class="favorites-page">
+    <div class="ui-tabs ui-tabs--small ui-border--bottom l-island-round">
       <div class="ui-tabs__scroll">
         <div class="ui-tabs__content l-island-a">
-          <router-link  :to="{ name: 'user.favorites'}" class="ui-tab" :class="{'ui-tab--active': $route.name === 'user.favorites'}">
+          <router-link :to="{ name: 'user.favorites'}" class="ui-tab"
+                       :class="{'ui-tab--active': $route.name === 'user.favorites'}">
             <span class="ui-tab__label">
               Статьи
               <span class="ui-tab__counter ">{{ postTotal }}</span>
             </span>
           </router-link>
-          <router-link :to="{ name: 'user.favorites.comments'}" class="ui-tab" :class="{'ui-tab--active': $route.name === 'user.favorites.comments'}">
+          <router-link :to="{ name: 'user.favorites.comments'}" class="ui-tab"
+                       :class="{'ui-tab--active': $route.name === 'user.favorites.comments'}">
             <span class="ui-tab__label">Комментарии
-              <span class="ui-tab__counter ">{{ commentsTotal}}</span>
+              <span class="ui-tab__counter ">{{ commentsTotal }}</span>
             </span>
           </router-link>
         </div>
@@ -47,43 +49,43 @@
 </template>
 
 <script>
-  import InfiniteLoading from "vue-infinite-loading";
-  import axios from "axios";
-  import Comment from "../../components/Blocks/Comment";
-  import UserCommentBlock from "../../components/Blocks/UserCommentBlock";
-  import Post from "../../components/Blocks/Post";
+import InfiniteLoading from "vue-infinite-loading";
+import axios from "axios";
+import Comment from "../../components/Blocks/Comment";
+import UserCommentBlock from "../../components/Blocks/UserCommentBlock";
+import Post from "../../components/Blocks/Post";
 
-  export default {
-    name: "favorites",
-    middleware: 'private',
-    components: {Post, UserCommentBlock, Comment, InfiniteLoading},
-    data() {
-      return {
-        filter: this.$route.name.indexOf('.comments') + 1 ? 'comments' : 'posts',
-        data: [],
-        page: 1,
-        infiniteId: +new Date(),
-        postTotal: 0,
-        commentsTotal: 0
-      }
-    },
-    beforeRouteEnter(to, from, next) {
-      next(vm => {
-        vm.filter = to.name.indexOf('.comments') + 1 ? 'comments' : 'posts';
-        vm.data = [];
-        vm.page = 1;
-        vm.infiniteId += 1;
-      });
-    },
-    methods: {
-      infiniteHandler($state) {
-        axios.get('/api/u/' + this.$route.params.slug + '/favorites?filter=' + this.filter + '&page=' + this.page)
+export default {
+  name: "favorites",
+  middleware: 'private',
+  components: {Post, UserCommentBlock, Comment, InfiniteLoading},
+  data() {
+    return {
+      filter: this.$route.name.indexOf('.comments') + 1 ? 'comments' : 'posts',
+      data: [],
+      page: 1,
+      infiniteId: +new Date(),
+      postTotal: 0,
+      commentsTotal: 0
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.filter = to.name.indexOf('.comments') + 1 ? 'comments' : 'posts';
+      vm.data = [];
+      vm.page = 1;
+      vm.infiniteId += 1;
+    });
+  },
+  methods: {
+    infiniteHandler($state) {
+      axios.get('/api/u/' + this.$route.params.slug + '/favorites?filter=' + this.filter + '&page=' + this.page)
           .then((data) => {
-            if (data.data.postTotal){
+            if (data.data.postTotal) {
               this.postTotal = data.data.postTotal
             }
 
-            if (data.data.commentsTotal){
+            if (data.data.commentsTotal) {
               this.commentsTotal = data.data.commentsTotal
             }
 
@@ -98,10 +100,10 @@
               $state.complete();
             }
           });
-      },
-    }
-
+    },
   }
+
+}
 </script>
 
 <style scoped>

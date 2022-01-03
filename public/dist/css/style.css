@@ -6963,3 +6963,30 @@ input:checked + .like-btn-svg {
     margin-left: auto;
     border-radius: 100px;
 }
+
+@media (min-width: 640px) {
+    .favorites-page#page_wrapper {
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 640px) {
+    .notifications-page#page_wrapper {
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+    }
+}
+
+.notifications-page#page_wrapper, .favorites-page#page_wrapper  {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+/*@media (min-width: 1300px) and (max-width: 1539px) {*/
+/*    .layout__right-column {*/
+/*        display: none;*/
+/*    }*/
+/*}*/
