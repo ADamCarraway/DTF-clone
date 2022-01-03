@@ -7,10 +7,11 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\UserNotificationSetting;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class LiveLentaAddCommentNotification extends Notification
+class LiveLentaAddCommentNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -18,20 +19,20 @@ class LiveLentaAddCommentNotification extends Notification
      * @var Comment
      */
     private Comment $comment;
-    private User $user;
 
     /**
      * AddFollowNotification constructor.
      * @param Comment $comment
      */
-    public function __construct(Comment $comment, User $user)
+    public function __construct(Comment $comment)
     {
         $this->comment = $comment;
-        $this->user = $user;
     }
 
     public function via($notifiable)
     {
+        $this->onQueue('notification');
+
         return ['broadcast'];
     }
 

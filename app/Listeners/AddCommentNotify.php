@@ -9,6 +9,6 @@ class AddCommentNotify
 {
     public function handle(CommentCreated $event)
     {
-        dispatch_now(new AddCommentNotificationJob($event->comment));
+        dispatch(new AddCommentNotificationJob($event->comment));
     }
 }

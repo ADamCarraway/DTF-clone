@@ -11,6 +11,6 @@ class AddPostNotify
 {
     public function handle(PostCreated $event)
     {
-        dispatch_now(new AddPostNotificationJob($event->post));
+        dispatch(new AddPostNotificationJob($event->post));
     }
 }

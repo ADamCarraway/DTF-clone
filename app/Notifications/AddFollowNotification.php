@@ -4,12 +4,14 @@ namespace App\Notifications;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class AddFollowNotification extends Notification
+class AddFollowNotification extends Notification implements ShouldQueue
 {
-//    use Queueable;
+    use Queueable;
     /**
      * @var User
      */
@@ -26,6 +28,8 @@ class AddFollowNotification extends Notification
 
     public function via($notifiable)
     {
+        $this->onQueue('notification');
+
         return $notifiable->isNotificationEnabled(self::class) ? ['broadcast', 'database'] : [];
     }
 

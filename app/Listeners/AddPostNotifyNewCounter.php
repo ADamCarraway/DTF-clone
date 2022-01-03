@@ -9,6 +9,6 @@ class AddPostNotifyNewCounter
 {
     public function handle(PostCreated $event)
     {
-        dispatch_now(new AddPostNotificationNewCounterJob($event->post));
+        dispatch(new AddPostNotificationNewCounterJob($event->post));
     }
 }

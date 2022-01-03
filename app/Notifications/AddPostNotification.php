@@ -4,10 +4,11 @@ namespace App\Notifications;
 
 use App\Models\Post;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class AddPostNotification extends Notification
+class AddPostNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -20,6 +21,8 @@ class AddPostNotification extends Notification
 
     public function via($notifiable)
     {
+        $this->onQueue('notification');
+
         return $notifiable->isNotificationEnabled(self::class) ? ['broadcast', 'database'] : [];
     }
 

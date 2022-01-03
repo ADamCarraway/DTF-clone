@@ -5,12 +5,15 @@ namespace App\Notifications;
 use App\Models\Comment;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class AddLikeToCommentNotification extends Notification
+class AddLikeToCommentNotification extends Notification implements ShouldQueue
 {
-//    use Queueable;
+    use Queueable;
+
     /**
      * @var User
      */
@@ -33,6 +36,8 @@ class AddLikeToCommentNotification extends Notification
 
     public function via($notifiable)
     {
+        $this->onQueue('notification');
+
         return $notifiable->isNotificationEnabled(self::class) ? ['broadcast', 'database'] : [];
     }
 

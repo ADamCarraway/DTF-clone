@@ -9,14 +9,17 @@ class UserNotifyRemove
 {
     public function handle($event)
     {
+        /** @var User $user */
+        $user = auth()->user();
+
         if ($event->type === 'category') {
-            $category = Category::query()->where('slug', $event->slug)->firstOrFail();
-
-            auth()->user()->categoryNotify()->detach($category->id);
-        } else {
-            $user = User::query()->whereSlug($event->slug)->firstOrFail();
-
-            auth()->user()->userNotify()->detach($user->id);
+            $user->categoryNotify()->detach(
+                Category::query()->where('slug', $event->slug)->firstOrFail()->id
+            );
+        } elseif ($event->type === 'user') {
+            $user->userNotify()->detach(
+                User::query()->whereSlug($event->slug)->firstOrFail()->id
+            );
         }
     }
 }

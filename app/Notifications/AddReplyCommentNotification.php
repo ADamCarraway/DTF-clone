@@ -7,10 +7,11 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\UserNotificationSetting;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class AddReplyCommentNotification extends Notification
+class AddReplyCommentNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -33,6 +34,8 @@ class AddReplyCommentNotification extends Notification
 
     public function via($notifiable)
     {
+        $this->onQueue('notification');
+
         return $notifiable->isNotificationEnabled(self::class) ? ['broadcast', 'database'] : [];
     }
 
