@@ -29,7 +29,7 @@ window.Echo = new Echo({
   forceTLS: false,
   wsHost: window.location.hostname,
   wsPort: 6001,
-  enabledTransports: ['ws']
+  wssPort: 443
 });
 
 import '~/plugins'
