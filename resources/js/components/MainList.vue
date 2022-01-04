@@ -23,7 +23,7 @@
     <router-link :to="{ name: 'rating'}" class="sidebar__tree-list__item">
       <div class="sidebar-tree-list-item__link">
         <ion-icon name="trending-up-outline" class="sidebar__icon"></ion-icon>
-        <p class="sidebar__tree-list__item__name">Рейтинг DTF</p>
+        <p class="sidebar__tree-list__item__name">Рейтинг</p>
       </div>
     </router-link>
     <router-link :to="{ name: 'subs'}" class="sidebar__tree-list__item">

@@ -115,7 +115,7 @@
       if (this.$route.name === 'index.new') EventBus.$emit('clearNewPosts')
     },
     metaInfo() {
-      return {title: 'DTF — игры, кино, сериалы, разработка, сообщество'}
+      return {title: 'noCONTEXT — игры, кино, сериалы, разработка, сообщество'}
     }
   }
 </script>
