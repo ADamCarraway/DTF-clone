@@ -7,6 +7,7 @@ use App\Notifications\AddFollowNotification;
 use App\Notifications\AddLikeToCommentNotification;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 
@@ -19,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
+
         if ($this->app->runningUnitTests()) {
             Schema::defaultStringLength(191);
         }
