@@ -33,7 +33,7 @@
           </infinite-loading>
           <div class="head-notifies__loader" style="display: none;">
             <div class="v-loader ui_preloader"><span class="ui_preloader__dot"></span> <span
-              class="ui_preloader__dot"></span> <span class="ui_preloader__dot"></span></div>
+                class="ui_preloader__dot"></span> <span class="ui_preloader__dot"></span></div>
           </div>
           <div v-if="user && notifications.length === 0">
             <div class="u-notification u-notification--border u-notification--hover text-center">
@@ -43,8 +43,8 @@
         </div>
         <footer class="head-notifies__footer t-ff-1-500">
           <router-link
-            :to="{ name: 'user.notifications', params: {'slug': user.slug} }"
-            class="head-notifies__footer-link t-link-inline">
+              :to="{ name: 'user.notifications', params: {'slug': user.slug} }"
+              class="head-notifies__footer-link t-link-inline">
             <span>Все уведомления</span>
           </router-link>
         </footer>
@@ -80,10 +80,6 @@ export default {
       'notifications': [],
       'page': 1,
       'needLoading': true,
-      'exeptions': [
-        'App\\Notifications\\LiveLentaAddCommentNotification',
-        'App\\Notifications\\AddPostNotificationNewCounter'
-      ]
     }
   },
 
@@ -94,29 +90,28 @@ export default {
   mounted() {
     if (this.user) {
       Echo.private(`App.Models.User.${this.$store.getters['auth/user']['id']}`).notification(notification => {
-        if (!this.exeptions.includes(notification.type)) {
-          this.notReading += 1;
-          // this.notifications.unshift({'type': notification.type, 'data': notification.data})
-        }
+        this.notReading += 1;
+        // this.notifications.unshift({'type': notification.type, 'data': notification.data})
 
         EventBus.$emit('addNotification', {'notification': notification});
       });
     }
+
   },
   methods: {
     infiniteHandler($state) {
       axios.get('/api/notification' + '?page=' + this.page)
-        .then((data) => {
-          this.notReading = 0;
-          if (data.data.data.length) {
-            this.showAllReadBtn = data.data.notRead
-            this.page = this.page + 1;
-            this.notifications = data.data.data;
-            $state.loaded();
-          } else {
-            $state.complete();
-          }
-        });
+          .then((data) => {
+            this.notReading = 0;
+            if (data.data.data.length) {
+              this.showAllReadBtn = data.data.notRead
+              this.page = this.page + 1;
+              this.notifications = data.data.data;
+              $state.loaded();
+            } else {
+              $state.complete();
+            }
+          });
 
       // const uniqueElementsBy = (arr, fn) =>
       //   arr.reduce((acc, v) => {
@@ -129,9 +124,9 @@ export default {
 
     readAll() {
       axios.post('/api/notification/readAll')
-        .then((data) => {
-          this.showAllReadBtn = 0;
-        });
+          .then((data) => {
+            this.showAllReadBtn = 0;
+          });
     }
   }
 }

@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\UserNotificationSetting;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -48,5 +49,11 @@ class LiveLentaAddCommentNotification extends Notification implements ShouldQueu
         return new BroadcastMessage([
             'comment' => $this->comment,
         ]);
+    }
+
+
+    public function broadcastOn(): Channel
+    {
+        return new Channel('new-comment.' . $this->comment->post->category->id);
     }
 }

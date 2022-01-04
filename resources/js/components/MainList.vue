@@ -14,7 +14,8 @@
         <p class="sidebar-tree-list-item__badge" v-if="newCount">{{ newCount }}</p>
       </div>
     </router-link>
-    <router-link :to="{ name: 'user.favorites', params:{'slug': user.slug}}" class="sidebar__tree-list__item" v-if="user">
+    <router-link :to="{ name: 'user.favorites', params:{'slug': user.slug}}" class="sidebar__tree-list__item"
+                 v-if="user">
       <div class="sidebar-tree-list-item__link">
         <ion-icon name="bookmark-outline" class="sidebar__icon"></ion-icon>
         <p class="sidebar__tree-list__item__name">Закладки</p>
@@ -56,11 +57,14 @@ export default {
     EventBus.$on('clearNewPosts', () => {
       this.newCount = 0;
     });
-    EventBus.$on('addNotification', (data) => {
-      if (data.notification.type === 'App\\Notifications\\AddPostNotificationNewCounter') {
+
+    let subs = this.user ? this.user.subscriptions : window.config.categories;
+
+    for (const [key, value] of Object.entries(subs)) {
+      Echo.channel('new-post-counter.' + value.id).notification(notification => {
         this.newCount += 1;
-      }
-    });
+      });
+    }
   },
   methods: {
     change(filter) {

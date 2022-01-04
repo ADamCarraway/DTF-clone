@@ -94,12 +94,17 @@ export default {
       this.show = !this.show;
     });
     EventBus.$on('addNotification', (data) => {
-      if (data.notification.type === 'App\\Notifications\\LiveLentaAddCommentNotification'){
-        this.comments.unshift(data.notification.comment)
-      }else{
-        this.comments.unshift(data.notification)
-      }
+      console.log(data.notification)
+      this.comments.unshift(data.notification)
     });
+
+    let subs = this.user ? this.user.subscriptions : window.config.categories;
+
+    for (const [key, value] of Object.entries(subs)) {
+      Echo.channel('new-comment.' + value.id).notification(notification => {
+        this.comments.unshift(notification.comment)
+      });
+    }
   },
   created() {
     this.get()

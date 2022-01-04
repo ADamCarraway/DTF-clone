@@ -3,17 +3,17 @@
 namespace App\Models;
 
 use App\Concerns\Ignorable;
-use App\Concerns\Notifiable;
+use App\Concerns\Notifiable as NotifiableTrait;
 use App\Contracts\Ignorable as IgnorableInterface;
 use App\Contracts\Notifiable as NotifiableInterface;
 use Hypefactors\Laravel\Follow\Contracts\CanBeFollowedContract;
 use Hypefactors\Laravel\Follow\Traits\CanBeFollowed;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Notifications\Notifiable;
 
 class Category extends Model implements CanBeFollowedContract, IgnorableInterface, NotifiableInterface
 {
-    use CanBeFollowed, Ignorable, Notifiable;
+    use CanBeFollowed, Ignorable, NotifiableTrait, Notifiable;
 
     //a - postsLikes, b
     const ODDS = ['a' => 0.02, 'c' => 1];

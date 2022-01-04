@@ -32,7 +32,7 @@ class AddCommentNotificationJob implements ShouldQueue
             })
             ->where('user_id', '!=', $this->comment->user_id)
             ->each(function (Notification $notification) {
-                $notification->user->notify(new AddCommentNotification($this->comment))->onQueue('notification');
+                $notification->user->notify(new AddCommentNotification($this->comment));
             });
     }
 }

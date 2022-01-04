@@ -16,7 +16,6 @@ class LiveLentaController extends Controller
         $comments = Comment::query()
             ->with(['user', 'post'])
             ->whereNull('parent_id')
-            ->where('user_id', '!=', auth()->id())
             ->whereHas('post', function ($q) {
                 $q->whereIn('category_id', auth()->user()->followings()
                     ->where('followable_type', Category::class)

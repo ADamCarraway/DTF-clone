@@ -3,12 +3,12 @@
 namespace App\Listeners;
 
 use App\Events\PostCreated;
-use App\Jobs\AddPostNotificationNewCounterJob;
+use App\Notifications\AddPostNotificationNewCounter;
 
 class AddPostNotifyNewCounter
 {
     public function handle(PostCreated $event)
     {
-        dispatch(new AddPostNotificationNewCounterJob($event->post));
+        $event->post->category->notify(new AddPostNotificationNewCounter($event->post));
     }
 }
