@@ -1,6 +1,6 @@
 # LARAVEL / SPA / LIKE DTF.RU
 
-![This is an image](https://i.imgur.com/awuEpIX.png)
+![This is an image](https://i.imgur.com/NX9crnm.png)
 
 ## Installation
 >The project is under development and refactoring. You will not be able to upgrade to the next version. Complete reinstallation only.
