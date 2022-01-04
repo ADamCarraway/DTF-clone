@@ -1,7 +1,7 @@
 <template>
   <el-dropdown trigger="click" @command="commands" v-if="user">
     <div class="el-dropdown-link">
-      <ion-icon src="/icons/ellipsis-horizontal-outline.svg"></ion-icon>
+      <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
     </div>
     <el-dropdown-menu slot="dropdown">
       <router-link :to="{name: 'editor', params: { data:data, postSlug:data.slug }}"

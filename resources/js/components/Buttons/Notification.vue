@@ -3,13 +3,13 @@
     class="v-subscribe-button__notifications v-button v-button--default v-button--size-default">
     <div v-if="!data.is_notify" @click="notify(true)">
       <div class="v-button__icon">
-        <ion-icon src="/icons/notifications-outline.svg"></ion-icon>
+        <ion-icon name="notifications-outline"></ion-icon>
       </div>
     </div>
 
     <div v-if="data.is_notify" @click="notify(false)">
       <div class="v-button__icon">
-        <ion-icon src="/icons/notifications-off-outline.svg"></ion-icon>
+        <ion-icon name="notifications-off-outline"></ion-icon>
       </div>
     </div>
   </div>

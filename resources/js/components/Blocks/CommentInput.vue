@@ -6,10 +6,10 @@
 
       <div class="comments_pseudo_form__buttons">
         <div class="comments_pseudo_form__button">
-          <ion-icon src="/icons/link-outline.svg" :class="'icon--attach-link'"></ion-icon>
+          <ion-icon name="link-outline" :class="'icon--attach-link'"></ion-icon>
         </div>
         <div class="comments_pseudo_form__button">
-          <ion-icon src="/icons/image-outline.svg" :class="'icon--ui_image'"></ion-icon>
+          <ion-icon name="image-outline" :class="'icon--ui_image'"></ion-icon>
         </div>
       </div>
 

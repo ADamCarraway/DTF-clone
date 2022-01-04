@@ -7,7 +7,7 @@
            @click="repost(data.is_reposted)"
       >
 <!--        <i class="fas fa-retweet l-fs-20"></i>-->
-        <ion-icon src="/icons/sync-outline.svg"></ion-icon>
+        <ion-icon name="sync-outline"></ion-icon>
         <div class="repost_button__counter l-ml-4" v-if="data.repost_count > 0">{{ data.repost_count }}</div>
         <div class="repost_button__counter l-ml-4"></div>
       </div>

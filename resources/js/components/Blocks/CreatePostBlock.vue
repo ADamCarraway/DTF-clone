@@ -35,7 +35,7 @@
     <div class="miniEditor__actions">
       <label for="file">
         <div class="attachButton">
-          <ion-icon src="/icons/image-outline.svg"></ion-icon>
+          <ion-icon name="image-outline"></ion-icon>
           <span class="attachButton__label">
           Фото и видео
         </span>

@@ -2,7 +2,7 @@
   <div class="v-header__avatar v-header-avatar" :class="{'preloader': !data || preloader}"
        :style="{ backgroundImage: `url('${data.avatar}')` }">
     <label for="avatar-upload" class="avatar-upload-icon" v-if="(data.slug && user && user.slug == $route.params.slug) && !preloader">
-      <ion-icon src="/icons/image-outline.svg"></ion-icon>
+      <ion-icon name="image-outline"></ion-icon>
       <input type="file" v-on:change="update" class="" id="avatar-upload" style="display: none">
     </label>
   </div>

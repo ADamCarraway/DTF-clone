@@ -12,7 +12,7 @@
             :to="{ name: data.category ? 'post' :'user.post', params: {postSlug: data.slug, slug: data.category ? data.category.slug : data.user.slug} }"
             class="comments_counter__count t-link">
                 <span class="comments_counter__count__ico l-inline-block l-va-middle l-lhr-1">
-                  <ion-icon src="/icons/chatbubble-outline.svg" style="transform: scale(-1, 1);"></ion-icon>
+                  <ion-icon name="chatbubble-outline" style="transform: scale(-1, 1);"></ion-icon>
                 </span>
             <span class="comments_counter__count__value l-inline-block l-va-middle">{{ data.comments_count}}</span>
           </router-link>

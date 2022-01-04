@@ -18,7 +18,7 @@
 
             <a href="https://dtf.ru/u/91342-adam-carraway/285557-yted?comment=8485319" v-if="parent"
                class="comments__item__replied_to t-link">
-              <ion-icon src="/icons/return-up-back-outline.svg"></ion-icon>
+              <ion-icon name="return-up-back-outline"></ion-icon>
               {{ parent.user.name }}
             </a>
 
@@ -67,7 +67,7 @@
         </div>
         <!-- Reply -->
         <div class="comments__item__reply" @click="toggle">
-          <ion-icon src="/icons/chatbubble-outline.svg" style="transform: scale(-1, 1);"></ion-icon> Ответить</div>
+          <ion-icon name="chatbubble-outline" style="transform: scale(-1, 1);"></ion-icon> Ответить</div>
 
         <bookmark :data="data"/>
 

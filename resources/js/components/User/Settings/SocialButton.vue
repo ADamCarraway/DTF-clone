@@ -5,7 +5,7 @@
     <ion-icon :src="'/icons/' + icon"></ion-icon>
     <span class="island__social_links__title" style="text-transform: capitalize;">{{ provider.name }}</span>
     <div class="island__social_links__item__delete" v-if="provider.status">
-      <ion-icon src="/icons/close-outline.svg"></ion-icon>
+      <ion-icon name="close-outline"></ion-icon>
     </div>
   </div>
 </template>

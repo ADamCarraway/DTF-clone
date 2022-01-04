@@ -2,9 +2,10 @@
   <div class="auth-form">
     <div class="auth-form__art"
          style="background-image: url(https://leonardo.osnova.io/356f8b87-e803-86ab-2875-f11915f78a7e/-/scale_crop/600x1154/center/); color: #000000">
-      <svg class="icon icon--site_logo" width="70" height="23">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#site_logo"></use>
-      </svg>
+      <img src="logo.png" class="site_logo">
+<!--      <svg class="icon icon&#45;&#45;site_logo" width="70" height="23">-->
+<!--        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#site_logo"></use>-->
+<!--      </svg>-->
     </div>
     <button type="button" aria-label="Close" class="el-dialog__headerbtn" @click="modalHide()"><i class="el-dialog__close el-icon el-icon-close"></i></button>
     <div class="auth-form__main">

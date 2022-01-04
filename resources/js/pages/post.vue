@@ -44,7 +44,7 @@
 
               <!-- Число просмотров -->
               <div class="content-header-number content-header__item">
-                <ion-icon src="/icons/eye-outline.svg" :class="'mr-2'"></ion-icon> {{ data.unique_views_count }}
+                <ion-icon name="eye-outline" :class="'mr-2'"></ion-icon> {{ data.unique_views_count }}
               </div>
 
               <!-- Закрепленный пост -->

@@ -4,7 +4,7 @@
     <div class="l-mb-28 lm-mb-20 content-feed l-island-bg l-island-round">
 
       <div class="content-header-repost l-island-a" v-if="data.parent_id">
-        <ion-icon src="/icons/repeat-outline.svg"></ion-icon>
+        <ion-icon name="repeat-outline"></ion-icon>
         <router-link v-if="data.user" :to="{ name: 'user', params: {slug: data.user.slug} }"
                      class="content-header-repost__name l-inline-block l-mr-4 l-relative l-z-1 t-link"
                      :title="data.user.name">
@@ -78,7 +78,7 @@
             <router-link
               :to="{ name: post.category ? 'post' :'user.post', params: {postSlug: post.slug, slug: post.category ? post.category.slug : post.user.slug} }">
               <span class="content-editorial-tick">
-                <ion-icon src="/icons/checkmark.svg"></ion-icon>
+                <ion-icon name="checkmark"></ion-icon>
               </span>
             </router-link>
           </span>

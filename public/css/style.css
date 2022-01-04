@@ -6990,3 +6990,8 @@ input:checked + .like-btn-svg {
 /*        display: none;*/
 /*    }*/
 /*}*/
+
+.site_logo{
+    width: 90px;
+    height: 25px;
+}

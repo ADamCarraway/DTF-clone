@@ -2,7 +2,7 @@
   <div class="site-header__item">
     <div class="head-notifies" :class="{'head-notifies--showed': show}">
       <div class="head-notifies__toggler" @click="show = !show">
-        <ion-icon src="/icons/notifications-outline.svg"></ion-icon>
+        <ion-icon name="notifications-outline"></ion-icon>
         <!--        head-notifies__badge--hidden-->
         <span class="head-notifies__badge"
               :class="{'head-notifies__badge--hidden': !notReading}">{{ notReading }}</span>

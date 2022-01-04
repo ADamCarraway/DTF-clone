@@ -33,7 +33,7 @@
                              v-if="data.slug && user && user.slug == $route.params.slug"
                              class="v-button v-button--default v-button--size-default">
                   <div class="v-button__icon">
-                    <ion-icon src="/icons/settings-outline.svg"></ion-icon>
+                    <ion-icon name="settings-outline"></ion-icon>
                   </div>
                 </router-link>
               </div>

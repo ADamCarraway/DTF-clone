@@ -6,29 +6,29 @@
 
       <!-- Login Form Button -->
       <div class="social-auth__button" @click="showLoginForm()">
-        <ion-icon src="/icons/mail-outline.svg"></ion-icon>
+        <ion-icon name="mail-outline"></ion-icon>
         <div class="social-auth__label">Почта</div>
       </div>
 
       <div class="social-auth__button" @click="login('vk')">
-        <ion-icon src="/icons/logo-vk.svg"></ion-icon>
+        <ion-icon name="logo-vk"></ion-icon>
         <div class="social-auth__label">ВКонтакте</div>
       </div>
 
       <div class="social-auth__button" @click="login('google')">
-        <ion-icon src="/icons/logo-google.svg"></ion-icon>
+        <ion-icon name="logo-google"></ion-icon>
         <div class="social-auth__label">Google</div>
       </div>
 
       <div class="row">
         <div class="col-md-6">
           <div class="social-auth__button" @click="login('twitch')">
-            <ion-icon src="/icons/logo-twitch.svg"></ion-icon>
+            <ion-icon name="logo-twitch"></ion-icon>
           </div>
         </div>
         <div class="col-md-6">
           <div class="social-auth__button" @click="login('facebook')">
-            <ion-icon src="/icons/logo-facebook.svg"></ion-icon>
+            <ion-icon name="logo-facebook"></ion-icon>
           </div>
         </div>
       </div>
