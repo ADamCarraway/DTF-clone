@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6b7d7b1e34c6ab861d917aeb846861e",
+    "content-hash": "f55d5bf63d52d1a6fef96a98ccdcb3d3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -464,40 +464,34 @@
         },
         {
             "name": "cloudinary/cloudinary_php",
-            "version": "2.5.1",
+            "version": "1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary/cloudinary_php.git",
-                "reference": "7d5d5eeb56df7cda1acd5a6310285ad6e55b9f82"
+                "reference": "2a8e6ed5bc6cf024022c6fcc03b69e1ce92ccaab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/7d5d5eeb56df7cda1acd5a6310285ad6e55b9f82",
-                "reference": "7d5d5eeb56df7cda1acd5a6310285ad6e55b9f82",
+                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/2a8e6ed5bc6cf024022c6fcc03b69e1ce92ccaab",
+                "reference": "2a8e6ed5bc6cf024022c6fcc03b69e1ce92ccaab",
                 "shasum": ""
             },
             "require": {
+                "ext-curl": "*",
                 "ext-json": "*",
-                "guzzlehttp/guzzle": "^6|^7",
-                "monolog/monolog": "*",
-                "php": ">=5.6.0",
-                "psr/log": "^1",
-                "shrikeh/teapot": "^1|^2"
+                "php": ">=5.4.0"
             },
             "require-dev": {
-                "consolidation/robo": "~1",
-                "ext-dom": "*",
-                "ext-libxml": "*",
                 "ext-zip": "*",
-                "friendsofphp/php-cs-fixer": "*",
-                "phpmd/phpmd": "*",
-                "phpunit/phpunit": "^5",
-                "squizlabs/php_codesniffer": "3.*"
+                "phpunit/phpunit": "4.8.*"
             },
             "type": "library",
             "autoload": {
                 "classmap": [
                     "src"
+                ],
+                "files": [
+                    "src/Helpers.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -522,9 +516,9 @@
             "support": {
                 "email": "info@cloudinary.com",
                 "issues": "https://github.com/cloudinary/cloudinary_php/issues",
-                "source": "https://github.com/cloudinary/cloudinary_php/tree/2.5.1"
+                "source": "https://github.com/cloudinary/cloudinary_php/tree/1.20.0"
             },
-            "time": "2021-11-24T17:04:15+00:00"
+            "time": "2021-01-13T18:40:23+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -6287,63 +6281,6 @@
             "time": "2021-12-10T11:20:11+00:00"
         },
         {
-            "name": "shrikeh/teapot",
-            "version": "v2.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/shrikeh/teapot.git",
-                "reference": "2fea5720963f22eedb920ee65b9d643bfa3e8daf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/shrikeh/teapot/zipball/2fea5720963f22eedb920ee65b9d643bfa3e8daf",
-                "reference": "2fea5720963f22eedb920ee65b9d643bfa3e8daf",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5",
-                "psr/http-message": "^1.0",
-                "teapot/status-code": "^1.0"
-            },
-            "require-dev": {
-                "behat/behat": "^3.2",
-                "bossa/phpspec2-expect": "^2.0",
-                "escapestudios/symfony2-coding-standard": "^2.9",
-                "phpspec/phpspec": "~3.0.0",
-                "squizlabs/php_codesniffer": "^2.7"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Teapot\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Barney Hanlon",
-                    "email": "barney@shrikeh.net"
-                },
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com"
-                }
-            ],
-            "description": "PHP HTTP Response Status library",
-            "homepage": "https://shrikeh.github.io/teapot/",
-            "keywords": [
-                "http"
-            ],
-            "support": {
-                "issues": "https://github.com/shrikeh/teapot/issues",
-                "source": "https://github.com/shrikeh/teapot/tree/master"
-            },
-            "time": "2017-09-01T13:56:48+00:00"
-        },
-        {
             "name": "simplesoftwareio/simple-qrcode",
             "version": "3.0.0",
             "source": {
@@ -9140,53 +9077,6 @@
                 }
             ],
             "time": "2021-12-29T10:10:35+00:00"
-        },
-        {
-            "name": "teapot/status-code",
-            "version": "v1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/teapot-php/status-code.git",
-                "reference": "7aaba4364645ebb9d3a36267c9b3a32206d3042b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/teapot-php/status-code/zipball/7aaba4364645ebb9d3a36267c9b3a32206d3042b",
-                "reference": "7aaba4364645ebb9d3a36267c9b3a32206d3042b",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.4 || ^7.0 || ^8.0"
-            },
-            "require-dev": {
-                "squizlabs/php_codesniffer": "^3.5.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Teapot\\StatusCode\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Barney Hanlon",
-                    "email": "barney@shrikeh.net"
-                }
-            ],
-            "description": "PHP HTTP Response Status code library",
-            "homepage": "http://shrikeh.github.com/teapot",
-            "keywords": [
-                "http"
-            ],
-            "support": {
-                "issues": "https://github.com/teapot-php/status-code/issues",
-                "source": "https://github.com/teapot-php/status-code/tree/v1.1.2"
-            },
-            "time": "2020-11-03T17:14:32+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

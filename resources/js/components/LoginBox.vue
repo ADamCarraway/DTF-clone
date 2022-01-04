@@ -2,7 +2,7 @@
   <div class="auth-form">
     <div class="auth-form__art"
          style="background-image: url(https://leonardo.osnova.io/356f8b87-e803-86ab-2875-f11915f78a7e/-/scale_crop/600x1154/center/); color: #000000">
-      <img src="logo.png" class="site_logo">
+      <img src="/logo.png" class="site_logo">
 <!--      <svg class="icon icon&#45;&#45;site_logo" width="70" height="23">-->
 <!--        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#site_logo"></use>-->
 <!--      </svg>-->
