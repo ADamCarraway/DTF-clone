@@ -16,7 +16,7 @@
 <!--            </svg>-->
 <!--          </use>-->
 <!--        </svg>-->
-        <img src="/logo.png" alt="" class="site_logo">
+        <img src="/logo.png" alt="" class="site_logo">1
       </router-link>
     </div>
 
