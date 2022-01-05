@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('viewWebSocketsDashboard', function () use ($email){
+        Gate::define('viewWebSocketsDashboard', function (){
             return true;
         });
     }
