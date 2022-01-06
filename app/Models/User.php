@@ -41,6 +41,7 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
     const ODDS = ['a' => 0.02, 'b' => 0.05, 'c' => 1];
 
     const AVATAR_PATH = 'user/avatars/full/';
+    const HEADER_PATH = 'user/headers/full/';
     const COMMENT_FILE_PATH = 'comment/files/full/';
     const POST_FILE_PATH = 'post/files/full/';
 

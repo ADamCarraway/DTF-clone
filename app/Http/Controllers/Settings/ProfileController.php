@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use JD\Cloudder\Facades\Cloudder;
 
 class ProfileController extends Controller
@@ -12,12 +13,12 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name'  => 'required',
             'email' => 'required|email|unique:users,email,' . auth()->user()->id,
         ]);
 
         return tap(auth()->user())->update([
-            'name' => $request->input('name'),
+            'name'  => $request->input('name'),
             'email' => $request->input('email'),
         ]);
     }
@@ -38,5 +39,32 @@ class ProfileController extends Controller
         return tap(auth()->user())->update([
             'avatar' => $avatar_status['url']
         ]);
+    }
+
+    public function headerUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'header' => 'required',
+        ]);
+
+        $user = auth()->user();
+
+        $header = Cloudder::upload($request->file('header')->getRealPath(),
+            User::HEADER_PATH . time() . '-' . str_replace('.' . $request->file('header')->getClientOriginalExtension(), "", $request->file('header')->getClientOriginalName()),
+            [],
+            $user->id . '-' . $user->name);
+
+        $header_status = $header->getResult();
+
+        return tap(auth()->user())->update([
+            'header' => $header_status['url']
+        ]);
+    }
+
+    public function headerDestroy()
+    {
+        auth()->user()->update(['header' => null]);
+
+        return response()->json();
     }
 }

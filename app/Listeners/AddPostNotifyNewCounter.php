@@ -9,6 +9,9 @@ class AddPostNotifyNewCounter
 {
     public function handle(PostCreated $event)
     {
-        $event->post->category->notify(new AddPostNotificationNewCounter($event->post));
+        $post = $event->post;
+        if ($post->category_id) {
+            $post->category->notify(new AddPostNotificationNewCounter($event->post));
+        }
     }
 }

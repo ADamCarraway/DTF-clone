@@ -20,6 +20,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('settings/profile', 'Settings\ProfileController@update');
     Route::post('settings/profile/avatar/update', 'Settings\ProfileController@avatarUpdate');
+    Route::post('settings/header/update', 'Settings\ProfileController@headerUpdate');
+    Route::post('settings/header/delete', 'Settings\ProfileController@headerDestroy');
     Route::post('settings/password', 'Settings\PasswordController@update');
     Route::get('settings/notification', 'Settings\UserNotificationController@index');
     Route::post('settings/notification', 'Settings\UserNotificationController@update');
