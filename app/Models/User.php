@@ -13,11 +13,11 @@ use Hypefactors\Laravel\Follow\Contracts\CanFollowContract;
 use Hypefactors\Laravel\Follow\Traits\CanBeFollowed;
 use Hypefactors\Laravel\Follow\Traits\CanFollow;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Concerns\Ignorable;
@@ -50,7 +50,7 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
     ];
 
     protected $hidden = [
-        'password', 'remember_token', 'qr'
+        'password', 'remember_token', 'qr', 'last_seen'
     ];
 
     protected $casts = [
@@ -71,7 +71,8 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         'is_favorite',
         'is_follow',
         'type',
-        'slug'
+        'slug',
+        'online'
     ];
 
 
@@ -195,8 +196,8 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
                 ->sortByDesc('is_favorite')
                 ->toArray(),
             'subscribers'         => $this->followers()->with('follower')->limit(12)->get()->pluck('follower'),
-            'followers_count'   => $this->followers()->count(),
-            'followings_count' => $this->followings()->count(),
+            'followers_count'     => $this->followers()->count(),
+            'followings_count'    => $this->followings()->count(),
             'subscriptions_limit' => array_slice($subscriptions, 0, 5),
             'posts_count'         => $this->posts()->public()->count(),
             'comments_count'      => $this->comments()->count(),
@@ -216,5 +217,15 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
     public function isNotificationEnabled($notification)
     {
         return $this->notificationSettings()->where('notification', $notification)->first()->status ?? 1;
+    }
+
+    public function getOnlineAttribute(): bool
+    {
+        return Cache::has('is-online-' . $this->id);
+    }
+
+    public function settings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserSetting::class);
     }
 }

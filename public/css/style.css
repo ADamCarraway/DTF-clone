@@ -1532,21 +1532,28 @@ body {
     border-color: #f4f4f4;
     position: relative;
     background: #f4f4f4;
-    color: #818181;
+    color: #000;
     fill: currentColor;
 }
 
-.island__social_links__item {
-    height: 28px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    max-width: 100%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+.island__social_links__item:not(:last-child) {
+    margin-right: 8px;
 }
+
+.island__social_links__item {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    border-radius: 7px;
+    height: 32px;
+    padding: 6px 14px 6px 10px;
+    background-color: #f2f2f2;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+
 
 .island__social_links__item ion-icon {
     margin-right: 8px;
@@ -1555,6 +1562,8 @@ body {
 
 .island__social_links__title {
     font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
 }
 
 .island__social_links__item__delete ion-icon {
@@ -7034,4 +7043,38 @@ ion-icon{
 
 .settings-hashtags__add-button .v-button__label{
     padding: 0 var(--offset);
+}
+
+.comment__avatar--online::after {
+    --size: 8px;
+    --stroke: 1px;
+    content: '';
+    width: var(--size);
+    height: var(--size);
+    background-color: #07a23b;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 0 0 var(--stroke) #fff;
+    box-shadow: 0 0 0 var(--stroke) #fff;
+    margin-top: auto;
+    margin-left: auto;
+}
+
+.comment__avatar {
+    width: 32px;
+    height: 32px;
+    /*margin-right: var(--offset-avatar-right);*/
+    /*margin-top: var(--offset-avatar-top);*/
+    /*margin-bottom: calc(var(--size-avatar)*-1);*/
+    position: absolute;
+    margin-left: -42px;
+    border-radius: 50%;
+    background-size: cover;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    -webkit-box-shadow: inset 0 0 0 1px rgba(0,0,0,.1);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.1);
 }

@@ -8,9 +8,8 @@
             <!-- User -->
             <router-link v-if="data.user" :to="{ name: 'user', params: {slug: data.user.slug} }"
                          class="comments__item__user t-link">
-              <img class="andropov_image comments__item__user__image andropov_image--bordered"
-                   style="background-color: transparent;"
-                   :src="data.user.avatar">
+              <a class="comment__avatar" :class="{'comment__avatar--online': data.user.online}"
+                 :style="{ backgroundImage: `url('${data.user.avatar}')` }"></a>
               <p class="comments__item__user__name">
                 <span class="user_name">{{ data.user.name }}</span>
               </p>

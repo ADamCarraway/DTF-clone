@@ -43,6 +43,8 @@
 
     <social/>
 
+    <online-status/>
+
     <setting-header :data="user"/>
   </div>
 </template>
@@ -53,10 +55,11 @@ import {mapGetters} from 'vuex'
 import Password from "./Password";
 import Social from "./Social";
 import SettingHeader from "./Header";
+import OnlineStatus from "./OnlineStatus";
 
 export default {
   name: "MainInfo",
-  components: {SettingHeader, Social, Password},
+  components: {OnlineStatus, SettingHeader, Social, Password},
   scrollToTop: false,
 
   data() {

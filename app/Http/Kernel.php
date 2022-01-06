@@ -42,6 +42,7 @@ class Kernel extends HttpKernel
 
         'spa' => [
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\LastSeenUserActivity::class
         ],
 
         'api' => [

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use JD\Cloudder\Facades\Cloudder;
@@ -66,5 +67,12 @@ class ProfileController extends Controller
         auth()->user()->update(['header' => null]);
 
         return response()->json();
+    }
+
+    public function updateOnlineStatus(Request $request)
+    {
+        return response()->json(
+            UserSetting::ChangeOnlineStatus(auth()->user(), $request->input('status', 1))
+        );
     }
 }
