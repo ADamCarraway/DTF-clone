@@ -64,7 +64,7 @@
             <el-dropdown-menu slot="dropdown">
               <div class="at-dropdown-menu-item__title">Профиль</div>
               <router-link :to="{ name: 'user', params: {slug: user.slug} }"
-                           class="at-dropdown-menu__item item--selected">
+                           class="at-dropdown-menu__item">
                 <div class="item__image">
                   <img :src="user.avatar">
                 </div>
