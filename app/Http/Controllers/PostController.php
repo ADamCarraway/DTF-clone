@@ -79,6 +79,11 @@ class PostController extends Controller
         ]);
     }
 
+    public function unpublish(Post $post)
+    {
+        return response()->json($post->update(['is_publish' => false]));
+    }
+
     public function destroy(Post $post)
     {
         return response()->json($post->delete());

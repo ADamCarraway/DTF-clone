@@ -41,11 +41,13 @@ export default {
       if (type === 'unpublish') {
         let post = this.data;
         post['is_publish'] = false;
-        axios.post('/api/' + (this.data.category.slug ?? 'my') + '/posts/store', post).then((response) => {
+        axios.post('/api/posts/' + this.data.id + '/unpublish', post).then((response) => {
           this.$notify({
             message: 'Материал распубликован',
             type: 'success'
           });
+
+          this.$store.dispatch('auth/updateUser', {user: {'drafts_count': this.user.drafts_count + 1}})
         })
       }
 

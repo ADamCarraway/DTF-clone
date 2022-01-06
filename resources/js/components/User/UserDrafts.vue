@@ -1,8 +1,6 @@
 <template>
-  <div class="l-island-bg  l-island-round">
-    <div class="">
-      <post v-for="item in data" :data="item" :key="item.id"></post>
-    </div>
+  <div class="  l-island-round">
+    <post v-for="item in data" :data="item" :key="item.id"></post>
     <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
       <div slot="no-results">
         <div class="l-island-bg v-island">
@@ -34,18 +32,18 @@ export default {
   methods: {
     infiniteHandler($state) {
       axios.get('/api/drafts?page=' + this.page)
-        .then((data) => {
-          if (data.data.data.length) {
-            this.page = this.page + 1;
-            $.each(data.data.data, (key, value) => {
-              this.data.push(value);
-            });
+          .then((data) => {
+            if (data.data.data.length) {
+              this.page = this.page + 1;
+              $.each(data.data.data, (key, value) => {
+                this.data.push(value);
+              });
 
-            $state.loaded();
-          } else {
-            $state.complete();
-          }
-        });
+              $state.loaded();
+            } else {
+              $state.complete();
+            }
+          });
     },
   }
 
