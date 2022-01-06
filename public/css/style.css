@@ -1800,7 +1800,6 @@ body {
 }
 
 .comments__item__more--root--only-icon, .ui-button--only-icon {
-    width: 34px;
     padding: 0
 }
 
@@ -2842,7 +2841,7 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 0 var(--offset);
+    padding: 0 var(--offset) 0 0;
     margin: 0 auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -2978,7 +2977,13 @@ body {
 } */
 
 .v-header__stats {
-    margin-top: 20px;
+    margin-top: 11px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-align: start;
+    align-items: flex-start;
 }
 
 .v-header__stat {
@@ -6998,4 +7003,15 @@ input:checked + .like-btn-svg {
 
 ion-icon{
     visibility: visible!important;
+}
+
+.v-button--blue {
+    background-color: #4683d9;
+    color: #fff;
+    -webkit-box-shadow: 0 1px 2px rgba(70,131,217,.48),inset 0 -1px 0 rgba(0,0,0,.12);
+    box-shadow: 0 1px 2px rgba(70,131,217,.48),inset 0 -1px 0 rgba(0,0,0,.12);
+}
+
+.v-header__stat:not(:last-child) {
+    margin-bottom: 8px;
 }

@@ -16,11 +16,6 @@ class PostController extends Controller
     public function index($feed, $filter = null)
     {
         $posts = Post::query()->with(['category', 'user'])
-            ->where(function ($q) {
-                if (auth()->check()) {
-                    $q->where('user_id', '!=', auth()->id());
-                }
-            })
             ->where(function ($q) use ($feed) {
                 if ($feed !== 'all' && auth()->check()) {
                     $users = auth()->user()->followings()->whereFollowableType(User::class)->pluck('followable_id')->toArray();

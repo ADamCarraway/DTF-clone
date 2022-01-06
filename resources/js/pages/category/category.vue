@@ -54,7 +54,7 @@
             </div>
 
             <category-tabs :data="data"></category-tabs>
-            <mini-header :data="data"></mini-header>
+<!--            <mini-header :data="data"></mini-header>-->
 
           </div>
         </div>

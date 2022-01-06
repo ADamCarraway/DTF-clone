@@ -44,14 +44,14 @@
 
             <div class="v-header__stats">
               <div :class="{'preloader preloader-stat': !data.created_at}" class="v-header__stat">
-                <i>
-                  <ion-icon name="planet-outline"></ion-icon>
-                </i>
+                {{ user.followers_count }} подписчика
+              </div>
+              <div :class="{'preloader preloader-stat': !data.created_at}" class="v-header__stat">
                 На проекте с {{ date }}
               </div>
             </div>
             <user-tabs v-if="data" :user="data"/>
-            <mini-header :data="data"></mini-header>
+<!--            <mini-header :data="data"></mini-header>-->
           </div>
         </div>
       </div>
