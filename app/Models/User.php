@@ -72,7 +72,8 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         'is_follow',
         'type',
         'slug',
-        'online'
+        'online',
+        'show_posts'
     ];
 
 
@@ -221,11 +222,20 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
 
     public function getOnlineAttribute(): bool
     {
+        if (($status = $this->settings()->where('key', 'show-online-status')->first()) && !$status->value){
+            return false;
+        }
+
         return Cache::has('is-online-' . $this->id);
     }
 
     public function settings(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserSetting::class);
+    }
+
+    public function getShowPostsAttribute(): bool
+    {
+        return $this->settings()->where('key', 'show-posts')->first()->value ?? 1;
     }
 }

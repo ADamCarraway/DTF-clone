@@ -1,13 +1,13 @@
 <template>
   <div class="v-form-section user-settings__container">
     <label class="v-form-section__label">
-      Статус онлайн
+      Записи в блоге
     </label>
     <div class="v-form-section__field justify-content-between">
       <div class="v-form-section__field d-flex justify-content-between">
         <div class="v-field--text v-field v-field--default w-100">
           <div class="v-field__wrapper">
-            <el-select v-model="user.online" @change="change" class="v-text-input__input">
+            <el-select v-model="user.show_posts" @change="change" class="v-text-input__input">
               <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -27,18 +27,18 @@ import axios from 'axios'
 import {mapGetters} from 'vuex'
 
 export default {
-  name: "OnlineStatus",
+  name: "ShowPosts",
   data() {
     return {
       'preloader': false,
       options: [
         {
           value: true,
-          label: 'Показывать когда я онлайн'
+          label: 'Показывать всем'
         },
         {
           value: false,
-          label: 'Скрыть от всех'
+          label: 'Показывать только подписчикам'
         }
       ]
     }
@@ -49,16 +49,16 @@ export default {
 
   methods: {
     change() {
-      let status = this.user.online;
+      let status = this.user.show_posts;
 
-      axios.post('/api/settings/online-status', {'status': status}).then((response) => {
-        this.user.online = status
+      axios.post('/api/settings/show-posts', {'status': status}).then((response) => {
+        this.user.show_posts = status
         this.$notify({
-          message: 'Статус обновлен',
+          message: 'Показ записей обновлен',
           type: 'success'
         });
       }).catch(error => {
-        this.user.online = !status;
+        this.user.show_posts = !status;
 
         this.$notify({
           message: error.response.data.message,

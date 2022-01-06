@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = User::query()
-             ->whereSlug($slug)
+            ->whereSlug($slug)
             ->firstOrFail();
 
         return response()->json($user->toVueFormat());
@@ -35,7 +35,7 @@ class UserController extends Controller
         $user = User::query()->whereSlug($slug)->firstOrFail();
 
         return response()->json([
-            'subscribers' => $user->followers()->with('follower')->limit(6)->get()->pluck('follower'),
+            'subscribers'   => $user->followers()->with('follower')->limit(6)->get()->pluck('follower'),
             'subscriptions' => $user->followings()->with('followable')->limit(6)->get()->pluck('followable')
         ]);
     }
@@ -45,7 +45,7 @@ class UserController extends Controller
         /** @var User $user */
         $user = User::query()->whereSlug($slug)->firstOrFail();
 
-        $paginator = tap($user->followers()->with('follower')->paginate(10),function($paginatedInstance){
+        $paginator = tap($user->followers()->with('follower')->paginate(10), function ($paginatedInstance) {
             return $paginatedInstance->getCollection()->transform(function ($follower) {
                 return $follower->follower;
             });
@@ -59,7 +59,7 @@ class UserController extends Controller
         /** @var User $user */
         $user = User::query()->whereSlug($slug)->firstOrFail();
 
-        $paginator = tap($user->followings()->with('followable')->paginate(10),function($paginatedInstance){
+        $paginator = tap($user->followings()->with('followable')->paginate(10), function ($paginatedInstance) {
             return $paginatedInstance->getCollection()->transform(function ($follower) {
                 return $follower->followable;
             });
@@ -72,6 +72,14 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = User::query()->whereSlug($slug)->firstOrFail();
+
+//        if (!$user->is(auth()->user()) && !$user->show_posts || (auth()->check() && !auth()->user()->isFollowing($user))) {
+//            return response()->json(
+//                $user->posts()
+//                    ->where('id', 0)
+//                    ->paginate(10)
+//            );
+//        }
 
         return response()->json(
             $user->posts()

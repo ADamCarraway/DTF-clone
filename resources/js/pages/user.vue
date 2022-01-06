@@ -43,8 +43,8 @@
             </div>
 
             <div class="v-header__stats">
-              <div :class="{'preloader preloader-stat': !data.created_at}" class="v-header__stat" v-if="user.followers_count">
-                {{ user.followers_count }} подписчика
+              <div :class="{'preloader preloader-stat': !data.created_at}" class="v-header__stat" v-if="data.followers_count">
+                {{ data.followers_count }} подписчика
               </div>
               <div :class="{'preloader preloader-stat': !data.created_at}" class="v-header__stat">
                 На проекте с {{ date }}

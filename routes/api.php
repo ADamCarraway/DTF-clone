@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('settings/notification', 'Settings\UserNotificationController@index');
     Route::post('settings/notification', 'Settings\UserNotificationController@update');
     Route::post('settings/online-status', 'Settings\ProfileController@updateOnlineStatus');
+    Route::post('settings/show-posts', 'Settings\ProfileController@updateShowPostsStatus');
 
 
     Route::post('oauth/{driver}/attach', 'Auth\OAuthController@redirectToProvider')->name('oauth.attach');

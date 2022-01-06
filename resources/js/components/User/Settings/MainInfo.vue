@@ -45,6 +45,8 @@
 
     <online-status/>
 
+    <show-posts/>
+
     <setting-header :data="user"/>
   </div>
 </template>
@@ -56,10 +58,11 @@ import Password from "./Password";
 import Social from "./Social";
 import SettingHeader from "./Header";
 import OnlineStatus from "./OnlineStatus";
+import ShowPosts from "./ShowPosts";
 
 export default {
   name: "MainInfo",
-  components: {OnlineStatus, SettingHeader, Social, Password},
+  components: {ShowPosts, OnlineStatus, SettingHeader, Social, Password},
   scrollToTop: false,
 
   data() {

@@ -26,4 +26,14 @@ class UserSetting extends Model
     {
         return $user->settings()->updateOrCreate(['key' => 'show-online-status'], ['value' => $status]);
     }
+
+    /**
+     * @param User|Authenticatable $user
+     * @param int $status
+     * @return Model
+     */
+    public static function ChangeShowPostsStatus(User $user, int $status = 1): Model
+    {
+        return $user->settings()->updateOrCreate(['key' => 'show-posts'], ['value' => $status]);
+    }
 }

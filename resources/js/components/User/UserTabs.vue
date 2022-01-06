@@ -24,7 +24,7 @@ export default {
   name: 'UserTabs',
   props: ['user'],
   computed: {
-    tabs () {
+    tabs() {
       return [
         {
           name: 'Статьи',
@@ -44,8 +44,8 @@ export default {
           name: 'Черновики',
           route: 'user.drafts',
           active: ['user.drafts'],
-          count: store.getters['auth/user'].drafts_count === 0 ? '' : store.getters['auth/user'].drafts_count,
-          if: this.user ? store.getters['auth/user'].slug === this.user.slug : false
+          count: this.user ? (this.user.drafts_count === 0 ? '' : this.user.drafts_count) : '',
+          if: !!(store.getters['auth/user'] && store.getters['auth/user'].slug === this.user.slug)
         },
         {
           name: 'Подробнее',

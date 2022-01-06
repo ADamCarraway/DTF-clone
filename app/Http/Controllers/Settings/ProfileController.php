@@ -75,4 +75,11 @@ class ProfileController extends Controller
             UserSetting::ChangeOnlineStatus(auth()->user(), $request->input('status', 1))
         );
     }
+
+    public function updateShowPostsStatus(Request $request)
+    {
+        return response()->json(
+            UserSetting::ChangeShowPostsStatus(auth()->user(), $request->input('status', 1))
+        );
+    }
 }
