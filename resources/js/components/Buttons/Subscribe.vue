@@ -4,8 +4,9 @@
          :class="{'v-subscribe-button__unsubscribe v-button v-button--default v-button--size-default': !small,
          'ui-button ui-button--subscribe ui-button--5 ui-button--only-icon ui-button--small': small}">
       <div class="v-button__icon">
-<!--        <ion-icon name="close" :class="'v-button__icon v-button__icon&#45;&#45;new color-red'"></ion-icon>-->
-        <img src="/icons/close.svg" width="20" height="20" class="v-button__icon v-button__icon--new color-red" alt="">
+<!--        <ion-icon name="close-outline" :class="'v-button__icon v-button__icon&#45;&#45;new color-red'"></ion-icon>-->
+<!--        <img src="/icons/close" width="20" height="20" class="v-button__icon v-button__icon&#45;&#45;new color-red" alt="">-->
+        <ion-icon name="close-outline" :class="'v-button__icon v-button__icon--new color-red'"></ion-icon>
       </div>
       <span class="v-button__label">Отписаться</span>
     </div>
