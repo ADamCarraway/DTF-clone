@@ -33,7 +33,7 @@
     </div>
 
     <div class="miniEditor__actions">
-      <label for="file">
+      <label v-if="!editorShow">
         <div class="attachButton">
           <ion-icon name="image-outline"></ion-icon>
           <span class="attachButton__label">
@@ -41,7 +41,15 @@
         </span>
         </div>
       </label>
-      <input type="file" id="file" v-on:change="upload" class="comment-file-input">
+      <label v-if="!editorShow">
+        <div class="attachButton">
+          <ion-icon name="link-outline" style="color:#27e"></ion-icon>
+          <span class="attachButton__label">
+          Ссылка
+        </span>
+        </div>
+      </label>
+<!--      <input type="file" id="file" v-on:change="upload" class="comment-file-input">-->
 <!--      <div class="attachButton">-->
 <!--        <i class="fas fa-link"></i>-->
 <!--        <span class="attachButton__label">Ссылка</span>-->
@@ -82,6 +90,7 @@
     methods: {
       editorShowed() {
         this.editorShow = true;
+        this.editorjs.focus(true)
       },
       editorHide() {
         this.editorShow = false;

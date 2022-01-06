@@ -21,16 +21,16 @@
       bookmark(value) {
         if (!value) {
           axios.delete('/api/bookmark', {data: {'bookmarked': this.data.type, 'id': this.data.id}}).then((res) => {
-            this.$parent.data.bookmarks_count = res.data.bookmarks
-            this.$parent.data.is_bookmarked = false
+            this.data.bookmarks_count = res.data.bookmarks
+            this.data.is_bookmarked = false
           }).catch(() => {
           })
         }
 
         if (value) {
           axios.post('/api/bookmark', {'bookmarked': this.data.type, 'id': this.data.id}).then((res) => {
-            this.$parent.data.bookmarks_count = res.data.bookmarks
-            this.$parent.data.is_bookmarked = true
+            this.data.bookmarks_count = res.data.bookmarks
+            this.data.is_bookmarked = true
           }).catch(() => {
           })
         }
