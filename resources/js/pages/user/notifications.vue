@@ -47,6 +47,7 @@ import NewReplyComment from "../../components/Blocks/Notifications/NewReplyComme
 
 export default {
   name: "notification",
+  middleware: 'private',
   components: {
     NewReplyComment,
     NewPost, LikePost, LikeComment, NewFollow, NewComment, NotificationForGuest, InfiniteLoading

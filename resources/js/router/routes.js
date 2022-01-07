@@ -13,6 +13,8 @@ function page(path) {
 }
 
 export default [
+  {path: '/404', name:'404', component: page('errors/404.vue')},
+  {path: '/403', name:'403', component: page('errors/403.vue')},
   {
     path: '/',
     component: page('index.vue'),
@@ -82,7 +84,4 @@ export default [
   },
 
   {path: '/:slug/:postSlug', name: 'post', component: page('post.vue')},
-
-  {path: '*', name:'404', component: page('errors/404.vue')}
-
 ]

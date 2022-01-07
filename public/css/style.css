@@ -2068,7 +2068,7 @@ body {
     background-color: #ce2e23
 }
 
- .ui-button--ifb {
+.ui-button--ifb {
     color: #4267b2
 }
 
@@ -2076,19 +2076,19 @@ body {
     color: #4a76a8
 }
 
- .ui-button--itw {
+.ui-button--itw {
     color: #1da1f2
 }
 
- .ui-button--igg {
+.ui-button--igg {
     color: #d93025
 }
 
- .ui-button--ittv {
+.ui-button--ittv {
     color: #4b39cb
 }
 
- .ui-button--iemail {
+.ui-button--iemail {
     color: #000
 }
 
@@ -7252,7 +7252,7 @@ ion-icon.ellipsis-icon {
 .t-link-inline {
     color: #3766a9;
     cursor: pointer;
-    font-size: 16px;
+    /* font-size: 16px; */
 }
 
 .v-field__wrapper {

@@ -18,7 +18,7 @@
       <social-auth-box v-if="showPanel"/>
 
 
-      <div class="auth-form__note">
+      <div class="auth-form__note" style="font-size: 16px;">
         <a class="t-link-inline" href="/terms" data-no-ajax="" data-gtm="Signup Mail — Rules — Click">
           Условия использования
         </a>

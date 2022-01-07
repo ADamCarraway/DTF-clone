@@ -10,7 +10,9 @@
           :class="{'page--index' : $route.name &&
           ($route.name).indexOf('user.favorites')+1 !== 1 &&
           ($route.name).indexOf('user.notifications')+1 !== 1 &&
-           (($route.name).indexOf('user')+1 === 1 || ($route.name).indexOf('category')+1 === 1) }"
+           (($route.name).indexOf('user')+1 === 1 || ($route.name).indexOf('category')+1 === 1) ||
+           (($route.name).indexOf('404')+1 === 1 || ($route.name).indexOf('403')+1 === 1)
+      }"
       />
     </div>
   </div>

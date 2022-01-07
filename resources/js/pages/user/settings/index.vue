@@ -58,6 +58,7 @@ import {mapGetters} from "vuex";
 
 export default {
   name: "index",
+  middleware: 'private',
   computed: {
     ...mapGetters({
       user: 'auth/user',
