@@ -71,6 +71,21 @@
                 <span class="item__text">{{ user.name }}</span>
               </router-link>
 
+              <router-link :to="{ name: 'user.drafts', params:{'slug': user.slug}}" class="at-dropdown-menu__item" v-if="user.drafts_count">
+                <div class="item__icon">
+                  <ion-icon name="document-outline"></ion-icon>
+                </div>
+                <span class="item__text">Черновики <div class="item__badge">{{user.drafts_count}}</div></span>
+              </router-link>
+
+              <router-link :to="{ name: 'user.favorites', params:{'slug': user.slug}}" class="at-dropdown-menu__item">
+                <div class="item__icon">
+                  <ion-icon name="bookmark-outline"></ion-icon>
+                </div>
+                <span class="item__text">Закладки</span>
+              </router-link>
+
+
               <router-link :to="{ name: 'user.settings.main', params: {slug: user.slug} }" class="at-dropdown-menu__item">
                 <div class="item__icon">
                   <ion-icon name="settings-outline"></ion-icon>

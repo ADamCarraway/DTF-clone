@@ -1,6 +1,6 @@
 <template>
   <div>
-    <posts-filter :routes='{index: "user.comments", new: "user.comments.new"}'></posts-filter>
+    <posts-filter :routes='{index: "user.comments", new: "user.comments.new"}' v-if="data.length"></posts-filter>
     <div class="feed">
       <div class="feed__container">
         <div class="feed__chunk">
@@ -10,9 +10,9 @@
         </div>
         <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
           <div slot="no-results">
-            <div class="l-island-bg v-island">
+            <div class="l-island-bg v-island l-island-round">
               <div class="v-island__dummy">
-                Здесь еще нет публикаций
+                Вы еще не оставили ни одного комментария
               </div>
             </div>
           </div>

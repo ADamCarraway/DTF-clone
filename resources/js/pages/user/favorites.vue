@@ -30,17 +30,9 @@
         </div>
         <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
           <div slot="no-results">
-            <div class="subsite_content_dummy l-island-a l-island-bg l-fs-15 l-lh-22 l-ta-center">
-              <div class="subsite_content_dummy__title l-fw-600">
-                <span v-if="filter === 'comments'">Нет комментариев в закладках</span>
-                <span v-else>Нет статей в закладках</span>
-              </div>
-              <div class="subsite_content_dummy__text l-mt-5">
-                <span v-if="filter === 'comments'">Если вы прочли полезный комментарий, то нет ничего лучше, чем добавить его в закладки</span>
-                <span v-else>Как только вам понравится статья, не раздумывая жмите на закладку!</span>
-              </div>
-            </div>
-          </div>
+            <div class="l-island-bg l-island-round v-island bookmarks__dummy"><!----> <!----> <div class="v-island__dummy">
+              Вы ничего не добавляли в закладки
+            </div> <!----></div>          </div>
           <div slot="no-more"></div>
         </infinite-loading>
       </div>

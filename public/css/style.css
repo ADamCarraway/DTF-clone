@@ -7333,3 +7333,27 @@ ion-icon.ellipsis-icon {
     line-height: 1.6em;
     padding-left: 140px;
 }
+
+.item__badge {
+    display: inline-block;
+    background: #4683d9;
+    color: #fff;
+    font-size: 11px;
+    line-height: 1em;
+    text-align: center;
+    margin-left: 4px;
+    padding: 2px 3px;
+    min-width: 20px;
+    border-radius: 100px;
+}
+
+.v-island__dummy {
+    text-align: center;
+    padding: 84px 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-align: center;
+    align-items: center;
+}

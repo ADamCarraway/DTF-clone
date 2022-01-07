@@ -3,9 +3,14 @@
     <post v-for="item in data" :data="item" :key="item.id"></post>
     <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
       <div slot="no-results">
-        <div class="l-island-bg v-island">
+        <div class="l-island-bg v-island l-island-round">
           <div class="v-island__dummy">
-            Черновиков нет!
+            <p class="l-mb-16">
+              У вас нет черновиков            </p>
+
+            <router-link :to="{name: 'editor'}" class="v-button v-button--default v-button--size-default">
+              <span class="v-button__label">Создать запись</span>
+            </router-link>
           </div>
         </div>
       </div>
