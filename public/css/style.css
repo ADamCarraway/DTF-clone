@@ -7357,3 +7357,285 @@ ion-icon.ellipsis-icon {
     -ms-flex-align: center;
     align-items: center;
 }
+
+.v-popup-fp-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 998;
+    overflow: hidden;
+    padding: 20px 70px;
+    display: grid;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.v-popup-fp-window {
+    --controls-size: 48px;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 880px;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    position: relative;
+    overflow: hidden;
+    -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
+}
+
+.v-popup-fp-window__controls {
+    height: var(--controls-size);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-left: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.v-popup-fp-window__control:not(:last-child) {
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+.v-popup-fp-window__control {
+    padding: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    opacity: 0.5;
+}
+
+.v-popup-fp-window__control ion-icon {
+    display: block;
+    font-size: 20px;
+}
+
+.v-popup-fp-window__body {
+    min-height: 0;
+    min-width: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+@media (min-width: 1025px) {
+    .editor {
+        --actions-height: 86px;
+        height: 700px;
+    }
+}
+
+.editor {
+    --actions-height: 50px;
+    min-height: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+}
+
+.editor__body {
+    -ms-flex: 1;
+    flex: 1;
+    min-height: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+@media (min-width: 1025px) {
+    .editor__actions {
+        -ms-flex-order: 2;
+        order: 2;
+        top: auto;
+        bottom: 0;
+        border-bottom: 0;
+    }
+}
+
+.editor__actions {
+    height: 86px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #fff;
+    padding-right: var(--scrollbar-size);
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 6;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.editor__actions .editor-cp {
+    --height: var(--actions-height);
+}
+
+.editor-cp {
+    --offset-bottom: 10px;
+    width: 100%;
+    background-color: #fff;
+    z-index: 19;
+    font-size: 16px;
+    line-height: 1.5em;
+    position: relative;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.l-editor, .ce-block__content, .ce-block__indicators, .ce-toolbar__content {
+    --offset: 20px;
+    --max-editor-width: 680px;
+    padding-left: var(--offset) !important;
+    padding-right: var(--offset) !important;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+    width: 100%;
+    max-width: var(--max-editor-width);
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+@media (min-width: 1025px) {
+    .editor-cp__left {
+        margin-right: 20px;
+        padding-bottom: var(--offset-bottom);
+    }
+}
+
+@media (min-width: 1025px) {
+    .editor__authors {
+        --offset-top: 12px;
+        margin-bottom: 3px;
+        position: relative;
+        z-index: 5;
+    }
+}
+
+.editor-ap {
+    font-size: 15px;
+    line-height: 1.6em;
+}
+
+.editor-ap__content {
+    height: var(--height, 48px);
+}
+
+.l-fa-center {
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.l-flex {
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.editor-ap__item:not(:last-child) {
+    margin-right: 24px;
+}
+
+.editor-ap__item {
+    min-width: 0;
+    -ms-flex-negative: 1;
+    flex-shrink: 1;
+}
+
+@media (min-width: 1025px) {
+    .editor__scrollable {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-color: dark;
+        -webkit-overflow-scrolling: touch;
+        --scrollbar-size: 16px;
+        --scrollbar-offset: 4px;
+        scrollbar-color: #d9d9d9 transparent;
+        scrollbar-width: thin;
+    }
+}
+
+.editor__scrollable {
+    -ms-flex: 1;
+    flex: 1;
+    min-height: 0;
+}
+
+.editor-content {
+    font-size: 18px;
+    position: relative;
+    z-index: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.editor-title {
+    --color-placeholder: #d1d1d1;
+    display: block;
+    width: 100%;
+    height: 47px;
+    margin: 0 0 9px;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
+    border: 0;
+    outline: 0 !important;
+    font-size: 36px;
+    line-height: 1.3em;
+    font-weight: 500;
+}
+
+.editor-cp__content {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 86px;
+}
+
+.editor__authors {
+    top: 5px;
+    height: 48px;
+    background-color: #fff;
+    margin-bottom: 2px;
+    position: relative;
+    z-index: 2;
+    padding-right: var(--scrollbar-size);
+    margin-top: 5px;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+@media (min-width: 1025px) {
+    .editor {
+        --actions-height: 86px;
+        height: 700px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .v-popup-fp-overlay {
+        padding: 0;
+        position: fixed;
+        -ms-flex-line-pack: stretch;
+        align-content: stretch;
+    }
+}
