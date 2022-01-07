@@ -10,23 +10,43 @@
             </span>
       </div>
       <div class="notification__footer">
-        <div class="l-flex l-mt-9 l-mb-10">
+        <social-auth-box :isNotification="true"/>
+<!--        <div class="l-flex l-mt-9 l-mb-10">-->
 
-          <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--ifb l-mr-10" data-social="fb" data-refresh="1" air-click="auth_social_buttons"><svg class="icon icon--ui_facebook" width="8" height="17"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui_facebook"></use></svg></div>
-          <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--ivk l-mr-10" data-social="vk" data-refresh="1" air-click="auth_social_buttons"><svg class="icon icon--ui_vkontakte" width="17" height="10"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui_vkontakte"></use></svg></div>
-          <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--igg l-mr-10" data-social="gg" data-refresh="1" air-click="auth_social_buttons"><svg class="icon icon--ui_google" width="14" height="14"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui_google"></use></svg></div>
-          <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--itw l-mr-10" data-social="tw" data-refresh="1" air-click="auth_social_buttons"><svg class="icon icon--ui_twitter" width="15" height="12"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui_twitter"></use></svg></div>
-          <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--iemail l-mr-10" data-social="email" data-refresh="1" air-click="show_auth"><svg class="icon icon--ui_email" width="14" height="10"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui_email"></use></svg></div>
-        </div>
+<!--          <div class="ui-button ui-button&#45;&#45;5 ui-button&#45;&#45;only-icon ui-button&#45;&#45;small ui-button&#45;&#45;ifb l-mr-10"-->
+<!--               @click="login('facebook')">-->
+<!--            <ion-icon name="logo-facebook"></ion-icon>-->
+<!--          </div>-->
+<!--          <div class="ui-button ui-button&#45;&#45;5 ui-button&#45;&#45;only-icon ui-button&#45;&#45;small ui-button&#45;&#45;ivk l-mr-10"-->
+<!--               @click="login('vk')">-->
+<!--            <ion-icon name="logo-vk"></ion-icon>-->
+<!--          </div>-->
+<!--          <div class="ui-button ui-button&#45;&#45;5 ui-button&#45;&#45;only-icon ui-button&#45;&#45;small ui-button&#45;&#45;igg l-mr-10"-->
+<!--               @click="login('google')">-->
+<!--            <ion-icon name="logo-google"></ion-icon>-->
+<!--          </div>-->
+<!--          <div class="ui-button ui-button&#45;&#45;5 ui-button&#45;&#45;only-icon ui-button&#45;&#45;small ui-button&#45;&#45;igg l-mr-10"-->
+<!--               @click="login('twitch')">-->
+<!--            <ion-icon name="logo-twitch"></ion-icon>-->
+<!--          </div>-->
+<!--          &lt;!&ndash;          <div class="ui-button ui-button&#45;&#45;5 ui-button&#45;&#45;only-icon ui-button&#45;&#45;small ui-button&#45;&#45;itw l-mr-10">&ndash;&gt;-->
+<!--          &lt;!&ndash;            <svg class="icon icon&#45;&#45;ui_twitter" width="15" height="12"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui_twitter"></use></svg>&ndash;&gt;-->
+<!--          &lt;!&ndash;          </div>&ndash;&gt;-->
+<!--          <div class="ui-button ui-button&#45;&#45;5 ui-button&#45;&#45;only-icon ui-button&#45;&#45;small ui-button&#45;&#45;iemail l-mr-10">-->
+<!--            <ion-icon name="mail-outline"></ion-icon>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-    export default {
-        name: "NotificationForGuest"
-    }
+import SocialAuthBox from "../SocialAuthBox";
+export default {
+  name: "NotificationForGuest",
+  components: {SocialAuthBox},
+}
 </script>
 
 <style scoped>

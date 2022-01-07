@@ -17,11 +17,11 @@
 
       <social-auth-box v-if="showPanel"/>
 
+
       <div class="auth-form__note">
-        Авторизуясь, вы соглашаетесь с <a class="t-link-classic" href="/terms" data-no-ajax="">правилами пользования
-        сайтом</a>
-        и даете <a class="t-link-classic" href="/agreement" data-no-ajax="">согласие на обработку персональных
-        данных</a>.
+        <a class="t-link-inline" href="/terms" data-no-ajax="" data-gtm="Signup Mail — Rules — Click">
+          Условия использования
+        </a>
       </div>
     </div>
   </div>
@@ -56,6 +56,7 @@
       let t = this;
 
       EventBus.$on('show', function (name) {
+        console.log(name)
         t.show = name;
         if (t.show) {
           t.showPanel = false;

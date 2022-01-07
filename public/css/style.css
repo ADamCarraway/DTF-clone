@@ -5717,7 +5717,7 @@ input:checked + .like-btn-svg {
 }
 
 .auth-form__back {
-    color: #000;
+    color: #000;font-size: 16px;
 }
 
 .ui_form__fieldset {
@@ -7244,4 +7244,61 @@ ion-icon.ellipsis-icon {
 
 .el-select-dropdown__list{
     padding: 0!important;
+}
+
+.t-link-inline {
+    color: #3766a9;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.v-field__wrapper {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    background-color: #f5f5f5;
+    border: 1px solid rgba(0,0,0,0.03);
+    border-radius: 8px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: background-color 0.1s linear, border-color 0.1s linear, -webkit-box-shadow 0.1s linear;
+    transition: background-color 0.1s linear, border-color 0.1s linear, -webkit-box-shadow 0.1s linear;
+    transition: background-color 0.1s linear, border-color 0.1s linear, box-shadow 0.1s linear;
+    transition: background-color 0.1s linear, border-color 0.1s linear, box-shadow 0.1s linear, -webkit-box-shadow 0.1s linear;
+    line-height: 24px;
+    margin-bottom: 1rem;
+}
+
+.auth_tab .v-text-input {
+    --height: 46px;
+}
+
+.v-button__label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 var(--offset);
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.v-button--disabled {
+    pointer-events: none;
+    opacity: .5;
+}
+
+.form-item {
+    line-height: 24px;
+    margin-bottom: 1rem;
+}
+
+.submit-button {
+    width: 100%;
+}
+
+.auth_tab .v-button {
+    --offset: 16px;
+    --font-size: 16px;
+    --height: 48px;
 }

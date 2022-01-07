@@ -41,7 +41,7 @@
             </div>
           </div>
         </div>
-        <footer class="head-notifies__footer t-ff-1-500">
+        <footer class="head-notifies__footer t-ff-1-500" v-if="user">
           <router-link
               :to="{ name: 'user.notifications', params: {'slug': user.slug} }"
               class="head-notifies__footer-link t-link-inline">
