@@ -1,5 +1,7 @@
 <template>
-  <div class="site-header__item">
+  <div class="site-header__item"
+       @focusout="handleFocusOut"
+       tabindex="0">
     <div class="head-notifies" :class="{'head-notifies--showed': show}">
       <div class="head-notifies__toggler" @click="show = !show">
         <ion-icon name="notifications-outline"></ion-icon>
@@ -99,6 +101,9 @@ export default {
 
   },
   methods: {
+    handleFocusOut() {
+      this.show = false
+    },
     infiniteHandler($state) {
       axios.get('/api/notification' + '?page=' + this.page)
           .then((data) => {

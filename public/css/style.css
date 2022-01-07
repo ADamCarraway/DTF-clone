@@ -7302,3 +7302,7 @@ ion-icon.ellipsis-icon {
     --font-size: 16px;
     --height: 48px;
 }
+
+.site-header__item{
+    outline: none !important;
+}
