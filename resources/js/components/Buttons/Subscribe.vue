@@ -22,6 +22,7 @@
 <script>
 import axios from "axios";
 import {mapGetters} from "vuex";
+import EventBus from "../../plugins/event-bus";
 
 export default {
   name: "Subscribe",
@@ -56,6 +57,9 @@ export default {
         }).catch(() => {
           this.loadingSub = false;
         })
+      }
+      if (!this.data.show_posts && this.$route.name === 'user' && (this.user && this.user.id !== this.data.id)){
+        EventBus.$emit('changePostsRoute', {'url': '/api/u/'+this.data.slug+'/posts'})
       }
     },
     changeForSubscribe() {

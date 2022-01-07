@@ -73,13 +73,16 @@ class UserController extends Controller
         /** @var User $user */
         $user = User::query()->whereSlug($slug)->firstOrFail();
 
-//        if (!$user->is(auth()->user()) && !$user->show_posts || (auth()->check() && !auth()->user()->isFollowing($user))) {
-//            return response()->json(
-//                $user->posts()
-//                    ->where('id', 0)
-//                    ->paginate(10)
-//            );
-//        }
+        if (
+            (!auth()->check() && !$user->show_posts) ||
+            (auth()->check() && !$user->is(auth()->user()) && !auth()->user()->isFollowing($user))
+        ) {
+            return response()->json(
+                $user->posts()
+                    ->where('id', 0)
+                    ->paginate(10)
+            );
+        }
 
         return response()->json(
             $user->posts()

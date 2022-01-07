@@ -99,7 +99,7 @@
         <div class="col-md-12">
           <!-- Submit Button -->
           <button class="submit-button form-item v-button v-button--blue v-button--size-default"
-                  :class="{'v-button--disabled':!form.name || !form.email || !form.password || !!form.password_confirmation}">
+                  :class="{'v-button--disabled':!form.name || !form.email || !form.password || !form.password_confirmation}">
             <span class="v-button__label">Зарегистрироваться</span>
           </button>
 
