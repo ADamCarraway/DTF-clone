@@ -83,6 +83,6 @@ export default [
 
   {path: '/:slug/:postSlug', name: 'post', component: page('post.vue')},
 
-  {path: '*', component: page('errors/404.vue')}
+  {path: '*', name:'404', component: page('errors/404.vue')}
 
 ]

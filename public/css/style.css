@@ -5373,7 +5373,6 @@ input:checked + .like-btn-svg {
 }
 
 .t-ff-1-700 {
-    font-family: 'Roboto', Tahoma;
     font-weight: 700;
 }
 
@@ -7311,3 +7310,33 @@ ion-icon.ellipsis-icon {
     outline: none !important;
 }
 
+.page--error {
+    display: -ms-flexbox;
+    display: flex;
+    height: calc(100vh - 60px);
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.page--error .error {
+    will-change: top;
+}
+
+.page--error .error__ico {
+    float: left;
+    height: 100%;
+    width: 140px;
+    padding-right: 40px;
+    margin-top: -10px;
+}
+
+.page--error .error__code {
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+
+.page--error .error__message {
+    font-size: 17px;
+    line-height: 1.6em;
+    padding-left: 140px;
+}
