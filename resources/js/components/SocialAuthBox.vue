@@ -21,12 +21,17 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
+          <div class="social-auth__button" @click="login('twitter')">
+            <ion-icon name="logo-twitter"></ion-icon>
+          </div>
+        </div>
+        <div class="col-md-4">
           <div class="social-auth__button" @click="login('twitch')">
             <ion-icon name="logo-twitch"></ion-icon>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="social-auth__button" @click="login('facebook')">
             <ion-icon name="logo-facebook"></ion-icon>
           </div>

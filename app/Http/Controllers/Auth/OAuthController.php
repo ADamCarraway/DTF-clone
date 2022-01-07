@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Http\Controllers\Controller;
 use App\Models\OAuthProvider;
 use App\Models\User;
+use App\Services\Twitter\TwitterAuthService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -24,10 +26,11 @@ class OAuthController extends Controller
     public function __construct()
     {
         config([
-            'services.github.redirect' => route('oauth.callback', 'github'),
-            'services.twitch.redirect' => route('oauth.callback', 'twitch'),
+            'services.github.redirect'   => route('oauth.callback', 'github'),
+            'services.twitch.redirect'   => route('oauth.callback', 'twitch'),
             'services.facebook.redirect' => route('oauth.callback', 'facebook'),
-            'services.google.redirect' => route('oauth.callback', 'google'),
+            'services.google.redirect'   => route('oauth.callback', 'google'),
+            'services.twitter.redirect'  => route('oauth.callback', 'twitter'),
         ]);
     }
 
@@ -39,8 +42,14 @@ class OAuthController extends Controller
      */
     public function redirectToProvider($provider)
     {
+        if ($provider == 'twitter') {
+            $url = (new TwitterAuthService())->getTargetUrl();
+        } else {
+            $url = Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
+        }
+
         return [
-            'url' => Socialite::driver($provider)->stateless()->redirect()->getTargetUrl(),
+            'url' => $url,
         ];
     }
 
@@ -56,7 +65,12 @@ class OAuthController extends Controller
             return $this->attach($provider);
         }
 
-        $user = Socialite::driver($provider)->stateless()->user();
+        if ($provider === 'twitter') {
+            $user = (new TwitterAuthService())->setUser(request());
+        } else {
+            $user = Socialite::driver($provider)->stateless()->user();
+        }
+
         $user->name = $user->name == null ? $user->nickname : $user->name;
 
         $user = $this->findOrCreateUser($provider, $user);
@@ -66,7 +80,7 @@ class OAuthController extends Controller
         );
 
         return view('oauth/callback', [
-            'token' => $token,
+            'token'      => $token,
             'token_type' => 'bearer',
             'expires_in' => $this->guard()->getPayload()->get('exp') - time(),
         ]);
@@ -85,7 +99,7 @@ class OAuthController extends Controller
 
         if ($oauthProvider) {
             $oauthProvider->update([
-                'access_token' => $user->token,
+                'access_token'  => $user->token,
                 'refresh_token' => $user->refreshToken,
             ]);
 
@@ -94,10 +108,10 @@ class OAuthController extends Controller
 
         if ($ex_user = User::where('email', $user->getEmail())->first()) {
             $ex_user->oauthProviders()->create([
-                'provider' => $provider,
+                'provider'         => $provider,
                 'provider_user_id' => $user->getId(),
-                'access_token' => $user->token,
-                'refresh_token' => $user->refreshToken,
+                'access_token'     => $user->token,
+                'refresh_token'    => $user->refreshToken,
             ]);
 
             return $ex_user;
@@ -114,16 +128,17 @@ class OAuthController extends Controller
     protected function createUser($provider, $sUser)
     {
         $user = User::create([
-            'name' => $sUser->getName(),
-            'email' => $sUser->getEmail(),
+            'name'              => $sUser->getName(),
+            'email'             => $sUser->getEmail(),
             'email_verified_at' => now(),
+            'avatar'            => $sUser->getAvatar()
         ]);
 
         $user->oauthProviders()->create([
-            'provider' => $provider,
+            'provider'         => $provider,
             'provider_user_id' => $sUser->getId(),
-            'access_token' => $sUser->token,
-            'refresh_token' => $sUser->refreshToken,
+            'access_token'     => $sUser->token,
+            'refresh_token'    => $sUser->refreshToken,
         ]);
 
         event(new Registered($user));
@@ -140,37 +155,47 @@ class OAuthController extends Controller
 
     public function attach($driver)
     {
-        $user = Socialite::driver($driver)->stateless()->user();
+        if ($driver === 'twitter') {
+            $connection = new TwitterOAuth(config('services.twitter.client_id'), config('services.twitter.client_secret'), request()->oauth_token, Cache::get(request()->user));
+            $access_token = $connection->oauth('oauth/access_token', ['oauth_verifier' => request()->oauth_verifier]);
+
+            $connection = new TwitterOAuth(config('services.twitter.client_id'), config('services.twitter.client_secret'), $access_token['oauth_token'], $access_token['oauth_token_secret']);
+            $user = $connection->get('account/verify_credentials', ['include_email' => 'true']);
+            $user->token = $access_token['oauth_token']; // this is used in the findOrCreateUser and createUser function
+        } else {
+            $user = Socialite::driver($driver)->stateless()->user();
+        }
+
         $user->name = $user->name == null ? $user->nickname : $user->name;
 
         $ex_u = OAuthProvider::query()->where('provider', $driver)->where('provider_user_id', $user->getId())->first();
 
         if ($ex_u && $ex_u->user_id != auth()->id()) {
             return view('oauth.socialAttach', [
-                'status' => 'false',
-                'message' => 'Этот аккаунт нельзя прикрепить, потому что он уже прикреплён к другому пользователю',
+                'status'   => 'false',
+                'message'  => 'Этот аккаунт нельзя прикрепить, потому что он уже прикреплён к другому пользователю',
                 'provider' => $driver,
             ]);
         }
 
         if ($ex_u && $ex_u->user_id == auth()->id()) {
             return view('oauth.socialAttach', [
-                'status' => 'false',
-                'message' => 'Этот аакаунт уже привязан',
+                'status'   => 'false',
+                'message'  => 'Этот аакаунт уже привязан',
                 'provider' => $driver,
             ]);
         }
 
         auth()->user()->oauthProviders()->create([
-            'provider' => $driver,
+            'provider'         => $driver,
             'provider_user_id' => $user->getId(),
-            'access_token' => $user->token,
-            'refresh_token' => $user->refreshToken,
+            'access_token'     => $user->token,
+            'refresh_token'    => $user->refreshToken ?? null,
         ]);
 
         return view('oauth.socialAttach', [
-            'status' => true,
-            'message' => '',
+            'status'   => true,
+            'message'  => '',
             'provider' => $driver,
         ]);
     }
