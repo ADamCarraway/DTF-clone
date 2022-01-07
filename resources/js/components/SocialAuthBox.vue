@@ -10,29 +10,29 @@
         <div class="social-auth__label">Почта</div>
       </div>
 
-      <div class="social-auth__button" @click="login('vk')">
+      <div class="social-auth__button" @click="login('vk')" v-if="isActive('vkontakte')">
         <ion-icon name="logo-vk" class="ui-button--ivk micon"></ion-icon>
         <div class="social-auth__label">ВКонтакте</div>
       </div>
 
-      <div class="social-auth__button" @click="login('google')">
+      <div class="social-auth__button" @click="login('google')" v-if="isActive('google')">
         <ion-icon name="logo-google" class="ui-button--igg micon"></ion-icon>
         <div class="social-auth__label">Google</div>
       </div>
 
       <div class="row">
         <div class="col-md-4">
-          <div class="social-auth__button" @click="login('facebook')">
+          <div class="social-auth__button" @click="login('facebook')" v-if="isActive('facebook')">
             <ion-icon name="logo-facebook" class="ui-button--ifb"></ion-icon>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="social-auth__button" @click="login('twitter')">
+          <div class="social-auth__button" @click="login('twitter')" v-if="isActive('twitter')">
             <ion-icon name="logo-twitter" class="ui-button--itw"></ion-icon>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="social-auth__button" @click="login('twitch')">
+          <div class="social-auth__button" @click="login('twitch')" v-if="isActive('twitch')">
             <ion-icon name="logo-twitch" class="ui-button--ittv"></ion-icon>
           </div>
         </div>
@@ -48,24 +48,28 @@
 
     <div v-else>
       <div class="l-flex l-mt-9 l-mb-10">
-
         <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--ifb l-mr-10"
+             v-if="isActive('facebook')"
              @click="login('facebook')">
           <ion-icon name="logo-facebook"></ion-icon>
         </div>
         <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--ivk l-mr-10"
+             v-if="isActive('vk')"
              @click="login('vk')">
           <ion-icon name="logo-vk"></ion-icon>
         </div>
         <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--igg l-mr-10"
+             v-if="isActive('google')"
              @click="login('google')">
           <ion-icon name="logo-google"></ion-icon>
         </div>
         <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--itw l-mr-10"
+             v-if="isActive('twitter')"
              @click="login('twitter')">
           <ion-icon name="logo-twitter"></ion-icon>
         </div>
         <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--ittv l-mr-10"
+             v-if="isActive('twitch')"
              @click="login('twitch')">
           <ion-icon name="logo-twitch"></ion-icon>
         </div>
@@ -87,12 +91,15 @@ export default {
   props: ['isNotification'],
   data() {
     return {
-      url: ''
+      url: '',
+      providers: []
     }
   },
 
   mounted() {
     window.addEventListener('message', this.onMessage, false)
+
+    this.providers = window.config.authProviders
   },
 
   beforeDestroy() {
@@ -100,6 +107,9 @@ export default {
   },
 
   methods: {
+    isActive(provider){
+      return window.config.authProviders.indexOf(provider)+1
+    },
     show(name) {
       EventBus.$emit('show', name);
     },

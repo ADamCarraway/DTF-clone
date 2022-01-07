@@ -4,7 +4,10 @@
       'locale' => $locale = app()->getLocale(),
       'locales' => config('app.locales'),
       'categories' => $categories ?? [],
+      'authProviders' => config('auth.authProviders')
   ];
+
+var_dump(config('auth.authProviders'));
 @endphp
   <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">

@@ -47,25 +47,30 @@ return [
     'github' => [
         'client_id'     => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect'      => env('APP_URL') . '/api/oauth/github/callback'
     ],
 
     'twitter' => [
         'client_id'     => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect'      => env('APP_URL') . '/api/oauth/twitter/callback'
     ],
 
     'twitch' => [
         'client_id'     => env('TWITCH_KEY'),
         'client_secret' => env('TWITCH_SECRET'),
+        'redirect'      => env('APP_URL') . '/api/oauth/twitch/callback'
     ],
 
     'facebook' => [
         'client_id'     => env('FACEBOOK_KEY'),
         'client_secret' => env('FACEBOOK_SECRET'),
+        'redirect'      => env('APP_URL') . '/api/oauth/facebook/callback'
     ],
 
     'google' => [
         'client_id'     => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect'      => env('APP_URL') . '/api/oauth/google/callback'
     ],
 ];

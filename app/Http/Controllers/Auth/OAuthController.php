@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Http\Controllers\Controller;
 use App\Models\OAuthProvider;
 use App\Models\User;
@@ -16,22 +15,6 @@ use Laravel\Socialite\Facades\Socialite;
 class OAuthController extends Controller
 {
     use AuthenticatesUsers;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        config([
-            'services.github.redirect'   => route('oauth.callback', 'github'),
-            'services.twitch.redirect'   => route('oauth.callback', 'twitch'),
-            'services.facebook.redirect' => route('oauth.callback', 'facebook'),
-            'services.google.redirect'   => route('oauth.callback', 'google'),
-            'services.twitter.redirect'  => route('oauth.callback', 'twitter'),
-        ]);
-    }
 
     /**
      * Redirect the user to the provider authentication page.

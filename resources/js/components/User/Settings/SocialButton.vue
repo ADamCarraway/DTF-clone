@@ -1,5 +1,6 @@
 <template>
   <div :class="['island__social_links__item',soc, {'island__social_links__item--active': provider.status}]"
+       v-if="isActive(provider.name)"
        @click="syncProvider(provider.status ? 'detach' : 'attach', provider.name)">
 
     <ion-icon :name="icon"></ion-icon>
@@ -20,11 +21,19 @@
     data() {
       return {
         soc: 'island__social_links__item--' + this.provider.name,
-        icon: this.provider.icon
+        icon: this.provider.icon,
+        providers: []
       }
     },
 
+    mounted() {
+      this.providers = window.config.authProviders
+    },
+
     methods: {
+      isActive(provider){
+        return window.config.authProviders.indexOf(provider)+1
+      },
       syncProvider(type, provider) {
         switch (type) {
           case "attach":
