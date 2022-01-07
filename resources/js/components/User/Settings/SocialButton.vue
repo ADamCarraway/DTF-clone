@@ -2,7 +2,7 @@
   <div :class="['island__social_links__item',soc, {'island__social_links__item--active': provider.status}]"
        @click="syncProvider(provider.status ? 'detach' : 'attach', provider.name)">
 
-    <ion-icon :src="'/icons/' + icon"></ion-icon>
+    <ion-icon :name="icon"></ion-icon>
     <span class="island__social_links__title" style="text-transform: capitalize;">{{ provider.name }}</span>
     <div class="island__social_links__item__delete" v-if="provider.status">
       <ion-icon name="close-outline"></ion-icon>

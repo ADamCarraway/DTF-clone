@@ -23,9 +23,11 @@
     data() {
       return {
         arr: {
-          'facebook': {name: 'facebook', icon: 'logo-facebook.svg', status: false},
-          'google': {name: 'google', icon: 'logo-google.svg', status: false},
-          'twitch': {name: 'twitch', icon: 'logo-twitch.svg', status: false}
+          'facebook': {name: 'facebook', icon: 'logo-facebook', status: false},
+          'google': {name: 'google', icon: 'logo-google', status: false},
+          'twitch': {name: 'twitch', icon: 'logo-twitch', status: false},
+          'twitter': {name: 'twitter', icon: 'logo-twitter', status: false},
+          'vk': {name: 'vk', icon: 'logo-vk', status: false},
         }
       }
     },

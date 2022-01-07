@@ -10,7 +10,6 @@ use App\Services\Twitter\TwitterAuthService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -156,12 +155,7 @@ class OAuthController extends Controller
     public function attach($driver)
     {
         if ($driver === 'twitter') {
-            $connection = new TwitterOAuth(config('services.twitter.client_id'), config('services.twitter.client_secret'), request()->oauth_token, Cache::get(request()->user));
-            $access_token = $connection->oauth('oauth/access_token', ['oauth_verifier' => request()->oauth_verifier]);
-
-            $connection = new TwitterOAuth(config('services.twitter.client_id'), config('services.twitter.client_secret'), $access_token['oauth_token'], $access_token['oauth_token_secret']);
-            $user = $connection->get('account/verify_credentials', ['include_email' => 'true']);
-            $user->token = $access_token['oauth_token']; // this is used in the findOrCreateUser and createUser function
+            $user = (new TwitterAuthService())->setUser(request());
         } else {
             $user = Socialite::driver($driver)->stateless()->user();
         }
