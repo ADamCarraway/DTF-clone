@@ -1605,6 +1605,12 @@ body {
     color: #fff;
 }
 
+.island__social_links__item--active.island__social_links__item--vkontakte {
+    border-color: #4a76a8;
+    background: #4a76a8;
+    color: #fff;
+}
+
 .profile-photo-preview {
     border-radius: 6px;
     display: inline-block;

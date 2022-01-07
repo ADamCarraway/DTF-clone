@@ -73,4 +73,10 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect'      => env('APP_URL') . '/api/oauth/google/callback'
     ],
+
+    'vkontakte' => [
+        'client_id'     => env('VKONTAKTE_CLIENT_ID'),
+        'client_secret' => env('VKONTAKTE_CLIENT_SECRET'),
+        'redirect'      => env('APP_URL') . '/api/oauth/vkontakte/callback'
+    ],
 ];

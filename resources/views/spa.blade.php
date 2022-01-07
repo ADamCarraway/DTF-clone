@@ -7,7 +7,6 @@
       'authProviders' => config('auth.authProviders')
   ];
 
-var_dump(config('auth.authProviders'));
 @endphp
   <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">

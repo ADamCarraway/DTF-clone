@@ -10,7 +10,7 @@
         <div class="social-auth__label">Почта</div>
       </div>
 
-      <div class="social-auth__button" @click="login('vk')" v-if="isActive('vkontakte')">
+      <div class="social-auth__button" @click="login('vkontakte')" v-if="isActive('vkontakte')">
         <ion-icon name="logo-vk" class="ui-button--ivk micon"></ion-icon>
         <div class="social-auth__label">ВКонтакте</div>
       </div>
@@ -54,8 +54,8 @@
           <ion-icon name="logo-facebook"></ion-icon>
         </div>
         <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--ivk l-mr-10"
-             v-if="isActive('vk')"
-             @click="login('vk')">
+             v-if="isActive('vkontakte')"
+             @click="login('vkontakte')">
           <ion-icon name="logo-vk"></ion-icon>
         </div>
         <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--igg l-mr-10"

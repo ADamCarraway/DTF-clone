@@ -27,7 +27,7 @@
           'google': {name: 'google', icon: 'logo-google', status: false},
           'twitch': {name: 'twitch', icon: 'logo-twitch', status: false},
           'twitter': {name: 'twitter', icon: 'logo-twitter', status: false},
-          'vk': {name: 'vk', icon: 'logo-vk', status: false},
+          'vkontakte': {name: 'vkontakte', icon: 'logo-vk', status: false},
         }
       }
     },

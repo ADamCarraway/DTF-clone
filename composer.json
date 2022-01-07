@@ -28,6 +28,7 @@
     "socialiteproviders/facebook": "^1.0",
     "socialiteproviders/google": "^3.1",
     "socialiteproviders/twitch": "^5.2",
+    "socialiteproviders/vkontakte": "v4.1.0",
     "staudenmeir/eloquent-has-many-deep": "v1.13",
     "tymon/jwt-auth": "^1.0.0"
   },

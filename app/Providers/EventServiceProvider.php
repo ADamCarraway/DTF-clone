@@ -34,6 +34,7 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\\Twitch\\TwitchExtendSocialite@handle',
             'SocialiteProviders\\Facebook\\FacebookExtendSocialite@handle',
             'SocialiteProviders\\Google\\GoogleExtendSocialite@handle',
+            \SocialiteProviders\VKontakte\VKontakteExtendSocialite::class.'@handle',
         ],
 
         CancelSubscriptionEvent::class => [
