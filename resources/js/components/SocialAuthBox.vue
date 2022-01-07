@@ -6,34 +6,34 @@
 
       <!-- Login Form Button -->
       <div class="social-auth__button" @click="showLoginForm()">
-        <ion-icon name="mail-outline"></ion-icon>
+        <ion-icon name="mail-outline" class="ui-button--iemail micon"></ion-icon>
         <div class="social-auth__label">Почта</div>
       </div>
 
       <div class="social-auth__button" @click="login('vk')">
-        <ion-icon name="logo-vk"></ion-icon>
+        <ion-icon name="logo-vk" class="ui-button--ivk micon"></ion-icon>
         <div class="social-auth__label">ВКонтакте</div>
       </div>
 
       <div class="social-auth__button" @click="login('google')">
-        <ion-icon name="logo-google"></ion-icon>
+        <ion-icon name="logo-google" class="ui-button--igg micon"></ion-icon>
         <div class="social-auth__label">Google</div>
       </div>
 
       <div class="row">
         <div class="col-md-4">
+          <div class="social-auth__button" @click="login('facebook')">
+            <ion-icon name="logo-facebook" class="ui-button--ifb"></ion-icon>
+          </div>
+        </div>
+        <div class="col-md-4">
           <div class="social-auth__button" @click="login('twitter')">
-            <ion-icon name="logo-twitter"></ion-icon>
+            <ion-icon name="logo-twitter" class="ui-button--itw"></ion-icon>
           </div>
         </div>
         <div class="col-md-4">
           <div class="social-auth__button" @click="login('twitch')">
-            <ion-icon name="logo-twitch"></ion-icon>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="social-auth__button" @click="login('facebook')">
-            <ion-icon name="logo-facebook"></ion-icon>
+            <ion-icon name="logo-twitch" class="ui-button--ittv"></ion-icon>
           </div>
         </div>
       </div>
@@ -61,15 +61,16 @@
              @click="login('google')">
           <ion-icon name="logo-google"></ion-icon>
         </div>
-        <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--igg l-mr-10"
+        <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--itw l-mr-10"
+             @click="login('twitter')">
+          <ion-icon name="logo-twitter"></ion-icon>
+        </div>
+        <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--ittv l-mr-10"
              @click="login('twitch')">
           <ion-icon name="logo-twitch"></ion-icon>
         </div>
-        <!--          <div class="ui-button ui-button&#45;&#45;5 ui-button&#45;&#45;only-icon ui-button&#45;&#45;small ui-button&#45;&#45;itw l-mr-10">-->
-        <!--            <svg class="icon icon&#45;&#45;ui_twitter" width="15" height="12"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ui_twitter"></use></svg>-->
-        <!--          </div>-->
         <div class="ui-button ui-button--5 ui-button--only-icon ui-button--small ui-button--iemail l-mr-10"
-         @click="showLoginModal">
+             @click="showLoginModal">
           <ion-icon name="mail-outline"></ion-icon>
         </div>
       </div>
@@ -102,7 +103,7 @@ export default {
     show(name) {
       EventBus.$emit('show', name);
     },
-    showLoginModal(){
+    showLoginModal() {
       EventBus.$emit('loginModal', true);
     },
     async login(provider) {
@@ -175,3 +176,10 @@ function openWindow(url, title, options = {}) {
   return newWindow
 }
 </script>
+
+<style scoped>
+.micon {
+  margin-left: 6px;
+  margin-right: -6px;
+}
+</style>

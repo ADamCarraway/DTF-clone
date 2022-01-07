@@ -2068,24 +2068,28 @@ body {
     background-color: #ce2e23
 }
 
-.comments__item__more--root--ifb .icon, .ui-button--ifb .icon {
+ .ui-button--ifb {
     color: #4267b2
 }
 
-.comments__item__more--root--ivk .icon, .ui-button--ivk .icon {
+.ui-button--ivk {
     color: #4a76a8
 }
 
-.comments__item__more--root--itw .icon, .ui-button--itw .icon {
+ .ui-button--itw {
     color: #1da1f2
 }
 
-.comments__item__more--root--igg .icon, .ui-button--igg .icon {
+ .ui-button--igg {
     color: #d93025
 }
 
-.comments__item__more--root--iemail .icon, .ui-button--iemail .icon {
-    color: #818181
+ .ui-button--ittv {
+    color: #4b39cb
+}
+
+ .ui-button--iemail {
+    color: #000
 }
 
 .comments__item__more--root--loading, .comments_form--waiting .comments_form__reply, .ui-button--loading {
@@ -7306,3 +7310,4 @@ ion-icon.ellipsis-icon {
 .site-header__item{
     outline: none !important;
 }
+
