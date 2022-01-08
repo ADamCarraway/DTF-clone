@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ignore;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -101,6 +102,41 @@ class UserController extends Controller
                 ->latest()
                 ->with(['category', 'user', 'parent', 'parent.user'])
                 ->paginate(10)
+        );
+    }
+
+    public function blocked()
+    {
+        return response()->json(
+            auth()->user()
+                ->ignored()
+                ->with(['ignorable'])
+                ->latest()
+                ->paginate(10)
+        );
+    }
+
+    public function blockedDestroy(Ignore $ignore)
+    {
+        return response()->json($ignore->delete());
+    }
+
+    public function blockedSearch(Request $request)
+    {
+        return response()->json(
+            User::query()
+                ->where('name', 'like', '%' . $request->search . '%')
+                ->latest()
+                ->limit(50)
+                ->get()
+                ->map(function (User $user) {
+                    return [
+                        'id'    => $user->id,
+                        'label' => $user->name,
+                        'value' => $user->id,
+                        'image' => $user->avatar,
+                    ];
+                })
         );
     }
 }

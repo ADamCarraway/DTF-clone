@@ -77,13 +77,12 @@ export default {
           active: ['user.settings.notifications'],
           icon: 'notifications-outline'
         },
-        // {
-        //   name: 'Черный список',
-        //   route: 'user.settings.blocklist',
-        //   active: ['user.favorites', 'user.favorites.comments'],
-        //   count: this.user ? this.user.bookmarks_count : 0,
-        //   if: this.user ? store.getters['auth/user'].slug === this.user.slug : false
-        // },
+        {
+          name: 'Черный список',
+          route: 'user.settings.blocklist',
+          active: ['user.settings.blocklist'],
+          icon: 'close-circle-outline'
+        },
       ]
     }
   },

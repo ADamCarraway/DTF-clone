@@ -7,6 +7,7 @@ import UserAllDetails from "../components/User/Details/UserAllDetails";
 import UserDrafts from "../components/User/UserDrafts";
 import MainInfo from "../components/User/Settings/MainInfo";
 import NotificationSetting from "../components/User/Settings/NotificationSetting";
+import BlockList from "../components/User/Settings/BlockList";
 
 function page(path) {
   return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
@@ -60,7 +61,7 @@ export default [
     children: [
       {path: '', name: 'user.settings.main', component: MainInfo},
       {path: 'notifications', name: 'user.settings.notifications', component: NotificationSetting},
-      // {path: 'blocklist', name: 'user.settings.blocklist', component: DetailsIndexSubs},
+      {path: 'blocklist', name: 'user.settings.blocklist', component: BlockList},
     ]
   },
   {path: '/u/:slug/:postSlug', name: 'user.post', component: page('post.vue')},

@@ -27,6 +27,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('settings/notification', 'Settings\UserNotificationController@update');
     Route::post('settings/online-status', 'Settings\ProfileController@updateOnlineStatus');
     Route::post('settings/show-posts', 'Settings\ProfileController@updateShowPostsStatus');
+    Route::get('settings/block-list', 'Auth\UserController@blocked');
+    Route::get('settings/block-list/search', 'Auth\UserController@blockedSearch');
+    Route::post('settings/block-list/{ignore}/destroy', 'Auth\UserController@blockedDestroy');
 
 
     Route::post('oauth/{driver}/attach', 'Auth\OAuthController@redirectToProvider')->name('oauth.attach');
