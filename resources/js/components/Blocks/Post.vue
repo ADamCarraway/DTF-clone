@@ -88,28 +88,12 @@
       <router-link
         :to="{ name: post.category ? 'post' :'user.post', params: {postSlug: post.slug, slug: post.category ? post.category.slug : post.user.slug} }"
         class="content content--short  ">
-        <div class="content content--content l-island-a" v-html="html[0]">
+        <div class=" content content--short " v-html="html">
         </div>
-
-        <!--        <figure>-->
-
-        <!--          <div class="l-island-b">-->
-        <!--            <div class="content-image">-->
-
-        <!--              <div class="andropov_image andropov_image&#45;&#45;zoomable" style="max-height: 600px;max-width: 1274px;">-->
-
-        <!--                <div class="andropov_image__inner" style="padding-bottom: 0px; background: transparent;"><img-->
-        <!--                  src="https://leonardo.osnova.io/7a6199bd-6fdf-228e-2758-e7b8a019074c/-/resize/700/"></div>-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--          </div>-->
-
-
-        <!--        </figure>-->
 
       </router-link>
 
-      <post-footer :data="post"/>
+      <post-footer :class="'content-footer--short'" :data="post"/>
     </div>
   </div>
 </template>
@@ -121,6 +105,8 @@
   import PostFooter from "./PostFooter";
   import moment from "moment";
   import PostManagement from "./PostManagement";
+
+  const {editorParseToHtml} = require("../../helpers");
 
   export default {
     name: "Post",
@@ -137,10 +123,7 @@
       }
     },
     created() {
-      let test = new edjsHTML()
-      this.html = test.parse({
-        blocks: JSON.parse(this.post.blocks)
-      });
+      this.html = editorParseToHtml(this.post.blocks)
     }
   }
 </script>

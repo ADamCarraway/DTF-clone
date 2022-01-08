@@ -1,6 +1,6 @@
 <template>
   <div class="profile_comment_favorite l-island-a l-island-bg l-island-round l-mb-28 lm-mb-20">
-    <router-link :to="{ name: data.post.category ? 'post' :'user.post', params: {postSlug: data.post.slug, slug: data.post.category ? data.post.category.slug : data.user.slug} }"  class="profile_comment_favorite__title">
+    <router-link :to="{ name: data.post.category_id ? 'post' :'user.post', params: {postSlug: data.post.slug, slug: data.post.category_id ? data.post.category.slug : data.user.slug} }"  class="profile_comment_favorite__title">
       <span>{{ data.post.title }}</span>
     </router-link>
     <div class="profile_comment_favorite__header">

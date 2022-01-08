@@ -19,14 +19,12 @@ class CloudderController extends Controller
         $status = $file->getResult();
 
         return response()->json([
-            'url' => $status['url'],
-            'path' => $path
+            'url'  => $status['url'],
         ]);
     }
 
     public function destroy(Request $request)
     {
-       return response()->json(Cloudder::destroy($request->input('path')));
+        return response()->json(Cloudder::destroy($request->input('path')));
     }
-
 }

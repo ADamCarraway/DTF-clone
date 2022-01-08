@@ -214,6 +214,20 @@ export default {
                         };
                       });
                 },
+                uploadByUrl(url) {
+                  let p2 = new Promise(function(resolve, reject) {
+                    resolve(1);
+                  });
+
+                 return  p2.then(function(value) {
+                    return {
+                      success: 1,
+                      file: {
+                        url: url,
+                      }
+                    };
+                  })
+                }
               }
             }
           },
