@@ -236,4 +236,9 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
     {
         return $this->settings()->where('key', 'show-posts')->first()->value ?? 1;
     }
+
+    public function ignoredKeywords()
+    {
+        return $this->hasMany(IgnoredKeyword::class);
+    }
 }

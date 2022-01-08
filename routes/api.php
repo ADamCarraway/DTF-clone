@@ -31,6 +31,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('settings/block-list/search', 'Auth\UserController@blockedSearch');
     Route::post('settings/block-list/{ignore}/destroy', 'Auth\UserController@blockedDestroy');
 
+    Route::get('settings/block-keywords', 'IgnoreKeywordController@index');
+    Route::post('settings/block-keywords', 'IgnoreKeywordController@store');
+    Route::delete('settings/block-keywords', 'IgnoreKeywordController@destroy');
+
 
     Route::post('oauth/{driver}/attach', 'Auth\OAuthController@redirectToProvider')->name('oauth.attach');
     Route::post('oauth/{driver}/detach', 'Auth\OAuthController@detach')->name('oauth.detach');

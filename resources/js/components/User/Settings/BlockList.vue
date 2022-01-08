@@ -1,61 +1,64 @@
 <template>
   <div class="v-form-section">
-    <label class="v-form-section__label">
-      Пользователи
-    </label>
-    <div class="v-field--text v-field v-field--default w-100">
-      <div class="v-field__wrapper">
-        <el-select
-            v-model="ignorable"
-            @change="addToBlock"
-            filterable
-            remote
-            :remote-method="search"
-            placeholder="Имя"
-            noDataText="Ничего не найдено"
-            class="v-text-input__input">
-          <el-option
-              v-for="item in results"
-              :key="item.id"
-              :label="item.label"
-              :value="item.value">
-          </el-option>
-        </el-select>
-      </div>
-    </div>
 
-    <div class="settings-list-subsites__container">
-      <div class="v-list-subsites">
-        <div class="v-list-subsites__content v-list-subsites__content--columns-1">
-          <div class="v-list-subsites-item" v-for="item in list" :key="item.id">
-            <router-link :to="{ name: item.ignorable.type, params: {slug: item.ignorable.slug} }"
-                         class="v-list-subsites-item__main">
-              <div class="v-list-subsites-item__image"
-                   :style="{ backgroundImage: `url('${item.ignorable.icon}')`}"></div>
-              <div class="v-list-subsites-item__label-container">
+    <block-keywords/>
+
+    <div class="user-settings__container">
+      <label class="v-form-section__label">
+        Пользователи
+      </label>
+      <div class="v-field--text v-field v-field--default w-100">
+        <div class="v-field__wrapper">
+          <el-select
+              v-model="ignorable"
+              @change="addToBlock"
+              filterable
+              remote
+              :remote-method="search"
+              placeholder="Имя"
+              noDataText="Ничего не найдено"
+              class="v-text-input__input">
+            <el-option
+                v-for="item in results"
+                :key="item.id"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+      </div>
+      <div class="settings-list-subsites__container">
+        <div class="v-list-subsites">
+          <div class="v-list-subsites__content v-list-subsites__content--columns-1">
+            <div class="v-list-subsites-item" v-for="item in list" :key="item.id">
+              <router-link :to="{ name: item.ignorable.type, params: {slug: item.ignorable.slug} }"
+                           class="v-list-subsites-item__main">
+                <div class="v-list-subsites-item__image"
+                     :style="{ backgroundImage: `url('${item.ignorable.icon}')`}"></div>
+                <div class="v-list-subsites-item__label-container">
                 <span :title="item.ignorable.title" class="v-list-subsites-item__label">{{
                     item.ignorable.title
                   }}</span>
-              </div>
-            </router-link>
+                </div>
+              </router-link>
 
-            <div class="etc-control v-etc v-etc--right">
-              <div class="v-button v-button--default v-button--size-default" @click="destroy(item.id)">
-                <div class="v-button__icon">
-                  <ion-icon name="trash-outline"></ion-icon>
+              <div class="etc-control v-etc v-etc--right">
+                <div class="v-button v-button--default v-button--size-default" @click="destroy(item.id)">
+                  <div class="v-button__icon">
+                    <ion-icon name="trash-outline"></ion-icon>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
+          <div slot="no-results">
+          </div>
+          <div slot="no-more"></div>
+        </infinite-loading>
       </div>
-      <infinite-loading spinner="waveDots" :identifier="infiniteId" @distance="1" @infinite="infiniteHandler">
-        <div slot="no-results">
-        </div>
-        <div slot="no-more"></div>
-      </infinite-loading>
     </div>
-
   </div>
 </template>
 
@@ -63,10 +66,11 @@
 import axios from 'axios'
 import {mapGetters} from 'vuex'
 import InfiniteLoading from "vue-infinite-loading";
+import BlockKeywords from "./BlockKeywords";
 
 export default {
   name: "BlockList",
-  components: {InfiniteLoading},
+  components: {BlockKeywords, InfiniteLoading},
 
   scrollToTop: true,
 
