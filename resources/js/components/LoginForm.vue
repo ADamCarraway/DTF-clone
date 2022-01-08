@@ -104,7 +104,6 @@ export default {
 
   methods: {
     login() {
-      console.log(this.form)
       this.errors = {};
 
       axios.post('/api/login', this.form).then((res) => {

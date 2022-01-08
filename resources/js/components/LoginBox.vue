@@ -56,7 +56,6 @@
       let t = this;
 
       EventBus.$on('show', function (name) {
-        console.log(name)
         t.show = name;
         if (t.show) {
           t.showPanel = false;

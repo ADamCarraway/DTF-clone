@@ -101,7 +101,6 @@
         axios.get('/api/subs?search=' + this.search)
           .then((data) => {
             this.subs = data.data
-            console.log(this.subs)
           });
       },
       subscribe(type, data) {

@@ -94,7 +94,6 @@ export default {
       this.show = !this.show;
     });
     EventBus.$on('addNotification', (data) => {
-      console.log(data.notification)
       this.comments.unshift(data.notification)
     });
 
