@@ -30,21 +30,21 @@ export default {
           name: 'Статьи',
           route: 'user',
           active: ['user', 'user.new'],
-          count: this.user ? this.user.posts_count : '',
+          count: '',
           if: true
         },
         {
           name: 'Комментарии',
           route: 'user.comments',
           active: ['user.comments', 'user.comments.new'],
-          count: this.user ? this.user.comments_count : '',
+          count: '',
           if: true
         },
         {
           name: 'Черновики',
           route: 'user.drafts',
           active: ['user.drafts'],
-          count: this.user ? (this.user.drafts_count === 0 ? '' : this.user.drafts_count) : '',
+          count: '',
           if: !!(store.getters['auth/user'] && store.getters['auth/user'].slug === this.user.slug)
         },
         {

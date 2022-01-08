@@ -32,14 +32,14 @@
 
     <div class="site-header__item site-header__item--spaced site-header__item--desktop site-header__item--centered">
       <div class="v-create-button">
-        <router-link :to="{name: 'editor'}" class="v-create-button__main ">
+        <div @click="editorShow" class="v-create-button__main" style="cursor: pointer">
           <div class="v-split-button__icon">
             <ion-icon name="pencil-outline"></ion-icon>
           </div>
           <div class="v-create-button__label">
             Новая запись
           </div>
-        </router-link>
+        </div>
       </div>
     </div>
 
@@ -151,6 +151,10 @@ export default {
   methods: {
     showLoginModal() {
       EventBus.$emit('loginModal', true);
+    },
+
+    editorShow() {
+      EventBus.$emit('editorShow', true)
     },
     async logout() {
       // Log out the user.

@@ -1,7 +1,7 @@
 <template>
   <div class="l-page__content">
     <div class="l-mb-20" v-if="user && (data.type === 'category' || data.id === user.id)">
-      <create-post-block :user="user" :data="data"></create-post-block>
+      <create-post-block v-if="user"></create-post-block>
     </div>
     <posts-filter :routes='{index: data.type, new: data.type+".new"}'></posts-filter>
     <posts-list v-if="data.slug" :data="data" :url="['user', 'user.new'].includes(this.$route.name) ? '/api/u/' + data.slug + '/posts' : '/api/' + data.slug + '/posts'"></posts-list>

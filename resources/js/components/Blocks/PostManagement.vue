@@ -4,11 +4,11 @@
       <ion-icon name="ellipsis-horizontal" class="ellipsis-icon"></ion-icon>
     </div>
     <el-dropdown-menu slot="dropdown">
-      <router-link :to="{name: 'editor', params: { data:data, postSlug:data.slug }}"
-                   v-if="user.id === data.user_id" command="edit"
-                   class="el-dropdown-menu__item at-dropdown-menu__item etc_control__item">
+      <el-dropdown-item v-if="user.id === data.user_id"
+                        command="edit"
+                        class="el-dropdown-menu__item at-dropdown-menu__item etc_control__item">
         Редактировать
-      </router-link>
+      </el-dropdown-item>
       <el-dropdown-item v-if="user.id === data.user_id && data.is_publish" command="unpublish"
                         class="at-dropdown-menu__item etc_control__item">
         Распубликовать
@@ -27,6 +27,7 @@
 <script>
 import {mapGetters} from "vuex";
 import axios from "axios";
+import EventBus from "../../plugins/event-bus";
 
 export default {
   name: "PostManagement",
@@ -58,6 +59,10 @@ export default {
             type: 'success'
           });
         })
+      }
+
+      if (type === 'edit') {
+        EventBus.$emit('editorShow', true, this.data)
       }
 
     }

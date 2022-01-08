@@ -30,7 +30,6 @@ export default [
   {path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue')},
   {path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue')},
   {path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue')},
-  {path: '/writing/:postSlug?', name: 'editor', component: page('user/editor.vue'), props: true},
   {
     path: '/u/:slug',
     component: page('user.vue'),

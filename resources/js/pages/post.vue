@@ -67,7 +67,6 @@
 
           <h1 class="content-title" itemprop="headline">
             {{ data.title }}
-            {{ data.short_title }}
           </h1>
 
         </div>
@@ -138,8 +137,8 @@
       }),
     },
     methods: {
-      getPost() {
-        axios.get('/api/post/' + this.$route.params.postSlug).then((response) => {
+      getPost(slug) {
+        axios.get('/api/post/' + slug).then((response) => {
           this.data = response.data;
           let test = new edjsHTML()
           let html = test.parse({
@@ -152,8 +151,14 @@
         });
       },
     },
-    created() {
-      this.getPost();
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        vm.getPost(to.params.postSlug);
+      });
+    },
+    beforeRouteUpdate(to, from, next) {
+      this.getPost(to.params.postSlug);
+      next()
     },
     metaInfo() {
       return {title: this.data.title !== '' ? this.data.title : 'Запись пользователя '+ this.data.user.name}

@@ -6,6 +6,7 @@ import App from '~/components/App'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import Echo from 'laravel-echo';
+import VueTextareaAutosize from "vue-textarea-autosize";
 
 window.Vue = require('vue');
 
@@ -18,6 +19,8 @@ Vue.config.ignoredElements = [/^ion-/]
 
 VueClipboard.config.autoSetContainer = true // add this line
 Vue.use(VueClipboard)
+
+Vue.use(VueTextareaAutosize);
 
 Vue.component('InfiniteLoading', require('vue-infinite-loading'));
 

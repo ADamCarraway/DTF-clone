@@ -9,14 +9,14 @@
     <el-dialog
         :visible.sync="loginModal"
         :show-close="false"
-        :custom-class="'loginBox'">
+        :custom-class="''">
       <span slot="title"></span>
       <login-box/>
       <span slot="footer"></span>
     </el-dialog>
 
 
-    <create-post-modal v-if="editorShow"/>
+    <create-post-modal :data="readablePostData" v-if="editorShow"/>
 
   </div>
 </template>
@@ -52,7 +52,8 @@ export default {
     layout: null,
     defaultLayout: 'default',
     loginModal: false,
-    editorShow: false
+    editorShow: false,
+    readablePostData: null
   }),
 
   metaInfo() {
@@ -71,11 +72,9 @@ export default {
       t.loginModal = status;
     });
 
-    EventBus.$on('editorModal', function (status) {
+    EventBus.$on('editorShow', function (status, data = null) {
+      t.readablePostData = data;
       t.editorShow = status;
-      if (status){
-        EventBus.$emit('createPostBlock', {'status': false})
-      }
     });
 
     this.$loading = this.$refs.loading

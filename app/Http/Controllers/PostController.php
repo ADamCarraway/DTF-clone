@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -41,7 +42,13 @@ class PostController extends Controller
 
     public function show($slug)
     {
-        return response()->json(Post::query()->with(['category', 'user'])->whereSlug($slug)->firstOrFail());
+        $post = Post::query()->with(['category', 'user'])->whereSlug($slug)->firstOrFail();
+
+        if (!$post->is_publish && (!auth()->check() || !auth()->user()->is($post->user))) {
+           return response()->json('', Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json($post);
     }
 
     public function store(Request $request, $slug)
@@ -54,12 +61,14 @@ class PostController extends Controller
             $category = Category::query()->whereSlug($slug)->firstOrFail();
         }
 
+        $slug = ($request->input('id') ? $request->input('id') . '-' : '') . Str::slug($request->input('title'));
+
         /** @var Post $post */
         $post = $user->posts()->updateOrCreate([
             'id' => $request->input('id')
         ], [
             'title'       => $request->input('title') ?? '',
-            'slug'        => Str::slug($request->input('title')),
+            'slug'        => $slug,
             'intro'       => $request->input('intro') ?? '',
             'category_id' => $category->id ?? null,
             'blocks'      => json_encode($request->input('blocks')),

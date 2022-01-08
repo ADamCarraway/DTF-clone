@@ -200,8 +200,6 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
             'followers_count'     => $this->followers()->count(),
             'followings_count'    => $this->followings()->count(),
             'subscriptions_limit' => array_slice($subscriptions, 0, 5),
-            'posts_count'         => $this->posts()->public()->count(),
-            'comments_count'      => $this->comments()->count(),
             'bookmarks_count'     => $this->bookmarks()->count(),
             'notifications_count' => $this->notifications()
                 ->whereNull('read_at')

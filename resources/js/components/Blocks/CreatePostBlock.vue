@@ -1,7 +1,6 @@
 <template>
   <div class="">
-    <div class="miniEditor l-island-bg l-island-round" v-if="!editorShow"
-         @click="editorShowed()">
+    <div class="miniEditor l-island-bg l-island-round" @click="editorShowed()">
       <div class="miniEditor__avatar">
         <img :src="user.avatar">
       </div>
@@ -32,31 +31,26 @@
 <script>
 import CreatePostModal from "./CreatePostModal";
 import EventBus from "../../plugins/event-bus";
+import {mapGetters} from "vuex";
 
 export default {
   name: "CreatePostBlock",
   components: {CreatePostModal},
-  props: ['user', 'data'],
   data() {
     return {
       editorShow: false,
     }
   },
 
-  mounted() {
-    EventBus.$on('createPostBlock', function (data){
-      console.log('createPostBlock '+data.status)
-      this.editorShow = false;
-      console.log('NEWcreatePostBlock '+this.editorShow)
-
-    })
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+    }),
   },
+
   methods: {
     editorShowed() {
-      EventBus.$emit('editorModal', true)
-    },
-    editorHide() {
-      this.editorShow = false;
+      EventBus.$emit('editorShow', true)
     },
   },
 }

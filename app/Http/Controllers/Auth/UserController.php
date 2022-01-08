@@ -98,6 +98,7 @@ class UserController extends Controller
             auth()->user()
                 ->posts()
                 ->draft()
+                ->latest()
                 ->with(['category', 'user', 'parent', 'parent.user'])
                 ->paginate(10)
         );

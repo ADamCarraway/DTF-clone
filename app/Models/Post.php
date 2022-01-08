@@ -9,6 +9,7 @@ use App\Contracts\Bookmarkable as BookmarkableInterface;
 use App\Contracts\Likeable as LikeableInterface;
 use App\Contracts\Notifiable as NotifiableInterface;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -158,5 +159,10 @@ class Post extends Model implements BookmarkableInterface, LikeableInterface, No
     public function scopeDraft($q)
     {
         return $q->where('is_publish', false);
+    }
+
+    public function scopeWhereSlug(Builder $query, $slug)
+    {
+        return $query->where('id', (int)stristr($slug, '-', true));
     }
 }
