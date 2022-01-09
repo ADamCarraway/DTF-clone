@@ -88,7 +88,7 @@
       <router-link
         :to="{ name: post.category ? 'post' :'user.post', params: {postSlug: post.slug, slug: post.category ? post.category.slug : post.user.slug} }"
         class="content content--short  ">
-        <div class=" content content--short " v-html="html">
+        <div class=" content content--short " v-html="html" v-if="html">
         </div>
 
       </router-link>
