@@ -21,6 +21,7 @@ class PostController extends Controller
         $user = auth()->user();
 
         $posts = Post::query()->with(['category', 'user'])
+            ->public()
             ->where(function ($q) use ($user, $feed) {
                 if ($feed !== 'all' && auth()->check()) {
                     $users = $user->followings()->whereFollowableType(User::class)->pluck('followable_id')->toArray();
