@@ -15,7 +15,7 @@ class CategoryIndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'search' => 'string'
+            'search' => 'string|nullable'
         ];
     }
 }
