@@ -271,7 +271,6 @@ export default {
         outputData['title'] = this.title;
         outputData['id'] = this.id;
         axios.post('/api/' + this.category + '/posts/store', outputData).then((response) => {
-          console.log(outputData)
           this.prevUrl = '/u/' + response.data.category + '/' + response.data.post.slug
           this.loading = false
           this.saved = true
