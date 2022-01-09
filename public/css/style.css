@@ -7960,3 +7960,9 @@ a.v-list-subsites-item__main:hover {
 .content--short .l-island-a:not(:first-of-type) p {
     margin-top: 15px;
 }
+
+.content-header .content-header__info {
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+}
