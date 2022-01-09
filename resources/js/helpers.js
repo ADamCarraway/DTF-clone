@@ -90,5 +90,5 @@ export function editorParseToHtml(blocks, toFeed = false) {
 function showInFeed(block, status) {
     if (!status) return true;
 
-    return block.tunes.ShowInFeed;
+    return block.tunes ? block.tunes.ShowInFeed : false;
 }
