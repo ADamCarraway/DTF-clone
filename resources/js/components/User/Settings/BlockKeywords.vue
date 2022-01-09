@@ -13,7 +13,10 @@
         </div>
 
         <div class="hashtag-container" v-if="keywords">
-          <div class="v-hashtag" v-for="keyword in keywords" :key="keyword">
+          <div class="v-hashtag"
+               v-for="(keyword, index) in keywords"
+               :key="keyword"
+               v-if="index < limit">
             <div title="test" class="v-hashtag__text">
               {{ keyword }}
             </div>
@@ -21,6 +24,12 @@
               <ion-icon name="close-outline" class="icon--v_close"></ion-icon>
             </button>
           </div>
+          <button class="show-all-button" @click="show()" v-if="keywords.length > 6">
+            <span class="show-all-button__text">
+              <span v-if="!showAll">Показать все</span>
+              <span v-else>Скрыть</span>
+            </span>
+          </button>
         </div>
 
       </div>
@@ -53,6 +62,8 @@ export default {
     return {
       keywords: [],
       keyword: '',
+      showAll: false,
+      limit: 6
     }
   },
 
@@ -61,6 +72,10 @@ export default {
   }),
 
   methods: {
+    show(){
+      this.showAll = !this.showAll
+      this.limit = this.showAll ? this.keywords.length : 6
+    },
     add() {
       if (!this.keyword) return;
 
