@@ -15689,12 +15689,12 @@ ion-icon.ellipsis-icon {
     }
 }
 
-@media (min-width: 1000px) {
-    #page_wrapper:not(.page.page--entry) {
-        width: 960px;
-        margin: 0 auto;
-    }
-}
+/*@media (min-width: 1000px) {*/
+/*    #page_wrapper:not(.page.page--entry) {*/
+/*        width: 960px;*/
+/*        margin: 0 auto;*/
+/*    }*/
+/*}*/
 
 .post-single-image {
     width: 100%;
