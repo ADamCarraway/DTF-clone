@@ -3,9 +3,11 @@
     <div @click="subscribe(0)" v-if="data.is_follow"
          class="v-button v-button--default v-button--size-default ui-button--only-icon">
       <div class="v-button__icon">
-        <ion-icon name="close-outline" :class="'v-button__icon v-button__icon--new color-red'"></ion-icon>
+        <ion-icon name="checkmark-outline"
+                  :class="'v-button__icon v-button__icon--new color-green'"></ion-icon>
+
+        <!--        <ion-icon name="close-outline" :class="'v-button__icon v-button__icon&#45;&#45;new color-red'"></ion-icon>-->
       </div>
-      <!--      <span class="v-button__label">Отписаться</span>-->
     </div>
 
     <div @click="subscribe(1)" v-if="!data.is_follow"
@@ -30,6 +32,7 @@ export default {
   data() {
     return {
       loadingSub: false,
+      showBnt: true
     }
   },
   computed: {
@@ -58,8 +61,8 @@ export default {
           this.loadingSub = false;
         })
       }
-      if (!this.data.show_posts && this.$route.name === 'user' && (this.user && this.user.id !== this.data.id)){
-        EventBus.$emit('changePostsRoute', {'url': '/api/u/'+this.data.slug+'/posts'})
+      if (!this.data.show_posts && this.$route.name === 'user' && (this.user && this.user.id !== this.data.id)) {
+        EventBus.$emit('changePostsRoute', {'url': '/api/u/' + this.data.slug + '/posts'})
       }
     },
     changeForSubscribe() {

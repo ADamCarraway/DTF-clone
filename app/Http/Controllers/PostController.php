@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\PostCreated;
+use App\Http\Requests\CreatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -63,38 +64,40 @@ class PostController extends Controller
         return response()->json($post);
     }
 
-    public function store(Request $request, $slug)
+    public function store(CreatePostRequest $request, $slug)
     {
+        if ($request->id) {
+            $this->authorize('update', Post::find($request->id));
+        }
+
         $category = null;
         /** @var User $user */
         $user = auth()->user();
 
-        if ($slug !== 'my' && $slug != auth()->user()->slug) {
+        if ($slug !== 'my' && $slug != $user->slug) {
             $category = Category::query()->whereSlug($slug)->firstOrFail();
         }
 
-        $slug = ($request->input('id') ? $request->input('id') . '-' : '') . Str::slug($request->input('title'));
-
         /** @var Post $post */
         $post = $user->posts()->updateOrCreate([
-            'id' => $request->input('id')
+            'id' => $request->id
         ], [
-            'title'       => $request->input('title') ?? '',
-            'slug'        => $slug,
-            'intro'       => $request->input('intro') ?? '',
+            'title'       => $request->title,
+            'slug'        => ($request->id ? $request->id . '-' : '') . Str::slug($request->title),
+            'intro'       => $request->intro,
             'category_id' => $category->id ?? null,
-            'blocks'      => json_encode($request->input('blocks')),
-            'is_publish'  => $request->input('is_publish') ?? 1,
+            'blocks'      => json_encode($request->blocks),
+            'is_publish'  => $request->is_publish,
         ]);
 
-        if (!$request->input('id') && $request->input('is_publish')) {
+        if (!$request->id && $request->is_publish) {
             event(new PostCreated($post));
 
             $user->addNotification($post);
         }
 
         return response()->json([
-            'category' => $category->slug ?? auth()->user()->slug,
+            'category' => $category->slug ?? $user->slug,
             'type'     => is_null($category) ? 'user.post' : 'post',
             'post'     => $post
         ]);
@@ -102,11 +105,15 @@ class PostController extends Controller
 
     public function unpublish(Post $post)
     {
+        $this->authorize('unpublish', $post);
+
         return response()->json($post->update(['is_publish' => false]));
     }
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         return response()->json($post->delete());
     }
 
@@ -135,6 +142,8 @@ class PostController extends Controller
 
     public function deleteRepost(Post $post)
     {
+        $this->authorize('delete', $post);
+
         return auth()->user()->posts()->where('parent_id', $post->id)->delete();
     }
 }

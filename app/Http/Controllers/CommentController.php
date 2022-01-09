@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Events\CommentCreated;
+use App\Http\Requests\AddCommentReplyRequest;
+use App\Http\Requests\AddCommentRequest;
+use App\Http\Requests\CategoryCommentsRequest;
+use App\Http\Requests\UserCommentsRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -13,69 +17,51 @@ use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
-    public function userComments(Request $request, $slug)
+    public function userComments(UserCommentsRequest $request, $slug)
     {
-        $filter = $request->get('filter');
-        $odds = Comment::ODDS;
-
         /** @var User $user */
         $user = User::query()->whereSlug($slug)->firstOrFail();
         $comments = $user->comments()->with('post');
 
-        if ($filter == 'popular') {
+        if ($request->filter == 'popular') {
             $comments = $comments
-                ->leftJoin('comments as replies', function ($q) {
-                    $q->on('comments.id', '=', 'replies.parent_id');
-                })
                 ->leftJoin('likes', function ($q) {
                     $q->on('comments.id', '=', 'likes.likeable_id')
                         ->where('likes.likeable_type', '=', Comment::class);
                 })
-                ->leftJoin('bookmarks', function ($q) {
-                    $q->on('comments.id', '=', 'bookmarks.bookmarkable_id')
-                        ->where('bookmarks.bookmarkable_type', '=', Comment::class);
-                })
-                ->addSelect(DB::raw("('$odds[c]'+'$odds[a]'*LOG(1+count(DISTINCT likes.id))+'$odds[b]'*LOG(1+count(DISTINCT bookmarks.id))+'$odds[d]'*LOG(1+count(DISTINCT replies.id))) as weight"))
-                ->groupBy('comments.id')->orderBy('weight', 'desc');
+                ->addSelect(DB::raw("count(likes.id) as likes"))
+                ->groupBy('comments.id')->orderBy('likes', 'desc');
         }
 
-        if ($filter == 'new') {
+        if ($request->filter == 'new') {
             $comments->latest('created_at');
         }
 
         return $comments->paginate('10');
     }
 
-    public function comments(Request $request, $slug)
+    public function comments(CategoryCommentsRequest $request, $slug)
     {
-        $odds = Comment::ODDS;
-
-        $type = $request->get('type');
-
         $comments = Post::query()->whereSlug($slug)->firstOrFail()->comments()->withCount(['replies']);
 
-        if ($type == 'old') {
+        if ($request->type == 'old') {
             $comments->orderBy('created_at');
         }
 
-        if ($type == 'popular') {
+        if ($request->type == 'popular') {
             $comments = $comments
                 ->leftJoin('likes', function ($q) {
                     $q->on('comments.id', '=', 'likes.likeable_id')
                         ->where('likes.likeable_type', '=', Comment::class);
                 })
-                ->leftJoin('bookmarks', function ($q) {
-                    $q->on('comments.id', '=', 'bookmarks.bookmarkable_id')
-                        ->where('bookmarks.bookmarkable_type', '=', Comment::class);
-                })
-                ->addSelect(DB::raw("('$odds[c]'+'$odds[a]'*LOG(1+count(DISTINCT likes.id))+'$odds[b]'*LOG(1+count(DISTINCT bookmarks.id))) as weight"))
-                ->groupBy('comments.id')->orderBy('weight', 'desc');
+                ->addSelect(DB::raw("count(likes.id) as likes"))
+                ->groupBy('comments.id')->orderBy('likes', 'desc');
         }
 
         return $comments->paginate('10');
     }
 
-    public function store(Request $request)
+    public function store(AddCommentRequest $request)
     {
         $comment = new Comment;
 
@@ -94,23 +80,27 @@ class CommentController extends Controller
         return $saveComment->load('replies');
     }
 
-    public function replyStore(Request $request)
+    public function replyStore(AddCommentReplyRequest $request)
     {
+        /** @var User $user */
+        $user = auth()->user();
+
         $reply = new Comment();
 
-        $reply->comment = $request->get('comment');
+        $reply->comment = $request->comment;
 
-        $reply->user()->associate(auth()->user());
+        $reply->user()->associate($user);
 
-        $reply->parent_id = $request->get('commentId');
+        $reply->parent_id = $request->commentId;
 
         /** @var Post $post */
-        $post = Post::find($request->get('id'));
+        $post = Post::find($request->id);
 
+        /** @var Comment $comment */
         $comment = $post->comments()->save($reply)->load('post');
 
-        if ($post->user->id != auth()->user()->id) {
-            Comment::query()->where('id', $request->get('commentId'))->first()->user->notify(new AddReplyCommentNotification($comment, auth()->user()));
+        if ($post->user->id != $user->id) {
+            Comment::query()->where('id', $request->commentId)->first()->user->notify(new AddReplyCommentNotification($comment, $user));
         }
 
         return $reply;

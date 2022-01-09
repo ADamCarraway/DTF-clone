@@ -13,9 +13,6 @@ class Comment extends Model implements LikeableInterface, BookmarkableInterface
 {
     use Likeable, Bookmarkable;
 
-    //a - like, b = bookmarks, d = replies
-    const ODDS = ['a' => 80, 'b' => 50, 'c' => 10, 'd' => 30];
-
     protected $guarded = [];
     protected $appends = ['type', 'date', 'date_minute', 'is_like', 'is_bookmarked'];
     protected $with = ['user', 'replies'];

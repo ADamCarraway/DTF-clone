@@ -2876,6 +2876,10 @@ body {
     min-width: var(--min-width);
 }
 
+.ui-button--only-icon .v-button__icon ion-icon{
+    font-size: 22px;
+}
+
 .v-button__icon {
     display: -ms-flexbox;
     display: flex;
@@ -7945,4 +7949,15 @@ a.v-list-subsites-item__main:hover {
 .show-all-button__text {
     font-size: 16px;
     line-height: 24px;
+}
+
+@media (min-width: 640px) {
+    .l-island-a {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+.l-mb-28 {
+    margin-bottom: 28px;
 }

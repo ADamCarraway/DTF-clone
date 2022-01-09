@@ -4,7 +4,7 @@
     <div class="feed">
       <div class="feed__container">
         <div class="feed__chunk">
-          <div v-for="item in data" :key="item.id" class="feed__item l-island-round">
+          <div v-for="item in data" :key="item.id" class="feed__item l-island-round l-mb-28">
             <user-comment-block :data="item"/>
           </div>
         </div>

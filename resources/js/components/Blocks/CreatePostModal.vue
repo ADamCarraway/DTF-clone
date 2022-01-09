@@ -271,7 +271,7 @@ export default {
           if (response.data.post.is_publish && !autoSave) {
             EventBus.$emit('editorShow', false)
 
-            this.$router.go({
+            this.$router.push({
               name: response.data.type,
               params: {postSlug: response.data.post.slug, slug: response.data.category}
             })

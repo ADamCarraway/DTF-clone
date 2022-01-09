@@ -13,7 +13,7 @@
     </div>
     <div class="table__cell">
       <small>
-        <span>{{ data.rating }}</span>
+        <span>{{ data.rating ? data.rating : 1 }}</span>
       </small>
     </div>
     <div class="table__cell">

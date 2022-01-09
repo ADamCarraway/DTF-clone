@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryIndexRequest;
+use App\Http\Requests\CategoryPostsRequest;
 use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request)
+    public function index(CategoryIndexRequest $request)
     {
         $categories = Category::query()->withCount('followers');
 
-        if ($search = $request->input('search', '')){
+        if ($search = $request->search){
             $categories = $categories->where('title','like', "%$search%")
                 ->orWhere('description', 'like', "%$search%");
         }
@@ -58,17 +59,19 @@ class CategoryController extends Controller
         return response()->json($paginator);
     }
 
-    public function posts(Request $request, $slug)
+    public function posts(CategoryPostsRequest $request, $slug)
     {
         $category = Category::query()->whereSlug($slug)->firstOrFail();
-
-        $type = $request->get('type');
 
         $posts = Post::query()->with(['category', 'user'])
             ->whereCategoryId($category->id);
 
-        if ($type == 'new') {
+        if ($request->filter == 'new') {
             $posts->latest('created_at');
+        }
+
+        if ($request->filter == 'popular') {
+            $posts->latest('rating');
         }
 
         return response()->json($posts->paginate(10));
