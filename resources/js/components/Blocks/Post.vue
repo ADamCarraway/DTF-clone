@@ -123,7 +123,7 @@
       }
     },
     created() {
-      this.html = editorParseToHtml(this.post.blocks)
+      this.html = editorParseToHtml(this.post.blocks, true)
     }
   }
 </script>

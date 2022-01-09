@@ -115,9 +115,38 @@ import Delimiter from "@editorjs/delimiter";
 import Image from "@editorjs/image";
 import Link from "@editorjs/link";
 import Paragraph from "@editorjs/paragraph";
+import AnchorBlockTune from "/public/vendor/editorjs-anchor/bundle";
 import EventBus from "../../plugins/event-bus";
 import axios from "axios";
+import start from "/public/icons/star-outline.svg"
 
+class ShowInFeed {
+  constructor({api}) {
+    this.api = api;
+    this.button = document.createElement('span');
+    this.buttonCss = 'cdx-settings-button';
+    this.buttonActiveCss = 'cdx-settings-button--active';
+  }
+
+  static get isTune() {
+    return true;
+  }
+
+  render() {
+    this.button.classList.add(this.buttonCss);
+    this.button.innerHTML = '<ion-icon name="star-outline"></ion-icon>';
+
+    this.button.addEventListener('click', () => {
+      this.button.classList.toggle(this.buttonActiveCss, !this.button.classList.contains(this.buttonActiveCss));
+    });
+
+    return this.button;
+  }
+
+  save() {
+    return this.button.classList.contains(this.buttonActiveCss);
+  }
+}
 
 export default {
   name: "CreatePostModal",
@@ -184,14 +213,22 @@ export default {
         initialBlock: "paragraph",
         placeholder: 'Нажмите Tab для выбора инструмента',
         tools: {
+          ShowInFeed: ShowInFeed,
           header: {
             class: Header,
+            tunes: ['ShowInFeed'],
+            config: {
+              placeholder: 'Заголовок',
+              levels: [2, 3, 4],
+              defaultLevel: 2
+            }
           },
           list: {
             class: List
           },
           paragraph: {
             class: Paragraph,
+            tunes: ['ShowInFeed']
           },
           delimiter: {
             class: Delimiter
@@ -215,11 +252,11 @@ export default {
                       });
                 },
                 uploadByUrl(url) {
-                  let p2 = new Promise(function(resolve, reject) {
+                  let p2 = new Promise(function (resolve, reject) {
                     resolve(1);
                   });
 
-                 return  p2.then(function(value) {
+                  return p2.then(function (value) {
                     return {
                       success: 1,
                       file: {
@@ -229,7 +266,8 @@ export default {
                   })
                 }
               }
-            }
+            },
+            tunes: ['ShowInFeed']
           },
           link: {
             class: Link
@@ -261,6 +299,7 @@ export default {
         outputData['title'] = this.title;
         outputData['id'] = this.id;
         axios.post('/api/' + this.category + '/posts/store', outputData).then((response) => {
+          console.log(outputData)
           this.prevUrl = '/u/' + response.data.category + '/' + response.data.post.slug
           this.loading = false
           this.saved = true

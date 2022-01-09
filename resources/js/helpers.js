@@ -24,7 +24,7 @@ export function removeFromArray(array, element) {
     array.splice(index, 1);
 }
 
-export function editorParseToHtml(blocks) {
+export function editorParseToHtml(blocks, toFeed = false) {
     let html = '';
     let arrBlocks = JSON.parse(blocks);
 
@@ -32,7 +32,7 @@ export function editorParseToHtml(blocks) {
         let block = arrBlocks[i];
         let type = block.type;
 
-        if (type === "image") {
+        if (type === "image" && showInFeed(block, toFeed)) {
             let classNames = 'post-single-image';
 
             if (block.data.withBackground) {
@@ -56,7 +56,7 @@ export function editorParseToHtml(blocks) {
             }
 
             html += '</figure>';
-        } else if (type === 'paragraph') {
+        } else if (type === 'paragraph' && showInFeed(block, toFeed)) {
             html += '<div class="l-island-a">\n' +
                 '    \n' +
                 '        <p>' + block.data.text + '</p>\n' +
@@ -67,7 +67,7 @@ export function editorParseToHtml(blocks) {
             html += '<div class="l-island-a">' + block.data.text + '</div>'
 
             html += '</h' + block.data.level + '>'
-        } else if (type === 'list') {
+        } else if (type === 'list' && showInFeed(block, toFeed)) {
             let className = block.data.style === 'ordered' ? 'ordered' : 'unordered';
 
             html += '<div class="l-island-a"><ul class="' + className + '">'
@@ -77,7 +77,7 @@ export function editorParseToHtml(blocks) {
             }
 
             html += '</ul></div>'
-        } else if (type === 'delimiter') {
+        } else if (type === 'delimiter' && showInFeed(block, toFeed)) {
             html += '<div class="l-island-a">\n' +
                 '        <div class="block-delimiter"></div>\n' +
                 '    </div>'
@@ -85,4 +85,10 @@ export function editorParseToHtml(blocks) {
     }
 
     return html;
+}
+
+function showInFeed(block, status) {
+    if (!status) return true;
+
+    return block.tunes.ShowInFeed;
 }
