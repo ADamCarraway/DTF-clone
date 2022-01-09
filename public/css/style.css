@@ -4288,11 +4288,6 @@ a.v-list-subsites-item__main:hover {
     margin-top: 0;
 }
 
-.content .l-mv-20 + div h2, .content .l-mv-20 + div h3, .content .l-mv-20 + div h4, .content .l-mv-20 + div p, .content div:first-child:not(.block-html) h2, .content div:first-child:not(.block-html) h3, .content div:first-child:not(.block-html) h4, .content div:first-child:not(.block-html) p {
-    margin-top: 0;
-}
-
-
 .content figure, .l-mb-30 {
     margin-bottom: 30px;
 }
@@ -6982,7 +6977,7 @@ input:checked + .like-btn-svg {
 
 @media (min-width: 1340px) {
     #page_wrapper {
-        max-width: 1020px;
+        /* max-width: 1020px; */
         margin: 0 auto;
     }
 }
@@ -7858,8 +7853,8 @@ ion-icon.ellipsis-icon {
 
 @media (min-width: 1000px) {
     #page_wrapper {
-        width: 960px;
-        margin: 0 auto;
+        /* width: 960px; */
+        /* margin: 0 auto; */
     }
 }
 
@@ -7960,4 +7955,8 @@ a.v-list-subsites-item__main:hover {
 
 .l-mb-28 {
     margin-bottom: 28px;
+}
+
+.content--short .l-island-a:not(:first-of-type) p {
+    margin-top: 15px;
 }

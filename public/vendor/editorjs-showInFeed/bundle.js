@@ -1,9 +1,10 @@
 export default class ShowInFeed {
-    constructor({api}) {
+    constructor({api, data}) {
         this.api = api;
+        this.data = data || false;
         this.button = document.createElement('span');
-        this.buttonCss = 'cdx-settings-button';
-        this.buttonActiveCss = 'cdx-settings-button--active';
+        this.buttonBase = 'cdx-settings-button';
+        this.buttonActive = 'cdx-settings-button--active';
     }
 
     static get isTune() {
@@ -11,17 +12,34 @@ export default class ShowInFeed {
     }
 
     render() {
-        this.button.classList.add(this.buttonCss);
+        this.button.classList.add(this.buttonBase);
         this.button.innerHTML = '<ion-icon name="star-outline"></ion-icon>';
 
         this.button.addEventListener('click', () => {
-            this.button.classList.toggle(this.buttonActiveCss, !this.button.classList.contains(this.buttonActiveCss));
+            this.button.classList.toggle(this.buttonActive, !this.button.classList.contains(this.buttonActive));
+
+            this.data = this.button.classList.contains(this.buttonActive);
         });
+
+        this.button.classList.toggle(this.buttonActive, this.data);
 
         return this.button;
     }
 
+    // wrap(blockContent) {
+    //     // this.button.classList.toggle(this.buttonActive, toolData);
+    //
+    //     console.log(blockContent)
+    //     const myWrapper = document.createElement('div');
+    //
+    //     myWrapper.append(blockContent);
+    //
+    //     myWrapper.style.fontSize = '0.9em';
+    //
+    //     return myWrapper;
+    // }
+
     save() {
-        return this.button.classList.contains(this.buttonActiveCss);
+        return  this.data;;
     }
 }
