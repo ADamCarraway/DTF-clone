@@ -16,16 +16,28 @@ class PostController extends Controller
 
     public function index($feed, $filter = null)
     {
+        /** @var User $user */
+        $user = auth()->user();
+
         $posts = Post::query()->with(['category', 'user'])
-            ->where(function ($q) use ($feed) {
+            ->where(function ($q) use ($user, $feed) {
                 if ($feed !== 'all' && auth()->check()) {
-                    $users = auth()->user()->followings()->whereFollowableType(User::class)->pluck('followable_id')->toArray();
-                    $categories = auth()->user()->followings()->whereFollowableType(Category::class)->pluck('followable_id')->toArray();
+                    $users = $user->followings()->whereFollowableType(User::class)->pluck('followable_id')->toArray();
+                    $categories = $user->followings()->whereFollowableType(Category::class)->pluck('followable_id')->toArray();
 
                     $q->whereIn('posts.category_id', $categories)
                         ->orWhereIn('posts.user_id', $users);
                 }
             });
+
+        $posts->where(function ($b) use ($user) {
+            if ($user) {
+                foreach ($user->ignoredKeywords()->pluck('keyword') as $word) {
+                    $b->where('posts.title', 'not like', '%' . $word . '%');
+                    $b->where('posts.blocks', 'not like', '%' . $word . '%');
+                }
+            }
+        });
 
         if (!$filter ? $feed == 'popular' : $filter == 'popular') {
             $posts->orderBy('rating', 'desc');
@@ -45,7 +57,7 @@ class PostController extends Controller
         $post = Post::query()->with(['category', 'user'])->whereSlug($slug)->firstOrFail();
 
         if (!$post->is_publish && (!auth()->check() || !auth()->user()->is($post->user))) {
-           return response()->json('', Response::HTTP_NOT_FOUND);
+            return response()->json('', Response::HTTP_NOT_FOUND);
         }
 
         return response()->json($post);
