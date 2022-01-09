@@ -116,37 +116,9 @@ import Image from "@editorjs/image";
 import Link from "@editorjs/link";
 import Paragraph from "@editorjs/paragraph";
 import AnchorBlockTune from "/public/vendor/editorjs-anchor/bundle";
+import ShowInFeedTune from "/public/vendor/editorjs-showInFeed/bundle";
 import EventBus from "../../plugins/event-bus";
 import axios from "axios";
-import start from "/public/icons/star-outline.svg"
-
-class ShowInFeed {
-  constructor({api}) {
-    this.api = api;
-    this.button = document.createElement('span');
-    this.buttonCss = 'cdx-settings-button';
-    this.buttonActiveCss = 'cdx-settings-button--active';
-  }
-
-  static get isTune() {
-    return true;
-  }
-
-  render() {
-    this.button.classList.add(this.buttonCss);
-    this.button.innerHTML = '<ion-icon name="star-outline"></ion-icon>';
-
-    this.button.addEventListener('click', () => {
-      this.button.classList.toggle(this.buttonActiveCss, !this.button.classList.contains(this.buttonActiveCss));
-    });
-
-    return this.button;
-  }
-
-  save() {
-    return this.button.classList.contains(this.buttonActiveCss);
-  }
-}
 
 export default {
   name: "CreatePostModal",
@@ -213,7 +185,7 @@ export default {
         initialBlock: "paragraph",
         placeholder: 'Нажмите Tab для выбора инструмента',
         tools: {
-          ShowInFeed: ShowInFeed,
+          ShowInFeed: ShowInFeedTune,
           header: {
             class: Header,
             tunes: ['ShowInFeed'],
