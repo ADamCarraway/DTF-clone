@@ -1,5 +1,5 @@
 <template>
-  <div class="rating-page">
+  <div class="rating-page page--index">
     <div class="subsite_head l-island-a l-island-bg l-pt-20 l-pb-5">
       <div class="subsite_head__row">
         <div class="subsite_head__name l-fs-30 lm-fs-22 l-lh-30 l-fw-600">

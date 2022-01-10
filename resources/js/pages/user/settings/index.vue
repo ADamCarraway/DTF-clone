@@ -1,5 +1,5 @@
 <template>
-  <div class="page_wrapper">
+  <div class="settings-page page--index">
     <div class="user-settings l-page l-page--content-sidebar l-mt-20 l-mb-20">
       <div class="l-page__content">
         <div class="user-settings__content l-island-bg l-island-round v-island">
