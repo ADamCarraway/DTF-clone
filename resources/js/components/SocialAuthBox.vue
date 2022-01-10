@@ -21,17 +21,17 @@
       </div>
 
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-4 col-sm-4">
           <div class="social-auth__button" @click="login('facebook')" v-if="isActive('facebook')">
             <ion-icon name="logo-facebook" class="ui-button--ifb"></ion-icon>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-4 col-sm-4">
           <div class="social-auth__button" @click="login('twitter')" v-if="isActive('twitter')">
             <ion-icon name="logo-twitter" class="ui-button--itw"></ion-icon>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-4 col-sm-4">
           <div class="social-auth__button" @click="login('twitch')" v-if="isActive('twitch')">
             <ion-icon name="logo-twitch" class="ui-button--ittv"></ion-icon>
           </div>

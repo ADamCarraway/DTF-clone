@@ -3,78 +3,78 @@
     <div class="l-entry l-island-bg l-island-round l-pv-30 lm-pt-15 lm-pb-30 w_1020"
          style="border-radius: 0px 0px 8px 8px" v-if="data.slug">
       <div class="l-entry__header l-island-a">
-        <div class="content-header content-header--short">
-          <div class="content-header__info l-island-a">
+        <div class="content-header">
 
-            <div class="content-header__left">
+          <div class="content-header__info">
 
-              <!-- Подсайт, в котором опубликована статья -->
-              <router-link v-if="data.category" :to="{ name: 'category', params: {slug: data.category.slug} }"
-                           class="content-header-author content-header-author--subsite content-header__item">
-                <div class="content-header-author__avatar">
+            <!-- Подсайт, в котором опубликована статья -->
+            <router-link v-if="data.category" :to="{ name: 'category', params: {slug: data.category.slug} }"
+                         class="content-header-author content-header-author--subsite content-header__item">
+              <div class="content-header-author__avatar">
 
-                  <img class="andropov_image  andropov_image--bordered"
-                       :src="data.category.icon">
-                </div>
-
-                <div class="content-header-author__name">
-                  {{ data.category.title }}
-                </div>
-
-              </router-link>
-
-              <!-- Автор -->
-              <router-link v-if="data.user" :to="{ name: 'user', params: {slug: data.user.slug} }"
-                           class="content-header-author content-header__item"
-                           :class="{'content-header-author--subsite': !data.category}">
-                <div v-if="!data.category" class="content-header-author__avatar">
-
-                  <img class="andropov_image  andropov_image--bordered"
-                       :src="data.user.avatar">
-                </div>
-
-                <div class="content-header-author__name">
-                  {{ data.user.name }}
-                </div>
-
-              </router-link>
-
-              <!-- Время публикации -->
-              <div class="content-header-number content-header__item">
-                <span class="time">{{ data.date }}</span>
+                <img class="andropov_image  andropov_image--bordered"
+                     :src="data.category.icon">
               </div>
 
-              <!-- Число просмотров -->
-              <div class="content-header-number content-header__item">
-                <ion-icon name="eye-outline" :class="'mr-2'"></ion-icon>
-                {{ data.unique_views_count }}
+              <div class="content-header-author__name">
+                {{ data.category.title }}
               </div>
 
-              <!-- Закрепленный пост -->
+            </router-link>
 
-              <!-- Пометка у спонсорских постов -->
+            <!-- Автор -->
+            <router-link v-if="data.user" :to="{ name: 'user', params: {slug: data.user.slug} }"
+                         class="content-header-author content-header__item"
+                         :class="{'content-header-author--subsite': !data.category}">
+              <div v-if="!data.category" class="content-header-author__avatar">
 
+                <img class="andropov_image  andropov_image--bordered"
+                     :src="data.user.avatar">
+              </div>
+
+              <div class="content-header-author__name">
+                {{ data.user.name }}
+              </div>
+
+            </router-link>
+
+            <!-- Время публикации -->
+            <div class="content-header__item content-header-number">
+                <span class=" lm-inline">
+                    <time class="time">{{ data.date }}</time>
+                </span>
             </div>
 
-            <div class="content-header__right">
-              <!-- Бейдж черновика -->
-              <div v-if="!data.is_publish"
-                   class="content-header__item content-header-label content-header-label--draft">Черновик
-              </div>
+            <!-- Число просмотров -->
+<!--            <div class="content-header-number content-header__item">-->
+<!--              <ion-icon name="eye-outline" :class="'mr-2'"></ion-icon>-->
+<!--              {{ data.unique_views_count }}-->
+<!--            </div>-->
 
-              <!-- Управление статьей -->
-              <post-management :data="data"></post-management>
+            <!-- Закрепленный пост -->
 
-              <!-- Кнопка «Подписаться» -->
-            </div>
+            <!-- Пометка у спонсорских постов -->
 
           </div>
+          <div class="content-header__spacer"></div>
+          <div class="content-header__item content-header__item--controls">
+            <!-- Бейдж черновика -->
+            <div v-if="!data.is_publish"
+                 class="content-header__item content-header-label content-header-label--draft">Черновик
+            </div>
 
-          <h1 class="content-title" itemprop="headline">
-            {{ data.title }}
-          </h1>
+            <!-- Управление статьей -->
+            <post-management :data="data"></post-management>
+
+            <!-- Кнопка «Подписаться» -->
+          </div>
 
         </div>
+
+        <h1 class="content-title" itemprop="headline">
+          {{ data.title }}
+        </h1>
+
       </div>
 
       <div class="l-entry__content">
@@ -83,7 +83,7 @@
       </div>
 
       <div class="subsite-card-entry">
-        <div class="subsite-card-entry--short">
+        <div class="l-island-a">
           <div class="subsite-card">
             <router-link router-link :to="{ name: 'user', params: {slug: data.user.slug} }" class="subsite-card__main">
               <!-- Автор -->
@@ -166,15 +166,15 @@ export default {
 
 <style scoped>
 
-.content-header--short {
-  padding-top: 0px;
-  margin-bottom: 0px;
-}
+/*.content-header--short {*/
+/*  padding-top: 0px;*/
+/*  margin-bottom: 0px;*/
+/*}*/
 
-.content-header__info.l-island-a {
-  padding-left: 0;
-  padding-right: 0;
-}
+/*.content-header__info.l-island-a {*/
+/*  padding-left: 0;*/
+/*  padding-right: 0;*/
+/*}*/
 
 .content-footer--short {
 
@@ -188,16 +188,16 @@ export default {
   margin-right: auto;
 }
 
-.l-entry__header {
+/*.l-entry__header {*/
 
-  padding-left: 0;
-  padding-right: 0;
-}
+/*  padding-left: 0;*/
+/*  padding-right: 0;*/
+/*}*/
 
-.content-footer--short {
-  padding: 0;
-  margin-top: 30px;
-}
+/*.content-footer--short {*/
+/*  padding: 0;*/
+/*  margin-top: 30px;*/
+/*}*/
 
 .subsite-card-entry--short {
 

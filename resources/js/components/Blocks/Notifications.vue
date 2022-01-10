@@ -1,5 +1,5 @@
 <template>
-  <div class="site-header__item"
+  <div class="site-header__item site-header__item--desktop"
        @focusout="handleFocusOut"
        tabindex="0">
     <div class="head-notifies" :class="{'head-notifies--showed': show}">

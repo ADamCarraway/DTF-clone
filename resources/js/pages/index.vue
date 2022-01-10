@@ -1,6 +1,7 @@
 <template>
-  <div class="page page--index ">
+  <div class="app--content-feed page page--index">
     <news-widget v-if="$route.name === 'index' || $route.name === 'index.all'"></news-widget>
+    <create-post-block v-else/>
 
     <div class="app--content-feed">
       <div class="ui-sorting ui-sorting--with-tabs">

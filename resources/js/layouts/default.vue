@@ -17,6 +17,7 @@
       }"
       />
     </div>
+    <mobile-menu/>
   </div>
 </template>
 <!--          v-if="$route.name && ($route.name).indexOf('user')+1 !== 1"-->
@@ -26,11 +27,13 @@
 import Navbar from '~/components/Navbar'
 import LiveLenta from "../components/LiveLenta";
 import Sidebar from "../components/Sidebar";
+import MobileMenu from "../components/Blocks/MobileMenu";
 
 export default {
   name: 'MainLayout',
 
   components: {
+    MobileMenu,
     Sidebar,
     LiveLenta,
     Navbar

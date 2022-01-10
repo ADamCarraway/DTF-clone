@@ -13,10 +13,9 @@
         сделал репост
       </div>
 
-      <div class="content-header content-header--short">
-        <div class="content-header__info l-island-a" :class="{'content-header--empty-title': !post.title}">
+      <div class="content-header content-header--short l-island-a" :class="{'content-header--empty-title': !post.title}">
 
-          <div class="content-header__left">
+          <div class="content-header__info">
 
             <!-- Подсайт, в котором опубликована статья -->
             <router-link v-if="post.category" :to="{ name: 'category', params: {slug: post.category.slug} }"
@@ -58,12 +57,10 @@
 
             <!-- Пометка у спонсорских постов -->
 
-          </div>
-
-          <div class="content-header__right">
-            <!-- Бейдж черновика -->
-            <div class="content-header__item content-header-label content-header-label--draft" v-if="!post.is_publish">Черновик</div>
-
+          </div> 
+          <div class="content-header__spacer"></div>
+          <div class="content-header__item content-header-label content-header-label--draft" v-if="!post.is_publish">Черновик</div>
+          <div class="content-header__item content-header__item--controls">
             <!-- Управление статьей -->
             <post-management :data="post"></post-management>
 
@@ -71,18 +68,21 @@
           </div>
 
         </div>
-        <router-link class="content-header__title l-island-a" v-if="post.title"
-                     :to="{ name: post.category ? 'post' :'user.post', params: {postSlug: post.slug, slug: post.category ? post.category.slug : post.user.slug} }">
-          {{ post.title }}
-          <span class="l-no-wrap" v-if="post.is_official">
+      <div class="content content--short">
+        <div class="content-container">
+          <router-link class="content-title content-title--short l-island-a" v-if="post.title"
+                       :to="{ name: post.category ? 'post' :'user.post', params: {postSlug: post.slug, slug: post.category ? post.category.slug : post.user.slug} }">
+            {{ post.title }}
+            <span class="l-no-wrap" v-if="post.is_official">
             <router-link
-              :to="{ name: post.category ? 'post' :'user.post', params: {postSlug: post.slug, slug: post.category ? post.category.slug : post.user.slug} }">
+                :to="{ name: post.category ? 'post' :'user.post', params: {postSlug: post.slug, slug: post.category ? post.category.slug : post.user.slug} }">
               <span class="content-editorial-tick">
                 <ion-icon name="checkmark"></ion-icon>
               </span>
             </router-link>
           </span>
-        </router-link>
+          </router-link>
+        </div>
       </div>
 
       <router-link

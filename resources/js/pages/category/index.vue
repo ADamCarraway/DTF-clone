@@ -1,6 +1,5 @@
 <template>
-  <div class="page page--subsites lm-mt-0 l-pb-15 lm-pb-0 l-clear"
-       style="width: 640px;padding-top: 16px;padding-bottom: 16px;">
+  <div class="page page--index page--subsites lm-mt-0 l-pb-15 lm-pb-0 l-clear">
     <div class="subsites_catalog">
       <div class="ui-tabs ui-tabs--default lm-hidden l-island-bg">
         <div class="ui-tabs__scroll">
@@ -14,10 +13,12 @@
           </div>
         </div>
       </div>
-      <div class="subsites_catalog__search l-island-a l-island-bg l-pv-15">
-        <ion-icon name="search-outline"></ion-icon>
-        <input v-model="search" class="subsites_catalog__search__bar l-ml-15" placeholder="Поиск"
-               data-gtm="Subsites catalog – Search">
+      <div class="subsites_catalog__search l-island-bg l-pv-15">
+        <div class="l-island-a">
+          <ion-icon name="search-outline"></ion-icon>
+          <input v-model="search" class="subsites_catalog__search__bar l-ml-15" placeholder="Поиск"
+                 data-gtm="Subsites catalog – Search">
+        </div>
       </div>
       <div class="subsites_catalog__content l-island-bg">
         <div v-for="item in subs" :key="item.slug" class="subsites_catalog_item l-island-a l-pv-20">

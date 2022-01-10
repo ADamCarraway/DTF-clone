@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="site-header__item site-header__item--spaced site-header__item--desktop site-header__item--centered">
+    <div class="site-header__item site-header__item--spaced site-header__item--centered site-header__item--create">
       <div class="v-create-button">
         <div @click="editorShow" class="v-create-button__main" style="cursor: pointer">
           <div class="v-split-button__icon">
@@ -48,7 +48,7 @@
 
     <notifications/>
 
-    <div class="site-header__item" v-if="user">
+    <div class="site-header__item site-header__item--desktop" v-if="user">
       <div class="site-header-user">
         <div class="site-header-user-profile">
           <router-link :to="{ name: 'user', params: {slug: user.slug} }"
@@ -154,7 +154,11 @@ export default {
     },
 
     editorShow() {
-      EventBus.$emit('editorShow', true)
+      if (this.user){
+        EventBus.$emit('editorShow', true)
+      }else{
+        EventBus.$emit('loginModal', true);
+      }
     },
     async logout() {
       // Log out the user.

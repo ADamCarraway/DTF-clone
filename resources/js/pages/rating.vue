@@ -1,13 +1,13 @@
 <template>
   <div class="rating-page page--index">
-    <div class="subsite_head l-island-a l-island-bg l-pt-20 l-pb-5">
-      <div class="subsite_head__row">
+    <div class="subsite_head l-island-bg l-pt-20 l-pb-5">
+      <div class="subsite_head__row l-island-a">
         <div class="subsite_head__name l-fs-30 lm-fs-22 l-lh-30 l-fw-600">
           Рейтинг сообществ и блогов
         </div>
       </div>
 
-      <div class="subsite_head__row">
+      <div class="subsite_head__row l-island-a">
         <div class="subsite_head__description l-fs-15 l-lh-21 lm-fs-13 lm-lh-18">
           Десять лучших авторов и&nbsp;комментаторов, а&nbsp;также администраторы первых десяти сообществ из&nbsp;рейтинга
           по&nbsp;итогам месяца бесплатно получают <a href="/plus">Plus-аккаунт</a> на&nbsp;месяц.

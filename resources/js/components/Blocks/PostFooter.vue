@@ -1,5 +1,5 @@
 <template>
-  <div class="content-footer content-footer--short l-island-a">
+  <div class="content-footer l-island-a">
 
     <div class="content-footer__left">
 
