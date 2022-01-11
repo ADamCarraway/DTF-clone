@@ -8568,3 +8568,90 @@ a.v-list-subsites-item__main:hover {
     overflow-x: hidden;
     -ms-overflow-x: hidden;
 }
+
+@media (max-width: 1024px){
+    .v-popup-fp-window__controls {
+        display: none;
+    }
+}
+
+@media (max-width: 1024px){
+    .editor__body {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-color: dark;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 1024px){
+    .editor-cp__left {
+        -ms-flex: 1;
+        flex: 1;
+        -ms-flex-direction: row-reverse;
+        flex-direction: row-reverse;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 1024px){
+    .editor-cp .v-button {
+        --offset: 14px;
+        --min-width: 36px;
+        --height: 32px;
+        --font-size: 14px;
+        --icon-size: 20px;
+        --border-radius: 6px;
+    }
+
+    .editor-cp .v-button__icon--new{
+        margin-right: 8px;
+    }
+}
+
+@media (max-width: 1024px){
+    .editor__authors, .editor__scrollable {
+        padding-right: 16px;
+        padding-left: 16px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .el-input__inner{
+        padding-left: 0!important;
+    }
+
+    .editor__actions, .editor-cp__content{
+        height: 50px;
+    }
+}
+
+.editor-cp__back {
+    padding: 16px;
+    /*margin-left: -16px;*/
+    font-size: 24px;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px){
+    .editor-cp__autosave {
+        margin-left: 0;
+        margin-right: auto;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 1025px){
+    .editor-cp-mobile {
+        display: none;
+    }
+}
+
+

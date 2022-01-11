@@ -17,6 +17,10 @@
               <div class="editor__actions">
                 <div class="editor-cp">
                   <div class="editor-cp__content l-editor">
+                    <div class="editor-cp__back editor-cp-mobile">
+                      <ion-icon name="arrow-back-outline"></ion-icon>
+                    </div>
+
                     <div class="editor-cp__left">
                       <button @click="save(1, false)"
                               class="v-button v-button--blue v-button--size-default v-button--mobile-size-tiny"
@@ -29,9 +33,9 @@
                       <a :href="prevUrl"
                          v-if="prevUrl || is_publish"
                          target="_blank"
-                         class="editor-cp-desktop v-button v-button--default v-button--size-default v-button--mobile-size-tiny"
+                         class="editor-cp-desktop v-button v-button--default v-button--size-default v-button--mobile-size-tiny v-button__icon--new"
                          title="Перейти к статье">
-                        <div class="v-button__icon v-button__icon--new">
+                        <div class="v-button__icon">
                           <ion-icon name="eye-outline"></ion-icon>
                         </div>
                       </a>
