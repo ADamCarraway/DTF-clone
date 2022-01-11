@@ -28,7 +28,7 @@ class PostController extends Controller
                     $categories = $user->followings()->whereFollowableType(Category::class)->pluck('followable_id')->toArray();
 
                     $q->whereIn('posts.category_id', $categories)
-                        ->orWhereIn('posts.user_id', $users);
+                        ->orWhereIn('posts.user_id', array_merge($users, [$user->id]));
                 }
             });
 
