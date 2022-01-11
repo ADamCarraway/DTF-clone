@@ -1,6 +1,15 @@
 <template>
-  <div class="layout__left-column layout__sticky" v-show="!hideSidebar">
+  <div class="layout__left-column layout__sticky" :class="{'sidebar--shown': !hideSidebar}" v-show="!hideSidebar">
     <div class="sidebar">
+      <div class="sidebar__header">
+        <div class="site-header-burger" @click="hideSidebar = !hideSidebar">
+          <ion-icon name="menu-outline"></ion-icon>
+        </div>
+        <router-link :to="{ name: 'index' }" class="site-header-logo site-header-logo--dtf">
+          <img src="/logo.png" alt="" class="site_logo">
+        </router-link>
+      </div>
+
       <div class="sidebar__scroll vb vb-visible" style="position: relative; overflow: hidden;">
         <div class="vb-content"
              style="display: block; overflow: hidden scroll; height: 100%; width: 100%;">
@@ -32,57 +41,58 @@
         </div>
       </div>
     </div>
+    <div class="sidebar__tint"></div>
   </div>
 </template>
 
 <script>
-  import MainList from "./MainList";
-  import EventBus from "../plugins/event-bus";
-  import {mapGetters} from "vuex";
-  import {forEach} from "../helpers"
-  import axios from "axios";
-  import Favorite from "./Buttons/Favorite";
+import MainList from "./MainList";
+import EventBus from "../plugins/event-bus";
+import {mapGetters} from "vuex";
+import {forEach} from "../helpers"
+import axios from "axios";
+import Favorite from "./Buttons/Favorite";
 
-  export default {
-    name: "Sidebar",
-    components: {Favorite, MainList},
-    data() {
-      return {
-        hideSidebar: false,
-        hide: true,
-        subs: {},
-        active: []
-      }
-    },
-    computed: mapGetters({
-      user: 'auth/user',
-      subscriptions: 'auth/subscriptions',
-    }),
-    mounted() {
-      this.subs = this.user ? this.subscriptions : window.config.categories;
-      this.showAll(false)
+export default {
+  name: "Sidebar",
+  components: {Favorite, MainList},
+  data() {
+    return {
+      hideSidebar: false,
+      hide: true,
+      subs: {},
+      active: []
+    }
+  },
+  computed: mapGetters({
+    user: 'auth/user',
+    subscriptions: 'auth/subscriptions',
+  }),
+  mounted() {
+    this.subs = this.user ? this.subscriptions : window.config.categories;
+    this.showAll(false)
 
-      EventBus.$on('hideSidebar', () => {
-        this.hideSidebar = !this.hideSidebar;
+    EventBus.$on('hideSidebar', () => {
+      this.hideSidebar = !this.hideSidebar;
+    });
+  },
+
+  methods: {
+    showAll(status) {
+      this.hide = status;
+
+      if (status) return Object.keys(this.subs).map((key) => {
+        this.subs[key]['isVisible'] = true;
       });
-    },
 
-    methods: {
-      showAll(status) {
-        this.hide = status;
-
-        if (status) return Object.keys(this.subs).map((key) => {
-          this.subs[key]['isVisible'] = true;
-        });
-
-        let i = 0;
-        forEach(this.subs, (value, prop, obj) => {
-          this.subs[prop]['isVisible'] = i <= 5;
-          i++;
-        });
-      }
+      let i = 0;
+      forEach(this.subs, (value, prop, obj) => {
+        this.subs[prop]['isVisible'] = i <= 5;
+        i++;
+      });
     }
   }
+}
 </script>
 
 <style scoped>

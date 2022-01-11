@@ -25,11 +25,11 @@
           <div class="navigation-user-profile">
             <el-dropdown trigger="click" placement="bottom-end" style="display: flex;">
               <span class="el-dropdown-link dropdown_down">
-            <router-link :to="{ name: 'user', params: {slug: user.slug} }"
+            <div
                          class="site-header-user-profile__avatar not-active">
               <div class="site-header-user-profile__avatar-image"
                    :style="{'background-image': 'url('+user.avatar+')'}"></div>
-            </router-link>
+            </div>
               </span>
               <el-dropdown-menu slot="dropdown">
                 <div class="at-dropdown-menu-item__title">Профиль</div>

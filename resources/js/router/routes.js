@@ -59,7 +59,7 @@ export default [
     component: page('user/settings/index.vue'),
     name: 'user.settings',
     children: [
-      {path: '', name: 'user.settings.main', component: MainInfo},
+      {path: 'main', name: 'user.settings.main', component: MainInfo},
       {path: 'notifications', name: 'user.settings.notifications', component: NotificationSetting},
       {path: 'blocklist', name: 'user.settings.blocklist', component: BlockList},
     ]

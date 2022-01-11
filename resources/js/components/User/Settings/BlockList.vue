@@ -3,7 +3,7 @@
 
     <block-keywords/>
 
-    <div class="user-settings__container">
+    <div class="v-form-section user-settings__container">
       <label class="v-form-section__label">
         Пользователи
       </label>

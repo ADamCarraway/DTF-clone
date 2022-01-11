@@ -1,5 +1,5 @@
 <template>
-  <div class="news_widget l-island-bg l-island-round l-mb-15 l-pv-20 lm-pv-18 l-fs-16">
+  <div class="news_widget l-island-bg l-island-a l-island-round l-mb-15 l-pv-20 lm-pv-18 l-fs-16">
 
     <div class="news_widget__toggle t-no_select l-fs-13"  @click="show = !show" v-if="posts.length">
       <i class="el-icon-arrow-up" v-if="show"></i>
