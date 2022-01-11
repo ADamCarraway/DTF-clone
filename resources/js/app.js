@@ -7,13 +7,15 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import Echo from 'laravel-echo';
 import VueTextareaAutosize from "vue-textarea-autosize";
+import VueClipboard from 'vue-clipboard2'
+import DataTable from 'laravel-vue-datatable';
+
 
 window.Vue = require('vue');
 
 Vue.use(require('vue-resource'));
 Vue.use(ElementUI);
-
-import VueClipboard from 'vue-clipboard2'
+Vue.use(DataTable);
 
 Vue.config.ignoredElements = [/^ion-/]
 

@@ -174,6 +174,13 @@ return [
         JD\Cloudder\CloudderServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        JamesDordoy\LaravelVueDatatable\Providers\LaravelVueDatatableServiceProvider::class,
+        /*
+         * Local Package Service Providers...
+         */
+        \Packages\Admin\AdminServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

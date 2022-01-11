@@ -29,6 +29,7 @@
     "jquery": "^3.5.1",
     "js-cookie": "^2.2.0",
     "laravel-echo": "^1.11.1",
+    "laravel-vue-datatable": "^0.6.0",
     "moment": "^2.27.0",
     "popper.js": "^1.15.0",
     "pusher-js": "^7.0.3",

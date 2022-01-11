@@ -6,7 +6,7 @@
       <div class="layout__content l-relative">
         <child id="page_wrapper"/>
       </div>
-      <live-lenta
+      <live-lenta v-if="$route.name && ($route.name).indexOf('admin')+1 !== 1"
           :class="{'page--index' : $route.name &&
           ($route.name).indexOf('user.favorites')+1 !== 1 &&
           ($route.name).indexOf('user.notifications')+1 !== 1 &&

@@ -19,6 +19,8 @@ use Illuminate\Notifications\Notifiable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use JamesDordoy\LaravelVueDatatable\Traits\LaravelVueDatatableTrait;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Concerns\Ignorable;
 use App\Concerns\Notifiable as NotifiableTrait;
@@ -35,7 +37,9 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         NotifiableTrait,
         Ignored,
         Ignorable,
-        Notifiable;
+        Notifiable,
+        HasRoles,
+        LaravelVueDatatableTrait;
 
     //a - postLikes, b = commentsLikes
     const ODDS = ['a' => 0.02, 'b' => 0.05, 'c' => 1];
@@ -73,9 +77,24 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         'type',
         'slug',
         'online',
-        'show_posts'
+        'show_posts',
+        'is_admin'
     ];
 
+    protected $dataTableColumns = [
+        'id' => [
+            'searchable' => false,
+        ],
+        'name' => [
+            'searchable' => true,
+        ],
+        'email' => [
+            'searchable' => true,
+        ],
+        'created_at' => [
+            'searchable' => true,
+        ]
+    ];
 
     public function oauthProviders()
     {
@@ -220,7 +239,7 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
 
     public function getOnlineAttribute(): bool
     {
-        if (($status = $this->settings()->where('key', 'show-online-status')->first()) && !$status->value){
+        if (($status = $this->settings()->where('key', 'show-online-status')->first()) && !$status->value) {
             return false;
         }
 
@@ -240,5 +259,12 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
     public function ignoredKeywords()
     {
         return $this->hasMany(IgnoredKeyword::class);
+    }
+
+    public function getIsAdminAttribute()
+    {
+        if (!$this) return false;
+
+        return ($this->roles()->first()->name ?? '') === 'admin';
     }
 }

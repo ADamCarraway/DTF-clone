@@ -1,38 +1,68 @@
 <template>
   <div class="sidebar__tree-list">
-    <router-link :to="{ name: 'index'}" @click.native="change('popular')"
-                 class="sidebar__tree-list__item">
-      <div class="sidebar-tree-list-item__link">
-        <ion-icon name="flame-outline" class="sidebar__icon"></ion-icon>
-        <p class="sidebar__tree-list__item__name">Лента</p>
-      </div>
-    </router-link>
-    <router-link :to="{ name: 'index.new'}" class="sidebar__tree-list__item" @click.native="change('new')">
-      <div class="sidebar-tree-list-item__link">
-        <ion-icon name="time-outline" class="sidebar__icon"></ion-icon>
-        <p class="sidebar__tree-list__item__name">Севежее</p>
-        <p class="sidebar-tree-list-item__badge" v-if="newCount">{{ newCount }}</p>
-      </div>
-    </router-link>
-    <router-link :to="{ name: 'user.favorites', params:{'slug': user.slug}}" class="sidebar__tree-list__item"
-                 v-if="user">
-      <div class="sidebar-tree-list-item__link">
-        <ion-icon name="bookmark-outline" class="sidebar__icon"></ion-icon>
-        <p class="sidebar__tree-list__item__name">Закладки</p>
-      </div>
-    </router-link>
-    <router-link :to="{ name: 'rating'}" class="sidebar__tree-list__item">
-      <div class="sidebar-tree-list-item__link">
-        <ion-icon name="trending-up-outline" class="sidebar__icon"></ion-icon>
-        <p class="sidebar__tree-list__item__name">Рейтинг</p>
-      </div>
-    </router-link>
-    <router-link :to="{ name: 'subs'}" class="sidebar__tree-list__item">
-      <div class="sidebar-tree-list-item__link">
-        <ion-icon name="list-outline" class="sidebar__icon"></ion-icon>
-        <p class="sidebar__tree-list__item__name">Подписки</p>
-      </div>
-    </router-link>
+    <div v-if="$route.name && ($route.name).indexOf('admin')+1 !== 1">
+      <router-link :to="{ name: 'index'}" @click.native="change('popular')"
+                   class="sidebar__tree-list__item">
+        <div class="sidebar-tree-list-item__link">
+          <ion-icon name="flame-outline" class="sidebar__icon"></ion-icon>
+          <p class="sidebar__tree-list__item__name">Лента</p>
+        </div>
+      </router-link>
+      <router-link :to="{ name: 'index.new'}" class="sidebar__tree-list__item" @click.native="change('new')">
+        <div class="sidebar-tree-list-item__link">
+          <ion-icon name="time-outline" class="sidebar__icon"></ion-icon>
+          <p class="sidebar__tree-list__item__name">Севежее</p>
+          <p class="sidebar-tree-list-item__badge" v-if="newCount">{{ newCount }}</p>
+        </div>
+      </router-link>
+      <router-link :to="{ name: 'user.favorites', params:{'slug': user.slug}}" class="sidebar__tree-list__item"
+                   v-if="user">
+        <div class="sidebar-tree-list-item__link">
+          <ion-icon name="bookmark-outline" class="sidebar__icon"></ion-icon>
+          <p class="sidebar__tree-list__item__name">Закладки</p>
+        </div>
+      </router-link>
+      <router-link :to="{ name: 'rating'}" class="sidebar__tree-list__item">
+        <div class="sidebar-tree-list-item__link">
+          <ion-icon name="trending-up-outline" class="sidebar__icon"></ion-icon>
+          <p class="sidebar__tree-list__item__name">Рейтинг</p>
+        </div>
+      </router-link>
+      <router-link :to="{ name: 'subs'}" class="sidebar__tree-list__item">
+        <div class="sidebar-tree-list-item__link">
+          <ion-icon name="list-outline" class="sidebar__icon"></ion-icon>
+          <p class="sidebar__tree-list__item__name">Подписки</p>
+        </div>
+      </router-link>
+      <router-link :to="{ name: 'admin.index'}"
+                   v-if="user && user.is_admin"
+                   class="sidebar__tree-list__item">
+        <div class="sidebar-tree-list-item__link">
+          <ion-icon name="grid-outline" class="sidebar__icon"></ion-icon>
+          <p class="sidebar__tree-list__item__name">Админ панель</p>
+        </div>
+      </router-link>
+    </div>
+    <div v-else>
+      <router-link :to="{ name: 'admin.index'}"
+                   v-if="user && user.is_admin"
+                   class="sidebar__tree-list__item">
+        <div class="sidebar-tree-list-item__link">
+          <ion-icon name="grid-outline" class="sidebar__icon"></ion-icon>
+          <p class="sidebar__tree-list__item__name">Админ панель</p>
+        </div>
+      </router-link>
+
+      <router-link :to="{ name: 'admin.users.index'}"
+                   v-if="user && user.is_admin"
+                   class="sidebar__tree-list__item">
+        <div class="sidebar-tree-list-item__link">
+          <ion-icon name="people-outline" class="sidebar__icon"></ion-icon>
+          <p class="sidebar__tree-list__item__name">Пользователи</p>
+        </div>
+      </router-link>
+
+    </div>
   </div>
 </template>
 
