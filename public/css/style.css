@@ -8549,8 +8549,22 @@ a.v-list-subsites-item__main:hover {
         height: 100%;
         background: rgba(0, 0, 0, .6);
     }
+
     .sidebar--shown .sidebar {
         position: relative;
         z-index: 2;
     }
+}
+
+@media (min-width: 1340px) {
+
+    .page.page--entry#page_wrapper {
+        max-width: 1020px;
+        margin: 0 auto;
+    }
+}
+
+.page.page--entry#page_wrapper {
+    overflow-x: hidden;
+    -ms-overflow-x: hidden;
 }
