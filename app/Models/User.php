@@ -38,8 +38,7 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         Ignored,
         Ignorable,
         Notifiable,
-        HasRoles,
-        LaravelVueDatatableTrait;
+        HasRoles;
 
     //a - postLikes, b = commentsLikes
     const ODDS = ['a' => 0.02, 'b' => 0.05, 'c' => 1];
@@ -79,21 +78,6 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         'online',
         'show_posts',
         'is_admin'
-    ];
-
-    protected $dataTableColumns = [
-        'id' => [
-            'searchable' => false,
-        ],
-        'name' => [
-            'searchable' => true,
-        ],
-        'email' => [
-            'searchable' => true,
-        ],
-        'created_at' => [
-            'searchable' => true,
-        ]
     ];
 
     public function oauthProviders()

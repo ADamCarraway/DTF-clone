@@ -16,6 +16,7 @@ function page(path) {
 export default [
   {path: '/admin', name: 'admin.index', component: page('admin/index.vue')},
   {path: '/admin/users', name: 'admin.users.index', component: page('admin/users/index.vue')},
+  {path: '/admin/users/:id', name: 'admin.users.show', component: page('admin/users/show.vue')},
   {path: '/404', name:'404', component: page('errors/404.vue')},
   {path: '/403', name:'403', component: page('errors/403.vue')},
   {

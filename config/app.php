@@ -175,7 +175,6 @@ return [
         SocialiteProviders\Manager\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
-        JamesDordoy\LaravelVueDatatable\Providers\LaravelVueDatatableServiceProvider::class,
         /*
          * Local Package Service Providers...
          */

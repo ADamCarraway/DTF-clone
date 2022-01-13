@@ -9,7 +9,7 @@
     <el-dialog
         :visible.sync="loginModal"
         :show-close="false"
-        :custom-class="''">
+        :custom-class="'login-modal'">
       <span slot="title"></span>
       <login-box/>
       <span slot="footer"></span>

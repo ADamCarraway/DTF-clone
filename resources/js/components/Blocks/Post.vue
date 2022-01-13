@@ -57,7 +57,7 @@
 
             <!-- Пометка у спонсорских постов -->
 
-          </div> 
+          </div>
           <div class="content-header__spacer"></div>
           <div class="content-header__item content-header-label content-header-label--draft" v-if="!post.is_publish">Черновик</div>
           <div class="content-header__item content-header__item--controls">

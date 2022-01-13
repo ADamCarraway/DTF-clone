@@ -1,5 +1,5 @@
 <template>
-  <div class='l-island-bg l-island-round l-pv-30 lm-pv-15 l-mt-15 w_1020 '>
+  <div class='l-island-bg l-entry l-island-round l-pv-30 lm-pv-15 l-mt-15 w_1020 '>
     <div class="comments comments--ready">
       <div class="comments__body">
         <div class="comments__title l-island-a l-pb-10 lm-pt-30 l-fs-18 l-fw-700 l-mb-15" data-count="0">
