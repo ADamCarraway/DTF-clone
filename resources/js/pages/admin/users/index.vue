@@ -17,15 +17,12 @@
               label="Имя"
               sortable="custom">
             <template slot-scope="scope">
-              {{ '#' + scope.row.id }} <b>{{ scope.row.name }}</b>
-              <br>
-              <el-tag size="mini">{{ scope.row.email }}</el-tag>
+              <b>{{ scope.row.name }}</b>
             </template>
           </el-table-column>
           <el-table-column
               prop="role"
-              label="Роль"
-          >
+              label="Роль">
             <template slot-scope="scope">
               <el-tag size="small" type="success" v-if="scope.row.roles"
                       v-for="role in (scope.row.roles == null ? '' : scope.row.roles).split(',')" :key="role">{{ role }}
@@ -34,21 +31,14 @@
             </template>
           </el-table-column>
           <el-table-column
-              prop="date"
-              label="Рега"
+              prop="email"
+              label="Почта"
               sortable="custom">
           </el-table-column>
           <el-table-column
-              prop="posts_count"
-              label="Посты"
-              sortable="custom"
-              width="100">
-          </el-table-column>
-          <el-table-column
-              prop="comments_count"
-              label="Комм"
-              sortable="custom"
-              width="100">
+              prop="date"
+              label="Рега"
+              sortable="custom">
           </el-table-column>
           <el-table-column
               align="right">

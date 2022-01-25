@@ -4794,6 +4794,7 @@ input:checked + .like-btn-svg {
     margin-top: 14px;
     margin-bottom: 15px;
     color: #000;
+    display: block;
 }
 
 @media (max-width: 859px) {
@@ -8689,4 +8690,54 @@ a.v-list-subsites-item__main:hover {
     font-size: 13px;
     padding: 0 15px;
     border-radius: 4px;
+}
+
+.post-block{
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.post-block .content-header__info{
+    font-size: 13px;
+}
+
+.post-block .content-title{
+    font-size: 13px;
+}
+
+.post-block .content-header-number{
+    font-size: 13px;
+}
+
+.post-block .profile_comment_favorite__title{
+    font-size: 13px;
+}
+
+.post-block .profile_comment_favorite__text {
+    font-size: 13px;
+}
+
+.a-posts{
+    max-height: 450px;
+    overflow: hidden;
+    overflow-y: scroll;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.post-block {
+    font-size: 13px;
+    margin-bottom: 8px;
+    background: rgba(204, 204, 204, 0.13);
+    padding: 7px;
+    border-radius: 3px;
+}
+
+.stats-item {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 3px;
+    background: rgba(255, 255, 255, 0.56);
+    margin-right: 10px;
 }

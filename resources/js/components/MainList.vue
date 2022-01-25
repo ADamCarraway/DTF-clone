@@ -5,7 +5,7 @@
                    class="sidebar__tree-list__item">
         <div class="sidebar-tree-list-item__link">
           <ion-icon name="flame-outline" class="sidebar__icon"></ion-icon>
-          <p class="sidebar__tree-list__item__name">Лента</p>
+          <p class="sidebar__tree-list__item__name">Популярное</p>
         </div>
       </router-link>
       <router-link :to="{ name: 'index.new'}" class="sidebar__tree-list__item" @click.native="change('new')">

@@ -2,7 +2,6 @@
   <div class="">
     <div class="v-field--text v-field v-field--default w-100">
       <div class="v-field__wrapper">
-        {{ user.role }}
         <el-select
             v-model="roles"
             @change="changeRole"
@@ -29,7 +28,7 @@ export default {
   data() {
     return {
       allRoles: {},
-      roles: this.user.roles == null ? [] : this.user.roles.split(',')
+      roles: (this.user.roles == null || this.user.roles === "") ? [] : this.user.roles.split(',')
     }
   },
   props: ['user'],

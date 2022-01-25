@@ -1,7 +1,6 @@
 <template>
-  <span  @click="destroy">Удалить</span>
+  <span @click="destroy">Удалить</span>
 </template>
-
 <script>
 
 import axios from "axios";
@@ -12,6 +11,8 @@ export default {
   props: ['user'],
   methods: {
     destroy() {
+      if(!confirm("Действительно удалить?")) return;
+
       axios.get('/api/admin/users/' + this.user.id + '/destroy').then((res) => {
         this.user = {}
         this.$notify({

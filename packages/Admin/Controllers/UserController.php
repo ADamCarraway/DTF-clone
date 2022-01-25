@@ -15,9 +15,7 @@ class UserController extends Controller
         $users = DB::table('users')
             ->select([
                 'users.*',
-                DB::raw('count(p.id) as posts_count'),
-                DB::raw('count(c.id) as comments_count'),
-                DB::raw("GROUP_CONCAT(r.name SEPARATOR ',') as roles"),
+                DB::raw("GROUP_CONCAT(DISTINCT r.name SEPARATOR ',') as roles"),
                 DB::raw('DATE_FORMAT(users.created_at, "%d.%m.%Yг.") as date')
             ])
             ->leftJoin('user_has_roles as ur', 'users.id', '=', 'ur.user_id')
@@ -43,6 +41,12 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        $user->ignoredKeywords = $user->ignoredKeywords()->pluck('keyword');
+        $user->posts = $user->posts()->latest()->limit(25)->get();
+        $user->comments = $user->comments()->with('post')->whereNull('parent_id')->latest()->limit(25)->get();
+        $user->notifications = $user->notificationSettings;
+        $user->roles = implode(',',$user->roles()->pluck('name')->toArray());
+
         return response()->json($user);
     }
 
@@ -62,7 +66,11 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        return response()->json($user->update($request->toArray()));
+        $data = $request->all();
+
+        if ($request->exists('password')) $data['password'] = bcrypt($request->password);
+
+        return response()->json($user->update($data));
     }
 
     public function changeRoles(Request $request, User $user)

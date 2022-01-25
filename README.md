@@ -43,3 +43,8 @@ php artisan websockets:serve
 
 php artisan horizon
 ```
+## Login details:
+```bash
+Email    - admin@mail.com
+Password - password 
+```
