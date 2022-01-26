@@ -16,15 +16,15 @@
           {{ user.name }}
         </div>
         <div class="" style="font-size: 16px; display: flex; cursor: pointer;">
-          <ban-user :user="user" class="ml-3"/>
-          <delete-user :user="user" class="ml-3"/>
+          <ban-user :user="user" v-if="auth.all_permissions.includes('ban user')" class="ml-3"/>
+          <delete-user :user="user" v-if="auth.all_permissions.includes('delete user')" class="ml-3"/>
         </div>
       </div>
       <br>
       <br>
       <br>
       <div class="row">
-        <div class="col-6">
+        <div class="col-6" v-if="auth.all_permissions.includes('update user')">
           <update-form :user="user"/>
         </div>
         <div class="col-6">
@@ -55,6 +55,8 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-6">
           <label class="v-form-section__label mt-4">
             Последние посты <a href="" class="float-right" style="font-size: 13px">все</a>
@@ -93,11 +95,11 @@ export default {
       limit: 10
     }
   },
-  // computed: {
-  //   ...mapGetters({
-  //     user: 'auth/user',
-  //   }),
-  // },
+  computed: {
+    ...mapGetters({
+      auth: 'auth/user',
+    }),
+  },
   methods: {
     show() {
       this.showAll = !this.showAll

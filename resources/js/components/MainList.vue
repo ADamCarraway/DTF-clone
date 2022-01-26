@@ -54,11 +54,20 @@
       </router-link>
 
       <router-link :to="{ name: 'admin.users.index'}"
-                   v-if="user && user.is_admin"
+                   v-if="user && user.is_admin && user.all_permissions.includes('view all users')"
                    class="sidebar__tree-list__item">
         <div class="sidebar-tree-list-item__link">
           <ion-icon name="people-outline" class="sidebar__icon"></ion-icon>
           <p class="sidebar__tree-list__item__name">Пользователи</p>
+        </div>
+      </router-link>
+
+      <router-link :to="{ name: 'admin.roles.index'}"
+                   v-if="user && user.is_admin && user.all_permissions.includes('view all roles')"
+                   class="sidebar__tree-list__item">
+        <div class="sidebar-tree-list-item__link">
+          <ion-icon name="list-outline"></ion-icon>
+          <p class="sidebar__tree-list__item__name">Роли</p>
         </div>
       </router-link>
 

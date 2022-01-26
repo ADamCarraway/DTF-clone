@@ -158,4 +158,25 @@ return [
 
         'store' => 'default',
     ],
+
+    'admins' => [
+        'super admin',
+        'admin',
+        'reader'
+    ],
+
+    'permissions' => [
+        'view all users',
+        'view user',
+        'change user role',
+        'ban user',
+        'delete user',
+        'update user',
+
+        'view all roles',
+        'create role',
+        'update role',
+        'delete role',
+        'detach permission'
+    ]
 ];

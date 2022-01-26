@@ -3,7 +3,6 @@
 namespace Packages\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +12,8 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('viewAll',User::class);
+
         $users = DB::table('users')
             ->select([
                 'users.*',
@@ -47,6 +48,8 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        $this->authorize('show',User::class);
+
         $user->ignoredKeywords = $user->ignoredKeywords()->pluck('keyword');
         $user->posts = $user->posts()->latest()->limit(25)->get();
         $user->comments = $user->comments()->with('post')->whereNull('parent_id')->latest()->limit(25)->get();
@@ -58,6 +61,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $this->authorize('delete',User::class);
+
         abort_if(auth()->user()->is($user), '403', 'Нельзя удалить себя!');
 
         return response()->json($user->delete());
@@ -65,6 +70,8 @@ class UserController extends Controller
 
     public function ban(Request $request, User $user)
     {
+        $this->authorize('ban',User::class);
+
         abort_if(auth()->user()->is($user), '403', 'Нельзя заблокировать себя!');
 
         return response()->json($user->update(['is_banned' => (bool)$request->status]));
@@ -72,6 +79,8 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $this->authorize('update',User::class);
+
         $data = $request->all();
 
         if ($request->exists('password')) $data['password'] = bcrypt($request->password);
@@ -81,6 +90,8 @@ class UserController extends Controller
 
     public function changeRoles(Request $request, User $user)
     {
+        $this->authorize('changeRole',User::class);
+
         abort_if(auth()->user()->is($user), '403', 'Нельзя менять свои роли!');
 
         return response()->json($user->syncRoles($request->roles));

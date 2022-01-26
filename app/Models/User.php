@@ -17,6 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use JamesDordoy\LaravelVueDatatable\Traits\LaravelVueDatatableTrait;
@@ -77,7 +78,8 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
         'slug',
         'online',
         'show_posts',
-        'is_admin'
+        'is_admin',
+        'all_permissions'
     ];
 
     public function oauthProviders()
@@ -249,6 +251,17 @@ class User extends Authenticatable implements JWTSubject, CanFollowContract, Can
     {
         if (!$this) return false;
 
-        return ($this->roles()->first()->name ?? '') === 'admin';
+        return !empty(array_uintersect($this->roles()->pluck('name')->toArray(), config('permission.admins'), "strcasecmp"));
+    }
+
+    public function getAllPermissionsAttribute()
+    {
+        $permission = [];
+
+        $this->roles()->with('permissions')->each(function ($role) use (&$permission) {
+            $permission = array_merge($permission, collect($role->permissions)->pluck('name')->toArray());
+        });
+
+        return $permission;
     }
 }

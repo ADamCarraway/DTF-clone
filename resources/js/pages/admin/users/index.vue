@@ -82,24 +82,27 @@
 
             <template slot-scope="scope">
               <el-button
+                  v-if="user.all_permissions.includes('view user')"
                   size="mini"
                   class="ml-2"
                   @click="$router.push({ name: 'admin.users.show', params: {id: scope.row.id} })">
-                <ion-icon name="eye-outline"></ion-icon>
+                <ion-icon name="settings-outline"></ion-icon>
               </el-button>
               <el-dropdown trigger="click" v-if="user">
                 <el-button size="mini">
                   <ion-icon name="ellipsis-horizontal"></ion-icon>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item
+                  <el-dropdown-item v-if="user.all_permissions.includes('change user role')"
                       class="el-dropdown-menu__item at-dropdown-menu__item etc_control__item">
                     <span @click="changeRole(scope.row)">Роли</span>
                   </el-dropdown-item>
-                  <el-dropdown-item class="el-dropdown-menu__item at-dropdown-menu__item etc_control__item">
+                  <el-dropdown-item v-if="user.all_permissions.includes('ban user')"
+                      class="el-dropdown-menu__item at-dropdown-menu__item etc_control__item">
                     <ban-user :user="scope.row"/>
                   </el-dropdown-item>
-                  <el-dropdown-item class="el-dropdown-menu__item at-dropdown-menu__item etc_control__item text-danger">
+                  <el-dropdown-item
+                      class="el-dropdown-menu__item at-dropdown-menu__item etc_control__item text-danger">
                     <delete-user :user="scope.row"/>
                   </el-dropdown-item>
                 </el-dropdown-menu>
