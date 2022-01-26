@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -20,23 +21,28 @@ class UserController extends Controller
             ])
             ->leftJoin('user_has_roles as ur', 'users.id', '=', 'ur.user_id')
             ->leftJoin('roles as r', 'ur.role_id', '=', 'r.id')
-            ->leftJoin('posts as p', 'users.id', '=', 'p.user_id')
-            ->leftJoin('comments as c', function ($j) {
-                $j->on('users.id', '=', 'c.user_id')
-                    ->whereNull('c.parent_id')
-                    ->where('c.commentable_type', Post::class);
-            })
             ->where(function ($q) use ($request) {
                 if ($search = $request->input('s', false)) {
                     $q->where('users.name', 'like', '%' . $search . '%')
                         ->orWhere('users.email', 'like', '%' . $search . '%');
+                }
+
+                if ($role = $request->input('role')){
+                    $q->whereIn('r.id', $role);
+                }
+
+                if ($date = $request->input('date')){
+                    $q->whereBetween('users.created_at', $date);
                 }
             })
             ->groupBy('users.id')
             ->orderBy($request->orderBy, $request->order === 'descending' ? 'desc' : 'asc')
             ->paginate($request->count ?? 15);
 
-        return response()->json($users);
+        return response()->json([
+            'users' => $users,
+            'roles' => Role::query()->get()
+        ]);
     }
 
     public function show(User $user)

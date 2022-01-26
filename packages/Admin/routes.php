@@ -12,7 +12,7 @@ $adminAttributes = [
 ];
 
 $router->group($adminAttributes, function (Router $router) {
-    $router->get('users', 'UserController@index');
+    $router->post('users', 'UserController@index');
     $router->get('users/{user}/show', 'UserController@show');
     $router->get('users/{user}/destroy', 'UserController@destroy');
     $router->post('users/{user}/ban', 'UserController@ban');

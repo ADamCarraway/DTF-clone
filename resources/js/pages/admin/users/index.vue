@@ -7,6 +7,43 @@
             Пользователи сайта
           </div>
         </div>
+        <div class="row">
+          <div class="col-4">
+            <el-select class="w-100"
+                       v-model="role"
+                       multiple
+                       filterable
+                       remote
+                       reserve-keyword
+                       placeholder="Роль"
+                       @change="selectRole"
+                       :remote-method="searchRole">
+              <el-option
+                  v-for="item in roles"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+              </el-option>
+            </el-select>
+          </div>
+          <div class="col-4">
+            <el-date-picker
+                class="w-100"
+                v-model="date"
+                @change="changeDate"
+                type="daterange"
+                range-separator="-"
+                start-placeholder="с"
+                end-placeholder="по">
+            </el-date-picker>
+          </div>
+          <div class="col-4">
+            <el-input
+                v-model="s"
+                placeholder="Поиск"/>
+          </div>
+        </div>
+
         <el-table
             :data="users"
             :default-sort="{prop: 'id', order: 'descending'}"
@@ -42,12 +79,7 @@
           </el-table-column>
           <el-table-column
               align="right">
-            <template slot="header" slot-scope="scope">
-              <el-input
-                  v-model="s"
-                  size="mini"
-                  placeholder="Поиск"/>
-            </template>
+
             <template slot-scope="scope">
               <el-button
                   size="mini"
@@ -120,7 +152,10 @@ export default {
       sortProp: 'id',
       sortOrder: 'descending',
       roleModalVisible: false,
-      selectedUser: []
+      selectedUser: [],
+      role: '',
+      roles: {},
+      date: ''
     }
   },
   computed: {
@@ -151,12 +186,40 @@ export default {
       this.selectedUser = user
       this.roleModalVisible = true;
     },
+    selectRole(role) {
+      this.role = role
+      this.getData()
+    },
+    changeDate() {
+      this.getData()
+    },
+    searchRole(query){
+      if (query !== '') {
+        setTimeout(() => {
+          this.roles = this.list.filter(item => {
+            return item.label.toLowerCase()
+                .indexOf(query.toLowerCase()) > -1;
+          });
+        }, 200);
+      } else {
+        this.roles = [];
+      }
+    },
     getData() {
-      axios.get('/api/admin/users?count=' + this.perPage + '&page=' + this.currentPage + '&order=' + this.sortOrder + '&orderBy=' + this.sortProp + '&s=' + this.s).then((res) => {
-        this.users = res.data.data
-        this.total = Number(res.data.total)
-        this.perPage = Number(res.data.per_page)
-        this.currentPage = Number(res.data.current_page)
+      axios.post('/api/admin/users',{
+        count: this.perPage,
+        page: this.currentPage,
+        order: this.sortOrder,
+        orderBy: this.sortProp,
+        role: this.role,
+        s: this.s,
+        date: this.date
+      }).then((res) => {
+        this.roles = res.data.roles
+        this.users = res.data.users.data
+        this.total = Number(res.data.users.total)
+        this.perPage = Number(res.data.users.per_page)
+        this.currentPage = Number(res.data.users.current_page)
       })
     },
   },
